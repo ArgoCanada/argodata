@@ -45,7 +45,7 @@ argo_set_mirror <- function(mirror) {
   }
 
   if (dir.exists(mirror)) {
-    mirror <- paste0("file://", mirror)
+    mirror <- paste0("file://", fs::path_abs(mirror))
   }
 
   prefix <- strsplit(mirror, "//", fixed = TRUE)[[1]][1]

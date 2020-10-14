@@ -9,6 +9,14 @@
 Downloads data from the international Argo
   research program.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/paleolimbot/argodata}
+  \item Report bugs at \url{https://github.com/paleolimbot/argodata/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Dewey Dunnington \email{dewey.dunnington@dfo-mpo.gc.ca} (\href{https://orcid.org/0000-0002-9415-4582}{ORCID})
 

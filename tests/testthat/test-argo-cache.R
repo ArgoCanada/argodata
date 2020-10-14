@@ -21,3 +21,12 @@ test_that("argo_set_cache_dir() errors for invalid values", {
   file.create(tmp_file)
   expect_error(argo_set_cache_dir(tmp_file), "could not be created")
 })
+
+test_that("argo_cached() returns a filename", {
+  expect_identical(argo_cached("/some/file"), argo_cached("some/file"))
+  expect_identical(
+    argo_cached(data.frame(path = "/some/file")),
+    argo_cached("/some/file")
+  )
+  argo_cached("/some_file")
+})

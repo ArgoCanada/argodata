@@ -4,6 +4,7 @@
 \alias{argo_cache_dir}
 \alias{argo_set_cache_dir}
 \alias{with_argo_cache_dir}
+\alias{argo_cached}
 \title{Get and set the default cache directory}
 \usage{
 argo_cache_dir()
@@ -11,6 +12,8 @@ argo_cache_dir()
 argo_set_cache_dir(cache_dir)
 
 with_argo_cache_dir(cache_dir, expr)
+
+argo_cached(path)
 }
 \arguments{
 \item{cache_dir}{A writable directory in which downloaded files can be

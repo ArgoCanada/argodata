@@ -55,3 +55,13 @@ with_argo_cache_dir <- function(cache_dir, expr) {
   on.exit(argo_set_cache_dir(old_cache_dir))
   force(expr)
 }
+
+#' @rdname argo_cache_dir
+#' @export
+argo_cached <- function(path) {
+  if (is.data.frame(path)) {
+    path <- path[["path"]]
+  }
+
+  as.character(fs::path(argo_cache_dir(), path))
+}

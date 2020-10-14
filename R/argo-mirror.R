@@ -50,13 +50,13 @@ argo_set_mirror <- function(mirror) {
 
   prefix <- strsplit(mirror, "//", fixed = TRUE)[[1]][1]
   if (!(prefix %in% c("ftp:", "http:", "https:", "file:"))) {
-    abort("`mirror` must be a valid URL")
+    abort("`mirror` must be a valid URL or existing directory.")
   }
 
   # strip trailing slash if one exists
   mirror <- gsub("/$", "", mirror)
 
-  old_mirror <- argo_mirror()
+  old_mirror <- getOption("argodata.mirror", NULL)
   options(argodata.mirror = mirror)
   invisible(old_mirror)
 }

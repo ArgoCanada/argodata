@@ -54,9 +54,10 @@ argo_should_download <- function(path,
 
   cached <- argo_cached(path)
   modified <- file.mtime(cached)
-  age <- as.numeric(Sys.time() - file.mtime(), units = "hours")
-  is_global <- path == "/" | path == ""
+  age <- as.numeric(Sys.time() - modified, units = "hours")
+  is_global <- dirname(path) == "/" | dirname(path) == "."
 
-  (is_global & (age > max_global_cache_age)) |
-      (age > max_data_cache_age)
+  !file.exists(cached) |
+    (is_global & (age > max_global_cache_age)) |
+    (age > max_data_cache_age)
 }

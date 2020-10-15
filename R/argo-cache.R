@@ -5,6 +5,8 @@
 #' more quickly. The cache directory stores files in the same format as a
 #' an [argo_mirror()].
 #'
+#' @param path A path relative to the root directory of
+#'   [argo_mirror()].
 #' @param cache_dir A writable directory in which downloaded files can be
 #'   cached.
 #' @inheritParams argo_mirror

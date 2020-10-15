@@ -18,18 +18,18 @@ argo_path_global_tech()
 
 argo_path_global_traj()
 }
+\arguments{
+\item{path}{A path relative to the root directory of
+\code{\link[=argo_mirror]{argo_mirror()}}.}
+}
 \value{
-A relative path to a file.
+A full URL according to the current \code{\link[=argo_mirror]{argo_mirror()}}
+and \code{path}.
 }
 \description{
 Construct Argo paths and URLs
 }
 \examples{
-argo_path_global_meta()
-argo_path_global_prof()
-argo_path_global_tech()
-argo_path_global_traj()
-
-argo_url(argo_path_global_meta())
+argo_url("ar_index_global_prof.txt.gz")
 
 }

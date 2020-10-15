@@ -21,6 +21,9 @@ cached.}
 
 \item{expr}{An expression to be evaluated with the specified
 default \code{mirror}.}
+
+\item{path}{A path relative to the root directory of
+\code{\link[=argo_mirror]{argo_mirror()}}.}
 }
 \description{
 The cache directory stores previously downloaded files to access them

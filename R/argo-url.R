@@ -1,18 +1,14 @@
 
 #' Construct Argo paths and URLs
 #'
-#' @inheritParams argo_mirror
+#' @inheritParams argo_cache_dir
 #'
-#' @return A relative path to a file.
+#' @return A full URL according to the current [argo_mirror()]
+#'   and `path`.
 #' @export
 #'
 #' @examples
-#' argo_path_global_meta()
-#' argo_path_global_prof()
-#' argo_path_global_tech()
-#' argo_path_global_traj()
-#'
-#' argo_url(argo_path_global_meta())
+#' argo_url("ar_index_global_prof.txt.gz")
 #'
 argo_url <- function(path) {
   if (is.data.frame(path)) {

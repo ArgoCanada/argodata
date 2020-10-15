@@ -3,7 +3,6 @@
 \name{argo_download}
 \alias{argo_download}
 \alias{argo_should_download}
-\alias{argo_cached}
 \title{Download Argo data files}
 \usage{
 argo_download(path, download = argo_should_download(path), quiet = TRUE)
@@ -13,8 +12,6 @@ argo_should_download(
   max_global_cache_age = getOption("argodata.max_global_cache_age", 24),
   max_data_cache_age = getOption("argodata.max_data_cache_age", Inf)
 )
-
-argo_cached(path)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
@@ -28,6 +25,14 @@ hours ago.}
 
 \item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
 verbose error messages.}
+
+\item{max_global_cache_age, max_data_cache_age}{The maximum age in hours
+to keep cached files. Since index files change frequently, these are cached
+for 24 hours by default; data files are cached indefinitely by default.
+Use \code{Inf} to always use cached values; use \code{-Inf} to always force download.
+You can set the default values of these using
+\code{options(argodata.max_global_cache_age = ...)}
+and/or \code{options(argodata.max_data_cache_age = ...)}.}
 }
 \value{
 A vector of cached filenames corresponding to \code{path}.

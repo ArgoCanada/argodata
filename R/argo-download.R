@@ -1,8 +1,7 @@
 
 #' Download Argo data files
 #'
-#' @param path A path relative to the root directory of
-#'   [argo_mirror()].
+#' @inheritParams argo_cache_dir
 #' @param download A logical vector indicating whether or not
 #'   a file should be downloaded. Defaults to the value of
 #'   [argo_should_download()], which is `TRUE` for files that
@@ -10,6 +9,13 @@
 #'   hours ago.
 #' @param quiet Use `FALSE` to show which files are downloaded and for more
 #'   verbose error messages.
+#' @param max_global_cache_age,max_data_cache_age The maximum age in hours
+#'   to keep cached files. Since index files change frequently, these are cached
+#'   for 24 hours by default; data files are cached indefinitely by default.
+#'   Use `Inf` to always use cached values; use `-Inf` to always force download.
+#'   You can set the default values of these using
+#'   `options(argodata.max_global_cache_age = ...)`
+#'   and/or `options(argodata.max_data_cache_age = ...)`.
 #'
 #' @return A vector of cached filenames corresponding to `path`.
 #' @export
@@ -31,7 +37,7 @@ argo_download <- function(path, download = argo_should_download(path), quiet = T
 
   if (!all(file.exists(cached_download))) {
     missing_paths <- path_download[!file.exists(cached_download)]
-    missing_paths_lab <- paste0("'", head(missing_paths, 10), "'", collapse = "\n")
+    missing_paths_lab <- paste0("'", utils::head(missing_paths, 10), "'", collapse = "\n")
     files <- if (length(missing_paths) != 1) "files" else "file"
     abort(
       glue(
@@ -40,7 +46,7 @@ argo_download <- function(path, download = argo_should_download(path), quiet = T
     )
   }
 
-  unname(cached[path])
+  unname(cached_download[path])
 }
 
 #' @rdname argo_download

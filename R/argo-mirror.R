@@ -3,7 +3,7 @@
 #'
 #' Fetch the default Argo mirror using [argo_mirror()] or set it
 #' using by [argo_set_mirror()]. The default mirror is set to
-#' <ftp://ftp.ifremer.fr/ifremer/argo>. You can also set the default mirror
+#' <https://data-argo.ifremer.fr>. You can also set the default mirror
 #' using `options("argodata.mirror = "path/to/mirror")`. Use
 #' [with_argo_mirror()] to temporarily change the default mirror.
 #'
@@ -28,7 +28,7 @@
 #' with_argo_mirror("https://data-argo.ifremer.fr/", argo_mirror())
 #'
 argo_mirror <- function() {
-  getOption("argodata.mirror", NULL) %||% "ftp://ftp.ifremer.fr/ifremer/argo"
+  getOption("argodata.mirror", NULL) %||% "https://data-argo.ifremer.fr"
 }
 
 #' @rdname argo_mirror

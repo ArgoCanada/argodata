@@ -31,7 +31,7 @@ default \code{mirror}.}
 \description{
 Fetch the default Argo mirror using \code{\link[=argo_mirror]{argo_mirror()}} or set it
 using by \code{\link[=argo_set_mirror]{argo_set_mirror()}}. The default mirror is set to
-\url{ftp://ftp.ifremer.fr/ifremer/argo}. You can also set the default mirror
+\url{https://data-argo.ifremer.fr}. You can also set the default mirror
 using \verb{options("argodata.mirror = "path/to/mirror")}. Use
 \code{\link[=with_argo_mirror]{with_argo_mirror()}} to temporarily change the default mirror.
 }

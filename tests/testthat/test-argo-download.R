@@ -81,3 +81,22 @@ test_that("argo_should_download() works for data files", {
 
   unlink(tmp_dir, recursive = TRUE)
 })
+
+test_that("argo_download() works", {
+  skip_if_offline()
+
+  tmp_cache <- tempfile()
+  expect_false(file.exists(file.path(tmp_cache, "ar_index_global_meta.txt.gz")))
+  expect_identical(
+    fs::path_abs(with_argo_cache_dir(tmp_cache, argo_download("ar_index_global_meta.txt.gz", quiet = TRUE))),
+    fs::path_abs(file.path(tmp_cache, "ar_index_global_meta.txt.gz"))
+  )
+  expect_true(file.exists(file.path(tmp_cache, "ar_index_global_meta.txt.gz")))
+
+  expect_identical(
+    fs::path_abs(with_argo_cache_dir(tmp_cache, argo_download("ar_index_global_meta.txt.gz", quiet = TRUE))),
+    fs::path_abs(file.path(tmp_cache, "ar_index_global_meta.txt.gz"))
+  )
+
+  unlink(tmp_cache, recursive = TRUE)
+})

@@ -5,9 +5,5 @@ test_that("path and url functions work", {
     argo_url("/some/path"),
     argo_url("some/path")
   )
-  expect_identical(
-    argo_url(data.frame(path = "/some/path")),
-    argo_url("/some/path")
-  )
   expect_length(argo_url(character(0)), 0)
 })

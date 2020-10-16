@@ -31,3 +31,14 @@ test_that("multi_file_download() works", {
   unlink(dest)
   unlink(dest2)
 })
+
+test_that("multi_file_download() creates missing directories", {
+  skip_if_offline()
+
+  missing_dir <- tempfile()
+  dest <- file.path(missing_dir, "some_file.json")
+  expect_false(dir.exists(missing_dir))
+  multi_file_download("https://httpbin.org/get", dest, quiet = TRUE)
+  expect_true(dir.exists(missing_dir))
+  unlink(missing_dir, recursive = TRUE)
+})

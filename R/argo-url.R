@@ -11,9 +11,7 @@
 #' argo_url("ar_index_global_prof.txt.gz")
 #'
 argo_url <- function(path) {
-  if (is.data.frame(path)) {
-    path <- path[["path"]]
-  }
+  path <- argo_path(path)
 
   if (length(path) == 0) {
     return(character(0))

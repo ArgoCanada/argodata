@@ -21,17 +21,15 @@
 #' @export
 #'
 argo_download <- function(path, download = argo_should_download(path), quiet = TRUE) {
-  if (is.data.frame(path)) {
-    path <- path[["path"]]
-  }
+  path <- argo_path(path)
 
   path_download <- unique(path[rep_len(as.logical(download), length(path))])
   url_download <- argo_url(path_download)
   cached_download <- rlang::set_names(argo_cached(path_download), path_download)
 
-  multi_file_download(url_download, cached_download)
+  multi_file_download(url_download, cached_download, quiet = quiet)
 
-  unname(cached_download[path])
+  invisible(argo_cached(path))
 }
 
 #' @rdname argo_download
@@ -39,9 +37,7 @@ argo_download <- function(path, download = argo_should_download(path), quiet = T
 argo_should_download <- function(path,
                                  max_global_cache_age = getOption("argodata.max_global_cache_age", 24),
                                  max_data_cache_age = getOption("argodata.max_data_cache_age", Inf)) {
-  if (is.data.frame(path)) {
-    path <- path[["path"]]
-  }
+  path <- argo_path(path)
 
   cached <- argo_cached(path)
   modified <- file.mtime(cached)

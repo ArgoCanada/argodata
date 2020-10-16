@@ -11,6 +11,10 @@ multi_file_download <- function(url, dest, quiet = FALSE) {
   # download the files! (should really use a pool of some kind)
   error_message <- vapply(seq_along(url), function(i) {
     if (!quiet) message(glue("'{ url[i] }' => '{ dest[i] }'"))
+    if (!dir.exists(dirname(dest[i]))) {
+      dir.create(dirname(dest[i]), recursive = TRUE, showWarnings = FALSE)
+    }
+
     tryCatch({
       curl::curl_download(url[i], dest[i])
       NA_character_

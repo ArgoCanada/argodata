@@ -61,9 +61,5 @@ with_argo_cache_dir <- function(cache_dir, expr) {
 #' @rdname argo_cache_dir
 #' @export
 argo_cached <- function(path) {
-  if (is.data.frame(path)) {
-    path <- path[["path"]]
-  }
-
-  as.character(fs::path(argo_cache_dir(), path))
+  as.character(fs::path(argo_cache_dir(), argo_path(path)))
 }

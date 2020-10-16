@@ -1,4 +1,8 @@
 
+test_that("multi_file_download() works with zero items", {
+  expect_identical(multi_file_download(character(0), character(0)), character(0))
+})
+
 test_that("multi_file_download() works", {
   skip_if_offline()
 

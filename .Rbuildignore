@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^data-raw$
+^inst/cache-test/ar_index_global_prof\.txt\.gz$

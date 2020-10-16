@@ -2,21 +2,9 @@
 % Please edit documentation in R/argo-url.R
 \name{argo_url}
 \alias{argo_url}
-\alias{argo_path_global_meta}
-\alias{argo_path_global_prof}
-\alias{argo_path_global_tech}
-\alias{argo_path_global_traj}
 \title{Construct Argo paths and URLs}
 \usage{
 argo_url(path)
-
-argo_path_global_meta()
-
-argo_path_global_prof()
-
-argo_path_global_tech()
-
-argo_path_global_traj()
 }
 \arguments{
 \item{path}{A path relative to the root directory of

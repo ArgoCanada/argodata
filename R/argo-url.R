@@ -20,27 +20,3 @@ argo_url <- function(path) {
   path <- gsub("^/", "", path)
   paste0(argo_mirror(), "/", path)
 }
-
-#' @rdname argo_url
-#' @export
-argo_path_global_meta <- function() {
-  "/ar_index_global_prof.txt.gz"
-}
-
-#' @rdname argo_url
-#' @export
-argo_path_global_prof <- function() {
-  "/ar_index_global_prof.txt.gz"
-}
-
-#' @rdname argo_url
-#' @export
-argo_path_global_tech <- function() {
-  "/ar_index_global_tech.txt.gz"
-}
-
-#' @rdname argo_url
-#' @export
-argo_path_global_traj <- function() {
-  "/ar_index_global_traj.txt.gz"
-}

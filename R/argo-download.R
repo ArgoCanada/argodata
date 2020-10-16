@@ -29,22 +29,7 @@ argo_download <- function(path, download = argo_should_download(path), quiet = T
   url_download <- argo_url(path_download)
   cached_download <- rlang::set_names(argo_cached(path_download), path_download)
 
-  # download the files!
-  for (i in seq_along(path_download)) {
-    if (!quiet) message(glue("'{ url_download[i] }' => '{ cached_download[i] }'"))
-    try(curl::curl_download(url_download[i], cached_download[i]), silent = quiet)
-  }
-
-  if (!all(file.exists(cached_download))) {
-    missing_paths <- path_download[!file.exists(cached_download)]
-    missing_paths_lab <- paste0("'", utils::head(missing_paths, 10), "'", collapse = "\n")
-    files <- if (length(missing_paths) != 1) "files" else "file"
-    abort(
-      glue(
-        "{ length(missing_paths) } { files } failed to download:\n{missing_paths_lab}"
-      )
-    )
-  }
+  multi_file_download(url_download, cached_download)
 
   unname(cached_download[path])
 }

@@ -56,7 +56,7 @@ argo_global_traj <- function(download = NULL, quiet = TRUE) {
 #' @rdname argo_global_meta
 #' @export
 argo_read_global_meta <- function(file) {
-  value <- readr::read_csv(
+  readr::read_csv(
     file,
     col_types = readr::cols(
       file = readr::col_character(),
@@ -66,19 +66,16 @@ argo_read_global_meta <- function(file) {
     ),
     comment = "#"
   )
-
-  value$path <- paste0("dac/", value$file)
-  value
 }
 
 #' @rdname argo_global_meta
 #' @export
 argo_read_global_prof <- function(file) {
-  value <- readr::read_csv(
+  readr::read_csv(
     file,
     col_types = readr::cols(
       file = readr::col_character(),
-      date = readr::col_double(),
+      date = readr::col_datetime("%Y%m%d%H%M%S"),
       latitude = readr::col_double(),
       longitude = readr::col_double(),
       ocean = readr::col_character(),
@@ -88,15 +85,12 @@ argo_read_global_prof <- function(file) {
     ),
     comment = "#"
   )
-
-  value$path <- paste0("dac/", value$file)
-  value
 }
 
 #' @rdname argo_global_meta
 #' @export
 argo_read_global_tech <- function(file) {
-  value <- readr::read_csv(
+  readr::read_csv(
     file,
     col_types = readr::cols(
       file = readr::col_character(),
@@ -105,15 +99,12 @@ argo_read_global_tech <- function(file) {
     ),
     comment = "#"
   )
-
-  value$path <- paste0("dac/", value$file)
-  value
 }
 
 #' @rdname argo_global_meta
 #' @export
 argo_read_global_traj <- function(file) {
-  value <- readr::read_csv(
+  readr::read_csv(
     file,
     col_types = readr::cols(
       file = readr::col_character(),
@@ -127,9 +118,6 @@ argo_read_global_traj <- function(file) {
     ),
     comment = "#"
   )
-
-  value$path <- paste0("dac/", value$file)
-  value
 }
 
 argo_global <- function(path, name, read_fun, download, quiet) {

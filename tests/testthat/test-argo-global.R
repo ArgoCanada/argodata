@@ -11,7 +11,7 @@ test_that("argo_global_meta() works", {
       expect_is(argo_global_meta(), "tbl_df")
       expect_identical(
         names(argo_global_meta()),
-        c("file", "profiler_type", "institution", "date_update", "path")
+        c("file", "profiler_type", "institution", "date_update")
       )
     })
   })
@@ -25,7 +25,7 @@ test_that("argo_global_prof() works", {
   expect_identical(
     names(argo_global_prof()),
     c("file", "date", "latitude", "longitude", "ocean", "profiler_type",
-      "institution", "date_update", "path")
+      "institution", "date_update")
   )
 })
 
@@ -41,7 +41,7 @@ test_that("argo_global_tech() works", {
       expect_is(argo_global_tech(), "tbl_df")
       expect_identical(
         names(argo_global_tech()),
-        c("file", "institution", "date_update", "path")
+        c("file", "institution", "date_update")
       )
     })
   })
@@ -62,7 +62,7 @@ test_that("argo_global_traj() works", {
       expect_identical(
         names(argo_global_traj()),
         c("file", "latitude_max", "latitude_min", "longitude_max", "longitude_min",
-          "profiler_type", "institution", "date_update", "path")
+          "profiler_type", "institution", "date_update")
       )
     })
   })

@@ -24,9 +24,5 @@ test_that("argo_set_cache_dir() errors for invalid values", {
 
 test_that("argo_cached() returns a filename", {
   expect_identical(argo_cached("/some/file"), argo_cached("some/file"))
-  expect_identical(
-    argo_cached(data.frame(path = "/some/file")),
-    argo_cached("/some/file")
-  )
-  argo_cached("/some_file")
+  expect_identical(argo_cached(character(0)), character(0))
 })

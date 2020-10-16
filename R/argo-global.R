@@ -89,6 +89,7 @@ argo_read_global_prof <- function(file) {
     comment = "#"
   )
 
+  value$path <- paste0("dac/", value$file)
   value
 }
 
@@ -97,9 +98,15 @@ argo_read_global_prof <- function(file) {
 argo_read_global_tech <- function(file) {
   value <- readr::read_csv(
     file,
+    col_types = readr::cols(
+      file = readr::col_character(),
+      institution = readr::col_character(),
+      date_update = readr::col_datetime("%Y%m%d%H%M%S")
+    ),
     comment = "#"
   )
 
+  value$path <- paste0("dac/", value$file)
   value
 }
 
@@ -108,9 +115,20 @@ argo_read_global_tech <- function(file) {
 argo_read_global_traj <- function(file) {
   value <- readr::read_csv(
     file,
+    col_types = readr::cols(
+      file = readr::col_character(),
+      latitude_max = readr::col_double(),
+      latitude_min = readr::col_double(),
+      longitude_max = readr::col_double(),
+      longitude_min = readr::col_double(),
+      profiler_type = readr::col_double(),
+      institution = readr::col_character(),
+      date_update = readr::col_datetime("%Y%m%d%H%M%S")
+    ),
     comment = "#"
   )
 
+  value$path <- paste0("dac/", value$file)
   value
 }
 

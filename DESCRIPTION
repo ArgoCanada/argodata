@@ -19,7 +19,8 @@ Imports:
     rlang,
     fs,
     glue,
-    readr
+    readr,
+    stringr
 Suggests: 
     testthat
 URL: https://github.com/paleolimbot/argodata

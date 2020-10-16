@@ -68,3 +68,12 @@ with_argo_mirror <- function(mirror, expr) {
   on.exit(argo_set_mirror(old_mirror))
   force(expr)
 }
+
+#' @rdname argo_cache_dir
+#' @export
+argo_test_mirror <- function() {
+  paste0(
+    "file://",
+    fs::path_abs(system.file("cache-test", package = "argodata"))
+  )
+}

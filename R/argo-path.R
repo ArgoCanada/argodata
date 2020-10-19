@@ -1,5 +1,5 @@
 
-argo_path <- function(path) {
+as_argo_path <- function(path) {
   if (is.data.frame(path) && ("file" %in% names(path))) {
     path <- path[["file"]]
     path <- paste0(rep_len("dac/", length(path)), path)

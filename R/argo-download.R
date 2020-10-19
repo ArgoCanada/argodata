@@ -21,7 +21,7 @@
 #' @export
 #'
 argo_download <- function(path, download = NULL, quiet = TRUE) {
-  path <- argo_path(path)
+  path <- as_argo_path(path)
   download <- download %||% argo_should_download(path)
 
   path_download <- unique(path[rep_len(as.logical(download), length(path))])
@@ -38,7 +38,7 @@ argo_download <- function(path, download = NULL, quiet = TRUE) {
 argo_should_download <- function(path,
                                  max_global_cache_age = getOption("argodata.max_global_cache_age", 24),
                                  max_data_cache_age = getOption("argodata.max_data_cache_age", Inf)) {
-  path <- argo_path(path)
+  path <- as_argo_path(path)
 
   cached <- argo_cached(path)
   modified <- file.mtime(cached)

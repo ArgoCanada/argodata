@@ -20,7 +20,8 @@ Imports:
     fs,
     glue,
     readr,
-    stringr
+    stringr,
+    ncdf4
 Suggests: 
     testthat
 URL: https://github.com/paleolimbot/argodata

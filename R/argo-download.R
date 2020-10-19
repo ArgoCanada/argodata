@@ -20,7 +20,7 @@
 #' @return A vector of cached filenames corresponding to `path`.
 #' @export
 #'
-argo_download <- function(path, download = NULL, quiet = TRUE) {
+argo_download <- function(path, download = NULL, quiet = FALSE) {
   path <- as_argo_path(path)
   download <- download %||% argo_should_download(path)
 

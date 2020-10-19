@@ -5,7 +5,7 @@
 \alias{argo_should_download}
 \title{Download Argo data files}
 \usage{
-argo_download(path, download = NULL, quiet = TRUE)
+argo_download(path, download = NULL, quiet = FALSE)
 
 argo_should_download(
   path,

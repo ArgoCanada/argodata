@@ -7,7 +7,7 @@
 #' @return A [tibble::tibble()].
 #' @export
 #'
-argo_global_meta <- function(download = NULL, quiet = TRUE) {
+argo_global_meta <- function(download = NULL, quiet = FALSE) {
   argo_global(
     path = "ar_index_global_meta.txt.gz",
     name = "meta",
@@ -19,7 +19,7 @@ argo_global_meta <- function(download = NULL, quiet = TRUE) {
 
 #' @rdname argo_global_meta
 #' @export
-argo_global_prof <- function(download = NULL, quiet = TRUE) {
+argo_global_prof <- function(download = NULL, quiet = FALSE) {
   argo_global(
     path = "ar_index_global_prof.txt.gz",
     name = "prof",
@@ -31,7 +31,7 @@ argo_global_prof <- function(download = NULL, quiet = TRUE) {
 
 #' @rdname argo_global_meta
 #' @export
-argo_global_tech <- function(download = NULL, quiet = TRUE) {
+argo_global_tech <- function(download = NULL, quiet = FALSE) {
   argo_global(
     path = "ar_index_global_tech.txt.gz",
     name = "tech",
@@ -43,7 +43,7 @@ argo_global_tech <- function(download = NULL, quiet = TRUE) {
 
 #' @rdname argo_global_meta
 #' @export
-argo_global_traj <- function(download = NULL, quiet = TRUE) {
+argo_global_traj <- function(download = NULL, quiet = FALSE) {
   argo_global(
     path = "ar_index_global_traj.txt.gz",
     name = "traj",

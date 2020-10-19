@@ -11,13 +11,13 @@
 \alias{argo_read_global_traj}
 \title{Load Argo global index files}
 \usage{
-argo_global_meta(download = NULL, quiet = TRUE)
+argo_global_meta(download = NULL, quiet = FALSE)
 
-argo_global_prof(download = NULL, quiet = TRUE)
+argo_global_prof(download = NULL, quiet = FALSE)
 
-argo_global_tech(download = NULL, quiet = TRUE)
+argo_global_tech(download = NULL, quiet = FALSE)
 
-argo_global_traj(download = NULL, quiet = TRUE)
+argo_global_traj(download = NULL, quiet = FALSE)
 
 argo_read_global_meta(file)
 

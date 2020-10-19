@@ -1,5 +1,5 @@
 
-as_argo_float <- function(float, download = NULL, quiet = TRUE) {
+as_argo_float <- function(float, download = NULL, quiet = FALSE) {
   if (is.data.frame(float) && ("file" %in% names(float))) {
     float <- float[["file"]]
   }

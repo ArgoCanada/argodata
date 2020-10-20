@@ -21,7 +21,9 @@ Imports:
     glue,
     readr,
     stringr,
-    ncdf4
+    ncdf4,
+    vctrs,
+    tibble
 Suggests: 
     testthat
 URL: https://github.com/paleolimbot/argodata

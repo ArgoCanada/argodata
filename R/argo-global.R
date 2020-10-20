@@ -121,13 +121,13 @@ argo_read_global_traj <- function(file) {
 }
 
 argo_global <- function(path, name, read_fun, download, quiet) {
-  download <- download %||% argo_should_download(path)
+  should_download <- download %||% argo_should_download(path)
 
-  if (download) {
+  if (should_download || !(name %in% names(argo_global_cache))) {
     value <- read_fun(argo_download(path, download = download, quiet = quiet))
     argo_global_cache[[name]] <- value
 
-  } else if(!file.exists(argo_cached(path))) {
+  } else if(identical(download, FALSE) && (name %in% names(argo_global_cache))) {
     abort(glue("File does not exist and `download = FALSE`:\n'{ path }'."))
   }
 

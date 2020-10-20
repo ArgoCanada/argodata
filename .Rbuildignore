@@ -3,3 +3,10 @@
 ^LICENSE\.md$
 ^data-raw$
 ^inst/cache-test/ar_index_global_prof\.txt\.gz$
+^README\.Rmd$
+^cache-dev$
+^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^codecov\.yml$

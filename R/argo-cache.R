@@ -63,3 +63,16 @@ with_argo_cache_dir <- function(cache_dir, expr) {
 argo_cached <- function(path) {
   as.character(fs::path(argo_cache_dir(), as_argo_path(path)))
 }
+
+# For dev use only! The cache-dev folder is .gitignored,
+# and .Rbuildignored and when developing, downloading updated files is
+# not necessary.
+# nocov start
+use_dev_cache <- function(path) {
+  argo_set_cache_dir("cache-dev")
+  options(
+    argodata.max_global_cache_age = Inf,
+    argodata.max_data_cache_age = Inf
+  )
+}
+# nocov end

@@ -124,6 +124,7 @@ argo_global <- function(path, name, read_fun, download, quiet) {
   should_download <- download %||% argo_should_download(path)
 
   if (should_download || !(name %in% names(argo_global_cache))) {
+    if (!quiet) message(glue("Loading argo_global_{ name }()"))
     value <- read_fun(argo_download(path, download = download, quiet = quiet))
     argo_global_cache[[name]] <- value
 

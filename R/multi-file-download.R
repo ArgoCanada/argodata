@@ -23,7 +23,11 @@ multi_file_download <- function(url, dest, quiet = FALSE) {
       curl::curl_download(url[i], dest[i])
       NA_character_
     }, error = function(e) {
-      # If this is a user interrupt, should really error here
+      # If this is a user interrupt, stop completely
+      if (identical(e$message, "Operation was aborted by an application callback")) {
+        abort(e$message) # nocov
+      }
+
       paste0(e, collapse = "\n")
     })
   }, character(1))

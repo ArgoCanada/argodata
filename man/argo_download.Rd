@@ -5,7 +5,7 @@
 \alias{argo_should_download}
 \title{Download Argo data files}
 \usage{
-argo_download(path, download = NULL, quiet = FALSE)
+argo_download(path, download = NULL, async = NULL, quiet = FALSE)
 
 argo_should_download(
   path,
@@ -22,6 +22,9 @@ a file should be downloaded. Defaults to the value of
 \code{\link[=argo_should_download]{argo_should_download()}}, which is \code{TRUE} for files that
 do not exist in the cache or global files that were cached more than 24
 hours ago.}
+
+\item{async}{Use \code{TRUE} to perform HTTP requests in parallel. This is much
+faster for large numbers of small files.}
 
 \item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
 verbose error messages.}

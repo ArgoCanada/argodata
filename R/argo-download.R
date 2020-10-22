@@ -7,6 +7,8 @@
 #'   [argo_should_download()], which is `TRUE` for files that
 #'   do not exist in the cache or global files that were cached more than 24
 #'   hours ago.
+#' @param async Use `TRUE` to perform HTTP requests in parallel. This is much
+#'   faster for large numbers of small files.
 #' @param quiet Use `FALSE` to show which files are downloaded and for more
 #'   verbose error messages.
 #' @param max_global_cache_age,max_data_cache_age The maximum age in hours
@@ -20,15 +22,20 @@
 #' @return A vector of cached filenames corresponding to `path`.
 #' @export
 #'
-argo_download <- function(path, download = NULL, quiet = FALSE) {
+argo_download <- function(path, download = NULL, async = NULL, quiet = FALSE) {
   path <- as_argo_path(path)
   download <- download %||% argo_should_download(path)
+  async <- async %||% (length(path) > 1)
 
   path_download <- unique(path[rep_len(as.logical(download), length(path))])
   url_download <- argo_url(path_download)
   cached_download <- rlang::set_names(argo_cached(path_download), path_download)
 
-  multi_file_download(url_download, cached_download, quiet = quiet)
+  if (async) {
+    multi_file_download_async(url_download, cached_download, quiet = quiet)
+  } else {
+    multi_file_download(url_download, cached_download, quiet = quiet)
+  }
 
   invisible(argo_cached(path))
 }

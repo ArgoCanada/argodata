@@ -65,7 +65,7 @@ You can load profile data by filtering `argo_global_prof()` and piping to `argo_
 
 ```{r}
 argo_global_prof() %>% 
-  tail(2) %>% 
+  tail(100) %>% 
   argo_prof()
 ```
 
@@ -95,4 +95,3 @@ argo_global_prof(download = TRUE)
 options(argodata.max_global_cache_age = Inf)
 options(argodata.max_data_cache_age = Inf)
 ```
-

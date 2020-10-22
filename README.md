@@ -108,22 +108,22 @@ to `argo_prof()`:
 
 ``` r
 argo_global_prof() %>% 
-  tail(2) %>% 
+  tail(100) %>% 
   argo_prof()
-#> # A tibble: 189 x 18
+#> # A tibble: 9,199 x 18
 #>    float cycle_number date                 pres pres_qc pres_adjusted
 #>    <chr>        <int> <dttm>              <dbl> <chr>           <dbl>
-#>  1 nmdi~           70 2013-05-31 04:45:24     0 1                  NA
-#>  2 nmdi~           70 2013-05-31 04:45:24     6 1                  NA
-#>  3 nmdi~           70 2013-05-31 04:45:24    16 1                  NA
-#>  4 nmdi~           70 2013-05-31 04:45:24    26 1                  NA
-#>  5 nmdi~           70 2013-05-31 04:45:24    36 1                  NA
-#>  6 nmdi~           70 2013-05-31 04:45:24    46 1                  NA
-#>  7 nmdi~           70 2013-05-31 04:45:24    56 1                  NA
-#>  8 nmdi~           70 2013-05-31 04:45:24    66 1                  NA
-#>  9 nmdi~           70 2013-05-31 04:45:24    76 1                  NA
-#> 10 nmdi~           70 2013-05-31 04:45:24    86 1                  NA
-#> # ... with 179 more rows, and 12 more variables: pres_adjusted_qc <chr>,
+#>  1 nmdi~          123 2014-11-12 04:40:37     0 1                  NA
+#>  2 nmdi~          123 2014-11-12 04:40:37     6 1                  NA
+#>  3 nmdi~          123 2014-11-12 04:40:37    17 1                  NA
+#>  4 nmdi~          123 2014-11-12 04:40:37    26 1                  NA
+#>  5 nmdi~          123 2014-11-12 04:40:37    36 1                  NA
+#>  6 nmdi~          123 2014-11-12 04:40:37    46 1                  NA
+#>  7 nmdi~          123 2014-11-12 04:40:37    57 1                  NA
+#>  8 nmdi~          123 2014-11-12 04:40:37    66 1                  NA
+#>  9 nmdi~          123 2014-11-12 04:40:37    76 1                  NA
+#> 10 nmdi~          123 2014-11-12 04:40:37    86 1                  NA
+#> # ... with 9,189 more rows, and 12 more variables: pres_adjusted_qc <chr>,
 #> #   pres_adjusted_error <dbl>, psal <dbl>, psal_qc <chr>, psal_adjusted <dbl>,
 #> #   psal_adjusted_qc <chr>, psal_adjusted_error <dbl>, temp <dbl>,
 #> #   temp_qc <chr>, temp_adjusted <dbl>, temp_adjusted_qc <chr>,

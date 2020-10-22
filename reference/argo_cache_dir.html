@@ -92,7 +92,7 @@ an argo_mirror()." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/paleolimbot/argodata/">
+  <a href="https://github.com/ArgoCanada/argodata/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -111,7 +111,7 @@ an argo_mirror()." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Get and set the default cache directory</h1>
-    <small class="dont-index">Source: <a href='https://github.com/paleolimbot/argodata/blob/master/R/argo-cache.R'><code>R/argo-cache.R</code></a>, <a href='https://github.com/paleolimbot/argodata/blob/master/R/argo-mirror.R'><code>R/argo-mirror.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ArgoCanada/argodata/blob/master/R/argo-cache.R'><code>R/argo-cache.R</code></a>, <a href='https://github.com/ArgoCanada/argodata/blob/master/R/argo-mirror.R'><code>R/argo-mirror.R</code></a></small>
     <div class="hidden name"><code>argo_cache_dir.Rd</code></div>
     </div>
 
@@ -154,10 +154,10 @@ default <code>mirror</code>.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>argo_cache_dir</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8d1fr9/file6661aa42d24"</div><div class='input'>
+</div><div class='output co'>#&gt; [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpXojp1W/file6ed770e5eb8"</div><div class='input'>
 <span class='va'>temp_dir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='fu'>with_argo_cache_dir</span><span class='op'>(</span><span class='va'>temp_dir</span>, <span class='fu'>argo_cache_dir</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmp8d1fr9/file666108fa426"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='va'>temp_dir</span>, recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpXojp1W/file6ed506cbf18"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='va'>temp_dir</span>, recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 </div></pre>
   </div>

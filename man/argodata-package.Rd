@@ -12,8 +12,8 @@ Downloads data from the international Argo
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/paleolimbot/argodata}
-  \item Report bugs at \url{https://github.com/paleolimbot/argodata/issues}
+  \item \url{https://github.com/ArgoCanada/argodata}
+  \item Report bugs at \url{https://github.com/ArgoCanada/argodata/issues}
 }
 
 }

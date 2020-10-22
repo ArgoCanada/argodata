@@ -8,9 +8,9 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![R build
-status](https://github.com/paleolimbot/argodata/workflows/R-CMD-check/badge.svg)](https://github.com/paleolimbot/argodata/actions)
+status](https://github.com/ArgoCanada/argodata/workflows/R-CMD-check/badge.svg)](https://github.com/ArgoCanada/argodata/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/paleolimbot/argodata/branch/master/graph/badge.svg)](https://codecov.io/gh/paleolimbot/argodata?branch=master)
+coverage](https://codecov.io/gh/ArgoCanada/argodata/branch/master/graph/badge.svg)](https://codecov.io/gh/ArgoCanada/argodata?branch=master)
 <!-- badges: end -->
 
 The goal of argodata is to provide a data frame-based interface to data
@@ -23,7 +23,7 @@ You can install the development version from
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("paleolimbot/argodata")
+remotes::install_github("ArgoCanada/argodata")
 ```
 
 If you can load the package, you’re all set\!

@@ -26,5 +26,5 @@ Imports:
     tibble
 Suggests: 
     testthat
-URL: https://github.com/paleolimbot/argodata
-BugReports: https://github.com/paleolimbot/argodata/issues
+URL: https://github.com/ArgoCanada/argodata
+BugReports: https://github.com/ArgoCanada/argodata/issues

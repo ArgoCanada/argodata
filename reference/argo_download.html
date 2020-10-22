@@ -117,7 +117,7 @@
     <p>Download Argo data files</p>
     </div>
 
-    <pre class="usage"><span class='fu'>argo_download</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>argo_download</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, async <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='fu'>argo_should_download</span><span class='op'>(</span>
   <span class='va'>path</span>,
@@ -140,6 +140,11 @@ a file should be downloaded. Defaults to the value of
 <code>argo_should_download()</code>, which is <code>TRUE</code> for files that
 do not exist in the cache or global files that were cached more than 24
 hours ago.</p></td>
+    </tr>
+    <tr>
+      <th>async</th>
+      <td><p>Use <code>TRUE</code> to perform HTTP requests in parallel. This is much
+faster for large numbers of small files.</p></td>
     </tr>
     <tr>
       <th>quiet</th>

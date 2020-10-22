@@ -153,22 +153,22 @@
 <p>You can load profile data by filtering <code><a href="reference/argo_global_meta.html">argo_global_prof()</a></code> and piping to <code><a href="reference/argo_prof.html">argo_prof()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="fu"><a href="reference/argo_global_meta.html">argo_global_prof</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/argo_prof.html">argo_prof</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 189 x 18</span>
+<span class="co">#&gt; # A tibble: 9,199 x 18</span>
 <span class="co">#&gt;    float cycle_number date                 pres pres_qc pres_adjusted</span>
 <span class="co">#&gt;    &lt;chr&gt;        &lt;int&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 nmdi~           70 2013-05-31 04:45:24     0 1                  NA</span>
-<span class="co">#&gt;  2 nmdi~           70 2013-05-31 04:45:24     6 1                  NA</span>
-<span class="co">#&gt;  3 nmdi~           70 2013-05-31 04:45:24    16 1                  NA</span>
-<span class="co">#&gt;  4 nmdi~           70 2013-05-31 04:45:24    26 1                  NA</span>
-<span class="co">#&gt;  5 nmdi~           70 2013-05-31 04:45:24    36 1                  NA</span>
-<span class="co">#&gt;  6 nmdi~           70 2013-05-31 04:45:24    46 1                  NA</span>
-<span class="co">#&gt;  7 nmdi~           70 2013-05-31 04:45:24    56 1                  NA</span>
-<span class="co">#&gt;  8 nmdi~           70 2013-05-31 04:45:24    66 1                  NA</span>
-<span class="co">#&gt;  9 nmdi~           70 2013-05-31 04:45:24    76 1                  NA</span>
-<span class="co">#&gt; 10 nmdi~           70 2013-05-31 04:45:24    86 1                  NA</span>
-<span class="co">#&gt; # ... with 179 more rows, and 12 more variables: pres_adjusted_qc &lt;chr&gt;,</span>
+<span class="co">#&gt;  1 nmdi~          123 2014-11-12 04:40:37     0 1                  NA</span>
+<span class="co">#&gt;  2 nmdi~          123 2014-11-12 04:40:37     6 1                  NA</span>
+<span class="co">#&gt;  3 nmdi~          123 2014-11-12 04:40:37    17 1                  NA</span>
+<span class="co">#&gt;  4 nmdi~          123 2014-11-12 04:40:37    26 1                  NA</span>
+<span class="co">#&gt;  5 nmdi~          123 2014-11-12 04:40:37    36 1                  NA</span>
+<span class="co">#&gt;  6 nmdi~          123 2014-11-12 04:40:37    46 1                  NA</span>
+<span class="co">#&gt;  7 nmdi~          123 2014-11-12 04:40:37    57 1                  NA</span>
+<span class="co">#&gt;  8 nmdi~          123 2014-11-12 04:40:37    66 1                  NA</span>
+<span class="co">#&gt;  9 nmdi~          123 2014-11-12 04:40:37    76 1                  NA</span>
+<span class="co">#&gt; 10 nmdi~          123 2014-11-12 04:40:37    86 1                  NA</span>
+<span class="co">#&gt; # ... with 9,189 more rows, and 12 more variables: pres_adjusted_qc &lt;chr&gt;,</span>
 <span class="co">#&gt; #   pres_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   psal_adjusted_qc &lt;chr&gt;, psal_adjusted_error &lt;dbl&gt;, temp &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   temp_qc &lt;chr&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span>

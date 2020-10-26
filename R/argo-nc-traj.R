@@ -2,11 +2,6 @@
 #' Read Argo trajectory NetCDF files
 #'
 #' @inheritParams argo_nc_prof_read
-#' @param vars A character vector of variable names. These
-#'   values can be found for each file using
-#'   [argo_nc_traj_list_vars()].
-#'   If a variable does not exist in `nc`, a column of `NA`s
-#'   is filled in its place.
 #'
 #' @return A [tibble::tibble()] containing columns "float" and
 #'   all columns listed in `vars`.

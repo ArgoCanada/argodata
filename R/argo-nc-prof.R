@@ -2,15 +2,13 @@
 #' Read Argo profile NetCDF files
 #'
 #' @param nc A handle created using [ncdf4::nc_open()].
-#' @param vars A character vector of variable names. These
-#'   values can be found for each profile using
-#'   [argo_nc_prof_list_vars()].
-#'   If a variable does not exist in `nc`, a column of `NA`s
+#' @param vars A character vector of variable names.
+#'   If a variable does not exist in the file, a column of `NA`s
 #'   is filled in its place.
 #' @param meta A character vector of meta variable names for
 #'   each profile. These can be found using [argo_nc_prof_list_meta()].
 #' @param fill A `list()` of missing values that should be applied
-#'   when `vars` contains values that are not in [argo_nc_prof_list_vars()].
+#'   when `vars` contains values that are not in the file.
 #'
 #' @return A [tibble::tibble()] containing both `vars` and `meta`
 #'   columns.

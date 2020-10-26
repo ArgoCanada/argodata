@@ -12,14 +12,12 @@ argo_nc_traj_list_vars(nc)
 \arguments{
 \item{nc}{A handle created using \code{\link[ncdf4:nc_open]{ncdf4::nc_open()}}.}
 
-\item{vars}{A character vector of variable names. These
-values can be found for each file using
-\code{\link[=argo_nc_traj_list_vars]{argo_nc_traj_list_vars()}}.
-If a variable does not exist in \code{nc}, a column of \code{NA}s
+\item{vars}{A character vector of variable names.
+If a variable does not exist in the file, a column of \code{NA}s
 is filled in its place.}
 
 \item{fill}{A \code{list()} of missing values that should be applied
-when \code{vars} contains values that are not in \code{\link[=argo_nc_prof_list_vars]{argo_nc_prof_list_vars()}}.}
+when \code{vars} contains values that are not in the file.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}} containing columns "float" and

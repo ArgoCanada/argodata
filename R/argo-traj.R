@@ -13,13 +13,14 @@
 #' })
 #'
 #' traj_file <- system.file(
-#'   "cache-test/dac/csio/2900313/2900313_traj.nc",
+#'   "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
 #'   package = "argodata"
 #' )
 #'
 #' argo_read_traj(traj_file)
 #'
-argo_traj <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
+argo_traj <- function(path, vars = NULL, download = NULL, quiet = FALSE,
+                      .ptype = NULL) {
   path <- as_argo_path(path)
   assert_argo_traj_file(path)
   cached <- argo_download(path, download = download, quiet = quiet)
@@ -30,7 +31,7 @@ argo_traj <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
     vars = if (!is.null(vars)) toupper(vars) else vars
   )
 
-  tbl <- vctrs::vec_rbind(!!! tbls)
+  tbl <- vctrs::vec_rbind(!!! tbls, .ptype = .ptype)
 
   # make names lowercase
   names(tbl) <- tolower(names(tbl))

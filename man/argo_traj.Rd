@@ -5,7 +5,7 @@
 \alias{argo_read_traj}
 \title{Load Argo trajectories}
 \usage{
-argo_traj(path, vars = NULL, download = NULL, quiet = FALSE)
+argo_traj(path, vars = NULL, download = NULL, quiet = FALSE, .ptype = NULL)
 
 argo_read_traj(file, vars = NULL)
 }
@@ -26,6 +26,8 @@ hours ago.}
 \item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
 verbose error messages.}
 
+\item{.ptype}{A fixed output type (see \code{\link[vctrs:vec_bind]{vctrs::vec_rbind()}}).}
+
 \item{file}{A previously downloaded Argo trajectory NetCDF file.}
 }
 \value{
@@ -40,7 +42,7 @@ with_argo_example_cache({
 })
 
 traj_file <- system.file(
-  "cache-test/dac/csio/2900313/2900313_traj.nc",
+  "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
   package = "argodata"
 )
 

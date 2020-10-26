@@ -5,7 +5,7 @@
 \alias{argo_read_prof}
 \title{Load Argo profiles}
 \usage{
-argo_prof(path, vars = NULL, download = NULL, quiet = FALSE)
+argo_prof(path, vars = NULL, download = NULL, quiet = FALSE, .ptype = NULL)
 
 argo_read_prof(file, vars = NULL, meta = NULL)
 }
@@ -25,6 +25,8 @@ hours ago.}
 
 \item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
 verbose error messages.}
+
+\item{.ptype}{A fixed output type (see \code{\link[vctrs:vec_bind]{vctrs::vec_rbind()}}).}
 
 \item{file}{A previously downloaded Argo profile NetCDF file.}
 

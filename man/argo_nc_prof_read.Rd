@@ -6,7 +6,7 @@
 \alias{argo_nc_prof_list_meta}
 \title{Read Argo profile NetCDF files}
 \usage{
-argo_nc_prof_read(nc, vars = NULL, meta = NULL, fill = list())
+argo_nc_prof_read(nc, vars = NULL, meta = NULL)
 
 argo_nc_prof_list_vars(nc)
 
@@ -16,14 +16,11 @@ argo_nc_prof_list_meta(nc)
 \item{nc}{A handle created using \code{\link[ncdf4:nc_open]{ncdf4::nc_open()}}.}
 
 \item{vars}{A character vector of variable names.
-If a variable does not exist in the file, a column of \code{NA}s
-is filled in its place.}
+If a variable does not exist in the file, it is not included
+in the output.}
 
 \item{meta}{A character vector of meta variable names for
 each profile. These can be found using \code{\link[=argo_nc_prof_list_meta]{argo_nc_prof_list_meta()}}.}
-
-\item{fill}{A \code{list()} of missing values that should be applied
-when \code{vars} contains values that are not in the file.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}} containing both \code{vars} and \code{meta}
@@ -42,5 +39,7 @@ nc_prof <- ncdf4::nc_open(nc_prof_file)
 argo_nc_prof_list_vars(nc_prof)
 argo_nc_prof_list_meta(nc_prof)
 argo_nc_prof_read(nc_prof)
+
+ncdf4::nc_close(nc_prof)
 
 }

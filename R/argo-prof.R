@@ -4,7 +4,6 @@
 #' @inheritParams argo_download
 #' @inheritParams argo_nc_prof_read
 #' @param file A previously downloaded Argo profile NetCDF file.
-#' @param .ptype A fixed output type (see [vctrs::vec_rbind()]).
 #'
 #' @return A [tibble::tibble()].
 #' @export
@@ -21,10 +20,10 @@
 #'
 #' argo_read_prof(prof_file)
 #'
-argo_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE,
-                      .ptype = NULL) {
+argo_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   path <- as_argo_path(path)
   assert_argo_prof_file(path)
+
   cached <- argo_download(path, download = download, quiet = quiet)
 
   tbls <- lapply(
@@ -34,9 +33,7 @@ argo_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE,
     meta = c("CYCLE_NUMBER", "JULD")
   )
 
-  tbl <- vctrs::vec_rbind(!!! tbls, .ptype = .ptype)
-
-  # make names lowercase
+  tbl <- vctrs::vec_rbind(!!! tbls)
   names(tbl) <- tolower(names(tbl))
 
   argo_juld_to_date_tbl(tbl)

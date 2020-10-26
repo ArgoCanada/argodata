@@ -13,11 +13,8 @@ argo_nc_traj_list_vars(nc)
 \item{nc}{A handle created using \code{\link[ncdf4:nc_open]{ncdf4::nc_open()}}.}
 
 \item{vars}{A character vector of variable names.
-If a variable does not exist in the file, a column of \code{NA}s
-is filled in its place.}
-
-\item{fill}{A \code{list()} of missing values that should be applied
-when \code{vars} contains values that are not in the file.}
+If a variable does not exist in the file, it is not included
+in the output.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}} containing columns "float" and

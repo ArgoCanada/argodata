@@ -14,8 +14,8 @@ argo_read_traj(file, vars = NULL)
 \code{\link[=argo_mirror]{argo_mirror()}}.}
 
 \item{vars}{A character vector of variable names.
-If a variable does not exist in the file, a column of \code{NA}s
-is filled in its place.}
+If a variable does not exist in the file, it is not included
+in the output.}
 
 \item{download}{A logical vector indicating whether or not
 a file should be downloaded. Defaults to the value of
@@ -25,8 +25,6 @@ hours ago.}
 
 \item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
 verbose error messages.}
-
-\item{.ptype}{A fixed output type (see \code{\link[vctrs:vec_bind]{vctrs::vec_rbind()}}).}
 
 \item{file}{A previously downloaded Argo trajectory NetCDF file.}
 }

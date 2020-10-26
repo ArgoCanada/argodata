@@ -11,7 +11,7 @@ test_that("argo_prof() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(prof), c("float", "cycle_number", "date", "pres", "temp", "empty"))
+    expect_identical(names(prof), c("float", "cycle_number", "date", "pres", "temp"))
   })
 })
 

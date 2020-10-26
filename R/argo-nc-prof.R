@@ -1,5 +1,5 @@
 
-#' Read and inspect Argo Profile NetCDF files
+#' Read Argo profile NetCDF files
 #'
 #' @param nc A handle created using [ncdf4::nc_open()].
 #' @param vars A character vector of variable names. These
@@ -15,6 +15,17 @@
 #' @return A [tibble::tibble()] containing both `vars` and `meta`
 #'   columns.
 #' @export
+#'
+#' @examples
+#' nc_prof_file <- system.file(
+#'   "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+#'   package = "argodata"
+#' )
+#' nc_prof <- ncdf4::nc_open(nc_prof_file)
+#'
+#' argo_nc_prof_list_vars(nc_prof)
+#' argo_nc_prof_list_meta(nc_prof)
+#' argo_nc_prof_read(nc_prof)
 #'
 argo_nc_prof_read <- function(nc, vars = NULL, meta = NULL, fill = list()) {
   vars <- vars %||% argo_nc_prof_list_vars(nc)

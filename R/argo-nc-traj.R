@@ -52,6 +52,5 @@ argo_nc_traj_read <- function(nc, vars = NULL) {
 #' @rdname argo_nc_traj_read
 #' @export
 argo_nc_traj_list_vars <- function(nc) {
-  var_has_n_meas <- vapply(nc$var, function(x) x$dim[[1]]$name == "N_MEASUREMENT", logical(1))
-  names(nc$var)[var_has_n_meas]
+  argo_nc_vars_by_dimension(nc, 1, "N_MEASUREMENT")
 }

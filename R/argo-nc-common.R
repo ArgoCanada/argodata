@@ -1,8 +1,13 @@
 
-
-
-
-# ---- JULD -> DATE conversion ----
+argo_nc_vars_by_dimension <- function(nc, which, dim_name) {
+  var_has_dim <- vapply(nc$var, function(x) length(x$dim) >= which, logical(1))
+  var_has_dim[var_has_dim] <- vapply(
+    nc$var[var_has_dim],
+    function(x) identical(x$dim[[which]]$name, dim_name),
+    logical(1)
+  )
+  names(nc$var)[var_has_dim]
+}
 
 argo_juld_to_date <- function(juld) {
    argo_juld_epoch + as.difftime(juld, units = "days")

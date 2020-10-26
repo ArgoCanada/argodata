@@ -77,8 +77,7 @@ argo_nc_prof_read <- function(nc, vars = NULL, meta = NULL) {
 #' @rdname argo_nc_prof_read
 #' @export
 argo_nc_prof_list_vars <- function(nc) {
-  var_has_n_levels <- vapply(nc$var, function(x) x$dim[[1]]$name == "N_LEVELS", logical(1))
-  names(nc$var)[var_has_n_levels]
+  argo_nc_vars_by_dimension(nc, 1, "N_LEVELS")
 }
 
 #' @rdname argo_nc_prof_read

@@ -21,3 +21,28 @@ test_that("argo_nc_prof_*() works for single-profile nc files", {
 
   ncdf4::nc_close(nc)
 })
+
+test_that("argo_nc_prof() works for multi-profile nc files", {
+  nc <- ncdf4::nc_open(
+    system.file(
+      "cache-test/dac/csio/2900313/2900313_prof.nc",
+      package = "argodata"
+    )
+  )
+
+  nc_all <- argo_nc_prof_read(nc)
+  expect_true(all(nc_all$float == "csio/2900313"))
+  expect_identical(
+    length(unique(nc_all$CYCLE_NUMBER)),
+    length(
+      list.files(
+        system.file(
+          "cache-test/dac/csio/2900313/profiles",
+          package = "argodata"
+        )
+      )
+    )
+  )
+
+  ncdf4::nc_close(nc)
+})

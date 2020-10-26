@@ -65,7 +65,7 @@ argo_nc_prof_read <- function(nc, vars = NULL, meta = NULL, fill = list()) {
   # character(n * n_prof)
   values[types == "char"] <- lapply(
     values[types == "char"],
-    function(x) rawToChar(charToRaw(x), multiple = TRUE)
+    function(x) rawToChar(vapply(x, charToRaw, raw(n)), multiple = TRUE)
   )
 
   # char types are in the form character(), but should be

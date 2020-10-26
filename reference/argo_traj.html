@@ -125,6 +125,30 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>path</th>
+      <td><p>A path relative to the root directory of
+<code><a href='argo_mirror.html'>argo_mirror()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>vars</th>
+      <td><p>A character vector of variable names.
+If a variable does not exist in the file, a column of <code>NA</code>s
+is filled in its place.</p></td>
+    </tr>
+    <tr>
+      <th>download</th>
+      <td><p>A logical vector indicating whether or not
+a file should be downloaded. Defaults to the value of
+<code><a href='argo_download.html'>argo_should_download()</a></code>, which is <code>TRUE</code> for files that
+do not exist in the cache or global files that were cached more than 24
+hours ago.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Use <code>FALSE</code> to show which files are downloaded and for more
+verbose error messages.</p></td>
+    </tr>
+    <tr>
       <th>file</th>
       <td><p>A previously downloaded Argo trajectory NetCDF file.</p></td>
     </tr>

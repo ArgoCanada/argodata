@@ -24,18 +24,10 @@ argo_nc_traj_read <- function(nc, vars = NULL) {
   vars <- if (is.null(vars)) nc_vars else intersect(vars, nc_vars)
   n <- nc$dim$N_MEASUREMENT$len
 
-  # assign values
-  values <- lapply(nc$var[vars], ncdf4::ncvar_get, nc = nc)
-
-  # character types that are flags come as a single string, but need to be
+  values <- argo_nc_values(nc, vars)
   values <- argo_string_to_chars_tbl(values)
 
-  # extract float info from filename if possible
-  float <- list(float = vctrs::vec_rep(argo_nc_extract_float(nc), n))
-
-  # remove the 'dim' attribute from values
-  cols <- lapply(c(float, values), "dim<-", NULL)
-  tibble::new_tibble(cols, nrow = n)
+  argo_nc_new_tibble(nc, values, nrow = n)
 }
 
 #' @rdname argo_nc_traj_read

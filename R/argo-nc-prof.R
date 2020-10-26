@@ -40,21 +40,17 @@ argo_nc_prof_read <- function(nc, vars = NULL, meta = NULL) {
   n_prof <- nc$dim$N_PROF$len
 
   # assign values
-  values <- lapply(nc$var[vars], ncdf4::ncvar_get, nc = nc)
-  meta_values <- lapply(nc$var[meta], ncdf4::ncvar_get, nc = nc)
+  meta_values <- argo_nc_values(nc, meta)
+  values <- argo_nc_values(nc, vars)
 
+  # expand strings to characters
   meta_values <- argo_string_to_chars_tbl(meta_values)
   values <- argo_string_to_chars_tbl(values, n = n)
 
   # rep profile meta to match values
   meta_values <- lapply(meta_values, vctrs::vec_rep_each, n)
 
-  # extract float info from filename if possible
-  float <- list(float = vctrs::vec_rep(argo_nc_extract_float(nc), n * n_prof))
-
-  # remove the 'dim' attribute from values
-  cols <- argo_undimension_tbl(c(float, meta_values, values))
-  tibble::new_tibble(cols, nrow = n * n_prof)
+  argo_nc_new_tibble(nc, meta_values, values, nrow = n * n_prof)
 }
 
 #' @rdname argo_nc_prof_read

@@ -1,4 +1,9 @@
 
+argo_nc_values <- function(nc, vars) {
+  values <- lapply(nc$var[vars], ncdf4::ncvar_get, nc = nc)
+  lapply(values, argo_undimension)
+}
+
 argo_nc_vars_by_dimension <- function(nc, which, dim_name) {
   var_has_dim <- vapply(nc$var, function(x) length(x$dim) >= which, logical(1))
   var_has_dim[var_has_dim] <- vapply(
@@ -19,6 +24,12 @@ argo_nc_extract_float <- function(nc) {
   )
 }
 
+argo_nc_new_tibble <- function(nc, ..., nrow) {
+  # extract float info from filename if possible
+  float <- list(float = vctrs::vec_rep(argo_nc_extract_float(nc), nrow))
+  tibble::new_tibble(c(float, ...), nrow = nrow)
+}
+
 argo_string_to_chars <- function(x, n = NULL) {
   if (is.null(n)) {
     rawToChar(charToRaw(x), multiple = TRUE)
@@ -36,11 +47,6 @@ argo_string_to_chars_tbl <- function(tbl, n = NULL) {
 argo_undimension <- function(x) {
   dim(x) <- NULL
   x
-}
-
-argo_undimension_tbl <- function(tbl) {
-  tbl[] <- lapply(tbl, argo_undimension)
-  tbl
 }
 
 argo_juld_to_date <- function(juld) {

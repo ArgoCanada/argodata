@@ -26,3 +26,18 @@ test_that("argo_cached() returns a filename", {
   expect_identical(argo_cached("/some/file"), argo_cached("some/file"))
   expect_identical(argo_cached(character(0)), character(0))
 })
+
+test_that("with_argo_example_cache() works", {
+  expect_identical(
+    with_argo_example_cache(argo_cached("some_file")),
+    with_argo_cache_dir(
+      system.file("cache-test", package = "argodata"),
+      argo_cached("some_file")
+    )
+  )
+
+  tmp_cache <- tempfile()
+  expect_true(with_argo_cache_dir(tmp_cache, argo_should_download("ar_index_global_meta.txt.gz")))
+  expect_false(with_argo_example_cache(argo_should_download("ar_index_global_meta.txt.gz")))
+  unlink(tmp_cache, recursive = TRUE)
+})

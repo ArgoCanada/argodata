@@ -8,6 +8,18 @@
 #' @return A [tibble::tibble()].
 #' @export
 #'
+#' @examples
+#' with_argo_example_cache({
+#'   argo_prof("dac/csio/2900313/profiles/D2900313_000.nc")
+#' })
+#'
+#' prof_file <- system.file(
+#'   "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+#'   package = "argodata"
+#' )
+#'
+#' argo_read_prof(prof_file)
+#'
 argo_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   path <- as_argo_path(path)
   assert_argo_prof_file(path)

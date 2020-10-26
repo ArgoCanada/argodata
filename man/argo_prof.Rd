@@ -45,3 +45,16 @@ Load Argo profiles
 
 Load Argo trajectories
 }
+\examples{
+with_argo_example_cache({
+  argo_prof("dac/csio/2900313/profiles/D2900313_000.nc")
+})
+
+prof_file <- system.file(
+  "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+  package = "argodata"
+)
+
+argo_read_prof(prof_file)
+
+}

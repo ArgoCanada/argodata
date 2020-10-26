@@ -4,6 +4,7 @@
 \alias{argo_cache_dir}
 \alias{argo_set_cache_dir}
 \alias{with_argo_cache_dir}
+\alias{with_argo_example_cache}
 \alias{argo_cached}
 \alias{argo_test_mirror}
 \title{Get and set the default cache directory}
@@ -13,6 +14,8 @@ argo_cache_dir()
 argo_set_cache_dir(cache_dir)
 
 with_argo_cache_dir(cache_dir, expr)
+
+with_argo_example_cache(expr)
 
 argo_cached(path)
 

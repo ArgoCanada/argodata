@@ -60,6 +60,17 @@ with_argo_cache_dir <- function(cache_dir, expr) {
 
 #' @rdname argo_cache_dir
 #' @export
+with_argo_example_cache <- function(expr) {
+  old_options <- options(
+    argodata.max_global_cache_age = Inf,
+    argodata.max_data_cache_age = Inf
+  )
+  on.exit(options(old_options))
+  with_argo_cache_dir(system.file("cache-test", package = "argodata"), expr)
+}
+
+#' @rdname argo_cache_dir
+#' @export
 argo_cached <- function(path) {
   as.character(fs::path(argo_cache_dir(), as_argo_path(path)))
 }

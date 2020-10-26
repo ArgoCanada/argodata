@@ -2,11 +2,14 @@
 % Please edit documentation in R/argo-nc-prof.R
 \name{argo_nc_prof_read_levels}
 \alias{argo_nc_prof_read_levels}
+\alias{argo_nc_prof_read_prof}
 \alias{argo_nc_prof_vars_levels}
 \alias{argo_nc_prof_vars_prof}
 \title{Read Argo profile NetCDF files}
 \usage{
 argo_nc_prof_read_levels(nc, vars = NULL, meta = NULL)
+
+argo_nc_prof_read_prof(nc, vars = NULL)
 
 argo_nc_prof_vars_levels(nc)
 
@@ -38,7 +41,9 @@ nc_prof <- ncdf4::nc_open(nc_prof_file)
 
 argo_nc_prof_vars_levels(nc_prof)
 argo_nc_prof_vars_prof(nc_prof)
+
 argo_nc_prof_read_levels(nc_prof)
+argo_nc_prof_read_prof(nc_prof)
 
 ncdf4::nc_close(nc_prof)
 

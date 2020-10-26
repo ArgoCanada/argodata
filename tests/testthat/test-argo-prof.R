@@ -1,11 +1,11 @@
 
-test_that("argo_prof() works", {
+test_that("argo_prof_levels() works", {
   with_argo_mirror(argo_test_mirror(), {
-    prof <- argo_prof("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
+    prof <- argo_prof_levels("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
     expect_true(all(c("cycle_number", "pres", "temp") %in% names(prof)))
     expect_true(all(prof$cycle_number == 0))
 
-    prof <- argo_prof(
+    prof <- argo_prof_levels(
       "dac/csio/2900313/profiles/D2900313_000.nc",
       vars = c("pres", "temp", "empty"),
       quiet = TRUE
@@ -15,9 +15,38 @@ test_that("argo_prof() works", {
   })
 })
 
+test_that("argo_prof_prof() works", {
+  with_argo_example_cache({
+    prof <- argo_prof_prof("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
+    expect_true(all(c("cycle_number", "latitude", "longitude") %in% names(prof)))
+    expect_true(all(prof$cycle_number == 0))
+    expect_identical(nrow(prof), 1L)
+
+    prof <- argo_prof_prof(
+      "dac/csio/2900313/profiles/D2900313_000.nc",
+      vars = c("longitude", "latitude", "empty"),
+      quiet = TRUE
+    )
+
+    expect_identical(names(prof), c("float", "longitude", "latitude"))
+  })
+})
+
 test_that("argo_read_prof_levels() works", {
   expect_is(
     argo_read_prof_levels(
+      system.file(
+        "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+test_that("argo_read_prof_prof() works", {
+  expect_is(
+    argo_read_prof_prof(
       system.file(
         "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
         package = "argodata"

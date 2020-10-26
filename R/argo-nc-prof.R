@@ -22,7 +22,9 @@
 #'
 #' argo_nc_prof_vars_levels(nc_prof)
 #' argo_nc_prof_vars_prof(nc_prof)
+#'
 #' argo_nc_prof_read_levels(nc_prof)
+#' argo_nc_prof_read_prof(nc_prof)
 #'
 #' ncdf4::nc_close(nc_prof)
 #'
@@ -52,6 +54,19 @@ argo_nc_prof_read_levels <- function(nc, vars = NULL, meta = NULL) {
   meta_values <- lapply(meta_values, vctrs::vec_rep_each, n)
 
   argo_nc_new_tibble(nc, meta_values, values, nrow = n * n_prof)
+}
+
+#' @rdname argo_nc_prof
+#' @export
+argo_nc_prof_read_prof <- function(nc, vars = NULL) {
+  nc_vars <- argo_nc_prof_vars_prof(nc)
+  vars <- if (is.null(vars)) nc_vars else intersect(vars, nc_vars)
+  n <- nc$dim$N_PROF$len
+
+  values <- argo_nc_values(nc, vars)
+  values <- argo_string_to_chars_tbl(values)
+
+  argo_nc_new_tibble(nc, values, nrow = n)
 }
 
 #' @rdname argo_nc_prof

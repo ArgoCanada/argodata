@@ -7,10 +7,15 @@
 #'
 #' @return A [tibble::tibble()].
 #' @export
+#' @rdname argo_prof
 #'
 #' @examples
 #' with_argo_example_cache({
-#'   argo_prof("dac/csio/2900313/profiles/D2900313_000.nc")
+#'   argo_prof_levels("dac/csio/2900313/profiles/D2900313_000.nc")
+#' })
+#'
+#' with_argo_example_cache({
+#'   argo_prof_prof("dac/csio/2900313/profiles/D2900313_000.nc")
 #' })
 #'
 #' prof_file <- system.file(
@@ -19,8 +24,9 @@
 #' )
 #'
 #' argo_read_prof_levels(prof_file)
+#' argo_read_prof_prof(prof_file)
 #'
-argo_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
+argo_prof_levels <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   path <- as_argo_path(path)
   assert_argo_prof_file(path)
 
@@ -41,10 +47,41 @@ argo_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 
 #' @rdname argo_prof
 #' @export
+argo_prof_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
+  path <- as_argo_path(path)
+  assert_argo_prof_file(path)
+  cached <- argo_download(path, download = download, quiet = quiet)
+
+  tbls <- lapply(
+    cached,
+    argo_read_prof_prof,
+    vars = if (!is.null(vars)) toupper(vars) else vars
+  )
+
+  tbl <- vctrs::vec_rbind(!!! tbls)
+
+  # make names lowercase
+  names(tbl) <- tolower(names(tbl))
+
+  # return dates instead of juld
+  argo_juld_to_date_tbl(tbl)
+}
+
+
+#' @rdname argo_prof
+#' @export
 argo_read_prof_levels <- function(file, vars = NULL, meta = NULL) {
   nc <- ncdf4::nc_open(file, suppress_dimvals = TRUE)
   on.exit(ncdf4::nc_close(nc))
   argo_nc_prof_read_levels(nc, vars = vars, meta = meta)
+}
+
+#' @rdname argo_prof
+#' @export
+argo_read_prof_prof <- function(file, vars = NULL) {
+  nc <- ncdf4::nc_open(file, suppress_dimvals = TRUE)
+  on.exit(ncdf4::nc_close(nc))
+  argo_nc_prof_read_prof(nc, vars = vars)
 }
 
 assert_argo_prof_file <- function(path) {

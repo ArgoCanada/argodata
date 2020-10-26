@@ -130,16 +130,14 @@
     </tr>
     <tr>
       <th>vars</th>
-      <td><p>A character vector of variable names. These
-values can be found for each file using
-<code>argo_nc_traj_list_vars()</code>.
-If a variable does not exist in <code>nc</code>, a column of <code>NA</code>s
+      <td><p>A character vector of variable names.
+If a variable does not exist in the file, a column of <code>NA</code>s
 is filled in its place.</p></td>
     </tr>
     <tr>
       <th>fill</th>
       <td><p>A <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code> of missing values that should be applied
-when <code>vars</code> contains values that are not in <code><a href='argo_nc_prof_read.html'>argo_nc_prof_list_vars()</a></code>.</p></td>
+when <code>vars</code> contains values that are not in the file.</p></td>
     </tr>
     </table>
 

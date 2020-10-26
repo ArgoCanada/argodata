@@ -131,10 +131,8 @@
     </tr>
     <tr>
       <th>vars</th>
-      <td><p>A character vector of variable names. These
-values can be found for each profile using
-<code><a href='argo_nc_prof_read.html'>argo_nc_prof_list_vars()</a></code>.
-If a variable does not exist in <code>nc</code>, a column of <code>NA</code>s
+      <td><p>A character vector of variable names.
+If a variable does not exist in the file, a column of <code>NA</code>s
 is filled in its place.</p></td>
     </tr>
     <tr>
@@ -165,6 +163,56 @@ each profile. These can be found using <code><a href='argo_nc_prof_read.html'>ar
 
     <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code>.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
+  <span class='fu'>argo_prof</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/profiles/D2900313_000.nc"</span><span class='op'>)</span>
+<span class='op'>}</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 70 x 18</span><span>
+#&gt;    float cycle_number date                  pres pres_qc pres_adjusted
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>   9.80 1                9.80
+#&gt; </span><span style='color: #555555;'> 2</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  20.1  1               20.1 
+#&gt; </span><span style='color: #555555;'> 3</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  29.9  1               29.9 
+#&gt; </span><span style='color: #555555;'> 4</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  39.7  1               39.7 
+#&gt; </span><span style='color: #555555;'> 5</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  49.9  1               49.9 
+#&gt; </span><span style='color: #555555;'> 6</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  60.3  1               60.3 
+#&gt; </span><span style='color: #555555;'> 7</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  69.7  1               69.7 
+#&gt; </span><span style='color: #555555;'> 8</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  80.3  1               80.3 
+#&gt; </span><span style='color: #555555;'> 9</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  90.2  1               90.2 
+#&gt; </span><span style='color: #555555;'>10</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span> 100.   1              100.  
+#&gt; </span><span style='color: #555555;'># … with 60 more rows, and 12 more variables: pres_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   pres_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, temp </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, temp_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, temp_adjusted </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   temp_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, temp_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, psal </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   psal_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, psal_adjusted </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, psal_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   psal_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+<span class='va'>prof_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
+  <span class='st'>"cache-test/dac/csio/2900313/profiles/D2900313_000.nc"</span>,
+  package <span class='op'>=</span> <span class='st'>"argodata"</span>
+<span class='op'>)</span>
+
+<span class='fu'>argo_read_prof</span><span class='op'>(</span><span class='va'>prof_file</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 70 x 29</span><span>
+#&gt;    float CYCLE_NUMBER DIRECTION DATA_MODE   JULD JULD_QC JULD_LOCATION LATITUDE
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'> 2</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'> 3</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'> 4</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'> 5</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'> 6</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'> 7</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'> 8</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'> 9</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'>10</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'># … with 60 more rows, and 21 more variables: LONGITUDE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   POSITION_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PROFILE_PRES_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PROFILE_TEMP_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   PROFILE_PSAL_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, CONFIG_MISSION_NUMBER </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, PRES </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   PRES_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PRES_ADJUSTED </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PRES_ADJUSTED_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   PRES_ADJUSTED_ERROR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, TEMP </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, TEMP_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, TEMP_ADJUSTED </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   TEMP_ADJUSTED_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, TEMP_ADJUSTED_ERROR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PSAL </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   PSAL_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PSAL_ADJUSTED </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PSAL_ADJUSTED_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   PSAL_ADJUSTED_ERROR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -7,6 +7,18 @@
 #' @return A [tibble::tibble()].
 #' @export
 #'
+#' @examples
+#' with_argo_example_cache({
+#'   argo_traj("dac/csio/2900313/2900313_Rtraj.nc")
+#' })
+#'
+#' traj_file <- system.file(
+#'   "cache-test/dac/csio/2900313/2900313_traj.nc",
+#'   package = "argodata"
+#' )
+#'
+#' argo_read_traj(traj_file)
+#'
 argo_traj <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   path <- as_argo_path(path)
   assert_argo_traj_file(path)
@@ -23,19 +35,8 @@ argo_traj <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   # make names lowercase
   names(tbl) <- tolower(names(tbl))
 
-  # calculate datetime from juld and rename to `date`
-  if ("juld" %in% colnames(tbl)) {
-    tbl$juld <- as.POSIXct("1950-01-01 00:00:00 UTC", tz = "UTC") +
-      as.difftime(tbl$juld, units = "days")
-  }
-
-  if ("juld_adjusted" %in% colnames(tbl)) {
-    tbl$juld_adjusted <- as.POSIXct("1950-01-01 00:00:00 UTC", tz = "UTC") +
-      as.difftime(tbl$juld_adjusted, units = "days")
-  }
-
-  names(tbl) <- stringr::str_replace(names(tbl), "^juld", "date")
-  tbl
+  # return dates instead of juld
+  argo_juld_to_date_tbl(tbl)
 }
 
 #' @rdname argo_traj

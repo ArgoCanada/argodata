@@ -34,3 +34,16 @@ A \code{\link[tibble:tibble]{tibble::tibble()}}.
 \description{
 Load Argo trajectories
 }
+\examples{
+with_argo_example_cache({
+  argo_traj("dac/csio/2900313/2900313_Rtraj.nc")
+})
+
+traj_file <- system.file(
+  "cache-test/dac/csio/2900313/2900313_traj.nc",
+  package = "argodata"
+)
+
+argo_read_traj(traj_file)
+
+}

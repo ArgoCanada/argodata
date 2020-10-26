@@ -1,10 +1,10 @@
 
-test_that("argo_traj() works", {
+test_that("argo_traj_meas() works", {
   with_argo_example_cache({
-    traj <- argo_traj("dac/csio/2900313/2900313_Rtraj.nc", quiet = TRUE)
+    traj <- argo_traj_meas("dac/csio/2900313/2900313_Rtraj.nc", quiet = TRUE)
     expect_true(all(c("cycle_number", "longitude", "latitude") %in% names(traj)))
 
-    traj <- argo_traj(
+    traj <- argo_traj_meas(
       "dac/csio/2900313/2900313_Rtraj.nc",
       vars = c("cycle_number", "longitude", "empty"),
       quiet = TRUE
@@ -14,7 +14,34 @@ test_that("argo_traj() works", {
   })
 })
 
+test_that("argo_traj_cycle() works", {
+  with_argo_example_cache({
+    traj <- argo_traj_cycle("dac/csio/2900313/2900313_Rtraj.nc", quiet = TRUE)
+    expect_true(all(c("cycle_number_index", "data_mode") %in% names(traj)))
+
+    traj <- argo_traj_cycle(
+      "dac/csio/2900313/2900313_Rtraj.nc",
+      vars = c("cycle_number_index", "empty"),
+      quiet = TRUE
+    )
+
+    expect_identical(names(traj), c("float", "cycle_number_index"))
+  })
+})
+
 test_that("argo_read_traj_meas() works", {
+  expect_is(
+    argo_read_traj_meas(
+      system.file(
+        "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+test_that("argo_read_traj_cycle() works", {
   expect_is(
     argo_read_traj_meas(
       system.file(

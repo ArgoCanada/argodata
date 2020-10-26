@@ -33,6 +33,25 @@ argo_nc_traj_read_meas <- function(nc, vars = NULL) {
 
 #' @rdname argo_nc_traj
 #' @export
+argo_nc_traj_read_cycle <- function(nc, vars = NULL) {
+  nc_vars <- argo_nc_traj_vars_cycle(nc)
+  vars <- if (is.null(vars)) nc_vars else intersect(vars, nc_vars)
+  n <- nc$dim$N_CYCLE$len
+
+  values <- argo_nc_values(nc, vars)
+  values <- argo_string_to_chars_tbl(values)
+
+  argo_nc_new_tibble(nc, values, nrow = n)
+}
+
+#' @rdname argo_nc_traj
+#' @export
 argo_nc_traj_vars_meas <- function(nc) {
   argo_nc_vars_by_dimension(nc, 1, "N_MEASUREMENT")
+}
+
+#' @rdname argo_nc_traj
+#' @export
+argo_nc_traj_vars_cycle <- function(nc) {
+  argo_nc_vars_by_dimension(nc, 1, "N_CYCLE")
 }

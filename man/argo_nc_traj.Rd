@@ -2,12 +2,18 @@
 % Please edit documentation in R/argo-nc-traj.R
 \name{argo_nc_traj_read_meas}
 \alias{argo_nc_traj_read_meas}
+\alias{argo_nc_traj_read_cycle}
 \alias{argo_nc_traj_vars_meas}
+\alias{argo_nc_traj_vars_cycle}
 \title{Read Argo trajectory NetCDF files}
 \usage{
 argo_nc_traj_read_meas(nc, vars = NULL)
 
+argo_nc_traj_read_cycle(nc, vars = NULL)
+
 argo_nc_traj_vars_meas(nc)
+
+argo_nc_traj_vars_cycle(nc)
 }
 \arguments{
 \item{nc}{A handle created using \code{\link[ncdf4:nc_open]{ncdf4::nc_open()}}.}

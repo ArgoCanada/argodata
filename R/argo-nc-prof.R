@@ -43,34 +43,17 @@ argo_nc_prof_read <- function(nc, vars = NULL, meta = NULL) {
   values <- lapply(nc$var[vars], ncdf4::ncvar_get, nc = nc)
   meta_values <- lapply(nc$var[meta], ncdf4::ncvar_get, nc = nc)
 
-  # character types that are flags come as a single string, but need to be
-  # one character per row
-  meta_is_char <- vapply(nc$var[meta], function(var) identical(var$prec, "char"), logical(1))
-  vars_is_char <- vapply(nc$var[vars], function(var) identical(var$prec, "char"), logical(1))
-
-  meta_values[meta_is_char] <- lapply(
-    meta_values[meta_is_char],
-    function(x) rawToChar(charToRaw(x), multiple = TRUE)
-  )
-
-  # comes as character(n_prof)
-  values[vars_is_char] <- lapply(
-    values[vars_is_char],
-    function(x) rawToChar(vapply(x, charToRaw, raw(n)), multiple = TRUE)
-  )
+  meta_values <- argo_string_to_chars_tbl(meta_values)
+  values <- argo_string_to_chars_tbl(values, n = n)
 
   # rep profile meta to match values
   meta_values <- lapply(meta_values, vctrs::vec_rep_each, n)
 
   # extract float info from filename if possible
-  float_extract <- stringr::str_remove(
-    stringr::str_extract(nc$filename, "dac/[a-z]+/[A-Za-z0-9]+"),
-    "^dac/"
-  )
-  float <- list(float = vctrs::vec_rep(float_extract, n * n_prof))
+  float <- list(float = vctrs::vec_rep(argo_nc_extract_float(nc), n * n_prof))
 
   # remove the 'dim' attribute from values
-  cols <- lapply(c(float, meta_values, values), "dim<-", NULL)
+  cols <- argo_undimension_tbl(c(float, meta_values, values))
   tibble::new_tibble(cols, nrow = n * n_prof)
 }
 

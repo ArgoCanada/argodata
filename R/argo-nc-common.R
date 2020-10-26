@@ -9,6 +9,40 @@ argo_nc_vars_by_dimension <- function(nc, which, dim_name) {
   names(nc$var)[var_has_dim]
 }
 
+argo_nc_extract_float <- function(nc) {
+  stringr::str_remove(
+    stringr::str_extract(
+      nc$filename,
+      "dac/[a-z]+/[A-Za-z0-9]+"
+    ),
+    "^dac/"
+  )
+}
+
+argo_string_to_chars <- function(x, n = NULL) {
+  if (is.null(n)) {
+    rawToChar(charToRaw(x), multiple = TRUE)
+  } else {
+    rawToChar(vapply(x, charToRaw, raw(n)), multiple = TRUE)
+  }
+}
+
+argo_string_to_chars_tbl <- function(tbl, n = NULL) {
+  is_char <- vapply(tbl, is.character, logical(1))
+  tbl[is_char] <- lapply(tbl[is_char], argo_string_to_chars, n = n)
+  tbl
+}
+
+argo_undimension <- function(x) {
+  dim(x) <- NULL
+  x
+}
+
+argo_undimension_tbl <- function(tbl) {
+  tbl[] <- lapply(tbl, argo_undimension)
+  tbl
+}
+
 argo_juld_to_date <- function(juld) {
    argo_juld_epoch + as.difftime(juld, units = "days")
 }

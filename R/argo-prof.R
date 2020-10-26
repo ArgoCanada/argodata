@@ -38,8 +38,10 @@ argo_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   names(tbl) <- tolower(names(tbl))
 
   # calculate datetime from juld and rename to `date`
-  tbl$juld <- as.POSIXct("1950-01-01 00:00:00 UTC", tz = "UTC") +
-    as.difftime(tbl$juld, units = "days")
+  if ("juld" %in% colnames(tbl)) {
+    tbl$juld <- as.POSIXct("1950-01-01 00:00:00 UTC", tz = "UTC") +
+      as.difftime(tbl$juld, units = "days")
+  }
 
   names(tbl) <- replace(names(tbl), names(tbl) == "juld", "date")
   tbl

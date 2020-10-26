@@ -15,9 +15,9 @@ test_that("argo_prof() works", {
   })
 })
 
-test_that("argo_read_prof() works", {
+test_that("argo_read_prof_levels() works", {
   expect_is(
-    argo_read_prof(
+    argo_read_prof_levels(
       system.file(
         "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
         package = "argodata"

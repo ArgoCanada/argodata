@@ -2,12 +2,12 @@
 % Please edit documentation in R/argo-prof.R
 \name{argo_prof}
 \alias{argo_prof}
-\alias{argo_read_prof}
+\alias{argo_read_prof_levels}
 \title{Load Argo profiles}
 \usage{
 argo_prof(path, vars = NULL, download = NULL, quiet = FALSE)
 
-argo_read_prof(file, vars = NULL, meta = NULL)
+argo_read_prof_levels(file, vars = NULL, meta = NULL)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
@@ -29,7 +29,7 @@ verbose error messages.}
 \item{file}{A previously downloaded Argo profile NetCDF file.}
 
 \item{meta}{A character vector of meta variable names for
-each profile. These can be found using \code{\link[=argo_nc_prof_list_meta]{argo_nc_prof_list_meta()}}.}
+each profile. These can be found using \code{\link[=argo_nc_prof_vars_prof]{argo_nc_prof_vars_prof()}}.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}}.
@@ -47,6 +47,6 @@ prof_file <- system.file(
   package = "argodata"
 )
 
-argo_read_prof(prof_file)
+argo_read_prof_levels(prof_file)
 
 }

@@ -6,11 +6,12 @@
 #'   If a variable does not exist in the file, it is not included
 #'   in the output.
 #' @param meta A character vector of meta variable names for
-#'   each profile. These can be found using [argo_nc_prof_list_meta()].
+#'   each profile. These can be found using [argo_nc_prof_vars_prof()].
 #'
 #' @return A [tibble::tibble()] containing both `vars` and `meta`
 #'   columns.
 #' @export
+#' @rdname argo_nc_prof
 #'
 #' @examples
 #' nc_prof_file <- system.file(
@@ -19,19 +20,19 @@
 #' )
 #' nc_prof <- ncdf4::nc_open(nc_prof_file)
 #'
-#' argo_nc_prof_list_vars(nc_prof)
-#' argo_nc_prof_list_meta(nc_prof)
-#' argo_nc_prof_read(nc_prof)
+#' argo_nc_prof_vars_levels(nc_prof)
+#' argo_nc_prof_vars_prof(nc_prof)
+#' argo_nc_prof_read_levels(nc_prof)
 #'
 #' ncdf4::nc_close(nc_prof)
 #'
-argo_nc_prof_read <- function(nc, vars = NULL, meta = NULL) {
+argo_nc_prof_read_levels <- function(nc, vars = NULL, meta = NULL) {
   # only include variables that exist in the file
   # this is because not all profile files have all variables, so it makes it
   # possible to read in a list of files without knowing the variable names
   # ahead of time
-  nc_meta <- argo_nc_prof_list_meta(nc)
-  nc_vars <- argo_nc_prof_list_vars(nc)
+  nc_meta <- argo_nc_prof_vars_prof(nc)
+  nc_vars <- argo_nc_prof_vars_levels(nc)
 
   meta <- if (is.null(meta)) nc_meta else intersect(meta, nc_meta)
   vars <- if (is.null(vars)) nc_vars else intersect(vars, nc_vars)
@@ -53,15 +54,15 @@ argo_nc_prof_read <- function(nc, vars = NULL, meta = NULL) {
   argo_nc_new_tibble(nc, meta_values, values, nrow = n * n_prof)
 }
 
-#' @rdname argo_nc_prof_read
+#' @rdname argo_nc_prof
 #' @export
-argo_nc_prof_list_vars <- function(nc) {
+argo_nc_prof_vars_levels <- function(nc) {
   argo_nc_vars_by_dimension(nc, 1, "N_LEVELS")
 }
 
-#' @rdname argo_nc_prof_read
+#' @rdname argo_nc_prof
 #' @export
-argo_nc_prof_list_meta <- function(nc) {
+argo_nc_prof_vars_prof <- function(nc) {
   var_has_n_prof <- vapply(nc$var, function(x) {
     if (length(x$dim) != 1) return(FALSE)
     x$dim[[1]]$name == "N_PROF"

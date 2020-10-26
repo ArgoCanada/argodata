@@ -2,7 +2,7 @@
 #' Load Argo profiles
 #'
 #' @inheritParams argo_download
-#' @inheritParams argo_nc_prof_read
+#' @inheritParams argo_nc_prof_read_levels
 #' @param file A previously downloaded Argo profile NetCDF file.
 #'
 #' @return A [tibble::tibble()].
@@ -18,7 +18,7 @@
 #'   package = "argodata"
 #' )
 #'
-#' argo_read_prof(prof_file)
+#' argo_read_prof_levels(prof_file)
 #'
 argo_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   path <- as_argo_path(path)
@@ -28,7 +28,7 @@ argo_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 
   tbls <- lapply(
     cached,
-    argo_read_prof,
+    argo_read_prof_levels,
     vars = if (!is.null(vars)) toupper(vars) else vars,
     meta = c("CYCLE_NUMBER", "JULD")
   )
@@ -41,10 +41,10 @@ argo_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 
 #' @rdname argo_prof
 #' @export
-argo_read_prof <- function(file, vars = NULL, meta = NULL) {
+argo_read_prof_levels <- function(file, vars = NULL, meta = NULL) {
   nc <- ncdf4::nc_open(file, suppress_dimvals = TRUE)
   on.exit(ncdf4::nc_close(nc))
-  argo_nc_prof_read(nc, vars = vars, meta = meta)
+  argo_nc_prof_read_levels(nc, vars = vars, meta = meta)
 }
 
 assert_argo_prof_file <- function(path) {

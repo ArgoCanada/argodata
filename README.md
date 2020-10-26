@@ -104,12 +104,13 @@ argo_global_traj()
 ```
 
 You can load profile data by filtering `argo_global_prof()` and piping
-to `argo_prof()`:
+to `argo_prof_levels()` (one row per level sampled) or
+`argo_prof_prof()` (one row per profile):
 
 ``` r
 argo_global_prof() %>% 
   tail(100) %>% 
-  argo_prof()
+  argo_prof_levels()
 #> # A tibble: 9,199 x 18
 #>    float cycle_number date                 pres pres_qc pres_adjusted
 #>    <chr>        <int> <dttm>              <dbl> <chr>           <dbl>
@@ -128,6 +129,98 @@ argo_global_prof() %>%
 #> #   psal_adjusted_qc <chr>, psal_adjusted_error <dbl>, temp <dbl>,
 #> #   temp_qc <chr>, temp_adjusted <dbl>, temp_adjusted_qc <chr>,
 #> #   temp_adjusted_error <dbl>
+
+argo_global_prof() %>% 
+  tail(100) %>% 
+  argo_prof_prof()
+#> # A tibble: 100 x 13
+#>    float cycle_number direction data_mode date               
+#>    <chr>        <int> <chr>     <chr>     <dttm>             
+#>  1 nmdi~          123 A         R         2014-11-12 04:40:37
+#>  2 nmdi~          124 A         R         2014-11-22 04:52:39
+#>  3 nmdi~          125 A         R         2014-12-02 04:52:43
+#>  4 nmdi~          126 A         R         2014-12-12 04:52:45
+#>  5 nmdi~          127 A         R         2014-12-22 04:52:49
+#>  6 nmdi~          128 A         R         2015-01-01 04:52:52
+#>  7 nmdi~          129 A         R         2015-01-11 04:59:54
+#>  8 nmdi~          130 A         R         2015-01-21 04:52:58
+#>  9 nmdi~          131 A         R         2015-01-31 05:00:02
+#> 10 nmdi~          132 A         R         2015-02-10 04:53:05
+#> # ... with 90 more rows, and 8 more variables: date_qc <dttm>,
+#> #   date_location <dttm>, latitude <dbl>, longitude <dbl>, position_qc <chr>,
+#> #   profile_pres_qc <chr>, profile_psal_qc <chr>, profile_temp_qc <chr>
+```
+
+Similarly, you can load trajectory data by filtering
+`argo_global_traj()` and piping to `argo_traj_meas()` and/or
+`argo_traj_cycle()`:
+
+``` r
+argo_global_traj() %>% 
+  tail(10) %>% 
+  argo_traj_meas()
+#> # A tibble: 73,796 x 34
+#>    float date                date_status         date_qc            
+#>    <chr> <dttm>              <dttm>              <dttm>             
+#>  1 nmdi~ 2010-04-25 07:13:00 NA                  NA                 
+#>  2 nmdi~ 2010-05-28 11:30:00 NA                  NA                 
+#>  3 nmdi~ 2010-05-28 11:54:00 NA                  NA                 
+#>  4 nmdi~ NA                  NA                  NA                 
+#>  5 nmdi~ 2010-05-28 19:42:00 NA                  NA                 
+#>  6 nmdi~ 2010-05-29 07:00:00 NA                  NA                 
+#>  7 nmdi~ 2010-05-29 19:00:00 NA                  NA                 
+#>  8 nmdi~ 2010-05-30 07:00:00 NA                  NA                 
+#>  9 nmdi~ 2010-05-30 19:00:00 NA                  NA                 
+#> 10 nmdi~ 2010-05-31 07:00:00 NA                  NA                 
+#> # ... with 73,786 more rows, and 30 more variables: date_adjusted <dttm>,
+#> #   date_adjusted_status <dttm>, date_adjusted_qc <dttm>, latitude <dbl>,
+#> #   longitude <dbl>, position_accuracy <chr>, position_qc <chr>,
+#> #   cycle_number <int>, cycle_number_adjusted <int>, measurement_code <int>,
+#> #   axes_error_ellipse_major <dbl>, axes_error_ellipse_minor <dbl>,
+#> #   axes_error_ellipse_angle <dbl>, satellite_name <chr>, pres <dbl>,
+#> #   pres_qc <chr>, pres_adjusted <dbl>, pres_adjusted_qc <chr>,
+#> #   pres_adjusted_error <dbl>, temp <dbl>, temp_qc <chr>, temp_adjusted <dbl>,
+#> #   temp_adjusted_qc <chr>, temp_adjusted_error <dbl>, psal <dbl>,
+#> #   psal_qc <chr>, psal_adjusted <dbl>, psal_adjusted_qc <chr>,
+#> #   psal_adjusted_error <dbl>, data_mode <chr>
+
+argo_global_traj() %>% 
+  tail(10) %>% 
+  argo_traj_cycle()
+#> # A tibble: 1,461 x 43
+#>    float date_descent_start  date_descent_start~ date_first_stabili~
+#>    <chr> <dttm>              <dttm>              <dttm>             
+#>  1 nmdi~ 2010-05-28 11:27:00 NA                  2010-05-28 11:51:00
+#>  2 nmdi~ 2010-06-17 11:15:00 NA                  2010-06-17 11:39:00
+#>  3 nmdi~ 2010-06-27 11:27:00 NA                  2010-06-27 11:45:00
+#>  4 nmdi~ 2010-07-07 11:33:00 NA                  2010-07-07 11:51:00
+#>  5 nmdi~ 2010-07-17 11:27:00 NA                  2010-07-17 11:57:00
+#>  6 nmdi~ 2010-07-27 11:33:00 NA                  2010-07-27 11:51:00
+#>  7 nmdi~ 2010-08-06 11:27:00 NA                  2010-08-06 11:45:00
+#>  8 nmdi~ 2010-08-16 11:27:00 NA                  2010-08-16 11:51:00
+#>  9 nmdi~ 2010-08-26 11:33:00 NA                  2010-08-26 11:45:00
+#> 10 nmdi~ 2010-09-05 11:27:00 NA                  2010-09-05 11:51:00
+#> # ... with 1,451 more rows, and 39 more variables:
+#> #   date_first_stabilization_status <dttm>, date_descent_end <dttm>,
+#> #   date_descent_end_status <dttm>, date_park_start <dttm>,
+#> #   date_park_start_status <dttm>, date_park_end <dttm>,
+#> #   date_park_end_status <dttm>, date_deep_descent_end <dttm>,
+#> #   date_deep_descent_end_status <dttm>, date_deep_park_start <dttm>,
+#> #   date_deep_park_start_status <dttm>, date_ascent_start <dttm>,
+#> #   date_ascent_start_status <dttm>, date_deep_ascent_start <dttm>,
+#> #   date_deep_ascent_start_status <dttm>, date_ascent_end <dttm>,
+#> #   date_ascent_end_status <dttm>, date_transmission_start <dttm>,
+#> #   date_transmission_start_status <dttm>, date_first_message <dttm>,
+#> #   date_first_message_status <dttm>, date_first_location <dttm>,
+#> #   date_first_location_status <dttm>, date_last_location <dttm>,
+#> #   date_last_location_status <dttm>, date_last_message <dttm>,
+#> #   date_last_message_status <dttm>, date_transmission_end <dttm>,
+#> #   date_transmission_end_status <dttm>, clock_offset <dbl>, grounded <chr>,
+#> #   representative_park_pressure <dbl>,
+#> #   representative_park_pressure_status <chr>, config_mission_number <int>,
+#> #   cycle_number_index <int>, cycle_number_index_adjusted <int>,
+#> #   data_mode <chr>, date_start_transmission <dttm>,
+#> #   date_start_transmission_status <dttm>
 ```
 
 If you have previously downloaded Argo data, you can use `argo_read_*()`
@@ -149,7 +242,7 @@ argo_read_global_meta("cache-dev/ar_index_global_meta.txt.gz")
 #>  9 aoml/15854/15854_meta.nc           845 AO          2018-10-11 20:00:30
 #> 10 aoml/15855/15855_meta.nc           845 AO          2018-10-11 20:00:34
 #> # ... with 16,057 more rows
-argo_read_prof("cache-dev/dac/nmdis/2901633/profiles/R2901633_070.nc")
+argo_read_prof_levels("cache-dev/dac/nmdis/2901633/profiles/R2901633_070.nc")
 #> # A tibble: 95 x 28
 #>    float CYCLE_NUMBER DIRECTION DATA_MODE   JULD JULD_QC JULD_LOCATION LATITUDE
 #>    <chr>        <int> <chr>     <chr>      <dbl> <chr>           <dbl>    <dbl>

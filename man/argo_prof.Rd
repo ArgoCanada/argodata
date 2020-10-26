@@ -48,6 +48,10 @@ with_argo_example_cache({
   argo_prof_levels("dac/csio/2900313/profiles/D2900313_000.nc")
 })
 
+with_argo_example_cache({
+  argo_prof_prof("dac/csio/2900313/profiles/D2900313_000.nc")
+})
+
 prof_file <- system.file(
   "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
   package = "argodata"

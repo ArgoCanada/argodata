@@ -54,7 +54,7 @@ argo_juld_to_date <- function(juld) {
 }
 
 argo_juld_to_date_tbl <- function(tbl) {
-  is_juld <- names(tbl) %in% c("juld", "juld_adjusted", "JULD", "JULD_ADJUSTED")
+  is_juld <- stringr::str_detect(names(tbl), "^(JULD|juld)")
   tbl[is_juld] <- lapply(tbl[is_juld], argo_juld_to_date)
   names(tbl) <- stringr::str_replace(names(tbl), "^juld", "date")
   names(tbl) <- stringr::str_replace(names(tbl), "^JULD", "DATE")

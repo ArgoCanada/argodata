@@ -61,19 +61,35 @@ argo_global_tech()
 argo_global_traj()
 ```
 
-You can load profile data by filtering `argo_global_prof()` and piping to `argo_prof()`:
+You can load profile data by filtering `argo_global_prof()` and piping to `argo_prof_levels()` (one row per level sampled) or `argo_prof_prof()` (one row per profile):
 
 ```{r}
 argo_global_prof() %>% 
   tail(100) %>% 
-  argo_prof()
+  argo_prof_levels()
+
+argo_global_prof() %>% 
+  tail(100) %>% 
+  argo_prof_prof()
+```
+
+Similarly, you can load trajectory data by filtering `argo_global_traj()` and piping to `argo_traj_meas()` and/or `argo_traj_cycle()`:
+
+```{r}
+argo_global_traj() %>% 
+  tail(10) %>% 
+  argo_traj_meas()
+
+argo_global_traj() %>% 
+  tail(10) %>% 
+  argo_traj_cycle()
 ```
 
 If you have previously downloaded Argo data, you can use `argo_read_*()` functions:
 
 ```{r}
 argo_read_global_meta("cache-dev/ar_index_global_meta.txt.gz")
-argo_read_prof("cache-dev/dac/nmdis/2901633/profiles/R2901633_070.nc")
+argo_read_prof_levels("cache-dev/dac/nmdis/2901633/profiles/R2901633_070.nc")
 ```
 
 Documentation for Argo variable names, units, and more are available from the [Argo Data Management Documentation page](http://www.argodatamgt.org/Documentation).

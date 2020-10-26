@@ -14,9 +14,9 @@ test_that("argo_traj() works", {
   })
 })
 
-test_that("argo_read_traj() works", {
+test_that("argo_read_traj_meas() works", {
   expect_is(
-    argo_read_traj(
+    argo_read_traj_meas(
       system.file(
         "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
         package = "argodata"

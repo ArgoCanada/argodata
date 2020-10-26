@@ -2,12 +2,12 @@
 % Please edit documentation in R/argo-traj.R
 \name{argo_traj}
 \alias{argo_traj}
-\alias{argo_read_traj}
+\alias{argo_read_traj_meas}
 \title{Load Argo trajectories}
 \usage{
 argo_traj(path, vars = NULL, download = NULL, quiet = FALSE)
 
-argo_read_traj(file, vars = NULL)
+argo_read_traj_meas(file, vars = NULL)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
@@ -44,6 +44,6 @@ traj_file <- system.file(
   package = "argodata"
 )
 
-argo_read_traj(traj_file)
+argo_read_traj_meas(traj_file)
 
 }

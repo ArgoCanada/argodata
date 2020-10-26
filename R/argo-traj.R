@@ -17,7 +17,7 @@
 #'   package = "argodata"
 #' )
 #'
-#' argo_read_traj(traj_file)
+#' argo_read_traj_meas(traj_file)
 #'
 argo_traj <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   path <- as_argo_path(path)
@@ -26,7 +26,7 @@ argo_traj <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 
   tbls <- lapply(
     cached,
-    argo_read_traj,
+    argo_read_traj_meas,
     vars = if (!is.null(vars)) toupper(vars) else vars
   )
 
@@ -41,10 +41,10 @@ argo_traj <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 
 #' @rdname argo_traj
 #' @export
-argo_read_traj <- function(file, vars = NULL) {
+argo_read_traj_meas <- function(file, vars = NULL) {
   nc <- ncdf4::nc_open(file, suppress_dimvals = TRUE)
   on.exit(ncdf4::nc_close(nc))
-  argo_nc_traj_read(nc, vars = vars)
+  argo_nc_traj_read_meas(nc, vars = vars)
 }
 
 assert_argo_traj_file <- function(path) {

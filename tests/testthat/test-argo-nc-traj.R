@@ -7,10 +7,10 @@ test_that("argo_nc_traj_*() works for trajectory files", {
     )
   )
 
-  nc_all <- argo_nc_traj_read(nc)
-  expect_true(all(argo_nc_traj_list_vars(nc) %in% names(nc_all)))
+  nc_all <- argo_nc_traj_read_meas(nc)
+  expect_true(all(argo_nc_traj_vars_meas(nc) %in% names(nc_all)))
 
-  nc_no_meta <- argo_nc_traj_read(nc, vars = c("LONGITUDE", "LATITUDE", "EMPTY"))
+  nc_no_meta <- argo_nc_traj_read_meas(nc, vars = c("LONGITUDE", "LATITUDE", "EMPTY"))
   expect_identical(names(nc_no_meta), c("float", "LONGITUDE", "LATITUDE"))
 
   ncdf4::nc_close(nc)

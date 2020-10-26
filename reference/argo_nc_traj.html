@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load Argo trajectories — argo_traj • argodata</title>
+<title>Read Argo trajectory NetCDF files — argo_nc_traj_read_meas • argodata</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Load Argo trajectories — argo_traj" />
-<meta property="og:description" content="Load Argo trajectories" />
+<meta property="og:title" content="Read Argo trajectory NetCDF files — argo_nc_traj_read_meas" />
+<meta property="og:description" content="Read Argo trajectory NetCDF files" />
 
 
 
@@ -108,26 +108,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Load Argo trajectories</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ArgoCanada/argodata/blob/master/R/argo-traj.R'><code>R/argo-traj.R</code></a></small>
-    <div class="hidden name"><code>argo_traj.Rd</code></div>
+    <h1>Read Argo trajectory NetCDF files</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ArgoCanada/argodata/blob/master/R/argo-nc-traj.R'><code>R/argo-nc-traj.R</code></a></small>
+    <div class="hidden name"><code>argo_nc_traj.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Load Argo trajectories</p>
+    <p>Read Argo trajectory NetCDF files</p>
     </div>
 
-    <pre class="usage"><span class='fu'>argo_traj</span><span class='op'>(</span><span class='va'>path</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>argo_nc_traj_read_meas</span><span class='op'>(</span><span class='va'>nc</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>argo_read_traj_meas</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+<span class='fu'>argo_nc_traj_vars_meas</span><span class='op'>(</span><span class='va'>nc</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>path</th>
-      <td><p>A path relative to the root directory of
-<code><a href='argo_mirror.html'>argo_mirror()</a></code>.</p></td>
+      <th>nc</th>
+      <td><p>A handle created using <code><a href='https://rdrr.io/pkg/ncdf4/man/nc_open.html'>ncdf4::nc_open()</a></code>.</p></td>
     </tr>
     <tr>
       <th>vars</th>
@@ -135,64 +134,38 @@
 If a variable does not exist in the file, it is not included
 in the output.</p></td>
     </tr>
-    <tr>
-      <th>download</th>
-      <td><p>A logical vector indicating whether or not
-a file should be downloaded. Defaults to the value of
-<code><a href='argo_download.html'>argo_should_download()</a></code>, which is <code>TRUE</code> for files that
-do not exist in the cache or global files that were cached more than 24
-hours ago.</p></td>
-    </tr>
-    <tr>
-      <th>quiet</th>
-      <td><p>Use <code>FALSE</code> to show which files are downloaded and for more
-verbose error messages.</p></td>
-    </tr>
-    <tr>
-      <th>file</th>
-      <td><p>A previously downloaded Argo trajectory NetCDF file.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code>.</p>
+    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> containing columns "float" and
+columns listed in <code>vars</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
-  <span class='fu'>argo_traj</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_Rtraj.nc"</span><span class='op'>)</span>
-<span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 61 x 33</span><span>
-#&gt;    float date                date_status date_qc date_adjusted      
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'> 1</span><span> csio… 2003-08-04 </span><span style='color: #555555;'>01:40:00</span><span> 0           0       </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #555555;'> 2</span><span> csio… 2003-08-04 </span><span style='color: #555555;'>01:40:00</span><span> 4           1       </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #555555;'> 3</span><span> csio… 2003-08-13 </span><span style='color: #555555;'>08:52:56</span><span> 4           1       </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #555555;'> 4</span><span> csio… 2003-08-13 </span><span style='color: #555555;'>12:09:46</span><span> 4           1       </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #555555;'> 5</span><span> csio… 2003-08-13 </span><span style='color: #555555;'>13:47:15</span><span> 4           1       </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #555555;'> 6</span><span> csio… 2003-08-13 </span><span style='color: #555555;'>16:59:59</span><span> 4           1       </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #555555;'> 7</span><span> csio… 2003-08-13 </span><span style='color: #555555;'>18:41:17</span><span> 4           1       </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #555555;'> 8</span><span> csio… 2003-08-13 </span><span style='color: #555555;'>18:46:50</span><span> 4           1       </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #555555;'> 9</span><span> csio… 2003-08-23 </span><span style='color: #555555;'>08:15:49</span><span> 4           1       </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #555555;'>10</span><span> csio… 2003-08-23 </span><span style='color: #555555;'>08:19:09</span><span> 4           1       </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #555555;'># … with 51 more rows, and 28 more variables: date_adjusted_status </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   date_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, latitude </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, longitude </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   position_accuracy </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, position_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, cycle_number </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   cycle_number_adjusted </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, measurement_code </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, pres </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   pres_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, pres_adjusted </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, pres_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   pres_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, temp </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, temp_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, temp_adjusted </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   temp_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, temp_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, psal </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   psal_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, psal_adjusted </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, psal_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   psal_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, axes_error_ellipse_major </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   axes_error_ellipse_minor </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, axes_error_ellipse_angle </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   satellite_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
-<span class='va'>traj_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
+    <pre class="examples"><div class='input'><span class='va'>nc_traj_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
   <span class='st'>"cache-test/dac/csio/2900313/2900313_Rtraj.nc"</span>,
   package <span class='op'>=</span> <span class='st'>"argodata"</span>
 <span class='op'>)</span>
+<span class='va'>nc_traj</span> <span class='op'>&lt;-</span> <span class='fu'>ncdf4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ncdf4/man/nc_open.html'>nc_open</a></span><span class='op'>(</span><span class='va'>nc_traj_file</span><span class='op'>)</span>
 
-<span class='fu'>argo_read_traj_meas</span><span class='op'>(</span><span class='va'>traj_file</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 61 x 33</span><span>
+<span class='fu'>argo_nc_traj_vars_meas</span><span class='op'>(</span><span class='va'>nc_traj</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "JULD"                     "JULD_STATUS"             
+#&gt;  [3] "JULD_QC"                  "JULD_ADJUSTED"           
+#&gt;  [5] "JULD_ADJUSTED_STATUS"     "JULD_ADJUSTED_QC"        
+#&gt;  [7] "LATITUDE"                 "LONGITUDE"               
+#&gt;  [9] "POSITION_ACCURACY"        "POSITION_QC"             
+#&gt; [11] "CYCLE_NUMBER"             "CYCLE_NUMBER_ADJUSTED"   
+#&gt; [13] "MEASUREMENT_CODE"         "PRES"                    
+#&gt; [15] "PRES_QC"                  "PRES_ADJUSTED"           
+#&gt; [17] "PRES_ADJUSTED_QC"         "PRES_ADJUSTED_ERROR"     
+#&gt; [19] "TEMP"                     "TEMP_QC"                 
+#&gt; [21] "TEMP_ADJUSTED"            "TEMP_ADJUSTED_QC"        
+#&gt; [23] "TEMP_ADJUSTED_ERROR"      "PSAL"                    
+#&gt; [25] "PSAL_QC"                  "PSAL_ADJUSTED"           
+#&gt; [27] "PSAL_ADJUSTED_QC"         "PSAL_ADJUSTED_ERROR"     
+#&gt; [29] "AXES_ERROR_ELLIPSE_MAJOR" "AXES_ERROR_ELLIPSE_MINOR"
+#&gt; [31] "AXES_ERROR_ELLIPSE_ANGLE" "SATELLITE_NAME"          </div><div class='input'><span class='fu'>argo_nc_traj_read_meas</span><span class='op'>(</span><span class='va'>nc_traj</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 61 x 33</span><span>
 #&gt;    float   JULD JULD_STATUS JULD_QC JULD_ADJUSTED JULD_ADJUSTED_S…
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
 #&gt; </span><span style='color: #555555;'> 1</span><span> csio… </span><span style='text-decoration: underline;'>19</span><span>573. 0           0                  </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #555555;'>"</span><span> </span><span style='color: #555555;'>"</span><span>             
@@ -215,6 +188,8 @@ verbose error messages.</p></td>
 #&gt; </span><span style='color: #555555;'>#   PSAL_ADJUSTED_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PSAL_ADJUSTED_ERROR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   AXES_ERROR_ELLIPSE_MAJOR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, AXES_ERROR_ELLIPSE_MINOR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   AXES_ERROR_ELLIPSE_ANGLE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, SATELLITE_NAME </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
+<span class='fu'>ncdf4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ncdf4/man/nc_close.html'>nc_close</a></span><span class='op'>(</span><span class='va'>nc_traj</span><span class='op'>)</span>
+
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

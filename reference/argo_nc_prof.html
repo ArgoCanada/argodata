@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load Argo profiles — argo_prof • argodata</title>
+<title>Read Argo profile NetCDF files — argo_nc_prof_read_levels • argodata</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Load Argo profiles — argo_prof" />
-<meta property="og:description" content="Load Argo profiles" />
+<meta property="og:title" content="Read Argo profile NetCDF files — argo_nc_prof_read_levels" />
+<meta property="og:description" content="Read Argo profile NetCDF files" />
 
 
 
@@ -108,26 +108,27 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Load Argo profiles</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ArgoCanada/argodata/blob/master/R/argo-prof.R'><code>R/argo-prof.R</code></a></small>
-    <div class="hidden name"><code>argo_prof.Rd</code></div>
+    <h1>Read Argo profile NetCDF files</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ArgoCanada/argodata/blob/master/R/argo-nc-prof.R'><code>R/argo-nc-prof.R</code></a></small>
+    <div class="hidden name"><code>argo_nc_prof.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Load Argo profiles</p>
+    <p>Read Argo profile NetCDF files</p>
     </div>
 
-    <pre class="usage"><span class='fu'>argo_prof</span><span class='op'>(</span><span class='va'>path</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>argo_nc_prof_read_levels</span><span class='op'>(</span><span class='va'>nc</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, meta <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>argo_read_prof_levels</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, meta <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+<span class='fu'>argo_nc_prof_vars_levels</span><span class='op'>(</span><span class='va'>nc</span><span class='op'>)</span>
+
+<span class='fu'>argo_nc_prof_vars_prof</span><span class='op'>(</span><span class='va'>nc</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>path</th>
-      <td><p>A path relative to the root directory of
-<code><a href='argo_mirror.html'>argo_mirror()</a></code>.</p></td>
+      <th>nc</th>
+      <td><p>A handle created using <code><a href='https://rdrr.io/pkg/ncdf4/man/nc_open.html'>ncdf4::nc_open()</a></code>.</p></td>
     </tr>
     <tr>
       <th>vars</th>
@@ -136,62 +137,36 @@ If a variable does not exist in the file, it is not included
 in the output.</p></td>
     </tr>
     <tr>
-      <th>download</th>
-      <td><p>A logical vector indicating whether or not
-a file should be downloaded. Defaults to the value of
-<code><a href='argo_download.html'>argo_should_download()</a></code>, which is <code>TRUE</code> for files that
-do not exist in the cache or global files that were cached more than 24
-hours ago.</p></td>
-    </tr>
-    <tr>
-      <th>quiet</th>
-      <td><p>Use <code>FALSE</code> to show which files are downloaded and for more
-verbose error messages.</p></td>
-    </tr>
-    <tr>
-      <th>file</th>
-      <td><p>A previously downloaded Argo profile NetCDF file.</p></td>
-    </tr>
-    <tr>
       <th>meta</th>
       <td><p>A character vector of meta variable names for
-each profile. These can be found using <code><a href='argo_nc_prof_read_levels.html'>argo_nc_prof_vars_prof()</a></code>.</p></td>
+each profile. These can be found using <code>argo_nc_prof_vars_prof()</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code>.</p>
+    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> containing both <code>vars</code> and <code>meta</code>
+columns.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
-  <span class='fu'>argo_prof</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/profiles/D2900313_000.nc"</span><span class='op'>)</span>
-<span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 70 x 18</span><span>
-#&gt;    float cycle_number date                  pres pres_qc pres_adjusted
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>   9.80 1                9.80
-#&gt; </span><span style='color: #555555;'> 2</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  20.1  1               20.1 
-#&gt; </span><span style='color: #555555;'> 3</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  29.9  1               29.9 
-#&gt; </span><span style='color: #555555;'> 4</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  39.7  1               39.7 
-#&gt; </span><span style='color: #555555;'> 5</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  49.9  1               49.9 
-#&gt; </span><span style='color: #555555;'> 6</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  60.3  1               60.3 
-#&gt; </span><span style='color: #555555;'> 7</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  69.7  1               69.7 
-#&gt; </span><span style='color: #555555;'> 8</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  80.3  1               80.3 
-#&gt; </span><span style='color: #555555;'> 9</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>  90.2  1               90.2 
-#&gt; </span><span style='color: #555555;'>10</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span> 100.   1              100.  
-#&gt; </span><span style='color: #555555;'># … with 60 more rows, and 12 more variables: pres_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   pres_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, temp </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, temp_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, temp_adjusted </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   temp_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, temp_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, psal </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   psal_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, psal_adjusted </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, psal_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   psal_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
-<span class='va'>prof_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
+    <pre class="examples"><div class='input'><span class='va'>nc_prof_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
   <span class='st'>"cache-test/dac/csio/2900313/profiles/D2900313_000.nc"</span>,
   package <span class='op'>=</span> <span class='st'>"argodata"</span>
 <span class='op'>)</span>
+<span class='va'>nc_prof</span> <span class='op'>&lt;-</span> <span class='fu'>ncdf4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ncdf4/man/nc_open.html'>nc_open</a></span><span class='op'>(</span><span class='va'>nc_prof_file</span><span class='op'>)</span>
 
-<span class='fu'>argo_read_prof_levels</span><span class='op'>(</span><span class='va'>prof_file</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 70 x 29</span><span>
+<span class='fu'>argo_nc_prof_vars_levels</span><span class='op'>(</span><span class='va'>nc_prof</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "PRES"                "PRES_QC"             "PRES_ADJUSTED"      
+#&gt;  [4] "PRES_ADJUSTED_QC"    "PRES_ADJUSTED_ERROR" "TEMP"               
+#&gt;  [7] "TEMP_QC"             "TEMP_ADJUSTED"       "TEMP_ADJUSTED_QC"   
+#&gt; [10] "TEMP_ADJUSTED_ERROR" "PSAL"                "PSAL_QC"            
+#&gt; [13] "PSAL_ADJUSTED"       "PSAL_ADJUSTED_QC"    "PSAL_ADJUSTED_ERROR"</div><div class='input'><span class='fu'>argo_nc_prof_vars_prof</span><span class='op'>(</span><span class='va'>nc_prof</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "CYCLE_NUMBER"          "DIRECTION"             "DATA_MODE"            
+#&gt;  [4] "JULD"                  "JULD_QC"               "JULD_LOCATION"        
+#&gt;  [7] "LATITUDE"              "LONGITUDE"             "POSITION_QC"          
+#&gt; [10] "PROFILE_PRES_QC"       "PROFILE_TEMP_QC"       "PROFILE_PSAL_QC"      
+#&gt; [13] "CONFIG_MISSION_NUMBER"</div><div class='input'><span class='fu'>argo_nc_prof_read_levels</span><span class='op'>(</span><span class='va'>nc_prof</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 70 x 29</span><span>
 #&gt;    float CYCLE_NUMBER DIRECTION DATA_MODE   JULD JULD_QC JULD_LOCATION LATITUDE
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
@@ -212,6 +187,8 @@ each profile. These can be found using <code><a href='argo_nc_prof_read_levels.h
 #&gt; </span><span style='color: #555555;'>#   TEMP_ADJUSTED_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, TEMP_ADJUSTED_ERROR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PSAL </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   PSAL_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PSAL_ADJUSTED </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PSAL_ADJUSTED_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   PSAL_ADJUSTED_ERROR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+<span class='fu'>ncdf4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ncdf4/man/nc_close.html'>nc_close</a></span><span class='op'>(</span><span class='va'>nc_prof</span><span class='op'>)</span>
+
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

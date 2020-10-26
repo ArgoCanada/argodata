@@ -10,6 +10,22 @@ argo_traj(path, vars = NULL, download = NULL, quiet = FALSE)
 argo_read_traj(file, vars = NULL)
 }
 \arguments{
+\item{path}{A path relative to the root directory of
+\code{\link[=argo_mirror]{argo_mirror()}}.}
+
+\item{vars}{A character vector of variable names.
+If a variable does not exist in the file, a column of \code{NA}s
+is filled in its place.}
+
+\item{download}{A logical vector indicating whether or not
+a file should be downloaded. Defaults to the value of
+\code{\link[=argo_should_download]{argo_should_download()}}, which is \code{TRUE} for files that
+do not exist in the cache or global files that were cached more than 24
+hours ago.}
+
+\item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
+verbose error messages.}
+
 \item{file}{A previously downloaded Argo trajectory NetCDF file.}
 }
 \value{

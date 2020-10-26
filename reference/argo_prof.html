@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load Argo profiles — argo_prof • argodata</title>
+<title>Load Argo profiles — argo_prof_levels • argodata</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Load Argo profiles — argo_prof" />
+<meta property="og:title" content="Load Argo profiles — argo_prof_levels" />
 <meta property="og:description" content="Load Argo profiles" />
 
 
@@ -117,9 +117,13 @@
     <p>Load Argo profiles</p>
     </div>
 
-    <pre class="usage"><span class='fu'>argo_prof</span><span class='op'>(</span><span class='va'>path</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>argo_prof_levels</span><span class='op'>(</span><span class='va'>path</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>argo_read_prof_levels</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, meta <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+<span class='fu'>argo_prof_prof</span><span class='op'>(</span><span class='va'>path</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+
+<span class='fu'>argo_read_prof_levels</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, meta <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+
+<span class='fu'>argo_read_prof_prof</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,7 +169,7 @@ each profile. These can be found using <code><a href='argo_nc_prof_read_levels.h
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
-  <span class='fu'>argo_prof</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/profiles/D2900313_000.nc"</span><span class='op'>)</span>
+  <span class='fu'>argo_prof_levels</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/profiles/D2900313_000.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 70 x 18</span><span>
 #&gt;    float cycle_number date                  pres pres_qc pres_adjusted
@@ -185,6 +189,16 @@ each profile. These can be found using <code><a href='argo_nc_prof_read_levels.h
 #&gt; </span><span style='color: #555555;'>#   temp_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, temp_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, psal </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   psal_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, psal_adjusted </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, psal_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   psal_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+<span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
+  <span class='fu'>argo_prof_prof</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/profiles/D2900313_000.nc"</span><span class='op'>)</span>
+<span class='op'>}</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 14</span><span>
+#&gt;   float cycle_number direction data_mode date                date_qc            
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>             
+#&gt; </span><span style='color: #555555;'>1</span><span> csio…            0 A         D         2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span> </span><span style='color: #BB0000;'>NA</span><span>                 
+#&gt; </span><span style='color: #555555;'># … with 8 more variables: date_location </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span style='color: #555555;'>, latitude </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   longitude </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, position_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, profile_pres_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   profile_temp_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, profile_psal_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, config_mission_number </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'>
 <span class='va'>prof_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
   <span class='st'>"cache-test/dac/csio/2900313/profiles/D2900313_000.nc"</span>,
   package <span class='op'>=</span> <span class='st'>"argodata"</span>
@@ -211,7 +225,14 @@ each profile. These can be found using <code><a href='argo_nc_prof_read_levels.h
 #&gt; </span><span style='color: #555555;'>#   PRES_ADJUSTED_ERROR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, TEMP </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, TEMP_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, TEMP_ADJUSTED </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   TEMP_ADJUSTED_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, TEMP_ADJUSTED_ERROR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PSAL </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   PSAL_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PSAL_ADJUSTED </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PSAL_ADJUSTED_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   PSAL_ADJUSTED_ERROR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+#&gt; </span><span style='color: #555555;'>#   PSAL_ADJUSTED_ERROR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'><span class='fu'>argo_read_prof_prof</span><span class='op'>(</span><span class='va'>prof_file</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 14</span><span>
+#&gt;   float CYCLE_NUMBER DIRECTION DATA_MODE   JULD JULD_QC JULD_LOCATION LATITUDE
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'># … with 6 more variables: LONGITUDE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, POSITION_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   PROFILE_PRES_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PROFILE_TEMP_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PROFILE_PSAL_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   CONFIG_MISSION_NUMBER </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -119,6 +119,8 @@
 
     <pre class="usage"><span class='fu'>argo_nc_prof_read_levels</span><span class='op'>(</span><span class='va'>nc</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, meta <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
+<span class='fu'>argo_nc_prof_read_prof</span><span class='op'>(</span><span class='va'>nc</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+
 <span class='fu'>argo_nc_prof_vars_levels</span><span class='op'>(</span><span class='va'>nc</span><span class='op'>)</span>
 
 <span class='fu'>argo_nc_prof_vars_prof</span><span class='op'>(</span><span class='va'>nc</span><span class='op'>)</span></pre>
@@ -165,7 +167,8 @@ columns.</p>
 #&gt;  [4] "JULD"                  "JULD_QC"               "JULD_LOCATION"        
 #&gt;  [7] "LATITUDE"              "LONGITUDE"             "POSITION_QC"          
 #&gt; [10] "PROFILE_PRES_QC"       "PROFILE_TEMP_QC"       "PROFILE_PSAL_QC"      
-#&gt; [13] "CONFIG_MISSION_NUMBER"</div><div class='input'><span class='fu'>argo_nc_prof_read_levels</span><span class='op'>(</span><span class='va'>nc_prof</span><span class='op'>)</span>
+#&gt; [13] "CONFIG_MISSION_NUMBER"</div><div class='input'>
+<span class='fu'>argo_nc_prof_read_levels</span><span class='op'>(</span><span class='va'>nc_prof</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 70 x 29</span><span>
 #&gt;    float CYCLE_NUMBER DIRECTION DATA_MODE   JULD JULD_QC JULD_LOCATION LATITUDE
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -186,7 +189,14 @@ columns.</p>
 #&gt; </span><span style='color: #555555;'>#   PRES_ADJUSTED_ERROR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, TEMP </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, TEMP_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, TEMP_ADJUSTED </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   TEMP_ADJUSTED_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, TEMP_ADJUSTED_ERROR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PSAL </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   PSAL_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PSAL_ADJUSTED </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, PSAL_ADJUSTED_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   PSAL_ADJUSTED_ERROR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+#&gt; </span><span style='color: #555555;'>#   PSAL_ADJUSTED_ERROR </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'><span class='fu'>argo_nc_prof_read_prof</span><span class='op'>(</span><span class='va'>nc_prof</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 14</span><span>
+#&gt;   float CYCLE_NUMBER DIRECTION DATA_MODE   JULD JULD_QC JULD_LOCATION LATITUDE
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'># … with 6 more variables: LONGITUDE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, POSITION_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   PROFILE_PRES_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PROFILE_TEMP_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PROFILE_PSAL_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   CONFIG_MISSION_NUMBER </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'>
 <span class='fu'>ncdf4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ncdf4/man/nc_close.html'>nc_close</a></span><span class='op'>(</span><span class='va'>nc_prof</span><span class='op'>)</span>
 
 </div></span></pre>

@@ -150,11 +150,11 @@
 <span class="co">#&gt; 10 aoml~        -1.79       -6.00           7            -5.45           845</span>
 <span class="co">#&gt; # ... with 17,194 more rows, and 2 more variables: institution &lt;chr&gt;,</span>
 <span class="co">#&gt; #   date_update &lt;dttm&gt;</span></pre></div>
-<p>You can load profile data by filtering <code><a href="reference/argo_global_meta.html">argo_global_prof()</a></code> and piping to <code><a href="reference/argo_prof.html">argo_prof()</a></code>:</p>
+<p>You can load profile data by filtering <code><a href="reference/argo_global_meta.html">argo_global_prof()</a></code> and piping to <code><a href="reference/argo_prof_levels.html">argo_prof_levels()</a></code> (one row per level sampled) or <code><a href="reference/argo_prof_levels.html">argo_prof_prof()</a></code> (one row per profile):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="fu"><a href="reference/argo_global_meta.html">argo_global_prof</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/argo_prof.html">argo_prof</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="fu"><a href="reference/argo_prof_levels.html">argo_prof_levels</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 9,199 x 18</span>
 <span class="co">#&gt;    float cycle_number date                 pres pres_qc pres_adjusted</span>
 <span class="co">#&gt;    &lt;chr&gt;        &lt;int&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;</span>
@@ -172,9 +172,96 @@
 <span class="co">#&gt; #   pres_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   psal_adjusted_qc &lt;chr&gt;, psal_adjusted_error &lt;dbl&gt;, temp &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   temp_qc &lt;chr&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span>
-<span class="co">#&gt; #   temp_adjusted_error &lt;dbl&gt;</span></pre></div>
-<p>If you have previously downloaded Argo data, you can use <code>argo_read_*()</code> functions:</p>
+<span class="co">#&gt; #   temp_adjusted_error &lt;dbl&gt;</span>
+
+<span class="fu"><a href="reference/argo_global_meta.html">argo_global_prof</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="reference/argo_prof_levels.html">argo_prof_prof</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 100 x 13</span>
+<span class="co">#&gt;    float cycle_number direction data_mode date               </span>
+<span class="co">#&gt;    &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;dttm&gt;             </span>
+<span class="co">#&gt;  1 nmdi~          123 A         R         2014-11-12 04:40:37</span>
+<span class="co">#&gt;  2 nmdi~          124 A         R         2014-11-22 04:52:39</span>
+<span class="co">#&gt;  3 nmdi~          125 A         R         2014-12-02 04:52:43</span>
+<span class="co">#&gt;  4 nmdi~          126 A         R         2014-12-12 04:52:45</span>
+<span class="co">#&gt;  5 nmdi~          127 A         R         2014-12-22 04:52:49</span>
+<span class="co">#&gt;  6 nmdi~          128 A         R         2015-01-01 04:52:52</span>
+<span class="co">#&gt;  7 nmdi~          129 A         R         2015-01-11 04:59:54</span>
+<span class="co">#&gt;  8 nmdi~          130 A         R         2015-01-21 04:52:58</span>
+<span class="co">#&gt;  9 nmdi~          131 A         R         2015-01-31 05:00:02</span>
+<span class="co">#&gt; 10 nmdi~          132 A         R         2015-02-10 04:53:05</span>
+<span class="co">#&gt; # ... with 90 more rows, and 8 more variables: date_qc &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_location &lt;dttm&gt;, latitude &lt;dbl&gt;, longitude &lt;dbl&gt;, position_qc &lt;chr&gt;,</span>
+<span class="co">#&gt; #   profile_pres_qc &lt;chr&gt;, profile_psal_qc &lt;chr&gt;, profile_temp_qc &lt;chr&gt;</span></pre></div>
+<p>Similarly, you can load trajectory data by filtering <code><a href="reference/argo_global_meta.html">argo_global_traj()</a></code> and piping to <code><a href="reference/argo_traj_meas.html">argo_traj_meas()</a></code> and/or <code><a href="reference/argo_traj_meas.html">argo_traj_cycle()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="fu"><a href="reference/argo_global_meta.html">argo_global_traj</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="reference/argo_traj_meas.html">argo_traj_meas</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 73,796 x 34</span>
+<span class="co">#&gt;    float date                date_status         date_qc            </span>
+<span class="co">#&gt;    &lt;chr&gt; &lt;dttm&gt;              &lt;dttm&gt;              &lt;dttm&gt;             </span>
+<span class="co">#&gt;  1 nmdi~ 2010-04-25 07:13:00 NA                  NA                 </span>
+<span class="co">#&gt;  2 nmdi~ 2010-05-28 11:30:00 NA                  NA                 </span>
+<span class="co">#&gt;  3 nmdi~ 2010-05-28 11:54:00 NA                  NA                 </span>
+<span class="co">#&gt;  4 nmdi~ NA                  NA                  NA                 </span>
+<span class="co">#&gt;  5 nmdi~ 2010-05-28 19:42:00 NA                  NA                 </span>
+<span class="co">#&gt;  6 nmdi~ 2010-05-29 07:00:00 NA                  NA                 </span>
+<span class="co">#&gt;  7 nmdi~ 2010-05-29 19:00:00 NA                  NA                 </span>
+<span class="co">#&gt;  8 nmdi~ 2010-05-30 07:00:00 NA                  NA                 </span>
+<span class="co">#&gt;  9 nmdi~ 2010-05-30 19:00:00 NA                  NA                 </span>
+<span class="co">#&gt; 10 nmdi~ 2010-05-31 07:00:00 NA                  NA                 </span>
+<span class="co">#&gt; # ... with 73,786 more rows, and 30 more variables: date_adjusted &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_adjusted_status &lt;dttm&gt;, date_adjusted_qc &lt;dttm&gt;, latitude &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   longitude &lt;dbl&gt;, position_accuracy &lt;chr&gt;, position_qc &lt;chr&gt;,</span>
+<span class="co">#&gt; #   cycle_number &lt;int&gt;, cycle_number_adjusted &lt;int&gt;, measurement_code &lt;int&gt;,</span>
+<span class="co">#&gt; #   axes_error_ellipse_major &lt;dbl&gt;, axes_error_ellipse_minor &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   axes_error_ellipse_angle &lt;dbl&gt;, satellite_name &lt;chr&gt;, pres &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   pres_qc &lt;chr&gt;, pres_adjusted &lt;dbl&gt;, pres_adjusted_qc &lt;chr&gt;,</span>
+<span class="co">#&gt; #   pres_adjusted_error &lt;dbl&gt;, temp &lt;dbl&gt;, temp_qc &lt;chr&gt;, temp_adjusted &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   temp_adjusted_qc &lt;chr&gt;, temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;, psal_adjusted_qc &lt;chr&gt;,</span>
+<span class="co">#&gt; #   psal_adjusted_error &lt;dbl&gt;, data_mode &lt;chr&gt;</span>
+
+<span class="fu"><a href="reference/argo_global_meta.html">argo_global_traj</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="reference/argo_traj_meas.html">argo_traj_cycle</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 1,461 x 43</span>
+<span class="co">#&gt;    float date_descent_start  date_descent_start~ date_first_stabili~</span>
+<span class="co">#&gt;    &lt;chr&gt; &lt;dttm&gt;              &lt;dttm&gt;              &lt;dttm&gt;             </span>
+<span class="co">#&gt;  1 nmdi~ 2010-05-28 11:27:00 NA                  2010-05-28 11:51:00</span>
+<span class="co">#&gt;  2 nmdi~ 2010-06-17 11:15:00 NA                  2010-06-17 11:39:00</span>
+<span class="co">#&gt;  3 nmdi~ 2010-06-27 11:27:00 NA                  2010-06-27 11:45:00</span>
+<span class="co">#&gt;  4 nmdi~ 2010-07-07 11:33:00 NA                  2010-07-07 11:51:00</span>
+<span class="co">#&gt;  5 nmdi~ 2010-07-17 11:27:00 NA                  2010-07-17 11:57:00</span>
+<span class="co">#&gt;  6 nmdi~ 2010-07-27 11:33:00 NA                  2010-07-27 11:51:00</span>
+<span class="co">#&gt;  7 nmdi~ 2010-08-06 11:27:00 NA                  2010-08-06 11:45:00</span>
+<span class="co">#&gt;  8 nmdi~ 2010-08-16 11:27:00 NA                  2010-08-16 11:51:00</span>
+<span class="co">#&gt;  9 nmdi~ 2010-08-26 11:33:00 NA                  2010-08-26 11:45:00</span>
+<span class="co">#&gt; 10 nmdi~ 2010-09-05 11:27:00 NA                  2010-09-05 11:51:00</span>
+<span class="co">#&gt; # ... with 1,451 more rows, and 39 more variables:</span>
+<span class="co">#&gt; #   date_first_stabilization_status &lt;dttm&gt;, date_descent_end &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_descent_end_status &lt;dttm&gt;, date_park_start &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_park_start_status &lt;dttm&gt;, date_park_end &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_park_end_status &lt;dttm&gt;, date_deep_descent_end &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_deep_descent_end_status &lt;dttm&gt;, date_deep_park_start &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_deep_park_start_status &lt;dttm&gt;, date_ascent_start &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_ascent_start_status &lt;dttm&gt;, date_deep_ascent_start &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_deep_ascent_start_status &lt;dttm&gt;, date_ascent_end &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_ascent_end_status &lt;dttm&gt;, date_transmission_start &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_transmission_start_status &lt;dttm&gt;, date_first_message &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_first_message_status &lt;dttm&gt;, date_first_location &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_first_location_status &lt;dttm&gt;, date_last_location &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_last_location_status &lt;dttm&gt;, date_last_message &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_last_message_status &lt;dttm&gt;, date_transmission_end &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_transmission_end_status &lt;dttm&gt;, clock_offset &lt;dbl&gt;, grounded &lt;chr&gt;,</span>
+<span class="co">#&gt; #   representative_park_pressure &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   representative_park_pressure_status &lt;chr&gt;, config_mission_number &lt;int&gt;,</span>
+<span class="co">#&gt; #   cycle_number_index &lt;int&gt;, cycle_number_index_adjusted &lt;int&gt;,</span>
+<span class="co">#&gt; #   data_mode &lt;chr&gt;, date_start_transmission &lt;dttm&gt;,</span>
+<span class="co">#&gt; #   date_start_transmission_status &lt;dttm&gt;</span></pre></div>
+<p>If you have previously downloaded Argo data, you can use <code>argo_read_*()</code> functions:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="fu"><a href="reference/argo_global_meta.html">argo_read_global_meta</a></span><span class="op">(</span><span class="st">"cache-dev/ar_index_global_meta.txt.gz"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 16,067 x 4</span>
 <span class="co">#&gt;    file                     profiler_type institution date_update        </span>
@@ -190,7 +277,7 @@
 <span class="co">#&gt;  9 aoml/15854/15854_meta.nc           845 AO          2018-10-11 20:00:30</span>
 <span class="co">#&gt; 10 aoml/15855/15855_meta.nc           845 AO          2018-10-11 20:00:34</span>
 <span class="co">#&gt; # ... with 16,057 more rows</span>
-<span class="fu">argo_read_prof</span><span class="op">(</span><span class="st">"cache-dev/dac/nmdis/2901633/profiles/R2901633_070.nc"</span><span class="op">)</span>
+<span class="fu"><a href="reference/argo_prof_levels.html">argo_read_prof_levels</a></span><span class="op">(</span><span class="st">"cache-dev/dac/nmdis/2901633/profiles/R2901633_070.nc"</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 95 x 28</span>
 <span class="co">#&gt;    float CYCLE_NUMBER DIRECTION DATA_MODE   JULD JULD_QC JULD_LOCATION LATITUDE</span>
 <span class="co">#&gt;    &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;</span>
@@ -217,12 +304,12 @@
 <h2 class="hasAnchor">
 <a href="#cache-management" class="anchor"></a>Cache management</h2>
 <p>Each Argo floats mirror is home to over 250 GB of data organized in millions of files! The argodata package caches all files that it downloads, which you can set to a cache that persists between sessions. If you have a <a href="http://www.argodatamgt.org/Access-to-data/Argo-GDAC-synchronization-service">local mirror updated using rsync</a> you can pass this directory to <code><a href="reference/argo_mirror.html">argo_set_mirror()</a></code>, which can also be used to switch between the various mirrors provided by GDAC.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
+<div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="fu"><a href="reference/argo_cache_dir.html">argo_set_cache_dir</a></span><span class="op">(</span><span class="st">"path/to/cache"</span><span class="op">)</span>
 <span class="fu"><a href="reference/argo_mirror.html">argo_set_mirror</a></span><span class="op">(</span><span class="st">"ftp://usgodae.org/pub/outgoing/argo"</span><span class="op">)</span>
 <span class="fu"><a href="reference/argo_mirror.html">argo_set_mirror</a></span><span class="op">(</span><span class="st">"path/to/local/argo"</span><span class="op">)</span></pre></div>
 <p>By default, index files are cached for 24 hours and data files are cached indefinitely. These defaults reflect a balance between the considerable time required to download new files and the frequency with which files are updated on the mirror. To override these defaults you can pass <code>download = TRUE</code> to functions that load data, or set <code><a href="https://rdrr.io/r/base/options.html">options(argodata.max_data_cache_age = 3)</a></code>, where the number is in hours. Use <code>Inf</code> to always use the cached version of a file.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
+<div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="fu"><a href="reference/argo_global_meta.html">argo_global_prof</a></span><span class="op">(</span>download <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>argodata.max_global_cache_age <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>argodata.max_data_cache_age <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></pre></div>

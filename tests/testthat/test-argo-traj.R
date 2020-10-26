@@ -10,7 +10,7 @@ test_that("argo_traj() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(traj), c("float", "cycle_number", "longitude", "empty"))
+    expect_identical(names(traj), c("float", "cycle_number", "longitude"))
   })
 })
 

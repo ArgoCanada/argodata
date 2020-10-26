@@ -5,7 +5,7 @@
 \alias{argo_nc_traj_list_vars}
 \title{Read Argo trajectory NetCDF files}
 \usage{
-argo_nc_traj_read(nc, vars = NULL, fill = list())
+argo_nc_traj_read(nc, vars = NULL)
 
 argo_nc_traj_list_vars(nc)
 }
@@ -18,7 +18,7 @@ in the output.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}} containing columns "float" and
-all columns listed in \code{vars}.
+columns listed in \code{vars}.
 }
 \description{
 Read Argo trajectory NetCDF files
@@ -32,5 +32,7 @@ nc_traj <- ncdf4::nc_open(nc_traj_file)
 
 argo_nc_traj_list_vars(nc_traj)
 argo_nc_traj_read(nc_traj)
+
+ncdf4::nc_close(nc_traj)
 
 }

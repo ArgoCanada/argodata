@@ -4,7 +4,7 @@
 #' @inheritParams argo_nc_prof_read
 #'
 #' @return A [tibble::tibble()] containing columns "float" and
-#'   all columns listed in `vars`.
+#'   columns listed in `vars`.
 #' @export
 #'
 #' @examples
@@ -17,36 +17,32 @@
 #' argo_nc_traj_list_vars(nc_traj)
 #' argo_nc_traj_read(nc_traj)
 #'
-argo_nc_traj_read <- function(nc, vars = NULL, fill = list()) {
-  vars <- vars %||% argo_nc_traj_list_vars(nc)
+#' ncdf4::nc_close(nc_traj)
+#'
+argo_nc_traj_read <- function(nc, vars = NULL) {
+  nc_vars <- argo_nc_traj_list_vars(nc)
+  vars <- if (is.null(vars)) nc_vars else intersect(vars, nc_vars)
   n <- nc$dim$N_MEASUREMENT$len
 
-  values <- rep(list(rep_len(NA, n)), length(vars))
-  names(values) <- vars
-  types <- vapply(nc$var[vars], function(var) var$prec %||% "missing", character(1))
+  # assign values
+  values <- lapply(nc$var[vars], ncdf4::ncvar_get, nc = nc)
 
-  existing_vars <- intersect(vars, argo_nc_traj_list_vars(nc))
-  values[existing_vars] <- lapply(
-    existing_vars,
-    function(x) ncdf4::ncvar_get(nc, x)
-  )
+  # character types that are flags come as a single string, but need to be
+  # one character per row
+  vars_is_char <- vapply(nc$var[vars], function(var) identical(var$prec, "char"), logical(1))
 
-  # char types are in the form character(), but should be character(n)
-  values[types == "char"] <- lapply(
-    values[types == "char"],
+  # comes as character(n_prof)
+  values[vars_is_char] <- lapply(
+    values[vars_is_char],
     function(x) rawToChar(charToRaw(x), multiple = TRUE)
   )
-
-  # fill values that aren't in `nc` but are in `fill`
-  fill_vars <- intersect(names(fill), setdiff(vars, existing_vars))
-  values[fill_vars] <- lapply(fill[fill_vars], rep_len, n)
 
   # extract float info from filename if possible
   float_extract <- stringr::str_remove(
     stringr::str_extract(nc$filename, "dac/[a-z]+/[A-Za-z0-9]+"),
     "^dac/"
   )
-  float <- list(float = rep(float_extract, n))
+  float <- list(float = vctrs::vec_rep(float_extract, n))
 
   # remove the 'dim' attribute from values
   cols <- lapply(c(float, values), "dim<-", NULL)
@@ -56,6 +52,6 @@ argo_nc_traj_read <- function(nc, vars = NULL, fill = list()) {
 #' @rdname argo_nc_traj_read
 #' @export
 argo_nc_traj_list_vars <- function(nc) {
-  var_has_n_levels <- vapply(nc$var, function(x) x$dim[[1]]$name == "N_MEASUREMENT", logical(1))
-  names(nc$var)[var_has_n_levels]
+  var_has_n_meas <- vapply(nc$var, function(x) x$dim[[1]]$name == "N_MEASUREMENT", logical(1))
+  names(nc$var)[var_has_n_meas]
 }

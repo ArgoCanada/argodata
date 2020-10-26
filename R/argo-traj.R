@@ -19,8 +19,7 @@
 #'
 #' argo_read_traj(traj_file)
 #'
-argo_traj <- function(path, vars = NULL, download = NULL, quiet = FALSE,
-                      .ptype = NULL) {
+argo_traj <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   path <- as_argo_path(path)
   assert_argo_traj_file(path)
   cached <- argo_download(path, download = download, quiet = quiet)
@@ -31,7 +30,7 @@ argo_traj <- function(path, vars = NULL, download = NULL, quiet = FALSE,
     vars = if (!is.null(vars)) toupper(vars) else vars
   )
 
-  tbl <- vctrs::vec_rbind(!!! tbls, .ptype = .ptype)
+  tbl <- vctrs::vec_rbind(!!! tbls)
 
   # make names lowercase
   names(tbl) <- tolower(names(tbl))

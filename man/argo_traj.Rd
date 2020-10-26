@@ -5,7 +5,7 @@
 \alias{argo_read_traj}
 \title{Load Argo trajectories}
 \usage{
-argo_traj(path, vars = NULL, download = NULL, quiet = FALSE, .ptype = NULL)
+argo_traj(path, vars = NULL, download = NULL, quiet = FALSE)
 
 argo_read_traj(file, vars = NULL)
 }

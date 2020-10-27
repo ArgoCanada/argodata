@@ -138,10 +138,11 @@
     </tr>
     <tr>
       <th>vars</th>
-      <td><p>A character vector of variable names.
-If a variable does not exist in the file, it is not included
-in the output. The order of <code>vars</code> in the output is not
-guaranteed.</p></td>
+      <td><p>A vector of variable names to include. The ordering
+of the variables is not guaranteed, and variables that do not
+exist are ignored. For <code>nc_read_*()</code> and <code>read_*()</code> variants,
+these are the raw variable names (all caps, without "date"
+substituted for "juld").</p></td>
     </tr>
     <tr>
       <th>meta</th>
@@ -172,7 +173,13 @@ columns.</p>
 #&gt;  [4] "JULD"                  "JULD_QC"               "JULD_LOCATION"        
 #&gt;  [7] "LATITUDE"              "LONGITUDE"             "POSITION_QC"          
 #&gt; [10] "PROFILE_PRES_QC"       "PROFILE_TEMP_QC"       "PROFILE_PSAL_QC"      
-#&gt; [13] "CONFIG_MISSION_NUMBER"</div><div class='input'>
+#&gt; [13] "CONFIG_MISSION_NUMBER"</div><div class='input'><span class='fu'>argo_nc_prof_vars_history</span><span class='op'>(</span><span class='va'>nc_prof</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "HISTORY_START_PRES"       "HISTORY_STOP_PRES"       
+#&gt;  [3] "HISTORY_PREVIOUS_VALUE"   "HISTORY_INSTITUTION"     
+#&gt;  [5] "HISTORY_STEP"             "HISTORY_SOFTWARE"        
+#&gt;  [7] "HISTORY_SOFTWARE_RELEASE" "HISTORY_REFERENCE"       
+#&gt;  [9] "HISTORY_DATE"             "HISTORY_ACTION"          
+#&gt; [11] "HISTORY_PARAMETER"        "HISTORY_QCTEST"          </div><div class='input'>
 <span class='fu'>argo_nc_prof_read_levels</span><span class='op'>(</span><span class='va'>nc_prof</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 70 x 29</span><span>
 #&gt;    float CYCLE_NUMBER DIRECTION DATA_MODE   JULD JULD_QC JULD_LOCATION LATITUDE
@@ -201,7 +208,21 @@ columns.</p>
 #&gt; </span><span style='color: #555555;'>1</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
 #&gt; </span><span style='color: #555555;'># … with 6 more variables: LONGITUDE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, POSITION_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   PROFILE_PRES_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PROFILE_TEMP_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PROFILE_PSAL_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   CONFIG_MISSION_NUMBER </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'>
+#&gt; </span><span style='color: #555555;'>#   CONFIG_MISSION_NUMBER </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'><span class='fu'>argo_nc_prof_read_history</span><span class='op'>(</span><span class='va'>nc_prof</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 26</span><span>
+#&gt;   float CYCLE_NUMBER DIRECTION DATA_MODE   JULD JULD_QC JULD_LOCATION LATITUDE
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'>2</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'>3</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'># … with 18 more variables: LONGITUDE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, POSITION_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   PROFILE_PRES_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PROFILE_TEMP_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PROFILE_PSAL_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   CONFIG_MISSION_NUMBER </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, HISTORY_START_PRES </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   HISTORY_STOP_PRES </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, HISTORY_PREVIOUS_VALUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   HISTORY_INSTITUTION </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, HISTORY_STEP </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, HISTORY_SOFTWARE </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   HISTORY_SOFTWARE_RELEASE </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, HISTORY_REFERENCE </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   HISTORY_DATE </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, HISTORY_ACTION </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, HISTORY_PARAMETER </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   HISTORY_QCTEST </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
 <span class='fu'>ncdf4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ncdf4/man/nc_close.html'>nc_close</a></span><span class='op'>(</span><span class='va'>nc_prof</span><span class='op'>)</span>
 
 </div></span></pre>

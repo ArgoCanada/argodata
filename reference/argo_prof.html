@@ -139,10 +139,11 @@
     </tr>
     <tr>
       <th>vars</th>
-      <td><p>A character vector of variable names.
-If a variable does not exist in the file, it is not included
-in the output. The order of <code>vars</code> in the output is not
-guaranteed.</p></td>
+      <td><p>A vector of variable names to include. The ordering
+of the variables is not guaranteed, and variables that do not
+exist are ignored. For <code>nc_read_*()</code> and <code>read_*()</code> variants,
+these are the raw variable names (all caps, without "date"
+substituted for "juld").</p></td>
     </tr>
     <tr>
       <th>download</th>
@@ -159,7 +160,7 @@ verbose error messages.</p></td>
     </tr>
     <tr>
       <th>file</th>
-      <td><p>A previously downloaded Argo profile NetCDF file.</p></td>
+      <td><p>A previously downloaded Argo NetCDF file.</p></td>
     </tr>
     <tr>
       <th>meta</th>
@@ -171,6 +172,84 @@ each profile. These can be found using <code><a href='argo_nc_prof_read_levels.h
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code>.</p>
+    <h2 class="hasAnchor" id="level-variables"><a class="anchor" href="#level-variables"></a>Level Variables</h2>
+
+    
+
+
+<p>Some of these variables may be missing depending on the sensors
+that are available for a given float.</p><ul>
+<li><p><code>pres</code> (decibar, float): Sea water pressure, equals 0 at sea-level</p></li>
+<li><p><code>pres_qc</code> (char): quality flag</p></li>
+<li><p><code>pres_adjusted</code> (decibar, float): Sea water pressure, equals 0 at
+sea-level</p></li>
+<li><p><code>pres_adjusted_qc</code> (char): quality flag</p></li>
+<li><p><code>pres_adjusted_error</code> (decibar, float): Contains the error on the
+adjusted values as determined by the delayed mode QC process</p></li>
+<li><p><code>temp</code> (degree_Celsius, float): Sea temperature in-situ ITS-90 scale</p></li>
+<li><p><code>temp_qc</code> (char): quality flag</p></li>
+<li><p><code>temp_adjusted</code> (degree_Celsius, float): Sea temperature in-situ
+ITS-90 scale</p></li>
+<li><p><code>temp_adjusted_qc</code> (char): quality flag</p></li>
+<li><p><code>temp_adjusted_error</code> (degree_Celsius, float): Contains the error on
+the adjusted values as determined by the delayed mode QC process</p></li>
+<li><p><code>psal</code> (psu, float): Practical salinity</p></li>
+<li><p><code>psal_qc</code> (char): quality flag</p></li>
+<li><p><code>psal_adjusted</code> (psu, float): Practical salinity</p></li>
+<li><p><code>psal_adjusted_qc</code> (char): quality flag</p></li>
+<li><p><code>psal_adjusted_error</code> (psu, float): Contains the error on the
+adjusted values as determined by the delayed mode QC process</p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="profile-variables"><a class="anchor" href="#profile-variables"></a>Profile Variables</h2>
+
+    
+
+<ul>
+<li><p><code>cycle_number</code> (int): Float cycle number</p></li>
+<li><p><code>direction</code> (char): Direction of the station profiles</p></li>
+<li><p><code>data_mode</code> (char): Delayed mode or real time data</p></li>
+<li><p><code>date</code> (days since 1950-01-01 00:00:00 UTC, double): Julian day
+(UTC) of the station relative to REFERENCE_DATE_TIME</p></li>
+<li><p><code>date_qc</code> (char): Quality on date and time</p></li>
+<li><p><code>date_location</code> (days since 1950-01-01 00:00:00 UTC, double): Julian
+day (UTC) of the location relative to REFERENCE_DATE_TIME</p></li>
+<li><p><code>latitude</code> (degree_north, double): Latitude of the station, best
+estimate</p></li>
+<li><p><code>longitude</code> (degree_east, double): Longitude of the station, best
+estimate</p></li>
+<li><p><code>position_qc</code> (char): Quality on position (latitude and longitude)</p></li>
+<li><p><code>profile_pres_qc</code> (char): Global quality flag of PRES profile</p></li>
+<li><p><code>profile_temp_qc</code> (char): Global quality flag of TEMP profile</p></li>
+<li><p><code>profile_psal_qc</code> (char): Global quality flag of PSAL profile</p></li>
+<li><p><code>config_mission_number</code> (int): Unique number denoting the missions
+performed by the float</p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="history-variables"><a class="anchor" href="#history-variables"></a>History variables</h2>
+
+    
+
+<ul>
+<li><p><code>history_start_pres</code> (decibar, float): Start pressure action applied
+on</p></li>
+<li><p><code>history_stop_pres</code> (decibar, float): Stop pressure action applied
+on</p></li>
+<li><p><code>history_previous_value</code> (float): Parameter/Flag previous value
+before action</p></li>
+<li><p><code>history_institution</code> (char): Institution which performed action</p></li>
+<li><p><code>history_step</code> (char): Step in data processing</p></li>
+<li><p><code>history_software</code> (char): Name of software which performed action</p></li>
+<li><p><code>history_software_release</code> (char): Version/release of software which
+performed action</p></li>
+<li><p><code>history_reference</code> (char): Reference of database</p></li>
+<li><p><code>history_date</code> (char): Date the history record was created</p></li>
+<li><p><code>history_action</code> (char): Action performed on data</p></li>
+<li><p><code>history_parameter</code> (char): Station parameter action is performed on</p></li>
+<li><p><code>history_qctest</code> (char): Documentation of tests performed, tests
+failed (in hex form)</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
@@ -204,6 +283,20 @@ each profile. These can be found using <code><a href='argo_nc_prof_read_levels.h
 #&gt; </span><span style='color: #555555;'># … with 8 more variables: date_location </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span style='color: #555555;'>, latitude </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   longitude </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, position_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, profile_pres_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   profile_temp_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, profile_psal_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, config_mission_number </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'>
+<span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
+  <span class='fu'>argo_prof_history</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/profiles/D2900313_000.nc"</span><span class='op'>)</span>
+<span class='op'>}</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 15</span><span>
+#&gt;   float cycle_number date                history_start_p… history_stop_pr…
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>                         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>               </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'>2</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>               </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'>3</span><span> csio…            0 2003-08-13 </span><span style='color: #555555;'>08:47:42</span><span>               </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'># … with 10 more variables: history_previous_value </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   history_institution </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, history_step </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, history_software </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   history_software_release </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, history_reference </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   history_date </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, history_action </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, history_parameter </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   history_qctest </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
 <span class='va'>prof_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
   <span class='st'>"cache-test/dac/csio/2900313/profiles/D2900313_000.nc"</span>,
   package <span class='op'>=</span> <span class='st'>"argodata"</span>
@@ -237,7 +330,21 @@ each profile. These can be found using <code><a href='argo_nc_prof_read_levels.h
 #&gt; </span><span style='color: #555555;'>1</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
 #&gt; </span><span style='color: #555555;'># … with 6 more variables: LONGITUDE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, POSITION_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   PROFILE_PRES_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PROFILE_TEMP_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PROFILE_PSAL_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   CONFIG_MISSION_NUMBER </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'>
+#&gt; </span><span style='color: #555555;'>#   CONFIG_MISSION_NUMBER </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'><span class='fu'>argo_read_prof_history</span><span class='op'>(</span><span class='va'>prof_file</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 26</span><span>
+#&gt;   float CYCLE_NUMBER DIRECTION DATA_MODE   JULD JULD_QC JULD_LOCATION LATITUDE
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'>2</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'>3</span><span> csio…            0 A         D         </span><span style='text-decoration: underline;'>19</span><span>582. 1              </span><span style='text-decoration: underline;'>19</span><span>582.     23.2
+#&gt; </span><span style='color: #555555;'># … with 18 more variables: LONGITUDE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, POSITION_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   PROFILE_PRES_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PROFILE_TEMP_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PROFILE_PSAL_QC </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   CONFIG_MISSION_NUMBER </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, HISTORY_START_PRES </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   HISTORY_STOP_PRES </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, HISTORY_PREVIOUS_VALUE </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   HISTORY_INSTITUTION </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, HISTORY_STEP </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, HISTORY_SOFTWARE </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   HISTORY_SOFTWARE_RELEASE </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, HISTORY_REFERENCE </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   HISTORY_DATE </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, HISTORY_ACTION </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, HISTORY_PARAMETER </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   HISTORY_QCTEST </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

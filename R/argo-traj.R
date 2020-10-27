@@ -52,17 +52,21 @@ argo_traj_cycle <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 #' @rdname argo_traj
 #' @export
 argo_read_traj_meas <- function(file, vars = NULL) {
-  nc <- ncdf4::nc_open(file, suppress_dimvals = TRUE)
-  on.exit(ncdf4::nc_close(nc))
-  argo_nc_traj_read_meas(nc, vars = vars)
+  with_argo_nc_file(
+    file,
+    argo_nc_traj_read_meas,
+    vars = vars
+  )
 }
 
 #' @rdname argo_traj
 #' @export
 argo_read_traj_cycle <- function(file, vars = NULL) {
-  nc <- ncdf4::nc_open(file, suppress_dimvals = TRUE)
-  on.exit(ncdf4::nc_close(nc))
-  argo_nc_traj_read_cycle(nc, vars = vars)
+  with_argo_nc_file(
+    file,
+    argo_nc_traj_read_cycle,
+    vars = vars
+  )
 }
 
 assert_argo_traj_file <- function(path) {

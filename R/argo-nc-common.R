@@ -19,6 +19,12 @@ argo_read_many <- function(assert_fun, read_fun, ...,
   argo_juld_to_date_tbl(tbl)
 }
 
+with_argo_nc_file <- function(file, fun, ...) {
+  nc <- ncdf4::nc_open(file, suppress_dimvals = TRUE)
+  on.exit(ncdf4::nc_close(nc))
+  fun(nc, ...)
+}
+
 argo_nc_values <- function(nc, vars) {
   values <- lapply(nc$var[vars], ncdf4::ncvar_get, nc = nc)
   lapply(values, argo_undimension)

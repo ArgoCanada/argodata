@@ -55,17 +55,21 @@ argo_prof_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 #' @rdname argo_prof
 #' @export
 argo_read_prof_levels <- function(file, vars = NULL, meta = NULL) {
-  nc <- ncdf4::nc_open(file, suppress_dimvals = TRUE)
-  on.exit(ncdf4::nc_close(nc))
-  argo_nc_prof_read_levels(nc, vars = vars, meta = meta)
+  with_argo_nc_file(
+    file,
+    argo_nc_prof_read_levels,
+    vars = vars, meta = meta
+  )
 }
 
 #' @rdname argo_prof
 #' @export
 argo_read_prof_prof <- function(file, vars = NULL) {
-  nc <- ncdf4::nc_open(file, suppress_dimvals = TRUE)
-  on.exit(ncdf4::nc_close(nc))
-  argo_nc_prof_read_prof(nc, vars = vars)
+  with_argo_nc_file(
+    file,
+    argo_nc_prof_read_prof,
+    vars = vars
+  )
 }
 
 assert_argo_prof_file <- function(path) {

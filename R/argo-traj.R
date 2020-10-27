@@ -1,7 +1,6 @@
 
 #' Load Argo trajectories
 #'
-#' @param file A previously downloaded Argo trajectory NetCDF file.
 #' @inheritParams argo_prof_levels
 #'
 #' @return A [tibble::tibble()].

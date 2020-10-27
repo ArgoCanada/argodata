@@ -40,7 +40,7 @@ hours ago.}
 \item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
 verbose error messages.}
 
-\item{file}{A previously downloaded Argo profile NetCDF file.}
+\item{file}{A previously downloaded Argo NetCDF file.}
 
 \item{meta}{A character vector of meta variable names for
 each profile. These can be found using \code{\link[=argo_nc_prof_vars_prof]{argo_nc_prof_vars_prof()}}.}

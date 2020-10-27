@@ -1,9 +1,8 @@
 
 #' Load Argo profiles
 #'
-#' @inheritParams argo_download
+#' @inheritParams argo_vars
 #' @inheritParams argo_nc_prof_read_levels
-#' @param file A previously downloaded Argo profile NetCDF file.
 #'
 #' @return A [tibble::tibble()].
 #' @export

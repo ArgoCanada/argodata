@@ -40,7 +40,7 @@ hours ago.}
 \item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
 verbose error messages.}
 
-\item{file}{A previously downloaded Argo trajectory NetCDF file.}
+\item{file}{A previously downloaded Argo NetCDF file.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}}.

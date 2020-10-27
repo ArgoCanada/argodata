@@ -1,7 +1,7 @@
 
 #' Read Argo trajectory NetCDF files
 #'
-#' @inheritParams argo_nc_prof_read_levels
+#' @inheritParams argo_vars
 #'
 #' @return A [tibble::tibble()] containing columns "float" and
 #'   columns listed in `vars`.

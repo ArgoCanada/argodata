@@ -23,9 +23,11 @@
 #'
 #' argo_nc_prof_vars_levels(nc_prof)
 #' argo_nc_prof_vars_prof(nc_prof)
+#' argo_nc_prof_vars_history(nc_prof)
 #'
 #' argo_nc_prof_read_levels(nc_prof)
 #' argo_nc_prof_read_prof(nc_prof)
+#' argo_nc_prof_read_history(nc_prof)
 #'
 #' ncdf4::nc_close(nc_prof)
 #'

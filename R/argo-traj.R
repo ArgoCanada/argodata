@@ -17,6 +17,10 @@
 #'   argo_traj_cycle("dac/csio/2900313/2900313_Rtraj.nc")
 #' })
 #'
+#' with_argo_example_cache({
+#'   argo_traj_history("dac/csio/2900313/2900313_Rtraj.nc")
+#' })
+#'
 #' traj_file <- system.file(
 #'   "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
 #'   package = "argodata"
@@ -24,6 +28,7 @@
 #'
 #' argo_read_traj_meas(traj_file)
 #' argo_read_traj_cycle(traj_file)
+#' argo_read_traj_history(traj_file)
 #'
 argo_traj_meas <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   argo_read_many(

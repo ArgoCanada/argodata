@@ -44,7 +44,12 @@ nc_traj_file <- system.file(
 nc_traj <- ncdf4::nc_open(nc_traj_file)
 
 argo_nc_traj_vars_meas(nc_traj)
+argo_nc_traj_vars_cycle(nc_traj)
+argo_nc_traj_vars_history(nc_traj)
+
 argo_nc_traj_read_meas(nc_traj)
+argo_nc_traj_read_cycle(nc_traj)
+argo_nc_traj_read_history(nc_traj)
 
 ncdf4::nc_close(nc_traj)
 

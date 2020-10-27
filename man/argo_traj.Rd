@@ -3,6 +3,7 @@
 \name{argo_traj_meas}
 \alias{argo_traj_meas}
 \alias{argo_traj_cycle}
+\alias{argo_traj_history}
 \alias{argo_read_traj_meas}
 \alias{argo_read_traj_cycle}
 \alias{argo_read_traj_history}
@@ -12,7 +13,7 @@ argo_traj_meas(path, vars = NULL, download = NULL, quiet = FALSE)
 
 argo_traj_cycle(path, vars = NULL, download = NULL, quiet = FALSE)
 
-argo_traj_cycle(path, vars = NULL, download = NULL, quiet = FALSE)
+argo_traj_history(path, vars = NULL, download = NULL, quiet = FALSE)
 
 argo_read_traj_meas(file, vars = NULL)
 
@@ -26,7 +27,8 @@ argo_read_traj_history(file, vars = NULL)
 
 \item{vars}{A character vector of variable names.
 If a variable does not exist in the file, it is not included
-in the output.}
+in the output. The order of \code{vars} in the output is not
+guaranteed.}
 
 \item{download}{A logical vector indicating whether or not
 a file should be downloaded. Defaults to the value of

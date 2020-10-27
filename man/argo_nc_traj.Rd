@@ -26,7 +26,8 @@ argo_nc_traj_vars_history(nc)
 
 \item{vars}{A character vector of variable names.
 If a variable does not exist in the file, it is not included
-in the output.}
+in the output. The order of \code{vars} in the output is not
+guaranteed.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}} containing columns "float" and

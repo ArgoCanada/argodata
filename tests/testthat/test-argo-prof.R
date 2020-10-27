@@ -32,6 +32,22 @@ test_that("argo_prof_prof() works", {
   })
 })
 
+test_that("argo_prof_history() works", {
+  with_argo_example_cache({
+    prof <- argo_prof_history("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
+    expect_true(all(c("cycle_number", "history_qctest") %in% names(prof)))
+    expect_true(all(prof$cycle_number == 0))
+
+    prof <- argo_prof_history(
+      "dac/csio/2900313/profiles/D2900313_000.nc",
+      vars = c("history_qctest", "empty"),
+      quiet = TRUE
+    )
+
+    expect_identical(names(prof), c("float", "cycle_number", "date", "history_qctest"))
+  })
+})
+
 test_that("argo_read_prof_levels() works", {
   expect_is(
     argo_read_prof_levels(
@@ -47,6 +63,18 @@ test_that("argo_read_prof_levels() works", {
 test_that("argo_read_prof_prof() works", {
   expect_is(
     argo_read_prof_prof(
+      system.file(
+        "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+test_that("argo_read_prof_history() works", {
+  expect_is(
+    argo_read_prof_history(
       system.file(
         "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
         package = "argodata"

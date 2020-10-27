@@ -3,24 +3,31 @@
 \name{argo_nc_prof_read_levels}
 \alias{argo_nc_prof_read_levels}
 \alias{argo_nc_prof_read_prof}
+\alias{argo_nc_prof_read_history}
 \alias{argo_nc_prof_vars_levels}
 \alias{argo_nc_prof_vars_prof}
+\alias{argo_nc_prof_vars_history}
 \title{Read Argo profile NetCDF files}
 \usage{
 argo_nc_prof_read_levels(nc, vars = NULL, meta = NULL)
 
 argo_nc_prof_read_prof(nc, vars = NULL)
 
+argo_nc_prof_read_history(nc, vars = NULL, meta = NULL)
+
 argo_nc_prof_vars_levels(nc)
 
 argo_nc_prof_vars_prof(nc)
+
+argo_nc_prof_vars_history(nc)
 }
 \arguments{
 \item{nc}{A handle created using \code{\link[ncdf4:nc_open]{ncdf4::nc_open()}}.}
 
 \item{vars}{A character vector of variable names.
 If a variable does not exist in the file, it is not included
-in the output.}
+in the output. The order of \code{vars} in the output is not
+guaranteed.}
 
 \item{meta}{A character vector of meta variable names for
 each profile. These can be found using \code{\link[=argo_nc_prof_vars_prof]{argo_nc_prof_vars_prof()}}.}

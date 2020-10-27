@@ -51,6 +51,19 @@ argo_prof_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   )
 }
 
+#' @rdname argo_prof
+#' @export
+argo_prof_history <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
+  argo_read_many(
+    assert_argo_prof_file,
+    argo_read_prof_history,
+    path = path,
+    vars = vars,
+    meta = c("CYCLE_NUMBER", "JULD"),
+    download = download,
+    quiet = quiet
+  )
+}
 
 #' @rdname argo_prof
 #' @export
@@ -69,6 +82,17 @@ argo_read_prof_prof <- function(file, vars = NULL) {
     file,
     argo_nc_prof_read_prof,
     vars = vars
+  )
+}
+
+#' @rdname argo_prof
+#' @export
+argo_read_prof_history <- function(file, vars = NULL, meta = NULL) {
+  with_argo_nc_file(
+    file,
+    argo_nc_prof_read_history,
+    vars = vars,
+    meta = meta
   )
 }
 

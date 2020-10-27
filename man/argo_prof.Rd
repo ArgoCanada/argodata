@@ -3,17 +3,23 @@
 \name{argo_prof_levels}
 \alias{argo_prof_levels}
 \alias{argo_prof_prof}
+\alias{argo_prof_history}
 \alias{argo_read_prof_levels}
 \alias{argo_read_prof_prof}
+\alias{argo_read_prof_history}
 \title{Load Argo profiles}
 \usage{
 argo_prof_levels(path, vars = NULL, download = NULL, quiet = FALSE)
 
 argo_prof_prof(path, vars = NULL, download = NULL, quiet = FALSE)
 
+argo_prof_history(path, vars = NULL, download = NULL, quiet = FALSE)
+
 argo_read_prof_levels(file, vars = NULL, meta = NULL)
 
 argo_read_prof_prof(file, vars = NULL)
+
+argo_read_prof_history(file, vars = NULL, meta = NULL)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
@@ -21,7 +27,8 @@ argo_read_prof_prof(file, vars = NULL)
 
 \item{vars}{A character vector of variable names.
 If a variable does not exist in the file, it is not included
-in the output.}
+in the output. The order of \code{vars} in the output is not
+guaranteed.}
 
 \item{download}{A logical vector indicating whether or not
 a file should be downloaded. Defaults to the value of

@@ -87,4 +87,3 @@ test_that("assert_argo_traj_file() works", {
 
   expect_error(assert_argo_traj_file("not a file"), "Found 1 invalid Argo trajectory path")
 })
-

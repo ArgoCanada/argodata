@@ -25,10 +25,11 @@ argo_read_prof_history(file, vars = NULL, meta = NULL)
 \item{path}{A path relative to the root directory of
 \code{\link[=argo_mirror]{argo_mirror()}}.}
 
-\item{vars}{A character vector of variable names.
-If a variable does not exist in the file, it is not included
-in the output. The order of \code{vars} in the output is not
-guaranteed.}
+\item{vars}{A vector of variable names to include. The ordering
+of the variables is not guaranteed, and variables that do not
+exist are ignored. For \verb{nc_read_*()} and \verb{read_*()} variants,
+these are the raw variable names (all caps, without "date"
+substituted for "juld").}
 
 \item{download}{A logical vector indicating whether or not
 a file should be downloaded. Defaults to the value of

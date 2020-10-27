@@ -1,11 +1,7 @@
 
 #' Read Argo profile NetCDF files
 #'
-#' @param nc A handle created using [ncdf4::nc_open()].
-#' @param vars A character vector of variable names.
-#'   If a variable does not exist in the file, it is not included
-#'   in the output. The order of `vars` in the output is not
-#'   guaranteed.
+#' @inheritParams argo_vars
 #' @param meta A character vector of meta variable names for
 #'   each profile. These can be found using [argo_nc_prof_vars_prof()].
 #'

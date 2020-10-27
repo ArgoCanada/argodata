@@ -24,10 +24,11 @@ argo_nc_traj_vars_history(nc)
 \arguments{
 \item{nc}{A handle created using \code{\link[ncdf4:nc_open]{ncdf4::nc_open()}}.}
 
-\item{vars}{A character vector of variable names.
-If a variable does not exist in the file, it is not included
-in the output. The order of \code{vars} in the output is not
-guaranteed.}
+\item{vars}{A vector of variable names to include. The ordering
+of the variables is not guaranteed, and variables that do not
+exist are ignored. For \verb{nc_read_*()} and \verb{read_*()} variants,
+these are the raw variable names (all caps, without "date"
+substituted for "juld").}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}} containing columns "float" and

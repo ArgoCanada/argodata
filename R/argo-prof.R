@@ -27,44 +27,28 @@
 #' argo_read_prof_prof(prof_file)
 #'
 argo_prof_levels <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
-  path <- as_argo_path(path)
-  assert_argo_prof_file(path)
-
-  cached <- argo_download(path, download = download, quiet = quiet)
-
-  tbls <- lapply(
-    cached,
+  argo_read_many(
+    assert_argo_prof_file,
     argo_read_prof_levels,
-    vars = if (!is.null(vars)) toupper(vars) else vars,
-    meta = c("CYCLE_NUMBER", "JULD")
+    path = path,
+    vars = vars,
+    meta = c("CYCLE_NUMBER", "JULD"),
+    download = download,
+    quiet = quiet
   )
-
-  tbl <- vctrs::vec_rbind(!!! tbls)
-  names(tbl) <- tolower(names(tbl))
-
-  argo_juld_to_date_tbl(tbl)
 }
 
 #' @rdname argo_prof
 #' @export
 argo_prof_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
-  path <- as_argo_path(path)
-  assert_argo_prof_file(path)
-  cached <- argo_download(path, download = download, quiet = quiet)
-
-  tbls <- lapply(
-    cached,
+  argo_read_many(
+    assert_argo_prof_file,
     argo_read_prof_prof,
-    vars = if (!is.null(vars)) toupper(vars) else vars
+    path = path,
+    vars = vars,
+    download = download,
+    quiet = quiet
   )
-
-  tbl <- vctrs::vec_rbind(!!! tbls)
-
-  # make names lowercase
-  names(tbl) <- tolower(names(tbl))
-
-  # return dates instead of juld
-  argo_juld_to_date_tbl(tbl)
 }
 
 

@@ -1,4 +1,24 @@
 
+argo_read_many <- function(assert_fun, read_fun, ...,
+                           path, vars, download, quiet) {
+  path <- as_argo_path(path)
+  assert_fun(path)
+
+  cached <- argo_download(path, download = download, quiet = quiet)
+
+  tbls <- lapply(
+    cached,
+    read_fun,
+    vars = argo_unsanitize_vars(vars),
+    ...
+  )
+
+  tbl <- vctrs::vec_rbind(!!! tbls)
+  names(tbl) <- argo_sanitize_vars(names(tbl))
+
+  argo_juld_to_date_tbl(tbl)
+}
+
 argo_nc_values <- function(nc, vars) {
   values <- lapply(nc$var[vars], ncdf4::ncvar_get, nc = nc)
   lapply(values, argo_undimension)
@@ -47,6 +67,19 @@ argo_string_to_chars_tbl <- function(tbl, n = NULL) {
 argo_undimension <- function(x) {
   dim(x) <- NULL
   x
+}
+
+argo_unsanitize_vars <- function(x) {
+  if (is.null(x)) {
+    NULL
+  } else {
+    x <- toupper(x)
+    stringr::str_replace(x, "^DATE", "JULD")
+  }
+}
+
+argo_sanitize_vars <- function(x) {
+  tolower(x)
 }
 
 argo_juld_to_date <- function(juld) {

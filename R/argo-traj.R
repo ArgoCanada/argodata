@@ -26,45 +26,27 @@
 #' argo_read_traj_cycle(traj_file)
 #'
 argo_traj_meas <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
-  path <- as_argo_path(path)
-  assert_argo_traj_file(path)
-  cached <- argo_download(path, download = download, quiet = quiet)
-
-  tbls <- lapply(
-    cached,
+  argo_read_many(
+    assert_argo_traj_file,
     argo_read_traj_meas,
-    vars = if (!is.null(vars)) toupper(vars) else vars
+    path = path,
+    vars = vars,
+    download = download,
+    quiet = quiet
   )
-
-  tbl <- vctrs::vec_rbind(!!! tbls)
-
-  # make names lowercase
-  names(tbl) <- tolower(names(tbl))
-
-  # return dates instead of juld
-  argo_juld_to_date_tbl(tbl)
 }
 
 #' @rdname argo_traj
 #' @export
 argo_traj_cycle <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
-  path <- as_argo_path(path)
-  assert_argo_traj_file(path)
-  cached <- argo_download(path, download = download, quiet = quiet)
-
-  tbls <- lapply(
-    cached,
+  argo_read_many(
+    assert_argo_traj_file,
     argo_read_traj_cycle,
-    vars = if (!is.null(vars)) toupper(vars) else vars
+    path = path,
+    vars = vars,
+    download = download,
+    quiet = quiet
   )
-
-  tbl <- vctrs::vec_rbind(!!! tbls)
-
-  # make names lowercase
-  names(tbl) <- tolower(names(tbl))
-
-  # return dates instead of juld
-  argo_juld_to_date_tbl(tbl)
 }
 
 #' @rdname argo_traj

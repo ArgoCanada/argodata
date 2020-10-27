@@ -17,15 +17,30 @@ test_that("argo_traj_meas() works", {
 test_that("argo_traj_cycle() works", {
   with_argo_example_cache({
     traj <- argo_traj_cycle("dac/csio/2900313/2900313_Rtraj.nc", quiet = TRUE)
-    expect_true(all(c("cycle_number_index", "data_mode") %in% names(traj)))
+    expect_true(all(c("date_descent_start", "data_mode") %in% names(traj)))
 
     traj <- argo_traj_cycle(
       "dac/csio/2900313/2900313_Rtraj.nc",
-      vars = c("cycle_number_index", "empty"),
+      vars = c("date_descent_start", "empty"),
       quiet = TRUE
     )
 
-    expect_identical(names(traj), c("float", "cycle_number_index"))
+    expect_identical(names(traj), c("float", "date_descent_start"))
+  })
+})
+
+test_that("argo_traj_history() works", {
+  with_argo_example_cache({
+    traj <- argo_traj_history("dac/csio/2900313/2900313_Rtraj.nc", quiet = TRUE)
+    expect_true(all(c("history_index_dimension", "history_software") %in% names(traj)))
+
+    traj <- argo_traj_history(
+      "dac/csio/2900313/2900313_Rtraj.nc",
+      vars = c("history_index_dimension", "history_software", "empty"),
+      quiet = TRUE
+    )
+
+    expect_identical(names(traj), c("float", "history_index_dimension", "history_software"))
   })
 })
 
@@ -43,7 +58,19 @@ test_that("argo_read_traj_meas() works", {
 
 test_that("argo_read_traj_cycle() works", {
   expect_is(
-    argo_read_traj_meas(
+    argo_read_traj_cycle(
+      system.file(
+        "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+test_that("argo_read_traj_history() works", {
+  expect_is(
+    argo_read_traj_history(
       system.file(
         "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
         package = "argodata"

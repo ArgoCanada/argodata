@@ -46,6 +46,28 @@ argo_nc_traj_read_cycle <- function(nc, vars = NULL) {
 
 #' @rdname argo_nc_traj
 #' @export
+argo_nc_traj_read_history <- function(nc, vars = NULL) {
+  nc_vars_reg <- argo_nc_vars_by_dimension(nc, 1, "N_HISTORY")
+  nc_vars_string <- argo_nc_vars_by_dimension(nc, 2, "N_HISTORY")
+  nc_vars <- c(nc_vars_reg, nc_vars_string)
+
+  vars <- if (is.null(vars)) nc_vars else intersect(vars, nc_vars)
+  n <- nc$dim$N_HISTORY$len
+
+  # regular values don't have a string dimension, so need
+  # argo_string_to_chars_tbl()
+  values <- argo_nc_values(nc, intersect(vars, nc_vars_reg))
+  values <- argo_string_to_chars_tbl(values)
+
+  # string values are fixed-width, so need whitespace trimmed
+  values_string <- argo_nc_values(nc, intersect(vars, nc_vars_string))
+  values_string <- lapply(values_string, stringr::str_trim)
+
+  argo_nc_new_tibble(nc, c(values, values_string), nrow = n)
+}
+
+#' @rdname argo_nc_traj
+#' @export
 argo_nc_traj_vars_meas <- function(nc) {
   argo_nc_vars_by_dimension(nc, 1, "N_MEASUREMENT")
 }
@@ -54,4 +76,14 @@ argo_nc_traj_vars_meas <- function(nc) {
 #' @export
 argo_nc_traj_vars_cycle <- function(nc) {
   argo_nc_vars_by_dimension(nc, 1, "N_CYCLE")
+}
+
+#' @rdname argo_nc_traj
+#' @export
+argo_nc_traj_vars_history <- function(nc) {
+  c(
+    argo_nc_vars_by_dimension(nc, 1, "N_HISTORY"),
+    # for these variables, the first dimension is a string dimension
+    argo_nc_vars_by_dimension(nc, 2, "N_HISTORY")
+  )
 }

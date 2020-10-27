@@ -32,3 +32,20 @@ test_that("argo_nc_traj_*_cycle() works for trajectory files", {
 
   ncdf4::nc_close(nc)
 })
+
+test_that("argo_nc_traj_*_history() works for trajectory files", {
+  nc <- ncdf4::nc_open(
+    system.file(
+      "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
+      package = "argodata"
+    )
+  )
+
+  nc_all <- argo_nc_traj_read_history(nc)
+  expect_true(all(argo_nc_traj_vars_history(nc) %in% names(nc_all)))
+
+  nc_no_meta <- argo_nc_traj_read_history(nc, vars = c("HISTORY_INDEX_DIMENSION", "HISTORY_QCTEST", "EMPTY"))
+  expect_identical(names(nc_no_meta), c("float", "HISTORY_INDEX_DIMENSION", "HISTORY_QCTEST"))
+
+  ncdf4::nc_close(nc)
+})

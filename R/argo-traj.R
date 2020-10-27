@@ -51,6 +51,19 @@ argo_traj_cycle <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 
 #' @rdname argo_traj
 #' @export
+argo_traj_history <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
+  argo_read_many(
+    assert_argo_traj_file,
+    argo_read_traj_history,
+    path = path,
+    vars = vars,
+    download = download,
+    quiet = quiet
+  )
+}
+
+#' @rdname argo_traj
+#' @export
 argo_read_traj_meas <- function(file, vars = NULL) {
   with_argo_nc_file(
     file,
@@ -65,6 +78,16 @@ argo_read_traj_cycle <- function(file, vars = NULL) {
   with_argo_nc_file(
     file,
     argo_nc_traj_read_cycle,
+    vars = vars
+  )
+}
+
+#' @rdname argo_traj
+#' @export
+argo_read_traj_history <- function(file, vars = NULL) {
+  with_argo_nc_file(
+    file,
+    argo_nc_traj_read_history,
     vars = vars
   )
 }

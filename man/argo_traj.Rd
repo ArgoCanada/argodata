@@ -5,15 +5,20 @@
 \alias{argo_traj_cycle}
 \alias{argo_read_traj_meas}
 \alias{argo_read_traj_cycle}
+\alias{argo_read_traj_history}
 \title{Load Argo trajectories}
 \usage{
 argo_traj_meas(path, vars = NULL, download = NULL, quiet = FALSE)
 
 argo_traj_cycle(path, vars = NULL, download = NULL, quiet = FALSE)
 
+argo_traj_cycle(path, vars = NULL, download = NULL, quiet = FALSE)
+
 argo_read_traj_meas(file, vars = NULL)
 
 argo_read_traj_cycle(file, vars = NULL)
+
+argo_read_traj_history(file, vars = NULL)
 }
 \arguments{
 \item{path}{A path relative to the root directory of

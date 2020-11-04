@@ -15,14 +15,12 @@ knitr::opts_chunk$set(
 
 library(argodata)
 library(tidyverse)
+
 argo_set_cache_dir("cache-dev")
 options(argodata.max_global_cache_age = Inf)
 options(argodata.max_data_cache_age = Inf)
 
-argo_global_meta()
 argo_global_prof()
-argo_global_tech()
-argo_global_traj()
 ```
 
 # argodata
@@ -44,70 +42,52 @@ You can install the development version from [GitHub](https://github.com/) with:
 remotes::install_github("ArgoCanada/argodata")
 ```
 
-If you can load the package, you're all set!
+The argodata package downloads files from the [FTP and HTTPS mirrors](http://www.argodatamgt.org/Access-to-data/Access-via-FTP-or-HTTPS-on-GDAC), caches them, and loads them into R. You can set the mirror using `argo_set_mirror()` and the cache directory using `argo_set_cache_dir()`:
 
-```{r}
-library(argodata)
+```{r, eval = FALSE}
+argo_set_mirror("https://data-argo.ifremer.fr/")
+argo_set_cache_dir("my/argo/cache")
 ```
+
+Optionally, you can set `options(argodata.cache_dir = "my/argo/cache")` in your .Rprofile to persist this value between R sessions (see `usethis::edit_r_profile()`).
 
 ## Example
 
-The argodata package downloads files from the [FTP and HTTPS mirrors](http://www.argodatamgt.org/Access-to-data/Access-via-FTP-or-HTTPS-on-GDAC), caches them, and loads them into R. The `argo_global_*()` functions load the index files that list the locations of other files on the mirror:
+```{r example}
+library(tidyverse)
+library(argodata)
 
-```{r}
-argo_global_meta()
-argo_global_prof()
-argo_global_tech()
-argo_global_traj()
+# search for profiles that match some criteria
+(prof_ns_may_2020 <-  argo_global_prof() %>% 
+  filter(
+    latitude >= 50, latitude <= 60,
+    longitude >= -60, longitude <= -50,
+    lubridate::year(date) == 2020, 
+    lubridate::month(date) == 5
+  ))
+
+# downloads, caches, and reads the NetCDF files
+(levels_ns_may_2020 <- prof_ns_may_2020 %>% 
+  argo_prof_levels() )
+
+# plot!
+levels_ns_may_2020 %>% 
+  filter(psal_qc == 1) %>% 
+  ggplot(aes(x = psal, y = pres, col = temp)) +
+  geom_point() +
+  scale_y_reverse() +
+  theme_bw()
 ```
 
-You can load profile data by filtering `argo_global_prof()` and piping to `argo_prof_levels()` (one row per level sampled) or `argo_prof_prof()` (one row per profile):
-
-```{r}
-argo_global_prof() %>% 
-  tail(100) %>% 
-  argo_prof_levels()
-
-argo_global_prof() %>% 
-  tail(100) %>% 
-  argo_prof_prof()
-```
-
-Similarly, you can load trajectory data by filtering `argo_global_traj()` and piping to `argo_traj_meas()` and/or `argo_traj_cycle()`:
-
-```{r}
-argo_global_traj() %>% 
-  tail(10) %>% 
-  argo_traj_meas()
-
-argo_global_traj() %>% 
-  tail(10) %>% 
-  argo_traj_cycle()
-```
-
-If you have previously downloaded Argo data, you can use `argo_read_*()` functions:
-
-```{r}
-argo_read_global_meta("cache-dev/ar_index_global_meta.txt.gz")
-argo_read_prof_levels("cache-dev/dac/nmdis/2901633/profiles/R2901633_070.nc")
-```
-
-Documentation for Argo variable names, units, and more are available from the [Argo Data Management Documentation page](http://www.argodatamgt.org/Documentation).
-
-## Cache management
-
-Each Argo floats mirror is home to over 250 GB of data organized in millions of files! The argodata package caches all files that it downloads, which you can set to a cache that persists between sessions. If you have a [local mirror updated using rsync](http://www.argodatamgt.org/Access-to-data/Argo-GDAC-synchronization-service) you can pass this directory to `argo_set_mirror()`, which can also be used to switch between the various mirrors provided by GDAC.
+In RStudio, you can use the [leaflet](https://rstudio.github.io/leaflet/) package to view locations of profiles interactively.
 
 ```{r, eval=FALSE}
-argo_set_cache_dir("path/to/cache")
-argo_set_mirror("ftp://usgodae.org/pub/outgoing/argo")
-argo_set_mirror("path/to/local/argo")
+library(leaflet)
+
+prof_ns_may_2020 %>% 
+  leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(lng = ~longitude, lat = ~latitude, label = ~file)
 ```
 
-By default, index files are cached for 24 hours and data files are cached indefinitely. These defaults reflect a balance between the considerable time required to download new files and the frequency with which files are updated on the mirror. To override these defaults you can pass `download = TRUE` to functions that load data, or set `options(argodata.max_data_cache_age = 3)`, where the number is in hours. Use `Inf` to always use the cached version of a file.
-
-```{r, eval=FALSE}
-argo_global_prof(download = TRUE)
-options(argodata.max_global_cache_age = Inf)
-options(argodata.max_data_cache_age = Inf)
-```
+![Leaflet Widget](man/figures/README-leaflet.png)

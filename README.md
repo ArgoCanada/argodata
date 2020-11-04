@@ -26,275 +26,94 @@ You can install the development version from
 remotes::install_github("ArgoCanada/argodata")
 ```
 
-If you can load the package, you’re all set\!
+The argodata package downloads files from the [FTP and HTTPS
+mirrors](http://www.argodatamgt.org/Access-to-data/Access-via-FTP-or-HTTPS-on-GDAC),
+caches them, and loads them into R. You can set the mirror using
+`argo_set_mirror()` and the cache directory using
+`argo_set_cache_dir()`:
 
 ``` r
-library(argodata)
+argo_set_mirror("https://data-argo.ifremer.fr/")
+argo_set_cache_dir("my/argo/cache")
 ```
+
+Optionally, you can set `options(argodata.cache_dir = "my/argo/cache")`
+in your .Rprofile to persist this value between R sessions (see
+`usethis::edit_r_profile()`).
 
 ## Example
 
-The argodata package downloads files from the [FTP and HTTPS
-mirrors](http://www.argodatamgt.org/Access-to-data/Access-via-FTP-or-HTTPS-on-GDAC),
-caches them, and loads them into R. The `argo_global_*()` functions load
-the index files that list the locations of other files on the mirror:
-
 ``` r
-argo_global_meta()
-#> # A tibble: 16,067 x 4
-#>    file                     profiler_type institution date_update        
-#>    <chr>                            <dbl> <chr>       <dttm>             
-#>  1 aoml/13857/13857_meta.nc           845 AO          2018-10-11 20:00:14
-#>  2 aoml/13858/13858_meta.nc           845 AO          2018-10-11 20:00:15
-#>  3 aoml/13859/13859_meta.nc           845 AO          2018-10-11 20:00:25
-#>  4 aoml/15819/15819_meta.nc           845 AO          2018-10-11 20:00:16
-#>  5 aoml/15820/15820_meta.nc           845 AO          2018-10-11 20:00:18
-#>  6 aoml/15851/15851_meta.nc           845 AO          2018-10-11 20:00:26
-#>  7 aoml/15852/15852_meta.nc           845 AO          2018-10-11 20:00:28
-#>  8 aoml/15853/15853_meta.nc           845 AO          2018-10-11 20:00:29
-#>  9 aoml/15854/15854_meta.nc           845 AO          2018-10-11 20:00:30
-#> 10 aoml/15855/15855_meta.nc           845 AO          2018-10-11 20:00:34
-#> # ... with 16,057 more rows
-argo_global_prof()
-#> # A tibble: 2,355,451 x 8
+library(tidyverse)
+library(argodata)
+
+# search for profiles that match some criteria
+(prof_ns_may_2020 <-  argo_global_prof() %>% 
+  filter(
+    latitude >= 50, latitude <= 60,
+    longitude >= -60, longitude <= -50,
+    lubridate::year(date) == 2020, 
+    lubridate::month(date) == 5
+  ))
+#> # A tibble: 55 x 8
 #>    file  date                latitude longitude ocean profiler_type institution
 #>    <chr> <dttm>                 <dbl>     <dbl> <chr>         <dbl> <chr>      
-#>  1 aoml~ 1997-07-29 20:03:00    0.267     -16.0 A               845 AO         
-#>  2 aoml~ 1997-08-09 19:21:12    0.072     -17.7 A               845 AO         
-#>  3 aoml~ 1997-08-20 18:45:45    0.543     -19.6 A               845 AO         
-#>  4 aoml~ 1997-08-31 19:39:05    1.26      -20.5 A               845 AO         
-#>  5 aoml~ 1997-09-11 18:58:08    0.72      -20.8 A               845 AO         
-#>  6 aoml~ 1997-09-22 19:57:02    1.76      -21.6 A               845 AO         
-#>  7 aoml~ 1997-10-03 19:15:49    2.60      -21.6 A               845 AO         
-#>  8 aoml~ 1997-10-14 18:39:35    1.76      -21.6 A               845 AO         
-#>  9 aoml~ 1997-10-25 19:32:34    1.80      -21.8 A               845 AO         
-#> 10 aoml~ 1997-11-05 18:51:42    1.64      -21.4 A               845 AO         
-#> # ... with 2,355,441 more rows, and 1 more variable: date_update <dttm>
-argo_global_tech()
-#> # A tibble: 15,610 x 3
-#>    file                     institution date_update        
-#>    <chr>                    <chr>       <dttm>             
-#>  1 aoml/13857/13857_tech.nc AO          2018-10-11 20:00:14
-#>  2 aoml/13858/13858_tech.nc AO          2018-10-11 20:00:15
-#>  3 aoml/13859/13859_tech.nc AO          2018-10-11 20:00:25
-#>  4 aoml/15819/15819_tech.nc AO          2018-10-11 20:00:16
-#>  5 aoml/15820/15820_tech.nc AO          2018-10-11 20:00:18
-#>  6 aoml/15851/15851_tech.nc AO          2018-10-11 20:00:26
-#>  7 aoml/15852/15852_tech.nc AO          2018-10-11 20:00:28
-#>  8 aoml/15853/15853_tech.nc AO          2018-10-11 20:00:29
-#>  9 aoml/15854/15854_tech.nc AO          2018-10-11 20:00:30
-#> 10 aoml/15855/15855_tech.nc AO          2018-10-11 20:00:34
-#> # ... with 15,600 more rows
-argo_global_traj()
-#> # A tibble: 17,204 x 8
-#>    file  latitude_max latitude_min longitude_max longitude_min profiler_type
-#>    <chr>        <dbl>        <dbl>         <dbl>         <dbl>         <dbl>
-#>  1 aoml~         6.93        0.008        -15.0         -33.8            845
-#>  2 aoml~         5.21       -0.363         -9.50        -17.8            845
-#>  3 aoml~         5.93       -0.939        -18.6         -33.7            845
-#>  4 aoml~        -2.66       -9.19         -16.4         -40.0            845
-#>  5 aoml~        -1.98       -7.14          -9.90        -35.8            845
-#>  6 aoml~        -2.73       -6.22           3.33        -21.1            845
-#>  7 aoml~        -5.04       -8.44          -1.49        -18.9            845
-#>  8 aoml~        -4.70       -8.25          -4.40        -18.0            845
-#>  9 aoml~        -4.81       -7.20          -6.41        -12.7            845
-#> 10 aoml~        -1.79       -6.00           7            -5.45           845
-#> # ... with 17,194 more rows, and 2 more variables: institution <chr>,
-#> #   date_update <dttm>
-```
+#>  1 bodc~ 2020-05-05 16:48:52     56.9     -55.6 A               846 BO         
+#>  2 bodc~ 2020-05-15 14:51:15     56.3     -55.2 A               846 BO         
+#>  3 bodc~ 2020-05-25 16:41:59     55.6     -54.0 A               846 BO         
+#>  4 bodc~ 2020-05-02 16:13:53     59.5     -51.6 A               846 BO         
+#>  5 bodc~ 2020-05-12 17:51:58     59.7     -53.0 A               846 BO         
+#>  6 bodc~ 2020-05-22 16:12:39     59.1     -53.9 A               846 BO         
+#>  7 bodc~ 2020-05-04 01:44:23     59.4     -59.6 A               846 BO         
+#>  8 bodc~ 2020-05-13 21:17:51     58.8     -58.1 A               846 BO         
+#>  9 bodc~ 2020-05-23 16:30:46     58.2     -57.5 A               846 BO         
+#> 10 cori~ 2020-05-04 07:14:14     58.0     -52.8 A               846 IF         
+#> # ... with 45 more rows, and 1 more variable: date_update <dttm>
 
-You can load profile data by filtering `argo_global_prof()` and piping
-to `argo_prof_levels()` (one row per level sampled) or
-`argo_prof_prof()` (one row per profile):
-
-``` r
-argo_global_prof() %>% 
-  tail(100) %>% 
-  argo_prof_levels()
-#> # A tibble: 9,199 x 18
-#>    float cycle_number date                 pres pres_qc pres_adjusted
-#>    <chr>        <int> <dttm>              <dbl> <chr>           <dbl>
-#>  1 nmdi~          123 2014-11-12 04:40:37     0 1                  NA
-#>  2 nmdi~          123 2014-11-12 04:40:37     6 1                  NA
-#>  3 nmdi~          123 2014-11-12 04:40:37    17 1                  NA
-#>  4 nmdi~          123 2014-11-12 04:40:37    26 1                  NA
-#>  5 nmdi~          123 2014-11-12 04:40:37    36 1                  NA
-#>  6 nmdi~          123 2014-11-12 04:40:37    46 1                  NA
-#>  7 nmdi~          123 2014-11-12 04:40:37    57 1                  NA
-#>  8 nmdi~          123 2014-11-12 04:40:37    66 1                  NA
-#>  9 nmdi~          123 2014-11-12 04:40:37    76 1                  NA
-#> 10 nmdi~          123 2014-11-12 04:40:37    86 1                  NA
-#> # ... with 9,189 more rows, and 12 more variables: pres_adjusted_qc <chr>,
-#> #   pres_adjusted_error <dbl>, psal <dbl>, psal_qc <chr>, psal_adjusted <dbl>,
-#> #   psal_adjusted_qc <chr>, psal_adjusted_error <dbl>, temp <dbl>,
-#> #   temp_qc <chr>, temp_adjusted <dbl>, temp_adjusted_qc <chr>,
+# downloads, caches, and reads the NetCDF files
+(levels_ns_may_2020 <- prof_ns_may_2020 %>% 
+  argo_prof_levels() )
+#> # A tibble: 15,596 x 18
+#>    float cycle_number date                 pres  psal  temp pres_qc psal_qc
+#>    <chr>        <int> <dttm>              <dbl> <dbl> <dbl> <chr>   <chr>  
+#>  1 bodc~          213 2020-05-05 16:48:51  4.20  34.8  3.45 1       1      
+#>  2 bodc~          213 2020-05-05 16:48:51  9.80  34.8  3.45 1       1      
+#>  3 bodc~          213 2020-05-05 16:48:51 15.3   34.8  3.45 1       1      
+#>  4 bodc~          213 2020-05-05 16:48:51 20     34.8  3.45 1       1      
+#>  5 bodc~          213 2020-05-05 16:48:51 25     34.8  3.44 1       1      
+#>  6 bodc~          213 2020-05-05 16:48:51 29.8   34.8  3.44 1       1      
+#>  7 bodc~          213 2020-05-05 16:48:51 34.7   34.8  3.45 1       1      
+#>  8 bodc~          213 2020-05-05 16:48:51 40.2   34.8  3.44 1       1      
+#>  9 bodc~          213 2020-05-05 16:48:51 50.1   34.8  3.43 1       1      
+#> 10 bodc~          213 2020-05-05 16:48:51 59.4   34.8  3.43 1       1      
+#> # ... with 15,586 more rows, and 10 more variables: temp_qc <chr>,
+#> #   pres_adjusted <dbl>, psal_adjusted <dbl>, temp_adjusted <dbl>,
+#> #   pres_adjusted_qc <chr>, psal_adjusted_qc <chr>, temp_adjusted_qc <chr>,
+#> #   pres_adjusted_error <dbl>, psal_adjusted_error <dbl>,
 #> #   temp_adjusted_error <dbl>
 
-argo_global_prof() %>% 
-  tail(100) %>% 
-  argo_prof_prof()
-#> # A tibble: 100 x 13
-#>    float cycle_number direction data_mode date               
-#>    <chr>        <int> <chr>     <chr>     <dttm>             
-#>  1 nmdi~          123 A         R         2014-11-12 04:40:37
-#>  2 nmdi~          124 A         R         2014-11-22 04:52:39
-#>  3 nmdi~          125 A         R         2014-12-02 04:52:43
-#>  4 nmdi~          126 A         R         2014-12-12 04:52:45
-#>  5 nmdi~          127 A         R         2014-12-22 04:52:49
-#>  6 nmdi~          128 A         R         2015-01-01 04:52:52
-#>  7 nmdi~          129 A         R         2015-01-11 04:59:54
-#>  8 nmdi~          130 A         R         2015-01-21 04:52:58
-#>  9 nmdi~          131 A         R         2015-01-31 05:00:02
-#> 10 nmdi~          132 A         R         2015-02-10 04:53:05
-#> # ... with 90 more rows, and 8 more variables: date_qc <dttm>,
-#> #   date_location <dttm>, latitude <dbl>, longitude <dbl>, position_qc <chr>,
-#> #   profile_pres_qc <chr>, profile_psal_qc <chr>, profile_temp_qc <chr>
+# plot!
+levels_ns_may_2020 %>% 
+  filter(psal_qc == 1) %>% 
+  ggplot(aes(x = psal, y = pres, col = temp)) +
+  geom_point() +
+  scale_y_reverse() +
+  theme_bw()
 ```
 
-Similarly, you can load trajectory data by filtering
-`argo_global_traj()` and piping to `argo_traj_meas()` and/or
-`argo_traj_cycle()`:
+<img src="man/figures/README-example-1.png" width="100%" />
+
+In RStudio, you can use the
+[leaflet](https://rstudio.github.io/leaflet/) package to view locations
+of profiles interactively.
 
 ``` r
-argo_global_traj() %>% 
-  tail(10) %>% 
-  argo_traj_meas()
-#> # A tibble: 73,796 x 34
-#>    float date                date_status         date_qc            
-#>    <chr> <dttm>              <dttm>              <dttm>             
-#>  1 nmdi~ 2010-04-25 07:13:00 NA                  NA                 
-#>  2 nmdi~ 2010-05-28 11:30:00 NA                  NA                 
-#>  3 nmdi~ 2010-05-28 11:54:00 NA                  NA                 
-#>  4 nmdi~ NA                  NA                  NA                 
-#>  5 nmdi~ 2010-05-28 19:42:00 NA                  NA                 
-#>  6 nmdi~ 2010-05-29 07:00:00 NA                  NA                 
-#>  7 nmdi~ 2010-05-29 19:00:00 NA                  NA                 
-#>  8 nmdi~ 2010-05-30 07:00:00 NA                  NA                 
-#>  9 nmdi~ 2010-05-30 19:00:00 NA                  NA                 
-#> 10 nmdi~ 2010-05-31 07:00:00 NA                  NA                 
-#> # ... with 73,786 more rows, and 30 more variables: date_adjusted <dttm>,
-#> #   date_adjusted_status <dttm>, date_adjusted_qc <dttm>, latitude <dbl>,
-#> #   longitude <dbl>, position_accuracy <chr>, position_qc <chr>,
-#> #   cycle_number <int>, cycle_number_adjusted <int>, measurement_code <int>,
-#> #   axes_error_ellipse_major <dbl>, axes_error_ellipse_minor <dbl>,
-#> #   axes_error_ellipse_angle <dbl>, satellite_name <chr>, pres <dbl>,
-#> #   pres_qc <chr>, pres_adjusted <dbl>, pres_adjusted_qc <chr>,
-#> #   pres_adjusted_error <dbl>, temp <dbl>, temp_qc <chr>, temp_adjusted <dbl>,
-#> #   temp_adjusted_qc <chr>, temp_adjusted_error <dbl>, psal <dbl>,
-#> #   psal_qc <chr>, psal_adjusted <dbl>, psal_adjusted_qc <chr>,
-#> #   psal_adjusted_error <dbl>, data_mode <chr>
+library(leaflet)
 
-argo_global_traj() %>% 
-  tail(10) %>% 
-  argo_traj_cycle()
-#> # A tibble: 1,461 x 43
-#>    float date_descent_start  date_descent_start~ date_first_stabili~
-#>    <chr> <dttm>              <dttm>              <dttm>             
-#>  1 nmdi~ 2010-05-28 11:27:00 NA                  2010-05-28 11:51:00
-#>  2 nmdi~ 2010-06-17 11:15:00 NA                  2010-06-17 11:39:00
-#>  3 nmdi~ 2010-06-27 11:27:00 NA                  2010-06-27 11:45:00
-#>  4 nmdi~ 2010-07-07 11:33:00 NA                  2010-07-07 11:51:00
-#>  5 nmdi~ 2010-07-17 11:27:00 NA                  2010-07-17 11:57:00
-#>  6 nmdi~ 2010-07-27 11:33:00 NA                  2010-07-27 11:51:00
-#>  7 nmdi~ 2010-08-06 11:27:00 NA                  2010-08-06 11:45:00
-#>  8 nmdi~ 2010-08-16 11:27:00 NA                  2010-08-16 11:51:00
-#>  9 nmdi~ 2010-08-26 11:33:00 NA                  2010-08-26 11:45:00
-#> 10 nmdi~ 2010-09-05 11:27:00 NA                  2010-09-05 11:51:00
-#> # ... with 1,451 more rows, and 39 more variables:
-#> #   date_first_stabilization_status <dttm>, date_descent_end <dttm>,
-#> #   date_descent_end_status <dttm>, date_park_start <dttm>,
-#> #   date_park_start_status <dttm>, date_park_end <dttm>,
-#> #   date_park_end_status <dttm>, date_deep_descent_end <dttm>,
-#> #   date_deep_descent_end_status <dttm>, date_deep_park_start <dttm>,
-#> #   date_deep_park_start_status <dttm>, date_ascent_start <dttm>,
-#> #   date_ascent_start_status <dttm>, date_deep_ascent_start <dttm>,
-#> #   date_deep_ascent_start_status <dttm>, date_ascent_end <dttm>,
-#> #   date_ascent_end_status <dttm>, date_transmission_start <dttm>,
-#> #   date_transmission_start_status <dttm>, date_first_message <dttm>,
-#> #   date_first_message_status <dttm>, date_first_location <dttm>,
-#> #   date_first_location_status <dttm>, date_last_location <dttm>,
-#> #   date_last_location_status <dttm>, date_last_message <dttm>,
-#> #   date_last_message_status <dttm>, date_transmission_end <dttm>,
-#> #   date_transmission_end_status <dttm>, clock_offset <dbl>, grounded <chr>,
-#> #   representative_park_pressure <dbl>,
-#> #   representative_park_pressure_status <chr>, config_mission_number <int>,
-#> #   cycle_number_index <int>, cycle_number_index_adjusted <int>,
-#> #   data_mode <chr>, date_start_transmission <dttm>,
-#> #   date_start_transmission_status <dttm>
+prof_ns_may_2020 %>% 
+  leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(lng = ~longitude, lat = ~latitude, label = ~file)
 ```
 
-If you have previously downloaded Argo data, you can use `argo_read_*()`
-functions:
-
-``` r
-argo_read_global_meta("cache-dev/ar_index_global_meta.txt.gz")
-#> # A tibble: 16,067 x 4
-#>    file                     profiler_type institution date_update        
-#>    <chr>                            <dbl> <chr>       <dttm>             
-#>  1 aoml/13857/13857_meta.nc           845 AO          2018-10-11 20:00:14
-#>  2 aoml/13858/13858_meta.nc           845 AO          2018-10-11 20:00:15
-#>  3 aoml/13859/13859_meta.nc           845 AO          2018-10-11 20:00:25
-#>  4 aoml/15819/15819_meta.nc           845 AO          2018-10-11 20:00:16
-#>  5 aoml/15820/15820_meta.nc           845 AO          2018-10-11 20:00:18
-#>  6 aoml/15851/15851_meta.nc           845 AO          2018-10-11 20:00:26
-#>  7 aoml/15852/15852_meta.nc           845 AO          2018-10-11 20:00:28
-#>  8 aoml/15853/15853_meta.nc           845 AO          2018-10-11 20:00:29
-#>  9 aoml/15854/15854_meta.nc           845 AO          2018-10-11 20:00:30
-#> 10 aoml/15855/15855_meta.nc           845 AO          2018-10-11 20:00:34
-#> # ... with 16,057 more rows
-argo_read_prof_levels("cache-dev/dac/nmdis/2901633/profiles/R2901633_070.nc")
-#> # A tibble: 95 x 28
-#>    float CYCLE_NUMBER DIRECTION DATA_MODE   JULD JULD_QC JULD_LOCATION LATITUDE
-#>    <chr>        <int> <chr>     <chr>      <dbl> <chr>           <dbl>    <dbl>
-#>  1 nmdi~           70 A         R         23161. 1              23161.     27.9
-#>  2 nmdi~           70 A         R         23161. 1              23161.     27.9
-#>  3 nmdi~           70 A         R         23161. 1              23161.     27.9
-#>  4 nmdi~           70 A         R         23161. 1              23161.     27.9
-#>  5 nmdi~           70 A         R         23161. 1              23161.     27.9
-#>  6 nmdi~           70 A         R         23161. 1              23161.     27.9
-#>  7 nmdi~           70 A         R         23161. 1              23161.     27.9
-#>  8 nmdi~           70 A         R         23161. 1              23161.     27.9
-#>  9 nmdi~           70 A         R         23161. 1              23161.     27.9
-#> 10 nmdi~           70 A         R         23161. 1              23161.     27.9
-#> # ... with 85 more rows, and 20 more variables: LONGITUDE <dbl>,
-#> #   POSITION_QC <chr>, PROFILE_PRES_QC <chr>, PROFILE_PSAL_QC <chr>,
-#> #   PROFILE_TEMP_QC <chr>, PRES <dbl>, PRES_QC <chr>, PRES_ADJUSTED <dbl>,
-#> #   PRES_ADJUSTED_QC <chr>, PRES_ADJUSTED_ERROR <dbl>, PSAL <dbl>,
-#> #   PSAL_QC <chr>, PSAL_ADJUSTED <dbl>, PSAL_ADJUSTED_QC <chr>,
-#> #   PSAL_ADJUSTED_ERROR <dbl>, TEMP <dbl>, TEMP_QC <chr>, TEMP_ADJUSTED <dbl>,
-#> #   TEMP_ADJUSTED_QC <chr>, TEMP_ADJUSTED_ERROR <dbl>
-```
-
-Documentation for Argo variable names, units, and more are available
-from the [Argo Data Management Documentation
-page](http://www.argodatamgt.org/Documentation).
-
-## Cache management
-
-Each Argo floats mirror is home to over 250 GB of data organized in
-millions of files\! The argodata package caches all files that it
-downloads, which you can set to a cache that persists between sessions.
-If you have a [local mirror updated using
-rsync](http://www.argodatamgt.org/Access-to-data/Argo-GDAC-synchronization-service)
-you can pass this directory to `argo_set_mirror()`, which can also be
-used to switch between the various mirrors provided by GDAC.
-
-``` r
-argo_set_cache_dir("path/to/cache")
-argo_set_mirror("ftp://usgodae.org/pub/outgoing/argo")
-argo_set_mirror("path/to/local/argo")
-```
-
-By default, index files are cached for 24 hours and data files are
-cached indefinitely. These defaults reflect a balance between the
-considerable time required to download new files and the frequency with
-which files are updated on the mirror. To override these defaults you
-can pass `download = TRUE` to functions that load data, or set
-`options(argodata.max_data_cache_age = 3)`, where the number is in
-hours. Use `Inf` to always use the cached version of a file.
-
-``` r
-argo_global_prof(download = TRUE)
-options(argodata.max_global_cache_age = Inf)
-options(argodata.max_data_cache_age = Inf)
-```
+![Leaflet Widget](man/figures/README-leaflet.png)

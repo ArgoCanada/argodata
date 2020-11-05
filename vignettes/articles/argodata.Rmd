@@ -36,7 +36,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+The argodata package was designed to work with the [tidyverse](https://tidyverse.org) family of packages, for which learning materials are available in [English](https://r4ds.had.co.nz), [German](https://oreilly.de/produkt/r-fuer-data-science/), and Portuguese.
+
+```{r, eval=FALSE}
+library(tidyverse)
 library(argodata)
 ```
 
@@ -45,6 +48,7 @@ library(argodata)
 The `argo_global_*()` functions load the index files that list the locations of other files on the mirror:
 
 ```{r}
+library(argodata)
 argo_global_meta()
 argo_global_prof()
 argo_global_tech()

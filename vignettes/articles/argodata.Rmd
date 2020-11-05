@@ -5,6 +5,33 @@ title: "Get Started with argodata"
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  dpi = 300
+)
+
+library(argodata)
+
+# This allows the pkgdown action to cache files downloaded
+# to the cache to avoid downloading on every push. The cache
+# can be invalidated by incrementing the number in the 'key'
+# in the pkgdown action.
+argo_set_cache_dir(Sys.getenv("ARGO_PKGDOWN_CACHE", "../../cache-dev"))
+options(argodata.max_global_cache_age = Inf)
+options(argodata.max_data_cache_age = Inf)
+
+# this is a cheap way to avoid putting 'magrittr' in Suggests
+`%>%` <- testthat::`%>%`
+
+# load index files quietly
+argo_global_meta()
+argo_global_prof()
+argo_global_tech()
+argo_global_traj()
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
   comment = "#>"
 )
 ```

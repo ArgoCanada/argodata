@@ -7,6 +7,30 @@
 #' @return A [tibble::tibble()].
 #' @export
 #'
+#' @examples
+#' with_argo_example_cache({
+#'   argo_global_meta()
+#' })
+#'
+#' with_argo_example_cache({
+#'   argo_global_tech()
+#' })
+#'
+#' with_argo_example_cache({
+#'   argo_global_traj()
+#' })
+#'
+#' with_argo_example_cache({
+#'   argo_global_bio_traj()
+#' })
+#'
+#' \dontrun{
+#' # extended download time if no cached version is available
+#' argo_global_prof()
+#' argo_global_bio_prof()
+#' argo_global_synthetic_prof()
+#' }
+#'
 argo_global_meta <- function(download = NULL, quiet = FALSE) {
   argo_global(
     path = "ar_index_global_meta.txt.gz",
@@ -48,6 +72,42 @@ argo_global_traj <- function(download = NULL, quiet = FALSE) {
     path = "ar_index_global_traj.txt.gz",
     name = "traj",
     read_fun = argo_read_global_traj,
+    download = download,
+    quiet = quiet
+  )
+}
+
+#' @rdname argo_global_meta
+#' @export
+argo_global_bio_traj <- function(download = NULL, quiet = FALSE) {
+  argo_global(
+    path = "argo_bio-traj_index.txt.gz",
+    name = "bio_traj",
+    read_fun = argo_read_global_bio_traj,
+    download = download,
+    quiet = quiet
+  )
+}
+
+#' @rdname argo_global_meta
+#' @export
+argo_global_bio_prof <- function(download = NULL, quiet = FALSE) {
+  argo_global(
+    path = "argo_bio-profile_index.txt.gz",
+    name = "bio_prof",
+    read_fun = argo_read_global_bio_prof,
+    download = download,
+    quiet = quiet
+  )
+}
+
+#' @rdname argo_global_meta
+#' @export
+argo_global_synthetic_prof <- function(download = NULL, quiet = FALSE) {
+  argo_global(
+    path = "argo_synthetic-profile_index.txt.gz",
+    name = "bio_prof",
+    read_fun = argo_read_global_synthetic_prof,
     download = download,
     quiet = quiet
   )
@@ -119,6 +179,69 @@ argo_read_global_traj <- function(file) {
     comment = "#"
   )
 }
+
+#' @rdname argo_global_meta
+#' @export
+argo_read_global_bio_traj <- function(file) {
+  readr::read_csv(
+    file,
+    col_types = readr::cols(
+      file = readr::col_character(),
+      latitude_max = readr::col_double(),
+      latitude_min = readr::col_double(),
+      longitude_max = readr::col_double(),
+      longitude_min = readr::col_double(),
+      profiler_type = readr::col_double(),
+      institution = readr::col_character(),
+      parameters = readr::col_character(),
+      date_update = readr::col_datetime("%Y%m%d%H%M%S")
+    ),
+    comment = "#"
+  )
+}
+
+#' @rdname argo_global_meta
+#' @export
+argo_read_global_bio_prof <- function(file) {
+  readr::read_csv(
+    file,
+    col_types = readr::cols(
+      file = readr::col_character(),
+      date = readr::col_datetime("%Y%m%d%H%M%S"),
+      latitude = readr::col_double(),
+      longitude = readr::col_double(),
+      ocean = readr::col_character(),
+      profiler_type = readr::col_double(),
+      institution = readr::col_character(),
+      parameters = readr::col_character(),
+      parameter_data_mode = readr::col_character(),
+      date_update = readr::col_datetime("%Y%m%d%H%M%S")
+    ),
+    comment = "#"
+  )
+}
+
+#' @rdname argo_global_meta
+#' @export
+argo_read_global_synthetic_prof <- function(file) {
+  readr::read_csv(
+    file,
+    col_types = readr::cols(
+      file = readr::col_character(),
+      date = readr::col_datetime("%Y%m%d%H%M%S"),
+      latitude = readr::col_double(),
+      longitude = readr::col_double(),
+      ocean = readr::col_character(),
+      profiler_type = readr::col_double(),
+      institution = readr::col_character(),
+      parameters = readr::col_character(),
+      parameter_data_mode = readr::col_character(),
+      date_update = readr::col_datetime("%Y%m%d%H%M%S")
+    ),
+    comment = "#"
+  )
+}
+
 
 argo_global <- function(path, name, read_fun, download, quiet) {
   should_download <- download %||% argo_should_download(path)

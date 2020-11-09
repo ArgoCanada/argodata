@@ -3,6 +3,8 @@
 ^LICENSE\.md$
 ^data-raw$
 ^inst/cache-test/ar_index_global_prof\.txt\.gz$
+^inst/cache-test/argo_bio-profile_index\.txt\.gz$
+^inst/cache-test/argo_synthetic-profile_index\.txt\.gz$
 ^README\.Rmd$
 ^cache-dev$
 ^\.github$

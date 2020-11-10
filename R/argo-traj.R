@@ -255,7 +255,7 @@ argo_read_traj_history <- function(file, vars = NULL) {
 assert_argo_traj_file <- function(path) {
   is_traj_file <- stringr::str_detect(
     path,
-    "^dac/[a-z]+/([0-9a-zA-Z]+)/\\1_(R|D)traj\\.nc$"
+    "^dac/[a-z]+/([0-9a-zA-Z]+)/\\1_B?(R|D)traj\\.nc$"
   )
 
   if (any(!is_traj_file)) {

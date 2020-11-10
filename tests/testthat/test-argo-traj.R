@@ -119,6 +119,7 @@ test_that("argo_read_traj_history() works for bio files", {
 test_that("assert_argo_traj_file() works", {
   with_argo_example_cache({
     expect_silent(assert_argo_traj_file(as_argo_path(argo_global_traj(quiet = TRUE))))
+    expect_silent(assert_argo_traj_file(as_argo_path(argo_global_bio_traj(quiet = TRUE))))
   })
 
   expect_error(assert_argo_traj_file("not a file"), "Found 1 invalid Argo trajectory path")

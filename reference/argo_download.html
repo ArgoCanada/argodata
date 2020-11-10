@@ -141,8 +141,7 @@
       <td><p>A logical vector indicating whether or not
 a file should be downloaded. Defaults to the value of
 <code>argo_should_download()</code>, which is <code>TRUE</code> for files that
-do not exist in the cache or global files that were cached more than 24
-hours ago.</p></td>
+do not exist in the cache.</p></td>
     </tr>
     <tr>
       <th>async</th>
@@ -157,9 +156,8 @@ verbose error messages.</p></td>
     <tr>
       <th>max_global_cache_age, max_data_cache_age</th>
       <td><p>The maximum age in hours
-to keep cached files.
-Use <code>Inf</code> to always use cached files (default); use <code>-Inf</code> to always force download.
-You can set the default values of these using
+to keep cached files. Use <code>Inf</code> to always use cached files; use <code>-Inf</code>
+to always force download. You can set the default values of these using
 <code><a href='https://rdrr.io/r/base/options.html'>options(argodata.max_global_cache_age = ...)</a></code>
 and/or <code><a href='https://rdrr.io/r/base/options.html'>options(argodata.max_data_cache_age = ...)</a></code>.</p></td>
     </tr>

@@ -87,7 +87,7 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/argo_mirror.html">argo_set_mirror</a></span><span class="op">(</span><span class="st">"https://data-argo.ifremer.fr/"</span><span class="op">)</span>
 <span class="fu"><a href="reference/argo_cache_dir.html">argo_set_cache_dir</a></span><span class="op">(</span><span class="st">"my/argo/cache"</span><span class="op">)</span></code></pre></div>
-<p>Optionally, you can set <code><a href="https://rdrr.io/r/base/options.html">options(argodata.cache_dir = "my/argo/cache")</a></code> in your .Rprofile to persist this value between R sessions (see <code>usethis::edit_r_profile()</code>).</p>
+<p>Optionally, you can set <code><a href="https://rdrr.io/r/base/options.html">options(argodata.cache_dir = "my/argo/cache")</a></code> in your .Rprofile to persist this value between R sessions (see <code>usethis::edit_r_profile()</code>). Cached files are used indefinitely by default because of the considerable time it takes to refresh them. If you do use a persistent cache, you should at least update the index files regularly using <code><a href="reference/argo_cache_dir.html">argo_update_global()</a></code> (data files are also updated occasionally; update these using <code><a href="reference/argo_cache_dir.html">argo_update_data()</a></code>).</p>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">

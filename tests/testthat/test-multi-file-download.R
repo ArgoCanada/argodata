@@ -78,6 +78,14 @@ test_that("multi_file_download_async() works", {
     "1/1 file failed"
   )
 
+  expect_error(
+    expect_message(
+      multi_file_download_async("file://path/to/nowhere", dest, quiet = FALSE),
+      "Fetching 'file://path/to/nowhere/' failed"
+    ),
+    "1/1 file failed"
+  )
+
   unlink(dest)
 
   dest2 <- tempfile()

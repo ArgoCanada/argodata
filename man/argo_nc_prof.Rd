@@ -31,7 +31,7 @@ these are the raw variable names (all caps, without "date"
 substituted for "juld").}
 
 \item{meta}{A character vector of meta variable names for
-each profile. These can be found using \code{\link[=argo_nc_prof_vars_prof]{argo_nc_prof_vars_prof()}}.}
+each profile. These can be found using \code{\link[=argo_vars]{argo_vars()}}.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}} containing both \code{vars} and \code{meta}

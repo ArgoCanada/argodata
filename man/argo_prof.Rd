@@ -42,7 +42,7 @@ verbose error messages.}
 \item{file}{A previously downloaded Argo NetCDF file.}
 
 \item{meta}{A character vector of meta variable names for
-each profile. These can be found using \code{\link[=argo_nc_prof_vars_prof]{argo_nc_prof_vars_prof()}}.}
+each profile. These can be found using \code{\link[=argo_vars]{argo_vars()}}.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}}.

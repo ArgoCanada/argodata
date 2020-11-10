@@ -3,7 +3,7 @@
 #'
 #' @inheritParams argo_vars
 #' @param meta A character vector of meta variable names for
-#'   each profile. These can be found using [argo_nc_prof_vars_prof()].
+#'   each profile. These can be found using [argo_vars()].
 #'
 #' @return A [tibble::tibble()] containing both `vars` and `meta`
 #'   columns.

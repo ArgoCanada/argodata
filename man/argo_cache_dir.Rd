@@ -2,6 +2,8 @@
 % Please edit documentation in R/argo-cache.R, R/argo-mirror.R
 \name{argo_cache_dir}
 \alias{argo_cache_dir}
+\alias{argo_update_global}
+\alias{argo_update_data}
 \alias{argo_set_cache_dir}
 \alias{with_argo_cache_dir}
 \alias{with_argo_example_cache}
@@ -10,6 +12,10 @@
 \title{Get and set the default cache directory}
 \usage{
 argo_cache_dir()
+
+argo_update_global(max_global_cache_age = -Inf, all = TRUE, quiet = FALSE)
+
+argo_update_data(max_data_cache_age = -Inf, quiet = FALSE)
 
 argo_set_cache_dir(cache_dir)
 
@@ -22,6 +28,24 @@ argo_cached(path)
 argo_test_mirror()
 }
 \arguments{
+\item{max_global_cache_age}{The maximum age in hours
+to keep cached files. Use \code{Inf} to always use cached files; use \code{-Inf}
+to always force download. You can set the default values of these using
+\code{options(argodata.max_global_cache_age = ...)}
+and/or \code{options(argodata.max_data_cache_age = ...)}.}
+
+\item{all}{Should index files be downloaded even if they have not been
+previously downloaded?}
+
+\item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
+verbose error messages.}
+
+\item{max_data_cache_age}{The maximum age in hours
+to keep cached files. Use \code{Inf} to always use cached files; use \code{-Inf}
+to always force download. You can set the default values of these using
+\code{options(argodata.max_global_cache_age = ...)}
+and/or \code{options(argodata.max_data_cache_age = ...)}.}
+
 \item{cache_dir}{A writable directory in which downloaded files can be
 cached.}
 

@@ -96,9 +96,11 @@ argo_set_mirror("ftp://usgodae.org/pub/outgoing/argo")
 argo_set_mirror("path/to/local/argo")
 ```
 
-By default, index files are cached for 24 hours and data files are cached indefinitely. These defaults reflect a balance between the considerable time required to download new files and the frequency with which files are updated on the mirror. To override these defaults you can pass `download = TRUE` to functions that load data, or set `options(argodata.max_data_cache_age = 3)`, where the number is in hours. Use `Inf` to always use the cached version of a file.
+Because downloaded files are cached indefinitely by default, you are recommended to use a new cache for each project that requires an internally-consistent set of Argo files or update your cache on a regular basis. If you do use a persistent cache, you should at least update the index files regularly using `argo_update_global()` (data files are also updated occasionally; update these using `argo_update_data()`). You can also override the defaults by passing `download = TRUE` to functions that load data or set `options(argodata.max_data_cache_age = XX)`, where `XX` a value in hours. Use `Inf` to always use the cached version of a file or `-Inf` to never use the cached version.
 
 ```{r, eval=FALSE}
+argo_update_global()
+argo_update_data()
 argo_global_prof(download = TRUE)
 options(argodata.max_global_cache_age = Inf)
 options(argodata.max_data_cache_age = Inf)

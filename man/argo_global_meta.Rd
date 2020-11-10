@@ -49,8 +49,7 @@ argo_read_global_synthetic_prof(file)
 \item{download}{A logical vector indicating whether or not
 a file should be downloaded. Defaults to the value of
 \code{\link[=argo_should_download]{argo_should_download()}}, which is \code{TRUE} for files that
-do not exist in the cache or global files that were cached more than 24
-hours ago.}
+do not exist in the cache.}
 
 \item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
 verbose error messages.}

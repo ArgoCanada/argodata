@@ -39,7 +39,11 @@ argo_set_cache_dir("my/argo/cache")
 
 Optionally, you can set `options(argodata.cache_dir = "my/argo/cache")`
 in your .Rprofile to persist this value between R sessions (see
-`usethis::edit_r_profile()`).
+`usethis::edit_r_profile()`). Cached files are used indefinitely by
+default because of the considerable time it takes to refresh them. If
+you do use a persistent cache, you should at least update the index
+files regularly using `argo_update_global()` (data files are also
+updated occasionally; update these using `argo_update_data()`).
 
 ## Example
 

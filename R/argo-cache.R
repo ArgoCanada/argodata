@@ -9,7 +9,10 @@
 #'   [argo_mirror()].
 #' @param cache_dir A writable directory in which downloaded files can be
 #'   cached.
+#' @param all Should index files be downloaded even if they have not been
+#'   previously downloaded?
 #' @inheritParams argo_mirror
+#' @inheritParams argo_should_download
 #'
 #' @export
 #'
@@ -22,6 +25,49 @@
 #'
 argo_cache_dir <- function() {
   getOption("argodata.cache_dir", NULL) %||% argo_tmp_dir
+}
+
+#' @rdname argo_cache_dir
+#' @export
+argo_update_global <- function(max_global_cache_age = -Inf, all = TRUE, quiet = FALSE) {
+  # slightly different than refreshing the data (downloads files that have
+  # never been downloaded)
+  global_files <- c(
+    "ar_index_global_meta.txt.gz",
+    "ar_index_global_prof.txt.gz",
+    "ar_index_global_tech.txt.gz",
+    "ar_index_global_traj.txt.gz",
+    "argo_bio-profile_index.txt.gz",
+    "argo_bio-traj_index.txt.gz",
+    "argo_synthetic-profile_index.txt.gz"
+  )
+
+  if (!all) {
+    global_files <- intersect(global_files, list.files(argo_cache_dir()))
+  }
+
+  # remove cached versions
+  existing_globals <- ls(envir = argo_global_cache)
+  rm(list = existing_globals, envir = argo_global_cache)
+
+  argo_download(
+    global_files,
+    download = argo_should_download(global_files, max_global_cache_age = max_global_cache_age),
+    async = FALSE,
+    quiet = quiet
+  )
+}
+
+#' @rdname argo_cache_dir
+#' @export
+argo_update_data <- function(max_data_cache_age = -Inf, quiet = FALSE) {
+  nc_files <- list.files(argo_cache_dir(), "\\.nc$", recursive = TRUE)
+  argo_download(
+    nc_files,
+    download = argo_should_download(nc_files, max_data_cache_age = max_data_cache_age),
+    async = TRUE,
+    quiet = quiet
+  )
 }
 
 #' @rdname argo_cache_dir

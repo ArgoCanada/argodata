@@ -5,16 +5,14 @@
 #' @param download A logical vector indicating whether or not
 #'   a file should be downloaded. Defaults to the value of
 #'   [argo_should_download()], which is `TRUE` for files that
-#'   do not exist in the cache or global files that were cached more than 24
-#'   hours ago.
+#'   do not exist in the cache.
 #' @param async Use `TRUE` to perform HTTP requests in parallel. This is much
 #'   faster for large numbers of small files.
 #' @param quiet Use `FALSE` to show which files are downloaded and for more
 #'   verbose error messages.
 #' @param max_global_cache_age,max_data_cache_age The maximum age in hours
-#'   to keep cached files.
-#'   Use `Inf` to always use cached files (default); use `-Inf` to always force download.
-#'   You can set the default values of these using
+#'   to keep cached files. Use `Inf` to always use cached files; use `-Inf`
+#'   to always force download. You can set the default values of these using
 #'   `options(argodata.max_global_cache_age = ...)`
 #'   and/or `options(argodata.max_data_cache_age = ...)`.
 #'

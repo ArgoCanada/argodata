@@ -20,8 +20,7 @@ argo_should_download(
 \item{download}{A logical vector indicating whether or not
 a file should be downloaded. Defaults to the value of
 \code{\link[=argo_should_download]{argo_should_download()}}, which is \code{TRUE} for files that
-do not exist in the cache or global files that were cached more than 24
-hours ago.}
+do not exist in the cache.}
 
 \item{async}{Use \code{TRUE} to perform HTTP requests in parallel. This is much
 faster for large numbers of small files.}
@@ -30,9 +29,8 @@ faster for large numbers of small files.}
 verbose error messages.}
 
 \item{max_global_cache_age, max_data_cache_age}{The maximum age in hours
-to keep cached files.
-Use \code{Inf} to always use cached files (default); use \code{-Inf} to always force download.
-You can set the default values of these using
+to keep cached files. Use \code{Inf} to always use cached files; use \code{-Inf}
+to always force download. You can set the default values of these using
 \code{options(argodata.max_global_cache_age = ...)}
 and/or \code{options(argodata.max_data_cache_age = ...)}.}
 }

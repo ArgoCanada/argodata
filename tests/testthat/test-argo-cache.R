@@ -41,3 +41,21 @@ test_that("with_argo_example_cache() works", {
   expect_false(with_argo_example_cache(argo_should_download("ar_index_global_meta.txt.gz")))
   unlink(tmp_cache, recursive = TRUE)
 })
+
+test_that("argo_update_*() functions work", {
+  tmp_cache <- tempfile()
+
+  with_argo_cache_dir(tmp_cache, {
+    with_argo_mirror(argo_test_mirror(), {
+      expect_identical(argo_update_data(), character(0))
+      argo_download("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
+      expect_length(argo_update_data(quiet = TRUE), 1)
+
+      expect_identical(argo_update_global(all = FALSE), character(0))
+      argo_download("ar_index_global_meta.txt.gz", quiet = TRUE)
+      expect_length(argo_update_global(all = FALSE, quiet = TRUE), 1)
+    })
+  })
+
+  unlink(tmp_cache, recursive = TRUE)
+})

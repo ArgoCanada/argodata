@@ -124,7 +124,7 @@
 
 <span class='fu'>argo_should_download</span><span class='op'>(</span>
   <span class='va'>path</span>,
-  max_global_cache_age <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"argodata.max_global_cache_age"</span>, <span class='fl'>24</span><span class='op'>)</span>,
+  max_global_cache_age <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"argodata.max_global_cache_age"</span>, <span class='cn'>Inf</span><span class='op'>)</span>,
   max_data_cache_age <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"argodata.max_data_cache_age"</span>, <span class='cn'>Inf</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
@@ -157,9 +157,8 @@ verbose error messages.</p></td>
     <tr>
       <th>max_global_cache_age, max_data_cache_age</th>
       <td><p>The maximum age in hours
-to keep cached files. Since index files change frequently, these are cached
-for 24 hours by default; data files are cached indefinitely by default.
-Use <code>Inf</code> to always use cached values; use <code>-Inf</code> to always force download.
+to keep cached files.
+Use <code>Inf</code> to always use cached files (default); use <code>-Inf</code> to always force download.
 You can set the default values of these using
 <code><a href='https://rdrr.io/r/base/options.html'>options(argodata.max_global_cache_age = ...)</a></code>
 and/or <code><a href='https://rdrr.io/r/base/options.html'>options(argodata.max_data_cache_age = ...)</a></code>.</p></td>

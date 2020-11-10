@@ -37,7 +37,13 @@ argo_info <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   tbl <- vctrs::vec_rbind(!!! tbls)
   names(tbl) <- tolower(names(tbl))
 
-  var_is_datetime <- names(tbl) %in% c("reference_date_time", "date_creation", "date_update")
+  date_vars <- c(
+    "reference_date_time", "date_creation", "date_update",
+    "launch_date", "start_date", "startup_date",
+    "end_mission_date"
+  )
+
+  var_is_datetime <- names(tbl) %in% date_vars
   tbl[var_is_datetime] <- lapply(tbl[var_is_datetime], readr::parse_datetime, format = "%Y%m%d%H%M%S")
 
   val_is_char <- vapply(tbl, is.character, logical(1))

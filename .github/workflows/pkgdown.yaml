@@ -40,12 +40,12 @@ jobs:
       - name: Cache Argo downloads
         uses: actions/cache@v2
         with:
-          path: ${{ runner.temp }}/argo-pkgdown-cache
-          key: argo-cache-dev-2
+          path: ${{ runner.temp }}/argo-cache-dir
+          key: argo-cache-dir-pkgdown-1
 
       - name: Deploy package
         env:
-          ARGO_PKGDOWN_CACHE: ${{ runner.temp }}/argo-pkgdown-cache
+          R_ARGO_CACHE_DIR: ${{ runner.temp }}/argo-cache-dir
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"

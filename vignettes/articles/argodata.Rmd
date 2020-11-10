@@ -13,14 +13,6 @@ knitr::opts_chunk$set(
 
 library(argodata)
 
-# This allows the pkgdown action to cache files downloaded
-# to the cache to avoid downloading on every push. The cache
-# can be invalidated by incrementing the number in the 'key'
-# in the pkgdown action.
-argo_set_cache_dir(Sys.getenv("ARGO_PKGDOWN_CACHE", "../../cache-dev"))
-options(argodata.max_global_cache_age = Inf)
-options(argodata.max_data_cache_age = Inf)
-
 # this is a cheap way to avoid putting 'magrittr' in Suggests
 `%>%` <- testthat::`%>%`
 

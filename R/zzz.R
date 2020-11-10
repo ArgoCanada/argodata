@@ -5,8 +5,16 @@ argo_tmp_dir <- NULL
 # nocov start
 
 .onLoad <- function(...) {
+  # create package-specific temporary directory
   argo_tmp_dir <<- tempfile()
   dir.create(argo_tmp_dir)
+
+  # also set cache_dir and mirror based on environment variables
+  cache_dir_env <- Sys.getenv("R_ARGO_CACHE_DIR", unset = "")
+  if (cache_dir_env != "") argo_set_cache_dir(cache_dir_env)
+
+  mirror_env <- Sys.getenv("R_ARGO_MIRROR", unset = "")
+  if (mirror_env != "") argo_set_mirror(mirror_env)
 }
 
 .onUnload <- function(...) {

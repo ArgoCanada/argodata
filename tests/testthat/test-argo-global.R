@@ -20,23 +20,17 @@ test_that("argo_global_meta() works", {
 })
 
 test_that("argo_global_prof() works", {
-  # basically, only during devtools::test()
-  skip_if_not(file.exists("../../inst/cache-test/ar_index_global_prof.txt.gz"))
+  skip_if_not(Sys.getenv("R_ARGO_CACHE_DIR") != "")
 
-  tmp_cache <- tempfile()
-
-  with_argo_cache_dir(tmp_cache, {
-    with_argo_mirror("../../inst/cache-test", {
-      expect_is(argo_global_prof(), "tbl_df")
-      expect_identical(
-        names(argo_global_prof()),
-        c("file", "date", "latitude", "longitude", "ocean", "profiler_type",
-          "institution", "date_update")
-      )
-    })
+  with_argo_cache_dir(Sys.getenv("R_ARGO_CACHE_DIR"), {
+    expect_is(argo_global_prof(), "tbl_df")
+    expect_identical(
+      names(argo_global_prof()),
+      c("file", "date", "latitude", "longitude", "ocean", "profiler_type",
+        "institution", "date_update")
+    )
   })
 
-  unlink(tmp_cache)
 })
 
 test_that("argo_global_tech() works", {
@@ -98,42 +92,30 @@ test_that("argo_global_bio_traj() works", {
 })
 
 test_that("argo_global_bio_prof() works", {
-  # basically, only during devtools::test()
-  skip_if_not(file.exists("../../inst/cache-test/argo_bio-profile_index.txt.gz"))
+  skip_if_not(Sys.getenv("R_ARGO_CACHE_DIR") != "")
 
-  tmp_cache <- tempfile()
-
-  with_argo_cache_dir(tmp_cache, {
-    with_argo_mirror("../../inst/cache-test", {
-      expect_is(argo_global_bio_prof(), "tbl_df")
-      expect_identical(
-        names(argo_global_bio_prof()),
-        c("file", "date", "latitude", "longitude", "ocean", "profiler_type",
-          "institution", "parameters", "parameter_data_mode", "date_update")
-      )
-    })
+  with_argo_cache_dir(Sys.getenv("R_ARGO_CACHE_DIR"), {
+    expect_is(argo_global_bio_prof(), "tbl_df")
+    expect_identical(
+      names(argo_global_bio_prof()),
+      c("file", "date", "latitude", "longitude", "ocean", "profiler_type",
+        "institution", "parameters", "parameter_data_mode", "date_update")
+    )
   })
 
-  unlink(tmp_cache)
 })
 
 test_that("argo_global_synthetic_prof() works", {
-  # basically, only during devtools::test()
-  skip_if_not(file.exists("../../inst/cache-test/argo_synthetic-profile_index.txt.gz"))
+  skip_if_not(Sys.getenv("R_ARGO_CACHE_DIR") != "")
 
-  tmp_cache <- tempfile()
-
-  with_argo_cache_dir(tmp_cache, {
-    with_argo_mirror("../../inst/cache-test", {
-      expect_is(argo_global_synthetic_prof(), "tbl_df")
-      expect_identical(
-        names(argo_global_synthetic_prof()),
-        c("file", "date", "latitude", "longitude", "ocean", "profiler_type",
-          "institution", "parameters", "parameter_data_mode", "date_update")
-      )
-    })
+  with_argo_cache_dir(Sys.getenv("R_ARGO_CACHE_DIR"), {
+    expect_is(argo_global_synthetic_prof(), "tbl_df")
+    expect_identical(
+      names(argo_global_synthetic_prof()),
+      c("file", "date", "latitude", "longitude", "ocean", "profiler_type",
+        "institution", "parameters", "parameter_data_mode", "date_update")
+    )
   })
 
-  unlink(tmp_cache)
 })
 

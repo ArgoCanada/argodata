@@ -9,7 +9,7 @@ argo_download(path, download = NULL, async = NULL, quiet = FALSE)
 
 argo_should_download(
   path,
-  max_global_cache_age = getOption("argodata.max_global_cache_age", 24),
+  max_global_cache_age = getOption("argodata.max_global_cache_age", Inf),
   max_data_cache_age = getOption("argodata.max_data_cache_age", Inf)
 )
 }
@@ -30,9 +30,8 @@ faster for large numbers of small files.}
 verbose error messages.}
 
 \item{max_global_cache_age, max_data_cache_age}{The maximum age in hours
-to keep cached files. Since index files change frequently, these are cached
-for 24 hours by default; data files are cached indefinitely by default.
-Use \code{Inf} to always use cached values; use \code{-Inf} to always force download.
+to keep cached files.
+Use \code{Inf} to always use cached files (default); use \code{-Inf} to always force download.
 You can set the default values of these using
 \code{options(argodata.max_global_cache_age = ...)}
 and/or \code{options(argodata.max_data_cache_age = ...)}.}

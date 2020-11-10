@@ -1,6 +1,6 @@
 
 test_that("argo cache can be set and fetched", {
-  with_argo_mirror(NULL, {
+  with_argo_cache_dir(NULL, {
     expect_identical(argo_cache_dir(), argo_tmp_dir)
     expect_identical(getOption("argodata.cache_dir"), NULL)
 

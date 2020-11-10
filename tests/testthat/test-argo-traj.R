@@ -80,6 +80,42 @@ test_that("argo_read_traj_history() works", {
   )
 })
 
+test_that("argo_read_traj_meas() works for bio files", {
+  expect_is(
+    argo_read_traj_meas(
+      system.file(
+        "cache-test/dac/csio/2902746/2902746_BRtraj.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+test_that("argo_read_traj_cycle() works for bio files", {
+  expect_is(
+    argo_read_traj_cycle(
+      system.file(
+        "cache-test/dac/csio/2902746/2902746_BRtraj.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+test_that("argo_read_traj_history() works for bio files", {
+  expect_is(
+    argo_read_traj_history(
+      system.file(
+        "cache-test/dac/csio/2902746/2902746_BRtraj.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
 test_that("assert_argo_traj_file() works", {
   with_argo_example_cache({
     expect_silent(assert_argo_traj_file(as_argo_path(argo_global_traj(quiet = TRUE))))

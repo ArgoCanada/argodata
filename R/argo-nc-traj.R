@@ -30,6 +30,10 @@ argo_nc_traj_read_meas <- function(nc, vars = NULL) {
   vars <- if (is.null(vars)) nc_vars else intersect(vars, nc_vars)
   n <- nc$dim$N_MEASUREMENT$len
 
+  if (is.null(n)) {
+    abort(glue("'{ nc$filename }' is missing dimension 'N_MEASUREMENT'"))
+  }
+
   values <- argo_nc_values(nc, vars)
   values <- argo_string_to_chars_tbl(values)
 
@@ -42,6 +46,10 @@ argo_nc_traj_read_cycle <- function(nc, vars = NULL) {
   nc_vars <- argo_nc_traj_vars_cycle(nc)
   vars <- if (is.null(vars)) nc_vars else intersect(vars, nc_vars)
   n <- nc$dim$N_CYCLE$len
+
+  if (is.null(n)) {
+    abort(glue("'{ nc$filename }' is missing dimension 'N_CYCLE'"))
+  }
 
   values <- argo_nc_values(nc, vars)
   values <- argo_string_to_chars_tbl(values)
@@ -58,6 +66,10 @@ argo_nc_traj_read_history <- function(nc, vars = NULL) {
 
   vars <- if (is.null(vars)) nc_vars else intersect(vars, nc_vars)
   n <- nc$dim$N_HISTORY$len
+
+  if (is.null(n)) {
+    abort(glue("'{ nc$filename }' is missing dimension 'N_HISTORY'"))
+  }
 
   # regular values don't have a string dimension, so need
   # argo_string_to_chars_tbl()

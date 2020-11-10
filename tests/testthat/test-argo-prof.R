@@ -84,6 +84,79 @@ test_that("argo_read_prof_history() works", {
   )
 })
 
+
+test_that("argo_read_prof_levels() works for bio profiles", {
+  expect_is(
+    argo_read_prof_levels(
+      system.file(
+        "cache-test/dac/csio/2902746/profiles/BR2902746_001.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+test_that("argo_read_prof_prof() works for bio profiles", {
+  expect_is(
+    argo_read_prof_prof(
+      system.file(
+        "cache-test/dac/csio/2902746/profiles/BR2902746_001.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+test_that("argo_read_prof_history() works for bio profiles", {
+  expect_is(
+    argo_read_prof_history(
+      system.file(
+        "cache-test/dac/csio/2902746/profiles/BR2902746_001.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+test_that("argo_read_prof_levels() works for synthetic profiles", {
+  expect_is(
+    argo_read_prof_levels(
+      system.file(
+        "cache-test/dac/csio/2902746/profiles/SR2902746_001.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+test_that("argo_read_prof_prof() works for synthetic profiles", {
+  expect_is(
+    argo_read_prof_prof(
+      system.file(
+        "cache-test/dac/csio/2902746/profiles/SR2902746_001.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+test_that("argo_read_prof_history() errors properly for synthetic profiles", {
+  expect_error(
+    argo_read_prof_history(
+      system.file(
+        "cache-test/dac/csio/2902746/profiles/SR2902746_001.nc",
+        package = "argodata"
+      )
+    ),
+    "is missing dimension"
+  )
+})
+
 test_that("assert_argo_prof_file() works", {
   expect_identical(
     assert_argo_prof_file("dac/aoml/3901309/profiles/R3901309_001D.nc"),

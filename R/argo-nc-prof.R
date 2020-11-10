@@ -37,6 +37,10 @@ argo_nc_prof_read_levels <- function(nc, vars = NULL, meta = NULL) {
   n <- nc$dim$N_LEVELS$len
   n_prof <- nc$dim$N_PROF$len
 
+  if (is.null(n) || is.null(n_prof)) {
+    abort(glue("'{ nc$filename }' is missing dimension 'N_LEVELS' or 'N_PROF'"))
+  }
+
   # assign values
   meta_values <- argo_nc_values(nc, meta)
   values <- argo_nc_values(nc, vars)
@@ -58,6 +62,10 @@ argo_nc_prof_read_prof <- function(nc, vars = NULL) {
   vars <- if (is.null(vars)) nc_vars else intersect(vars, nc_vars)
   n <- nc$dim$N_PROF$len
 
+  if (is.null(n)) {
+    abort(glue("'{ nc$filename }' is missing dimension 'N_PROF'"))
+  }
+
   values <- argo_nc_values(nc, vars)
   values <- argo_string_to_chars_tbl(values)
 
@@ -77,6 +85,10 @@ argo_nc_prof_read_history <- function(nc, vars = NULL, meta = NULL) {
 
   n <- nc$dim$N_HISTORY$len
   n_prof <- nc$dim$N_PROF$len
+
+  if (is.null(n) || is.null(n_prof)) {
+    abort(glue("'{ nc$filename }' is missing dimension 'N_HISTORY' or 'N_PROF'"))
+  }
 
   # When there are zero history items, reading a variable doesn't
   # work. Ideally this would have the history columns with the

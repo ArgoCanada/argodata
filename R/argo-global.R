@@ -106,7 +106,7 @@ argo_global_bio_prof <- function(download = NULL, quiet = FALSE) {
 argo_global_synthetic_prof <- function(download = NULL, quiet = FALSE) {
   argo_global(
     path = "argo_synthetic-profile_index.txt.gz",
-    name = "bio_prof",
+    name = "synthetic_prof",
     read_fun = argo_read_global_synthetic_prof,
     download = download,
     quiet = quiet

@@ -2,6 +2,12 @@
 % Please edit documentation in R/argo-meta.R
 \name{argo_meta_config_param}
 \alias{argo_meta_config_param}
+\alias{argo_meta_missions}
+\alias{argo_meta_trans_system}
+\alias{argo_meta_launch_config_param}
+\alias{argo_meta_sensor}
+\alias{argo_meta_param}
+\alias{argo_read_meta_config_param}
 \alias{argo_read_meta_missions}
 \alias{argo_read_meta_trans_system}
 \alias{argo_read_meta_launch_config_param}
@@ -10,6 +16,18 @@
 \title{Load Argo float meta}
 \usage{
 argo_meta_config_param(path, download = NULL, quiet = FALSE)
+
+argo_meta_missions(path, download = NULL, quiet = FALSE)
+
+argo_meta_trans_system(path, download = NULL, quiet = FALSE)
+
+argo_meta_launch_config_param(path, download = NULL, quiet = FALSE)
+
+argo_meta_sensor(path, download = NULL, quiet = FALSE)
+
+argo_meta_param(path, download = NULL, quiet = FALSE)
+
+argo_read_meta_config_param(file, vars = NULL)
 
 argo_read_meta_missions(file, vars = NULL)
 
@@ -49,7 +67,27 @@ Load Argo float meta
 }
 \examples{
 with_argo_example_cache({
-  argo_meta_config("dac/csio/2900313/2900313_meta.nc")
+  argo_meta_config_param("dac/csio/2900313/2900313_meta.nc")
+})
+
+with_argo_example_cache({
+  argo_meta_missions("dac/csio/2900313/2900313_meta.nc")
+})
+
+with_argo_example_cache({
+  argo_meta_trans_system("dac/csio/2900313/2900313_meta.nc")
+})
+
+with_argo_example_cache({
+  argo_meta_launch_config_param("dac/csio/2900313/2900313_meta.nc")
+})
+
+with_argo_example_cache({
+  argo_meta_sensor("dac/csio/2900313/2900313_meta.nc")
+})
+
+with_argo_example_cache({
+  argo_meta_param("dac/csio/2900313/2900313_meta.nc")
 })
 
 meta_file <- system.file(
@@ -58,10 +96,10 @@ meta_file <- system.file(
 )
 
 argo_read_meta_config_param(meta_file)
-argo_read_meta_missions(nc_meta)
-argo_read_meta_read_trans_system(nc_meta)
-argo_read_meta_launch_config_param(nc_meta)
-argo_read_meta_sensor(nc_meta)
-argo_read_meta_param(nc_meta)
+argo_read_meta_missions(meta_file)
+argo_read_meta_trans_system(meta_file)
+argo_read_meta_launch_config_param(meta_file)
+argo_read_meta_sensor(meta_file)
+argo_read_meta_param(meta_file)
 
 }

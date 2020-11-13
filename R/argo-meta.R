@@ -9,7 +9,7 @@
 #'
 #' @examples
 #' with_argo_example_cache({
-#'   argo_meta_config("dac/csio/2900313/2900313_meta.nc")
+#'   argo_meta_config_param("dac/csio/2900313/2900313_meta.nc")
 #' })
 #'
 #' meta_file <- system.file(
@@ -17,12 +17,17 @@
 #'   package = "argodata"
 #' )
 #'
-#' argo_read_meta_config(meta_file)
+#' argo_read_meta_config_param(meta_file)
+#' argo_read_meta_missions(meta_file)
+#' argo_read_meta_trans_system(meta_file)
+#' argo_read_meta_launch_config_param(meta_file)
+#' argo_read_meta_sensor(meta_file)
+#' argo_read_meta_param(meta_file)
 #'
-argo_meta_config <- function(path, download = NULL, quiet = FALSE) {
+argo_meta_config_param <- function(path, download = NULL, quiet = FALSE) {
   tbl <- argo_read_many(
     assert_argo_meta_file,
-    argo_read_meta_config,
+    argo_read_meta_config_param,
     path = path,
     vars = NULL,
     download = download,
@@ -35,10 +40,55 @@ argo_meta_config <- function(path, download = NULL, quiet = FALSE) {
 
 #' @rdname argo_meta
 #' @export
-argo_read_meta_config <- function(file, vars = NULL) {
+argo_read_meta_config_param <- function(file, vars = NULL) {
   with_argo_nc_file(
     file,
     argo_nc_meta_read_config_param
+  )
+}
+
+#' @rdname argo_meta
+#' @export
+argo_read_meta_missions <- function(file, vars = NULL) {
+  with_argo_nc_file(
+    file,
+    argo_nc_meta_read_missions
+  )
+}
+
+#' @rdname argo_meta
+#' @export
+argo_read_meta_trans_system <- function(file, vars = NULL) {
+  with_argo_nc_file(
+    file,
+    argo_nc_meta_read_trans_system
+  )
+}
+
+#' @rdname argo_meta
+#' @export
+argo_read_meta_launch_config_param <- function(file, vars = NULL) {
+  with_argo_nc_file(
+    file,
+    argo_nc_meta_read_launch_config_param
+  )
+}
+
+#' @rdname argo_meta
+#' @export
+argo_read_meta_sensor <- function(file, vars = NULL) {
+  with_argo_nc_file(
+    file,
+    argo_nc_meta_read_sensor
+  )
+}
+
+#' @rdname argo_meta
+#' @export
+argo_read_meta_param <- function(file, vars = NULL) {
+  with_argo_nc_file(
+    file,
+    argo_nc_meta_read_param
   )
 }
 

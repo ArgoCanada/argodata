@@ -1,12 +1,5 @@
 
-#' Load Argo trajectories
-#'
-#' Trajectory files contain (1) location measurements and (2)
-#' detailed information about each cycle. Use [argo_traj_meas()]
-#' output containing one row per location measurement; use
-#' [argo_traj_cycle()] for output containing one row per
-#' cycle. Finally, use [argo_traj_history()] to view quality
-#' control that has been applied.
+#' Load Argo float meta
 #'
 #' @inheritParams argo_prof_levels
 #'
@@ -45,7 +38,7 @@ argo_meta_config <- function(path, download = NULL, quiet = FALSE) {
 argo_read_meta_config <- function(file, vars = NULL) {
   with_argo_nc_file(
     file,
-    argo_nc_meta_read_config
+    argo_nc_meta_read_config_param
   )
 }
 

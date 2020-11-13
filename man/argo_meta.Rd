@@ -3,7 +3,7 @@
 \name{argo_meta_config}
 \alias{argo_meta_config}
 \alias{argo_read_meta_config}
-\title{Load Argo trajectories}
+\title{Load Argo float meta}
 \usage{
 argo_meta_config(path, download = NULL, quiet = FALSE)
 
@@ -33,12 +33,7 @@ substituted for "juld").}
 A \code{\link[tibble:tibble]{tibble::tibble()}}.
 }
 \description{
-Trajectory files contain (1) location measurements and (2)
-detailed information about each cycle. Use \code{\link[=argo_traj_meas]{argo_traj_meas()}}
-output containing one row per location measurement; use
-\code{\link[=argo_traj_cycle]{argo_traj_cycle()}} for output containing one row per
-cycle. Finally, use \code{\link[=argo_traj_history]{argo_traj_history()}} to view quality
-control that has been applied.
+Load Argo float meta
 }
 \examples{
 with_argo_example_cache({

@@ -40,6 +40,24 @@ argo_nc_vars_by_dimension <- function(nc, which, dim_name) {
   names(nc$var)[var_has_dim]
 }
 
+argo_nc_assert_dimensions <- function(nc, dimensions) {
+  dims <- Map("[[", list(nc$dim), dimensions)
+  dim_is_missing <- vapply(dims, is.null, logical(1))
+  if (any(dim_is_missing)) {
+    missing_dims <- dimensions[dim_is_missing]
+    dims_lab <- if(length(missing_dims) != 1) "dimensions" else "dimension"
+    missing_dims_list <- glue::glue_collapse(
+      paste0("'", missing_dims, "'"),
+      sep = ",",
+      last = " and "
+    )
+
+    abort(glue("'{ nc$filename }' is missing { dims_lab } { missing_dims_list }."))
+  }
+
+  invisible(nc)
+}
+
 argo_nc_extract_float <- function(nc) {
   stringr::str_remove(
     stringr::str_extract(

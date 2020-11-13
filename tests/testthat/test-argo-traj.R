@@ -2,7 +2,7 @@
 test_that("argo_traj_meas() works", {
   with_argo_example_cache({
     traj <- argo_traj_meas("dac/csio/2900313/2900313_Rtraj.nc", quiet = TRUE)
-    expect_true(all(c("cycle_number", "longitude", "latitude") %in% names(traj)))
+    expect_true(all(c("file", "cycle_number", "longitude", "latitude") %in% names(traj)))
 
     traj <- argo_traj_meas(
       "dac/csio/2900313/2900313_Rtraj.nc",
@@ -10,7 +10,7 @@ test_that("argo_traj_meas() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(traj), c("float", "cycle_number", "longitude"))
+    expect_identical(names(traj), c("file", "cycle_number", "longitude"))
   })
 })
 
@@ -25,14 +25,14 @@ test_that("argo_traj_cycle() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(traj), c("float", "date_descent_start"))
+    expect_identical(names(traj), c("file", "date_descent_start"))
   })
 })
 
 test_that("argo_traj_history() works", {
   with_argo_example_cache({
     traj <- argo_traj_history("dac/csio/2900313/2900313_Rtraj.nc", quiet = TRUE)
-    expect_true(all(c("history_index_dimension", "history_software") %in% names(traj)))
+    expect_true(all(c("file", "history_index_dimension", "history_software") %in% names(traj)))
 
     traj <- argo_traj_history(
       "dac/csio/2900313/2900313_Rtraj.nc",
@@ -40,7 +40,7 @@ test_that("argo_traj_history() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(traj), c("float", "history_index_dimension", "history_software"))
+    expect_identical(names(traj), c("file", "history_index_dimension", "history_software"))
   })
 })
 

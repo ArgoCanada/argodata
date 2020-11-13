@@ -2,7 +2,7 @@
 test_that("argo_prof_levels() works", {
   with_argo_mirror(argo_test_mirror(), {
     prof <- argo_prof_levels("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
-    expect_true(all(c("cycle_number", "pres", "temp") %in% names(prof)))
+    expect_true(all(c("file", "cycle_number", "pres", "temp") %in% names(prof)))
     expect_true(all(prof$cycle_number == 0))
 
     prof <- argo_prof_levels(
@@ -11,14 +11,14 @@ test_that("argo_prof_levels() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(prof), c("float", "cycle_number", "date", "pres", "temp"))
+    expect_identical(names(prof), c("file", "cycle_number", "date", "pres", "temp"))
   })
 })
 
 test_that("argo_prof_prof() works", {
   with_argo_example_cache({
     prof <- argo_prof_prof("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
-    expect_true(all(c("cycle_number", "latitude", "longitude") %in% names(prof)))
+    expect_true(all(c("file", "cycle_number", "latitude", "longitude") %in% names(prof)))
     expect_true(all(prof$cycle_number == 0))
     expect_identical(nrow(prof), 1L)
 
@@ -28,14 +28,14 @@ test_that("argo_prof_prof() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(prof), c("float", "longitude", "latitude"))
+    expect_identical(names(prof), c("file", "longitude", "latitude"))
   })
 })
 
 test_that("argo_prof_history() works", {
   with_argo_example_cache({
     prof <- argo_prof_history("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
-    expect_true(all(c("cycle_number", "history_qctest") %in% names(prof)))
+    expect_true(all(c("file", "cycle_number", "history_qctest") %in% names(prof)))
     expect_true(all(prof$cycle_number == 0))
 
     prof <- argo_prof_history(
@@ -44,7 +44,7 @@ test_that("argo_prof_history() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(prof), c("float", "cycle_number", "date", "history_qctest"))
+    expect_identical(names(prof), c("file", "cycle_number", "date", "history_qctest"))
   })
 })
 

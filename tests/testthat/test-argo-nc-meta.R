@@ -10,7 +10,7 @@ test_that("argo_nc_meta_read_config_param() works for meta files", {
   nc_all <- argo_nc_meta_read_config_param(nc)
   expect_true(
     all(
-      c("float", "CONFIG_MISSION_NUMBER", "CONFIG_PARAMETER_NAME",  "CONFIG_PARAMETER_VALUE")
+      c("CONFIG_MISSION_NUMBER", "CONFIG_PARAMETER_NAME",  "CONFIG_PARAMETER_VALUE")
       %in% names(nc_all)
     )
   )
@@ -29,7 +29,7 @@ test_that("argo_nc_meta_read_missions() works for meta files", {
   nc_all <- argo_nc_meta_read_missions(nc)
   expect_true(
     all(
-      c("float", "CONFIG_MISSION_NUMBER", "CONFIG_MISSION_COMMENT")
+      c("CONFIG_MISSION_NUMBER", "CONFIG_MISSION_COMMENT")
       %in% names(nc_all)
     )
   )
@@ -48,7 +48,7 @@ test_that("argo_nc_meta_read_trans_system() works for meta files", {
   nc_all <- argo_nc_meta_read_trans_system(nc)
   expect_true(
     all(
-      c("float", "TRANS_SYSTEM", "TRANS_SYSTEM_ID", "TRANS_FREQUENCY")
+      c("TRANS_SYSTEM", "TRANS_SYSTEM_ID", "TRANS_FREQUENCY")
       %in% names(nc_all)
     )
   )
@@ -68,7 +68,7 @@ test_that("argo_nc_meta_read_positioning_system() works for meta files", {
   nc_all <- argo_nc_meta_read_positioning_system(nc)
   expect_true(
     all(
-      c("float", "POSITIONING_SYSTEM")
+      c("POSITIONING_SYSTEM")
       %in% names(nc_all)
     )
   )
@@ -87,7 +87,7 @@ test_that("argo_nc_meta_read_launch_config_param() works for meta files", {
   nc_all <- argo_nc_meta_read_launch_config_param(nc)
   expect_true(
     all(
-      c("float", "LAUNCH_CONFIG_PARAMETER_NAME", "LAUNCH_CONFIG_PARAMETER_VALUE")
+      c("LAUNCH_CONFIG_PARAMETER_NAME", "LAUNCH_CONFIG_PARAMETER_VALUE")
       %in% names(nc_all)
     )
   )
@@ -106,7 +106,7 @@ test_that("argo_nc_meta_read_sensor() works for meta files", {
   nc_all <- argo_nc_meta_read_sensor(nc)
   expect_true(
     all(
-      c("float", "SENSOR", "SENSOR_MAKER", "SENSOR_MODEL", "SENSOR_SERIAL_NO")
+      c("SENSOR", "SENSOR_MAKER", "SENSOR_MODEL", "SENSOR_SERIAL_NO")
       %in% names(nc_all)
     )
   )
@@ -126,7 +126,6 @@ test_that("argo_nc_meta_read_param() works for meta files", {
   expect_true(
     all(
       c(
-        "float",
         "PARAMETER",
         "PARAMETER_SENSOR",
         "PARAMETER_UNITS",

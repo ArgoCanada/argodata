@@ -37,7 +37,7 @@ argo_nc_traj_read_meas <- function(nc, vars = NULL) {
   values <- argo_nc_values(nc, vars)
   values <- argo_string_to_chars_tbl(values)
 
-  argo_nc_new_tibble(nc, values, nrow = n)
+  tibble::new_tibble(values, nrow = n)
 }
 
 #' @rdname argo_nc_traj
@@ -54,7 +54,7 @@ argo_nc_traj_read_cycle <- function(nc, vars = NULL) {
   values <- argo_nc_values(nc, vars)
   values <- argo_string_to_chars_tbl(values)
 
-  argo_nc_new_tibble(nc, values, nrow = n)
+  tibble::new_tibble(values, nrow = n)
 }
 
 #' @rdname argo_nc_traj
@@ -80,7 +80,7 @@ argo_nc_traj_read_history <- function(nc, vars = NULL) {
   values_string <- argo_nc_values(nc, intersect(vars, nc_vars_string))
   values_string <- lapply(values_string, stringr::str_trim)
 
-  argo_nc_new_tibble(nc, c(values, values_string), nrow = n)
+  tibble::new_tibble(c(values, values_string), nrow = n)
 }
 
 #' @rdname argo_nc_traj

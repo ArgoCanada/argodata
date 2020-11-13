@@ -34,7 +34,7 @@ argo_nc_meta_read_config_param <- function(nc) {
   names <- argo_nc_values(nc, "CONFIG_PARAMETER_NAME")
   values <- argo_nc_values(nc, "CONFIG_PARAMETER_VALUE")
 
-  argo_nc_new_tibble(nc, mission_number, names, values, nrow = n_missions * n)
+  tibble::new_tibble(c(mission_number, names, values), nrow = n_missions * n)
 }
 
 #' @rdname argo_nc_meta
@@ -43,7 +43,7 @@ argo_nc_meta_read_missions <- function(nc) {
   argo_nc_assert_dimensions(nc, "N_MISSIONS")
   mission_number <- argo_nc_values(nc, "CONFIG_MISSION_NUMBER")
   comment <- argo_nc_values(nc, "CONFIG_MISSION_COMMENT")
-  argo_nc_new_tibble(nc, mission_number, comment, nrow = nc$dim$N_MISSIONS$len)
+  tibble::new_tibble(c(mission_number, comment), nrow = nc$dim$N_MISSIONS$len)
 }
 
 #' @rdname argo_nc_meta
@@ -51,7 +51,7 @@ argo_nc_meta_read_missions <- function(nc) {
 argo_nc_meta_read_trans_system <- function(nc) {
   argo_nc_assert_dimensions(nc, "N_TRANS_SYSTEM")
   values <- argo_nc_values(nc, c("TRANS_SYSTEM", "TRANS_SYSTEM_ID", "TRANS_FREQUENCY"))
-  argo_nc_new_tibble(nc, values, nrow = nc$dim$N_TRANS_SYSTEM$len)
+  tibble::new_tibble(values, nrow = nc$dim$N_TRANS_SYSTEM$len)
 }
 
 #' @rdname argo_nc_meta
@@ -59,7 +59,7 @@ argo_nc_meta_read_trans_system <- function(nc) {
 argo_nc_meta_read_positioning_system <- function(nc) {
   argo_nc_assert_dimensions(nc, "N_POSITIONING_SYSTEM")
   values <- argo_nc_values(nc, "POSITIONING_SYSTEM")
-  argo_nc_new_tibble(nc, values, nrow = nc$dim$N_POSITIONING_SYSTEM$len)
+  tibble::new_tibble(values, nrow = nc$dim$N_POSITIONING_SYSTEM$len)
 }
 
 #' @rdname argo_nc_meta
@@ -67,7 +67,7 @@ argo_nc_meta_read_positioning_system <- function(nc) {
 argo_nc_meta_read_launch_config_param <- function(nc) {
   argo_nc_assert_dimensions(nc, "N_LAUNCH_CONFIG_PARAM")
   values <- argo_nc_values(nc, c("LAUNCH_CONFIG_PARAMETER_NAME", "LAUNCH_CONFIG_PARAMETER_VALUE"))
-  argo_nc_new_tibble(nc, values, nrow = nc$dim$N_LAUNCH_CONFIG_PARAM$len)
+  tibble::new_tibble(values, nrow = nc$dim$N_LAUNCH_CONFIG_PARAM$len)
 }
 
 #' @rdname argo_nc_meta
@@ -78,7 +78,7 @@ argo_nc_meta_read_sensor <- function(nc) {
     nc,
     c("SENSOR", "SENSOR_MAKER", "SENSOR_MODEL", "SENSOR_SERIAL_NO")
   )
-  argo_nc_new_tibble(nc, values, nrow = nc$dim$N_SENSOR$len)
+  tibble::new_tibble(values, nrow = nc$dim$N_SENSOR$len)
 }
 
 #' @rdname argo_nc_meta
@@ -98,5 +98,5 @@ argo_nc_meta_read_param <- function(nc) {
       "PREDEPLOYMENT_CALIB_COMMENT"
     )
   )
-  argo_nc_new_tibble(nc, values, nrow = nc$dim$N_PARAM$len)
+  tibble::new_tibble(values, nrow = nc$dim$N_PARAM$len)
 }

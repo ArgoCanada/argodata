@@ -6,6 +6,10 @@ argo_read_many <- function(assert_fun, read_fun, ...,
 
   cached <- argo_download(path, download = download, quiet = quiet)
 
+  # names should be of the 'file' version, which can be
+  # joined with one of the global tables
+  names(cached) <- stringr::str_remove(path, "^dac/")
+
   tbls <- lapply(
     cached,
     read_fun,
@@ -13,7 +17,7 @@ argo_read_many <- function(assert_fun, read_fun, ...,
     ...
   )
 
-  tbl <- vctrs::vec_rbind(!!! tbls)
+  tbl <- vctrs::vec_rbind(!!! tbls, .names_to = "file")
   names(tbl) <- argo_sanitize_vars(names(tbl))
 
   argo_juld_to_date_tbl(tbl)
@@ -87,12 +91,6 @@ argo_nc_extract_float <- function(nc) {
     ),
     "^dac/"
   )
-}
-
-argo_nc_new_tibble <- function(nc, ..., nrow) {
-  # extract float info from filename if possible
-  float <- list(float = vctrs::vec_rep(argo_nc_extract_float(nc), nrow))
-  tibble::new_tibble(c(float, ...), nrow = nrow)
 }
 
 argo_string_to_chars <- function(x, n = NULL) {

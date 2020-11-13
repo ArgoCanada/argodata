@@ -52,7 +52,7 @@ argo_nc_prof_read_levels <- function(nc, vars = NULL, meta = NULL) {
   # rep profile meta to match values
   meta_values <- lapply(meta_values, vctrs::vec_rep_each, n)
 
-  argo_nc_new_tibble(nc, meta_values, values, nrow = n * n_prof)
+  tibble::new_tibble(c(meta_values, values), nrow = n * n_prof)
 }
 
 #' @rdname argo_nc_prof
@@ -69,7 +69,7 @@ argo_nc_prof_read_prof <- function(nc, vars = NULL) {
   values <- argo_nc_values(nc, vars)
   values <- argo_string_to_chars_tbl(values)
 
-  argo_nc_new_tibble(nc, values, nrow = n)
+  tibble::new_tibble(values, nrow = n)
 }
 
 #' @rdname argo_nc_prof
@@ -95,7 +95,7 @@ argo_nc_prof_read_history <- function(nc, vars = NULL, meta = NULL) {
   # correct types, but ncvar_get() errors and guessing the types
   # is complicated.
   if (n == 0) {
-    return(tibble::tibble(float = character(0)))
+    return(tibble::tibble())
   }
 
   # assign values
@@ -111,7 +111,7 @@ argo_nc_prof_read_history <- function(nc, vars = NULL, meta = NULL) {
   # rep profile meta to match values (note reversed dim order from levels)
   meta_values <- lapply(meta_values, vctrs::vec_rep, n)
 
-  argo_nc_new_tibble(nc, meta_values, values, values_string, nrow = n * n_prof)
+  tibble::new_tibble(c(meta_values, values, values_string), nrow = n * n_prof)
 }
 
 #' @rdname argo_nc_prof

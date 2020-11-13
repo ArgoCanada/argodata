@@ -28,13 +28,17 @@ argo_info <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 
   cached <- argo_download(path, download = download, quiet = quiet)
 
+  # names should be of the 'file' version, which can be
+  # joined with one of the global tables
+  names(cached) <- stringr::str_remove(path, "^dac/")
+
   tbls <- lapply(
     cached,
     argo_read_info,
     vars = if(is.null(vars)) NULL else toupper(vars)
   )
 
-  tbl <- vctrs::vec_rbind(!!! tbls)
+  tbl <- vctrs::vec_rbind(!!! tbls, .names_to = "file")
   names(tbl) <- tolower(names(tbl))
 
   date_vars <- c(
@@ -67,7 +71,7 @@ argo_nc_read_info <- function(nc, vars = NULL) {
   vars_tbl <- all_vars[stringr::str_detect(all_vars$dim, "^(STRING[0-9]+|DATE_TIME)$"), ]
   var_names <- if (!is.null(vars)) intersect(vars, vars_tbl$name) else vars_tbl$name
   values <- argo_nc_values(nc, var_names)
-  argo_nc_new_tibble(nc, values, nrow = 1L)
+  tibble::new_tibble(values, nrow = 1L)
 }
 
 assert_argo_nc_file <- function(path) {

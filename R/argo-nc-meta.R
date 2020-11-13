@@ -33,3 +33,17 @@ argo_nc_meta_read_config <- function(nc) {
 
   argo_nc_new_tibble(nc, mission_number, names, values, nrow = n_missions * n)
 }
+
+#' @rdname argo_nc_meta
+#' @export
+argo_nc_meta_read_missions <- function(nc) {
+  n_missions <- nc$dim$N_MISSIONS$len
+  if (is.null(n_missions)) {
+    abort(glue("'{ nc$filename }' is missing dimension 'N_MISSIONS'"))
+  }
+
+  mission_number <- argo_nc_values(nc, "CONFIG_MISSION_NUMBER")
+  comment <- argo_nc_values(nc, "CONFIG_MISSION_COMMENT")
+
+  argo_nc_new_tibble(nc, mission_number, comment, nrow = n_missions)
+}

@@ -41,6 +41,11 @@ nc_meta_file <- system.file(
 nc_meta <- ncdf4::nc_open(nc_meta_file)
 
 argo_nc_meta_read_config_param(nc_meta)
+argo_nc_meta_read_missions(nc_meta)
+argo_nc_meta_read_trans_system(nc_meta)
+argo_nc_meta_read_launch_config_param(nc_meta)
+argo_nc_meta_read_sensor(nc_meta)
+argo_nc_meta_read_param(nc_meta)
 
 ncdf4::nc_close(nc_meta)
 

@@ -187,56 +187,56 @@ substituted for "juld").</p></td>
   <span class='fu'>argo_meta_config_param</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_meta.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 7 x 4</span><span>
-#&gt;   float      config_mission_numb… config_parameter_name     config_parameter_va…
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> csio/2900…                    1 CONFIG_ParkPressure_dbar                  </span><span style='text-decoration: underline;'>1</span><span>500
-#&gt; </span><span style='color: #555555;'>2</span><span> csio/2900…                    1 CONFIG_ProfilePressure_d…                 </span><span style='text-decoration: underline;'>2</span><span>000
-#&gt; </span><span style='color: #555555;'>3</span><span> csio/2900…                    1 CONFIG_UpTime_hours                         </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'>4</span><span> csio/2900…                    1 CONFIG_DownTime_hours                       </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'>5</span><span> csio/2900…                    1 CONFIG_CycleTime_hours                     240
-#&gt; </span><span style='color: #555555;'>6</span><span> csio/2900…                    1 CONFIG_Direction_NUMBER                      1
-#&gt; </span><span style='color: #555555;'>7</span><span> csio/2900…                    1 CONFIG_MeasureBattery_LO…                    1</div><div class='input'>
+#&gt;   file             config_mission_num… config_parameter_name  config_parameter_…
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                          </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                               </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> csio/2900313/29…                   1 CONFIG_ParkPressure_d…               </span><span style='text-decoration: underline;'>1</span><span>500
+#&gt; </span><span style='color: #555555;'>2</span><span> csio/2900313/29…                   1 CONFIG_ProfilePressur…               </span><span style='text-decoration: underline;'>2</span><span>000
+#&gt; </span><span style='color: #555555;'>3</span><span> csio/2900313/29…                   1 CONFIG_UpTime_hours                    </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'>4</span><span> csio/2900313/29…                   1 CONFIG_DownTime_hours                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'>5</span><span> csio/2900313/29…                   1 CONFIG_CycleTime_hours                240
+#&gt; </span><span style='color: #555555;'>6</span><span> csio/2900313/29…                   1 CONFIG_Direction_NUMB…                  1
+#&gt; </span><span style='color: #555555;'>7</span><span> csio/2900313/29…                   1 CONFIG_MeasureBattery…                  1</div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_meta_missions</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_meta.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
-#&gt;   float        config_mission_number config_mission_comment
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                 
-#&gt; </span><span style='color: #555555;'>1</span><span> csio/2900313                     1 </span><span style='color: #555555;'>""</span><span>                    </div><div class='input'>
+#&gt;   file                         config_mission_number config_mission_comment
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                 
+#&gt; </span><span style='color: #555555;'>1</span><span> csio/2900313/2900313_meta.nc                     1 </span><span style='color: #555555;'>""</span><span>                    </div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_meta_trans_system</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_meta.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 4</span><span>
-#&gt;   float        trans_system trans_system_id trans_frequency
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #555555;'>1</span><span> csio/2900313 ARGOS        02528           1/45           </div><div class='input'>
+#&gt;   file                         trans_system trans_system_id trans_frequency
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
+#&gt; </span><span style='color: #555555;'>1</span><span> csio/2900313/2900313_meta.nc ARGOS        02528           1/45           </div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_meta_launch_config_param</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_meta.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 7 x 3</span><span>
-#&gt;   float        launch_config_parameter_name  launch_config_parameter_value
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> csio/2900313 CONFIG_ParkPressure_dbar                               </span><span style='text-decoration: underline;'>1</span><span>500
-#&gt; </span><span style='color: #555555;'>2</span><span> csio/2900313 CONFIG_ProfilePressure_dbar                            </span><span style='text-decoration: underline;'>2</span><span>000
-#&gt; </span><span style='color: #555555;'>3</span><span> csio/2900313 CONFIG_UpTime_hours                                      </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'>4</span><span> csio/2900313 CONFIG_DownTime_hours                                    </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'>5</span><span> csio/2900313 CONFIG_CycleTime_hours                                  240
-#&gt; </span><span style='color: #555555;'>6</span><span> csio/2900313 CONFIG_Direction_NUMBER                                   1
-#&gt; </span><span style='color: #555555;'>7</span><span> csio/2900313 CONFIG_MeasureBattery_LOGICAL                             1</div><div class='input'>
+#&gt;   file                     launch_config_parameter_n… launch_config_parameter_v…
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> csio/2900313/2900313_me… CONFIG_ParkPressure_dbar                         </span><span style='text-decoration: underline;'>1</span><span>500
+#&gt; </span><span style='color: #555555;'>2</span><span> csio/2900313/2900313_me… CONFIG_ProfilePressure_db…                       </span><span style='text-decoration: underline;'>2</span><span>000
+#&gt; </span><span style='color: #555555;'>3</span><span> csio/2900313/2900313_me… CONFIG_UpTime_hours                                </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'>4</span><span> csio/2900313/2900313_me… CONFIG_DownTime_hours                              </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'>5</span><span> csio/2900313/2900313_me… CONFIG_CycleTime_hours                            240
+#&gt; </span><span style='color: #555555;'>6</span><span> csio/2900313/2900313_me… CONFIG_Direction_NUMBER                             1
+#&gt; </span><span style='color: #555555;'>7</span><span> csio/2900313/2900313_me… CONFIG_MeasureBattery_LOG…                          1</div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_meta_sensor</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_meta.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 5</span><span>
-#&gt;   float        sensor   sensor_maker sensor_model sensor_serial_no
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'>1</span><span> csio/2900313 CTD_CNDC SBE          SBE41        0327            
-#&gt; </span><span style='color: #555555;'>2</span><span> csio/2900313 CTD_TEMP SBE          SBE41        0327            
-#&gt; </span><span style='color: #555555;'>3</span><span> csio/2900313 CTD_PRES SBE          SBE41        0327            </div><div class='input'>
+#&gt;   file                        sensor  sensor_maker sensor_model sensor_serial_no
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'>1</span><span> csio/2900313/2900313_meta.… CTD_CN… SBE          SBE41        0327            
+#&gt; </span><span style='color: #555555;'>2</span><span> csio/2900313/2900313_meta.… CTD_TE… SBE          SBE41        0327            
+#&gt; </span><span style='color: #555555;'>3</span><span> csio/2900313/2900313_meta.… CTD_PR… SBE          SBE41        0327            </div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_meta_param</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_meta.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 9</span><span>
-#&gt;   float parameter parameter_sensor parameter_units parameter_accur…
+#&gt;   file  parameter parameter_sensor parameter_units parameter_accur…
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
 #&gt; </span><span style='color: #555555;'>1</span><span> csio… PSAL      CTD_CNDC         psu             0.005 psu       
 #&gt; </span><span style='color: #555555;'>2</span><span> csio… TEMP      CTD_TEMP         degC (ITS-90)   0.002 degC      
@@ -250,49 +250,48 @@ substituted for "juld").</p></td>
 <span class='op'>)</span>
 
 <span class='fu'>argo_read_meta_config_param</span><span class='op'>(</span><span class='va'>meta_file</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 7 x 4</span><span>
-#&gt;   float   CONFIG_MISSION_NU… CONFIG_PARAMETER_NAME             CONFIG_PARAMETER…
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> csio/2…                  1 </span><span style='color: #555555;'>"</span><span>CONFIG_ParkPressure_dbar       …              </span><span style='text-decoration: underline;'>1</span><span>500
-#&gt; </span><span style='color: #555555;'>2</span><span> csio/2…                  1 </span><span style='color: #555555;'>"</span><span>CONFIG_ProfilePressure_dbar    …              </span><span style='text-decoration: underline;'>2</span><span>000
-#&gt; </span><span style='color: #555555;'>3</span><span> csio/2…                  1 </span><span style='color: #555555;'>"</span><span>CONFIG_UpTime_hours            …                </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'>4</span><span> csio/2…                  1 </span><span style='color: #555555;'>"</span><span>CONFIG_DownTime_hours          …                </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'>5</span><span> csio/2…                  1 </span><span style='color: #555555;'>"</span><span>CONFIG_CycleTime_hours         …               240
-#&gt; </span><span style='color: #555555;'>6</span><span> csio/2…                  1 </span><span style='color: #555555;'>"</span><span>CONFIG_Direction_NUMBER        …                 1
-#&gt; </span><span style='color: #555555;'>7</span><span> csio/2…                  1 </span><span style='color: #555555;'>"</span><span>CONFIG_MeasureBattery_LOGICAL  …                 1</div><div class='input'><span class='fu'>argo_read_meta_missions</span><span class='op'>(</span><span class='va'>meta_file</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
-#&gt;   float     CONFIG_MISSION_NUM… CONFIG_MISSION_COMMENT                          
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                           
-#&gt; </span><span style='color: #555555;'>1</span><span> csio/290…                   1 </span><span style='color: #555555;'>"</span><span>                                              …</div><div class='input'><span class='fu'>argo_read_meta_trans_system</span><span class='op'>(</span><span class='va'>meta_file</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 4</span><span>
-#&gt;   float       TRANS_SYSTEM      TRANS_SYSTEM_ID                TRANS_FREQUENCY  
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            
-#&gt; </span><span style='color: #555555;'>1</span><span> csio/29003… </span><span style='color: #555555;'>"</span><span>ARGOS          … </span><span style='color: #555555;'>"</span><span>02528                       … </span><span style='color: #555555;'>"</span><span>1/45           …</div><div class='input'><span class='fu'>argo_read_meta_launch_config_param</span><span class='op'>(</span><span class='va'>meta_file</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 7 x 3</span><span>
-#&gt;   float     LAUNCH_CONFIG_PARAMETER_NAME                  LAUNCH_CONFIG_PARAMET…
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> csio/290… </span><span style='color: #555555;'>"</span><span>CONFIG_ParkPressure_dbar                   …                   </span><span style='text-decoration: underline;'>1</span><span>500
-#&gt; </span><span style='color: #555555;'>2</span><span> csio/290… </span><span style='color: #555555;'>"</span><span>CONFIG_ProfilePressure_dbar                …                   </span><span style='text-decoration: underline;'>2</span><span>000
-#&gt; </span><span style='color: #555555;'>3</span><span> csio/290… </span><span style='color: #555555;'>"</span><span>CONFIG_UpTime_hours                        …                     </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'>4</span><span> csio/290… </span><span style='color: #555555;'>"</span><span>CONFIG_DownTime_hours                      …                     </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'>5</span><span> csio/290… </span><span style='color: #555555;'>"</span><span>CONFIG_CycleTime_hours                     …                    240
-#&gt; </span><span style='color: #555555;'>6</span><span> csio/290… </span><span style='color: #555555;'>"</span><span>CONFIG_Direction_NUMBER                    …                      1
-#&gt; </span><span style='color: #555555;'>7</span><span> csio/290… </span><span style='color: #555555;'>"</span><span>CONFIG_MeasureBattery_LOGICAL              …                      1</div><div class='input'><span class='fu'>argo_read_meta_sensor</span><span class='op'>(</span><span class='va'>meta_file</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 5</span><span>
-#&gt;   float  SENSOR     SENSOR_MAKER          SENSOR_MODEL          SENSOR_SERIAL_NO
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'>1</span><span> csio/… </span><span style='color: #555555;'>"</span><span>CTD_CNDC… </span><span style='color: #555555;'>"</span><span>SBE                … </span><span style='color: #555555;'>"</span><span>SBE41              … </span><span style='color: #555555;'>"</span><span>0327          …
-#&gt; </span><span style='color: #555555;'>2</span><span> csio/… </span><span style='color: #555555;'>"</span><span>CTD_TEMP… </span><span style='color: #555555;'>"</span><span>SBE                … </span><span style='color: #555555;'>"</span><span>SBE41              … </span><span style='color: #555555;'>"</span><span>0327          …
-#&gt; </span><span style='color: #555555;'>3</span><span> csio/… </span><span style='color: #555555;'>"</span><span>CTD_PRES… </span><span style='color: #555555;'>"</span><span>SBE                … </span><span style='color: #555555;'>"</span><span>SBE41              … </span><span style='color: #555555;'>"</span><span>0327          …</div><div class='input'><span class='fu'>argo_read_meta_param</span><span class='op'>(</span><span class='va'>meta_file</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 9</span><span>
-#&gt;   float PARAMETER PARAMETER_SENSOR PARAMETER_UNITS PARAMETER_ACCUR…
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
-#&gt; </span><span style='color: #555555;'>1</span><span> csio… </span><span style='color: #555555;'>"</span><span>PSAL   … </span><span style='color: #555555;'>"</span><span>CTD_CNDC      … </span><span style='color: #555555;'>"</span><span>psu          … </span><span style='color: #555555;'>"</span><span>0.005 psu     …
-#&gt; </span><span style='color: #555555;'>2</span><span> csio… </span><span style='color: #555555;'>"</span><span>TEMP   … </span><span style='color: #555555;'>"</span><span>CTD_TEMP      … </span><span style='color: #555555;'>"</span><span>degC (ITS-90)… </span><span style='color: #555555;'>"</span><span>0.002 degC    …
-#&gt; </span><span style='color: #555555;'>3</span><span> csio… </span><span style='color: #555555;'>"</span><span>PRES   … </span><span style='color: #555555;'>"</span><span>CTD_PRES      … </span><span style='color: #555555;'>"</span><span>dbar         … </span><span style='color: #555555;'>"</span><span>1.5%          …
-#&gt; </span><span style='color: #555555;'># … with 4 more variables: PARAMETER_RESOLUTION </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   PREDEPLOYMENT_CALIB_EQUATION </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PREDEPLOYMENT_CALIB_COEFFICIENT </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   PREDEPLOYMENT_CALIB_COMMENT </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
+#&gt;   CONFIG_MISSION_NU… CONFIG_PARAMETER_NAME                    CONFIG_PARAMETER_…
+#&gt;                </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>                  1 </span><span style='color: #555555;'>"</span><span>CONFIG_ParkPressure_dbar              …               </span><span style='text-decoration: underline;'>1</span><span>500
+#&gt; </span><span style='color: #555555;'>2</span><span>                  1 </span><span style='color: #555555;'>"</span><span>CONFIG_ProfilePressure_dbar           …               </span><span style='text-decoration: underline;'>2</span><span>000
+#&gt; </span><span style='color: #555555;'>3</span><span>                  1 </span><span style='color: #555555;'>"</span><span>CONFIG_UpTime_hours                   …                 </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'>4</span><span>                  1 </span><span style='color: #555555;'>"</span><span>CONFIG_DownTime_hours                 …                 </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'>5</span><span>                  1 </span><span style='color: #555555;'>"</span><span>CONFIG_CycleTime_hours                …                240
+#&gt; </span><span style='color: #555555;'>6</span><span>                  1 </span><span style='color: #555555;'>"</span><span>CONFIG_Direction_NUMBER               …                  1
+#&gt; </span><span style='color: #555555;'>7</span><span>                  1 </span><span style='color: #555555;'>"</span><span>CONFIG_MeasureBattery_LOGICAL         …                  1</div><div class='input'><span class='fu'>argo_read_meta_missions</span><span class='op'>(</span><span class='va'>meta_file</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 2</span><span>
+#&gt;   CONFIG_MISSION_NUMB… CONFIG_MISSION_COMMENT                                   
+#&gt;                  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                    
+#&gt; </span><span style='color: #555555;'>1</span><span>                    1 </span><span style='color: #555555;'>"</span><span>                                                       …</div><div class='input'><span class='fu'>argo_read_meta_trans_system</span><span class='op'>(</span><span class='va'>meta_file</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
+#&gt;   TRANS_SYSTEM       TRANS_SYSTEM_ID                    TRANS_FREQUENCY   
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             
+#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>"</span><span>ARGOS           </span><span style='color: #555555;'>"</span><span> </span><span style='color: #555555;'>"</span><span>02528                           </span><span style='color: #555555;'>"</span><span> </span><span style='color: #555555;'>"</span><span>1/45            </span><span style='color: #555555;'>"</span><span></div><div class='input'><span class='fu'>argo_read_meta_launch_config_param</span><span class='op'>(</span><span class='va'>meta_file</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 7 x 2</span><span>
+#&gt;   LAUNCH_CONFIG_PARAMETER_NAME                           LAUNCH_CONFIG_PARAMETE…
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                                    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>"</span><span>CONFIG_ParkPressure_dbar                            …                    </span><span style='text-decoration: underline;'>1</span><span>500
+#&gt; </span><span style='color: #555555;'>2</span><span> </span><span style='color: #555555;'>"</span><span>CONFIG_ProfilePressure_dbar                         …                    </span><span style='text-decoration: underline;'>2</span><span>000
+#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #555555;'>"</span><span>CONFIG_UpTime_hours                                 …                      </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'>4</span><span> </span><span style='color: #555555;'>"</span><span>CONFIG_DownTime_hours                               …                      </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'>5</span><span> </span><span style='color: #555555;'>"</span><span>CONFIG_CycleTime_hours                              …                     240
+#&gt; </span><span style='color: #555555;'>6</span><span> </span><span style='color: #555555;'>"</span><span>CONFIG_Direction_NUMBER                             …                       1
+#&gt; </span><span style='color: #555555;'>7</span><span> </span><span style='color: #555555;'>"</span><span>CONFIG_MeasureBattery_LOGICAL                       …                       1</div><div class='input'><span class='fu'>argo_read_meta_sensor</span><span class='op'>(</span><span class='va'>meta_file</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 4</span><span>
+#&gt;   SENSOR       SENSOR_MAKER             SENSOR_MODEL            SENSOR_SERIAL_NO
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>"</span><span>CTD_CNDC  … </span><span style='color: #555555;'>"</span><span>SBE                   … </span><span style='color: #555555;'>"</span><span>SBE41                … </span><span style='color: #555555;'>"</span><span>0327          …
+#&gt; </span><span style='color: #555555;'>2</span><span> </span><span style='color: #555555;'>"</span><span>CTD_TEMP  … </span><span style='color: #555555;'>"</span><span>SBE                   … </span><span style='color: #555555;'>"</span><span>SBE41                … </span><span style='color: #555555;'>"</span><span>0327          …
+#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #555555;'>"</span><span>CTD_PRES  … </span><span style='color: #555555;'>"</span><span>SBE                   … </span><span style='color: #555555;'>"</span><span>SBE41                … </span><span style='color: #555555;'>"</span><span>0327          …</div><div class='input'><span class='fu'>argo_read_meta_param</span><span class='op'>(</span><span class='va'>meta_file</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 8</span><span>
+#&gt;   PARAMETER PARAMETER_SENSOR PARAMETER_UNITS PARAMETER_ACCUR… PARAMETER_RESOL…
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>"</span><span>PSAL   … </span><span style='color: #555555;'>"</span><span>CTD_CNDC      … </span><span style='color: #555555;'>"</span><span>psu          … </span><span style='color: #555555;'>"</span><span>0.005 psu     … </span><span style='color: #555555;'>"</span><span>0.001 psu     …
+#&gt; </span><span style='color: #555555;'>2</span><span> </span><span style='color: #555555;'>"</span><span>TEMP   … </span><span style='color: #555555;'>"</span><span>CTD_TEMP      … </span><span style='color: #555555;'>"</span><span>degC (ITS-90)… </span><span style='color: #555555;'>"</span><span>0.002 degC    … </span><span style='color: #555555;'>"</span><span>0.001 degC    …
+#&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #555555;'>"</span><span>PRES   … </span><span style='color: #555555;'>"</span><span>CTD_PRES      … </span><span style='color: #555555;'>"</span><span>dbar         … </span><span style='color: #555555;'>"</span><span>1.5%          … </span><span style='color: #555555;'>"</span><span>0.1 dbar      …
+#&gt; </span><span style='color: #555555;'># … with 3 more variables: PREDEPLOYMENT_CALIB_EQUATION </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   PREDEPLOYMENT_CALIB_COEFFICIENT </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PREDEPLOYMENT_CALIB_COMMENT </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

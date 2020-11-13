@@ -168,25 +168,9 @@ argo_read_prof_history <- function(file, vars = NULL, meta = NULL) {
 }
 
 assert_argo_prof_file <- function(path) {
-  is_prof_file <- stringr::str_detect(
+  argo_assert_path_type(
     path,
-    "^dac/[a-z]+/([0-9a-zA-Z]+)/profiles/(B|S)?(R|D)\\1_[0-9]+D?\\.nc$"
+    "^dac/[a-z]+/([0-9a-zA-Z]+)/profiles/(B|S)?(R|D)\\1_[0-9]+D?\\.nc$",
+    "profile"
   )
-
-  if (any(!is_prof_file)) {
-    bad_files <- path[!is_prof_file]
-    paths <- if (length(bad_files) != 1) "paths" else "path"
-    bad_files_label <- paste0(
-      "'", utils::head(bad_files, 20), "'",
-      collapse = "\n"
-    )
-
-    abort(
-      glue(
-        "Found { length(bad_files) } invalid Argo profile { paths }:\n{ bad_files_label}"
-      )
-    )
-  }
-
-  invisible(path)
 }

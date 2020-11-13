@@ -58,6 +58,27 @@ argo_nc_assert_dimensions <- function(nc, dimensions) {
   invisible(nc)
 }
 
+argo_assert_path_type <- function(path, pattern, file_type) {
+  path_matches_pattern <- stringr::str_detect(path, pattern)
+
+  if (any(!path_matches_pattern)) {
+    bad_files <- path[!path_matches_pattern]
+    paths <- if (length(bad_files) != 1) "paths" else "path"
+    bad_files_label <- paste0(
+      "'", utils::head(bad_files, 20), "'",
+      collapse = "\n"
+    )
+
+    abort(
+      glue(
+        "Found { length(bad_files) } invalid Argo { file_type } { paths }:\n{ bad_files_label}"
+      )
+    )
+  }
+
+  invisible(path)
+}
+
 argo_nc_extract_float <- function(nc) {
   stringr::str_remove(
     stringr::str_extract(

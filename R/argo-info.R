@@ -71,26 +71,5 @@ argo_nc_read_info <- function(nc, vars = NULL) {
 }
 
 assert_argo_nc_file <- function(path) {
-  is_prof_file <- stringr::str_detect(
-    path,
-    "^dac/[a-z]+/([0-9a-zA-Z]+)/.*?\\.nc$"
-  )
-
-  if (any(!is_prof_file)) {
-    bad_files <- path[!is_prof_file]
-    paths <- if (length(bad_files) != 1) "paths" else "path"
-    bad_files_label <- paste0(
-      "'", utils::head(bad_files, 20), "'",
-      collapse = "\n"
-    )
-
-    abort(
-      glue(
-        "Found { length(bad_files) } invalid Argo NetCDF { paths }:\n{ bad_files_label}"
-      )
-    )
-  }
-
-  invisible(path)
+  argo_assert_path_type(path, "^dac/[a-z]+/([0-9a-zA-Z]+)/.*?\\.nc$", "NetCDF")
 }
-

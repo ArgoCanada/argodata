@@ -253,25 +253,9 @@ argo_read_traj_history <- function(file, vars = NULL) {
 }
 
 assert_argo_traj_file <- function(path) {
-  is_traj_file <- stringr::str_detect(
+  argo_assert_path_type(
     path,
-    "^dac/[a-z]+/([0-9a-zA-Z]+)/\\1_B?(R|D)traj\\.nc$"
+    "^dac/[a-z]+/([0-9a-zA-Z]+)/\\1_B?(R|D)traj\\.nc$",
+    "trajectory"
   )
-
-  if (any(!is_traj_file)) {
-    bad_files <- path[!is_traj_file]
-    paths <- if (length(bad_files) != 1) "paths" else "path"
-    bad_files_label <- paste0(
-      "'", utils::head(bad_files, 20), "'",
-      collapse = "\n"
-    )
-
-    abort(
-      glue(
-        "Found { length(bad_files) } invalid Argo trajectory { paths }:\n{ bad_files_label}"
-      )
-    )
-  }
-
-  invisible(path)
 }

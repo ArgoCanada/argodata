@@ -1,7 +1,7 @@
 
 #' Construct Argo paths and URLs
 #'
-#' @inheritParams argo_cache_dir
+#' @inheritParams argo_path_info
 #'
 #' @return A full URL according to the current [argo_mirror()]
 #'   and `path`.

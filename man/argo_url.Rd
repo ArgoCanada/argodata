@@ -8,7 +8,7 @@ argo_url(path)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
-\code{\link[=argo_mirror]{argo_mirror()}}.}
+\code{\link[=argo_mirror]{argo_mirror()}} or \code{\link[=argo_cache_dir]{argo_cache_dir()}}.}
 }
 \value{
 A full URL according to the current \code{\link[=argo_mirror]{argo_mirror()}}

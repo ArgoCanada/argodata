@@ -23,7 +23,7 @@ argo_read_prof_history(file, vars = NULL, meta = NULL)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
-\code{\link[=argo_mirror]{argo_mirror()}}.}
+\code{\link[=argo_mirror]{argo_mirror()}} or \code{\link[=argo_cache_dir]{argo_cache_dir()}}.}
 
 \item{vars}{A vector of variable names to include. The ordering
 of the variables is not guaranteed, and variables that do not

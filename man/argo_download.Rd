@@ -15,7 +15,7 @@ argo_should_download(
 }
 \arguments{
 \item{path}{A path relative to the root directory of
-\code{\link[=argo_mirror]{argo_mirror()}}.}
+\code{\link[=argo_mirror]{argo_mirror()}} or \code{\link[=argo_cache_dir]{argo_cache_dir()}}.}
 
 \item{download}{A logical vector indicating whether or not
 a file should be downloaded. Defaults to the value of

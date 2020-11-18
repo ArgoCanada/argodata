@@ -1,7 +1,7 @@
 
 #' Download Argo data files
 #'
-#' @inheritParams argo_cache_dir
+#' @inheritParams argo_path_info
 #' @param download A logical vector indicating whether or not
 #'   a file should be downloaded. Defaults to the value of
 #'   [argo_should_download()], which is `TRUE` for files that

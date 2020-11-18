@@ -35,8 +35,10 @@
 argo_vars <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   path <- as_argo_path(path)
   cached <- argo_download(path, download = download, quiet = quiet)
+  names(cached) <- stringr::str_remove(path, "^dac/")
+
   tbls <- lapply(cached, argo_read_vars, vars = argo_unsanitize_vars(vars))
-  tbl <- vctrs::vec_rbind(!!! tbls)
+  tbl <- vctrs::vec_rbind(!!! tbls, .names_to = "file")
   tbl$name <- tolower(tbl$name)
   tbl$name <- stringr::str_replace(tbl$name, "^juld", "date")
   tbl
@@ -52,26 +54,41 @@ argo_read_vars <- function(file, vars = NULL) {
 #' @export
 argo_nc_read_vars <- function(nc, vars = NULL) {
   vars <- if (is.null(vars)) names(nc$var) else intersect(vars, names(nc$var))
-  vars <- lapply(unclass(nc$var[vars]), argo_nc_var_as_tbl)
+  ncdf4_vars <- lapply(unclass(nc$var[vars]), argo_nc_var_as_tbl)
+  attrs <- lapply(unclass(nc$var[vars]), argo_nc_var_attr_as_tbl, nc)
 
-  tbl <- vctrs::vec_rbind(!!! vars)
-  tbl$float <- argo_nc_extract_float(nc)
+  tbl <- vctrs::vec_rbind(!!! ncdf4_vars)
+  tbl_attrs <- vctrs::vec_rbind(!!! attrs)
 
   # return an edited version of the raw values:
   # only include a few items, replace dim with the dimension names,
   # and trim whitespace
-  tbl <- tbl[c("float", "name", "longname", "units", "prec", "ndims", "size", "dim")]
+  tbl <- tbl[c("name", "longname", "units", "prec", "ndims", "size", "dim")]
   tbl$dim <- lapply(tbl$dim, function(x) vapply(x, "[[", "name", FUN.VALUE = character(1)))
   tbl_is_char <- vapply(tbl, is.character, logical(1))
   tbl[tbl_is_char] <- lapply(tbl[tbl_is_char], stringr::str_trim)
-  tbl
+
+  # include all attributes except those already included in the variable
+  # definition above
+  tbl_attrs <- tbl_attrs[setdiff(names(tbl_attrs), c("long_name", "units", "_FillValue"))]
+
+  vctrs::vec_cbind(tbl, tbl_attrs)
 }
 
 argo_nc_var_as_tbl <- function(var) {
   var$id <- NULL
+
   list_cols <- c("size", "dimids", "dim", "varsize", "dims", "missval")
   var_is_scalar <- !(names(var) %in% list_cols)
-
   var[!var_is_scalar] <- lapply(var[!var_is_scalar], list)
+
   tibble::new_tibble(lapply(var, unclass), nrow = 1)
+}
+
+argo_nc_var_attr_as_tbl <- function(var, nc) {
+  attrs <- ncdf4::ncatt_get(nc, var)
+  # this doesn't work with variables of multiple types and is covered by
+  # missval in the output
+  attrs[["_FillValue"]] <- NULL
+  tibble::new_tibble(attrs, nrow = 1)
 }

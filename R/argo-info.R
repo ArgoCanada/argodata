@@ -65,15 +65,33 @@ argo_read_info <- function(file, vars = NULL) {
 #' @rdname argo_info
 #' @export
 argo_nc_read_info <- function(nc, vars = NULL) {
+  # some global metadata is stored as variables along a string dimension
   all_vars <- argo_nc_read_vars(nc)
   all_vars <- all_vars[all_vars$ndims == 1, ]
   all_vars$dim <- unlist(all_vars$dim)
   vars_tbl <- all_vars[stringr::str_detect(all_vars$dim, "^(STRING[0-9]+|DATE_TIME)$"), ]
-  var_names <- if (!is.null(vars)) intersect(vars, vars_tbl$name) else vars_tbl$name
-  values <- argo_nc_values(nc, var_names)
-  tibble::new_tibble(values, nrow = 1L)
+
+  # other global metadata is stored as global attributes
+  # to avoid name collisions that could result from making variable names
+  # lowercase, namespace these as att_{ name }
+  attrs <- ncdf4::ncatt_get(nc, 0)
+  names(attrs) <- stringr::str_c("att_", names(attrs))
+
+  all_names <- c(vars_tbl$name, names(attrs))
+  var_names <- if (!is.null(vars)) intersect_any_case(all_names, vars) else all_names
+  values <- argo_nc_values(nc, intersect(vars_tbl$name, var_names))
+  attrs <- attrs[intersect(names(attrs), var_names)]
+  tibble::new_tibble(c(values, attrs), nrow = 1L)
 }
 
 assert_argo_nc_file <- function(path) {
   argo_assert_path_type(path, "^dac/[a-z]+/([0-9a-zA-Z]+)/.*?\\.nc$", "NetCDF")
+}
+
+intersect_any_case <- function(x, y) {
+  x_upper <- toupper(x)
+  y_upper <- toupper(y)
+  intersect_upper <- intersect(x_upper, y_upper)
+  result <- c(x[x_upper %in% intersect_upper], y[y_upper %in% intersect_upper])
+  result[!duplicated(toupper(result))]
 }

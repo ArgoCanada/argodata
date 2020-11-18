@@ -41,6 +41,7 @@ argo_vars <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   tbl <- vctrs::vec_rbind(!!! tbls, .names_to = "file")
   tbl$name <- tolower(tbl$name)
   tbl$name <- stringr::str_replace(tbl$name, "^juld", "date")
+  names(tbl) <- tolower(names(tbl))
   tbl
 }
 
@@ -68,10 +69,6 @@ argo_nc_read_vars <- function(nc, vars = NULL) {
   tbl_is_char <- vapply(tbl, is.character, logical(1))
   tbl[tbl_is_char] <- lapply(tbl[tbl_is_char], stringr::str_trim)
 
-  # include all attributes except those already included in the variable
-  # definition above
-  tbl_attrs <- tbl_attrs[setdiff(names(tbl_attrs), c("long_name", "units", "_FillValue"))]
-
   vctrs::vec_cbind(tbl, tbl_attrs)
 }
 
@@ -90,5 +87,6 @@ argo_nc_var_attr_as_tbl <- function(var, nc) {
   # this doesn't work with variables of multiple types and is covered by
   # missval in the output
   attrs[["_FillValue"]] <- NULL
+  names(attrs) <- stringr::str_c("att_", names(attrs))
   tibble::new_tibble(attrs, nrow = 1)
 }

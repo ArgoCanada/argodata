@@ -2,9 +2,12 @@
 % Please edit documentation in R/argo-path.R
 \name{argo_path_info}
 \alias{argo_path_info}
+\alias{as_argo_path}
 \title{Extract information from an Argo path}
 \usage{
 argo_path_info(path)
+
+as_argo_path(path)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
@@ -18,7 +21,9 @@ A \code{\link[tibble:tibble]{tibble::tibble()}} with columns \code{file}, \code{
 Extract information from an Argo path
 }
 \examples{
+with_argo_example_cache({
+  argo_path_info(list.files(argo_cache_dir(), recursive = TRUE))
+})
 
-argo_path_info(list.files())
 
 }

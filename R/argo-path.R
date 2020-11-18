@@ -9,8 +9,10 @@
 #' @export
 #'
 #' @examples
+#' with_argo_example_cache({
+#'   argo_path_info(list.files(argo_cache_dir(), recursive = TRUE))
+#' })
 #'
-#' argo_path_info(list.files())
 #'
 argo_path_info <- function(path) {
   path <- as_argo_path(path)
@@ -27,6 +29,7 @@ argo_path_info <- function(path) {
   )
 
   is_prof <- is.na(extract_non_prof[, 1])
+  is_prof[is.na(extract_prof[, 1]) & is.na(extract_non_prof[, 1])] <- NA
 
   file <- stringr::str_remove(path, "^dac/")
   file_float <- ifelse(is_prof, extract_prof[, 4], extract_non_prof[, 2])
@@ -38,7 +41,8 @@ argo_path_info <- function(path) {
   tibble::tibble(file, file_float, file_type, file_cycle, file_data_mode, file_modifier)
 }
 
-
+#' @rdname argo_path_info
+#' @export
 as_argo_path <- function(path) {
   if (is.data.frame(path) && ("file" %in% names(path))) {
     path <- path[["file"]]

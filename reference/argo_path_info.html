@@ -122,6 +122,8 @@
 
     <pre class="usage"><span class='fu'>argo_path_info</span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span>
 
+<span class='fu'>argo_extract_path_info</span><span class='op'>(</span><span class='va'>tbl</span><span class='op'>)</span>
+
 <span class='fu'>as_argo_path</span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -130,7 +132,9 @@
     <tr>
       <th>path</th>
       <td><p>A path relative to the root directory of
-<code><a href='argo_mirror.html'>argo_mirror()</a></code> or <code><a href='argo_cache_dir.html'>argo_cache_dir()</a></code>.</p></td>
+<code><a href='argo_mirror.html'>argo_mirror()</a></code> or <code><a href='argo_cache_dir.html'>argo_cache_dir()</a></code>. This value can also
+be a data.frame with a <code>file</code> column (e.g., a global index as
+returned by <code><a href='argo_global_meta.html'>argo_global_meta()</a></code> and others).</p></td>
     </tr>
     </table>
 
@@ -140,24 +144,29 @@
 <code>file_type</code>, <code>file_cycle</code>, <code>file_data_mode</code>, and <code>file_modifier</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
-  <span class='fu'>argo_path_info</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='fu'><a href='argo_cache_dir.html'>argo_cache_dir</a></span><span class='op'>(</span><span class='op'>)</span>, recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='fu'>argo_path_info</span><span class='op'>(</span><span class='st'>"dac/nmdis/2901633/profiles/R2901633_052.nc"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 6</span><span>
+#&gt;   file              file_float file_type file_cycle file_data_mode file_modifier
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        
+#&gt; </span><span style='color: #555555;'>1</span><span> nmdis/2901633/pr… 2901633    prof              52 R              </span><span style='color: #BB0000;'>NA</span><span>           </div><div class='input'>
+<span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
+  <span class='fu'>argo_extract_path_info</span><span class='op'>(</span><span class='fu'><a href='argo_global_meta.html'>argo_global_meta</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 34 x 6</span><span>
-#&gt;    file             file_float file_type file_cycle file_data_mode file_modifier
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        
-#&gt; </span><span style='color: #555555;'> 1</span><span> ar_index_global… </span><span style='color: #BB0000;'>NA</span><span>         </span><span style='color: #BB0000;'>NA</span><span>                </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
-#&gt; </span><span style='color: #555555;'> 2</span><span> ar_index_global… </span><span style='color: #BB0000;'>NA</span><span>         </span><span style='color: #BB0000;'>NA</span><span>                </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
-#&gt; </span><span style='color: #555555;'> 3</span><span> ar_index_global… </span><span style='color: #BB0000;'>NA</span><span>         </span><span style='color: #BB0000;'>NA</span><span>                </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
-#&gt; </span><span style='color: #555555;'> 4</span><span> argo_bio-traj_i… </span><span style='color: #BB0000;'>NA</span><span>         </span><span style='color: #BB0000;'>NA</span><span>                </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
-#&gt; </span><span style='color: #555555;'> 5</span><span> csio/2900313/29… 2900313    meta              </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
-#&gt; </span><span style='color: #555555;'> 6</span><span> csio/2900313/29… 2900313    prof              </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
-#&gt; </span><span style='color: #555555;'> 7</span><span> csio/2900313/29… 2900313    traj              </span><span style='color: #BB0000;'>NA</span><span> R              </span><span style='color: #BB0000;'>NA</span><span>           
-#&gt; </span><span style='color: #555555;'> 8</span><span> csio/2900313/29… 2900313    tech              </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
-#&gt; </span><span style='color: #555555;'> 9</span><span> csio/2900313/pr… 2900313    prof               0 D              </span><span style='color: #BB0000;'>NA</span><span>           
-#&gt; </span><span style='color: #555555;'>10</span><span> csio/2900313/pr… 2900313    prof               1 D              </span><span style='color: #BB0000;'>NA</span><span>           
-#&gt; </span><span style='color: #555555;'># … with 24 more rows</span><span></div><div class='input'>
-
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 16,062 x 9</span><span>
+#&gt;    file  file_float file_type file_cycle file_data_mode file_modifier
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        
+#&gt; </span><span style='color: #555555;'> 1</span><span> aoml… 13857      meta              </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
+#&gt; </span><span style='color: #555555;'> 2</span><span> aoml… 13858      meta              </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
+#&gt; </span><span style='color: #555555;'> 3</span><span> aoml… 13859      meta              </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
+#&gt; </span><span style='color: #555555;'> 4</span><span> aoml… 15819      meta              </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
+#&gt; </span><span style='color: #555555;'> 5</span><span> aoml… 15820      meta              </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
+#&gt; </span><span style='color: #555555;'> 6</span><span> aoml… 15851      meta              </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
+#&gt; </span><span style='color: #555555;'> 7</span><span> aoml… 15852      meta              </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
+#&gt; </span><span style='color: #555555;'> 8</span><span> aoml… 15853      meta              </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
+#&gt; </span><span style='color: #555555;'> 9</span><span> aoml… 15854      meta              </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
+#&gt; </span><span style='color: #555555;'>10</span><span> aoml… 15855      meta              </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>             </span><span style='color: #BB0000;'>NA</span><span>           
+#&gt; </span><span style='color: #555555;'># … with 16,052 more rows, and 3 more variables: profiler_type </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   institution </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, date_update </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

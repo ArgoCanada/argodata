@@ -38,7 +38,7 @@ argo_filter_radius <- function(tbl, latitude, longitude, radius_km) {
   )
 
   dist <- geodist_lnglat(
-    tbl$longitude, tbl$latitude,
+    normalize_lng(tbl$longitude), normalize_lat(tbl$latitude),
     longitude, latitude,
     R = 6371.01
   )

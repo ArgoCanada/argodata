@@ -53,7 +53,9 @@ cached.}
 default \code{mirror}.}
 
 \item{path}{A path relative to the root directory of
-\code{\link[=argo_mirror]{argo_mirror()}} or \code{\link[=argo_cache_dir]{argo_cache_dir()}}.}
+\code{\link[=argo_mirror]{argo_mirror()}} or \code{\link[=argo_cache_dir]{argo_cache_dir()}}. This value can also
+be a data.frame with a \code{file} column (e.g., a global index as
+returned by \code{\link[=argo_global_meta]{argo_global_meta()}} and others).}
 }
 \description{
 The cache directory stores previously downloaded files to access them

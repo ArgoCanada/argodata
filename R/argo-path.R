@@ -2,19 +2,30 @@
 #' Extract information from an Argo path
 #'
 #' @param path A path relative to the root directory of
-#'   [argo_mirror()] or [argo_cache_dir()].
+#'   [argo_mirror()] or [argo_cache_dir()]. This value can also
+#'   be a data.frame with a `file` column (e.g., a global index as
+#'   returned by [argo_global_meta()] and others).
 #'
 #' @return A [tibble::tibble()] with columns `file`, `file_float`,
 #'   `file_type`, `file_cycle`, `file_data_mode`, and `file_modifier`.
 #' @export
 #'
 #' @examples
+#' argo_path_info("dac/nmdis/2901633/profiles/R2901633_052.nc")
+#'
 #' with_argo_example_cache({
-#'   argo_path_info(list.files(argo_cache_dir(), recursive = TRUE))
+#'   argo_extract_path_info(argo_global_meta())
 #' })
 #'
-#'
 argo_path_info <- function(path) {
+  # this is the most common case, and in the case of a profile
+  # index, saves a str_replace() on 1.3 million rows
+  if (is.data.frame(path) && ("file" %in% names(path))) {
+    file <- path[["file"]]
+  } else {
+    file <- NULL
+  }
+
   path <- as_argo_path(path)
   filename <- basename(path)
 
@@ -31,7 +42,9 @@ argo_path_info <- function(path) {
   is_prof <- is.na(extract_non_prof[, 1])
   is_prof[is.na(extract_prof[, 1]) & is.na(extract_non_prof[, 1])] <- NA
 
-  file <- stringr::str_remove(path, "^dac/")
+  if (is.null(file)) {
+    file <- stringr::str_remove(path, "^dac/")
+  }
   file_float <- ifelse(is_prof, extract_prof[, 4], extract_non_prof[, 2])
   file_type <- ifelse(is_prof, "prof", extract_non_prof[, 5])
   file_cycle <- ifelse(is_prof, as.integer(extract_prof[, 5]), NA_integer_)
@@ -39,6 +52,25 @@ argo_path_info <- function(path) {
   file_modifier <- ifelse(is_prof, extract_prof[, 2], extract_non_prof[, 3])
 
   tibble::tibble(file, file_float, file_type, file_cycle, file_data_mode, file_modifier)
+}
+
+#' @rdname argo_path_info
+#' @export
+argo_extract_path_info <- function(tbl) {
+  if (!is.data.frame(tbl)) {
+    abort("`tbl` must be a data.frame.")
+  }
+
+  if (!("file" %in% names(tbl))) {
+    abort("`tbl` must contain a `file` column.")
+  }
+
+  info <- argo_path_info(tbl$file)
+  info$file <- NULL
+
+  out <- vctrs::vec_cbind(tbl, info, .name_repair = "check_unique")
+  out_names <- insert_vector(names(tbl), names(info), 1 + match("file", names(tbl)))
+  out[out_names]
 }
 
 #' @rdname argo_path_info
@@ -56,4 +88,8 @@ as_argo_path <- function(path) {
   }
 
   path
+}
+
+insert_vector <- function(x, y, pos) {
+  c(x[seq_len(pos - 1)], y, x[pos - 1 + seq_len(length(x) - pos + 1)])
 }

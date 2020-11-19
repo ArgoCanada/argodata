@@ -2,16 +2,21 @@
 % Please edit documentation in R/argo-path.R
 \name{argo_path_info}
 \alias{argo_path_info}
+\alias{argo_extract_path_info}
 \alias{as_argo_path}
 \title{Extract information from an Argo path}
 \usage{
 argo_path_info(path)
 
+argo_extract_path_info(tbl)
+
 as_argo_path(path)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
-\code{\link[=argo_mirror]{argo_mirror()}} or \code{\link[=argo_cache_dir]{argo_cache_dir()}}.}
+\code{\link[=argo_mirror]{argo_mirror()}} or \code{\link[=argo_cache_dir]{argo_cache_dir()}}. This value can also
+be a data.frame with a \code{file} column (e.g., a global index as
+returned by \code{\link[=argo_global_meta]{argo_global_meta()}} and others).}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}} with columns \code{file}, \code{file_float},
@@ -21,9 +26,10 @@ A \code{\link[tibble:tibble]{tibble::tibble()}} with columns \code{file}, \code{
 Extract information from an Argo path
 }
 \examples{
-with_argo_example_cache({
-  argo_path_info(list.files(argo_cache_dir(), recursive = TRUE))
-})
+argo_path_info("dac/nmdis/2901633/profiles/R2901633_052.nc")
 
+with_argo_example_cache({
+  argo_extract_path_info(argo_global_meta())
+})
 
 }

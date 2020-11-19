@@ -3,6 +3,7 @@
 export(argo_cache_dir)
 export(argo_cached)
 export(argo_download)
+export(argo_extract_path_info)
 export(argo_global_bio_prof)
 export(argo_global_bio_traj)
 export(argo_global_meta)

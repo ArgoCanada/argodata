@@ -5,6 +5,7 @@
 #'   [argo_mirror()] or [argo_cache_dir()]. This value can also
 #'   be a data.frame with a `file` column (e.g., a global index as
 #'   returned by [argo_global_meta()] and others).
+#' @inheritParams argo_filter_radius
 #'
 #' @return A [tibble::tibble()] with columns `file`, `file_float`,
 #'   `file_type`, `file_cycle`, `file_data_mode`, and `file_modifier`.
@@ -57,13 +58,7 @@ argo_path_info <- function(path) {
 #' @rdname argo_path_info
 #' @export
 argo_extract_path_info <- function(tbl) {
-  if (!is.data.frame(tbl)) {
-    abort("`tbl` must be a data.frame.")
-  }
-
-  if (!("file" %in% names(tbl))) {
-    abort("`tbl` must contain a `file` column.")
-  }
+  argo_assert_columns(tbl, "file")
 
   info <- argo_path_info(tbl$file)
   info$file <- NULL
@@ -88,8 +83,4 @@ as_argo_path <- function(path) {
   }
 
   path
-}
-
-insert_vector <- function(x, y, pos) {
-  c(x[seq_len(pos - 1)], y, x[pos - 1 + seq_len(length(x) - pos + 1)])
 }

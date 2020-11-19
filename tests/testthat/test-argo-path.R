@@ -71,8 +71,6 @@ test_that("argo_path_info() identifies file type and float for indexes", {
 })
 
 test_that("argo_extract_path_info() works", {
-  expect_error(argo_extract_path_info(NULL), "must be a data\\.frame")
-  expect_error(argo_extract_path_info(tibble::tibble()), "must contain a `file` column")
   with_argo_example_cache({
     expect_identical(
       argo_extract_path_info(argo_global_meta(quiet = TRUE)),

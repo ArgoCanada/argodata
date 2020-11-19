@@ -17,6 +17,10 @@ as_argo_path(path)
 \code{\link[=argo_mirror]{argo_mirror()}} or \code{\link[=argo_cache_dir]{argo_cache_dir()}}. This value can also
 be a data.frame with a \code{file} column (e.g., a global index as
 returned by \code{\link[=argo_global_meta]{argo_global_meta()}} and others).}
+
+\item{tbl}{A data.frame, ideally derived from \code{\link[=argo_global_meta]{argo_global_meta()}}
+and family. The column conventions used by the global indexes is assumed
+(e.g., columns \code{latitude} and \code{longitude} exist).}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}} with columns \code{file}, \code{file_float},

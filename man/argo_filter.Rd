@@ -20,7 +20,7 @@ argo_filter_updated(tbl, date_update_min, date_update_max = Sys.time())
 
 argo_filter_parameters(tbl, parameters, parameter_data_mode = NULL)
 
-argo_filter_float(tbl, float_id)
+argo_filter_float(tbl, float)
 
 argo_filter_data_mode(tbl, data_mode)
 }
@@ -49,6 +49,8 @@ contained in the \code{\link[=argo_global_bio_prof]{argo_global_bio_prof()}} \co
 \item{parameter_data_mode, data_mode}{A case-insensitive vector of data modes
 (realtime or delayed) or abbreviations of data modes (R for realtime, D
 for delayed).}
+
+\item{float}{A float identifier.}
 }
 \value{
 \code{tbl} with rows that match the search criteria.

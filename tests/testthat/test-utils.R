@@ -48,3 +48,12 @@ test_that("geodist functions work", {
     c(pi, pi / 2, 0, pi / 2, pi) * 2
   )
 })
+
+test_that("lng normzlier works", {
+  expect_equal(normalize_lng(180), 180)
+  expect_equal(normalize_lng(-180), -180)
+  expect_equal(normalize_lng(-179), -179)
+  expect_equal(normalize_lng(179), 179)
+  expect_equal(normalize_lng(361), 1)
+  expect_equal(normalize_lng(359), -1)
+})

@@ -1,4 +1,28 @@
 
+test_that("argo_filter_radius() works", {
+  tbl <- tibble::tibble(
+    latitude = c(0, 45),
+    longitude = c(0, -64)
+  )
+
+  expect_identical(argo_filter_radius(tbl, 0, 0, 12000), tbl)
+  expect_identical(argo_filter_radius(tbl, 0, 0, 10), tbl[1, ])
+  expect_identical(argo_filter_radius(tbl, 45, -64, 10), tbl[2, ])
+  expect_identical(argo_filter_radius(tbl, 45, -64, -10), tbl[integer(0), ])
+})
+
+test_that("argo_filter_rect() works", {
+  tbl <- tibble::tibble(
+    latitude = c(0, 12),
+    longitude = c(0, -170)
+  )
+
+  expect_identical(argo_filter_rect(tbl, -90, 90, -180, 180), tbl)
+  expect_identical(argo_filter_rect(tbl, -90, 90, -180, 180), tbl)
+  expect_identical(argo_filter_rect(tbl, 11, 13, -180, -160), tbl[2, ])
+  expect_identical(argo_filter_rect(tbl, 11, 13, 180, -160), tbl[2, ])
+})
+
 test_that("argo_filter_date() works", {
 
   tbl <- tibble::tibble(

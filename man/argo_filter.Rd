@@ -12,7 +12,7 @@
 \usage{
 argo_filter_radius(tbl, latitude, longitude, radius_km)
 
-argo_filter_rect(tbl, latitude_max, latitude_min, longitude_max, longitude_min)
+argo_filter_rect(tbl, latitude_min, latitude_max, longitude_min, longitude_max)
 
 argo_filter_date(tbl, date_min, date_max = Sys.time())
 

@@ -47,3 +47,18 @@ geodist_rad <- function(long1, lat1, long2, lat2, R = 6371010) {
   c <- 2 * asin(pmin(1, sqrt(a)))
   R * c
 }
+
+normalize_lng <- function(longitude) {
+  # -999.999 is occasionally used to denote missing in the profile index
+  # some longitudes are greater than 180, probably so that Cartesian logic
+  # can be used to query them
+  longitude[longitude == -999.999] <- NA_real_
+  normalized <- ((longitude + 180) %% 360) - 180
+  normalized[longitude == 180] <- 180
+  normalized
+}
+
+normalize_lat <- function(latitude) {
+  latitude[latitude == -99.999] <- NA_real_
+  latitude
+}

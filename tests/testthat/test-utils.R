@@ -49,6 +49,13 @@ test_that("geodist functions work", {
   )
 })
 
+test_that("arg sanitizer works", {
+  thing <- "something"
+  expect_identical(vec_sanitize(thing, character()), thing)
+  expect_error(vec_sanitize(thing, double()), "Can't convert `thing`")
+  expect_error(vec_sanitize(thing, character(), 2), class = "vctrs_error_assert_size")
+})
+
 test_that("lng normzlier works", {
   expect_equal(normalize_lng(180), 180)
   expect_equal(normalize_lng(-180), -180)

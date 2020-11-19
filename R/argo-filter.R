@@ -30,12 +30,10 @@
 #'
 argo_filter_radius <- function(tbl, latitude, longitude, radius_km) {
   argo_assert_columns(tbl, c("latitude", "longitude"))
-  vctrs::vec_size_common(
-    tbl = tbl,
-    latitude = latitude,
-    longitude = longitude,
-    radius_km = radius_km
-  )
+
+  latitude <- vec_sanitize(latitude, double(), 1)
+  longitude <- vec_sanitize(longitude, double(), 1)
+  radius_km <- vec_sanitize(radius_km, double(), 1)
 
   dist <- geodist_lnglat(
     normalize_lng(tbl$longitude), normalize_lat(tbl$latitude),
@@ -50,18 +48,17 @@ argo_filter_radius <- function(tbl, latitude, longitude, radius_km) {
 #' @export
 argo_filter_rect <- function(tbl, latitude_min, latitude_max, longitude_min, longitude_max) {
   argo_assert_columns(tbl, c("latitude", "longitude"))
-  vctrs::vec_size_common(
-    tbl = tbl,
-    latitude_min = latitude_min,
-    latitude_max = latitude_max,
-    longitude_min = longitude_min,
-    longitude_max = longitude_max
-  )
+
+  latitude_min <- vec_sanitize(latitude_min, double(), 1)
+  latitude_max <- vec_sanitize(latitude_max, double(), 1)
+  longitude_min <- vec_sanitize(longitude_min, double(), 1)
+  longitude_max <- vec_sanitize(longitude_max, double(), 1)
 
   # makes all values between -180 and 180 or NA if missing
   longitude <- normalize_lng(tbl$longitude)
   latitude <- normalize_lat(tbl$latitude)
 
+  # apply two rectangles in a wrap-around-the-date-line situation
   if (longitude_max < longitude_min) {
     contains_east <-
       (latitude >= latitude_min) &
@@ -123,9 +120,6 @@ argo_filter_updated <- function(tbl, date_update_min, date_update_max = Sys.time
     date_update_min = date_update_min,
     date_update_max = date_update_max
   )
-
-  tbl_match <- (tbl$date_update >= date_update_min) &
-    (tbl$date_update <= date_update_max)
 
   argo_do_filter(
     tbl,

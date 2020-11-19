@@ -48,10 +48,27 @@ geodist_rad <- function(long1, lat1, long2, lat2, R = 6371010) {
   R * c
 }
 
+vec_sanitize <- function(x, ptype, size = NULL) {
+  x_quo <- rlang::enquo(x)
+  out <- tryCatch(
+    vctrs::vec_cast(x, ptype),
+    vctrs_error_incompatible_type = function(e) {
+      abort(glue("Can't convert `{ rlang::as_label(x_quo) }` to <{ class(ptype)[1] }>"))
+    }
+  )
+
+  if (!is.null(size)) {
+    out <- vctrs::vec_assert(out, ptype, size = size, arg = rlang::as_label(x_quo))
+  }
+
+  out
+}
+
 normalize_lng <- function(longitude) {
   # -999.999 is occasionally used to denote missing in the profile index
   # some longitudes are greater than 180, probably so that Cartesian logic
   # can be used to query them
+  longitude <- vec_sanitize({{ longitude }}, double())
   longitude[longitude == -999.999] <- NA_real_
   normalized <- ((longitude + 180) %% 360) - 180
   normalized[longitude == 180] <- 180
@@ -59,6 +76,7 @@ normalize_lng <- function(longitude) {
 }
 
 normalize_lat <- function(latitude) {
+  latitude <- vec_sanitize({{ latitude }}, double())
   latitude[latitude == -99.999] <- NA_real_
   latitude
 }

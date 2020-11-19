@@ -31,3 +31,20 @@ test_that("insert_vector() works", {
     c("one", "two", "three", "XXX1", "XXX2")
   )
 })
+
+test_that("geodist functions work", {
+  expect_equal(geodist_lnglat(0, 0, 0, 90, R = 1), pi / 2)
+  expect_equal(geodist_lnglat(0, 0, 90, 0, R = 1), pi / 2)
+  expect_equal(geodist_lnglat(180, 0, 0, 0, R = 1), pi)
+  expect_equal(geodist_lnglat(0, 90, 0, 0, R = 1), pi / 2)
+
+  expect_equal(
+    geodist_lnglat(0, 0, c(-180, -90, 0, 90, 180), 0, R = 1),
+    c(pi, pi / 2, 0, pi / 2, pi)
+  )
+
+  expect_equal(
+    geodist_lnglat(0, 0, c(-180, -90, 0, 90, 180), 0, R = 2),
+    c(pi, pi / 2, 0, pi / 2, pi) * 2
+  )
+})

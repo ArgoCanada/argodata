@@ -132,7 +132,7 @@ other global index tables in the <code>argo_global_*()</code> family.</p>
 
 <span class='fu'>argo_filter_parameters</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='va'>parameters</span>, parameter_data_mode <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>argo_filter_float</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='va'>float_id</span><span class='op'>)</span>
+<span class='fu'>argo_filter_float</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='va'>float</span><span class='op'>)</span>
 
 <span class='fu'>argo_filter_data_mode</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='va'>data_mode</span><span class='op'>)</span></pre>
 
@@ -177,6 +177,10 @@ contained in the <code><a href='argo_global_meta.html'>argo_global_bio_prof()</a
       <td><p>A case-insensitive vector of data modes
 (realtime or delayed) or abbreviations of data modes (R for realtime, D
 for delayed).</p></td>
+    </tr>
+    <tr>
+      <th>float</th>
+      <td><p>A float identifier.</p></td>
     </tr>
     </table>
 

@@ -82,3 +82,24 @@ test_that("argo_filter_updated() works", {
     tbl[integer(0), ]
   )
 })
+
+test_that("latlon/rect checker gives reasonable errors", {
+  expect_identical(
+    tbl_has_latlon_or_rect(data.frame(latitude = 1, longitude = 1)),
+    "latlon"
+  )
+
+  expect_identical(
+    tbl_has_latlon_or_rect(
+      data.frame(
+        latitude_max = 1,
+        latitude_min = 1,
+        longitude_max = 1,
+        longitude_min = 1
+      )
+    ),
+    "rect"
+  )
+
+  expect_error(tbl_has_latlon_or_rect(data.frame()), "must contain columns")
+})

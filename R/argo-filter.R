@@ -11,7 +11,7 @@
 #' @param radius_km A radius from the point described by `latitude` and
 #'   `longitude`.
 #' @param latitude_max,latitude_min,longitude_max,longitude_min A rectangle
-#'   describing the desired bounds. Rectangle where `longitude_min` is greater
+#'   describing the desired bounds. A rectangle where `longitude_min` is greater
 #'   than `longitude_max` are interpreted as wrapping across the international
 #'   date line.
 #' @param date_min,date_max,date_update_min,date_update_max A range of
@@ -35,13 +35,14 @@ argo_filter_radius <- function(tbl, latitude, longitude, radius_km) {
   longitude <- vec_sanitize(longitude, double(), 1)
   radius_km <- vec_sanitize(radius_km, double(), 1)
 
-  dist <- geodist_lnglat(
-    normalize_lng(tbl$longitude), normalize_lat(tbl$latitude),
-    longitude, latitude,
-    R = 6371.01
-  )
+  tbl$latitude <- normalize_lng(tbl$latitude)
+  tbl$longitude <- normalize_lat(tbl$longitude)
 
-  argo_do_filter(tbl, dist <= radius_km)
+  if (tbl_has_latlon_or_rect(tbl) == "latlon") {
+    filter_latlon_radius(tbl, latitude, longitude, radius_km)
+  } else {
+    filter_rect_radius(tbl, latitude, longitude, radius_km)
+  }
 }
 
 #' @rdname argo_filter
@@ -58,29 +59,10 @@ argo_filter_rect <- function(tbl, latitude_min, latitude_max, longitude_min, lon
   longitude <- normalize_lng(tbl$longitude)
   latitude <- normalize_lat(tbl$latitude)
 
-  # apply two rectangles in a wrap-around-the-date-line situation
-  if (longitude_max < longitude_min) {
-    contains_east <-
-      (latitude >= latitude_min) &
-      (latitude <= latitude_max) &
-      (longitude >= 180) &
-      (longitude <= longitude_min)
-
-    contains_west <-
-      (latitude >= latitude_min) &
-      (latitude <= latitude_max) &
-      (longitude >= -180) &
-      (longitude <= longitude_max)
-
-    argo_do_filter(tbl, contains_east | contains_west)
+  if (tbl_has_latlon_or_rect(tbl) == "latlon") {
+    filter_latlon_rect(tbl, latitude_min, latitude_max, longitude_min, longitude_max)
   } else {
-    argo_do_filter(
-      tbl,
-      latitude >= latitude_min,
-      latitude <= latitude_max,
-      longitude >= longitude_min,
-      longitude <= longitude_max
-    )
+    filter_rect_rect(tbl, latitude_min, latitude_max, longitude_min, longitude_max)
   }
 }
 
@@ -144,6 +126,81 @@ argo_filter_float <- function(tbl, float) {
 #' @export
 argo_filter_data_mode <- function(tbl, data_mode) {
   abort("Not implemented")
+}
+
+filter_latlon_radius <- function(tbl, latitude, longitude, radius_km) {
+  dist <- geodist_lnglat(
+    tbl$longitude, tbl$latitude,
+    longitude, latitude,
+    R = 6371.01
+  )
+
+  argo_do_filter(tbl, dist <= radius_km)
+}
+
+filter_rect_radius <- function(tbl, latitude, longitude, radius_km) {
+  abort("Not implemented")
+}
+
+filter_latlon_rect <- function(tbl, latitude_min, latitude_max, longitude_min, longitude_max) {
+  # apply two rectangles in a wrap-around-the-date-line situation
+  latitude <- tbl$latitude
+  longitude <- tbl$longitude
+
+  if (longitude_max < longitude_min) {
+    contains_east <-
+      (latitude >= latitude_min) &
+      (latitude <= latitude_max) &
+      (longitude >= 180) &
+      (longitude <= longitude_min)
+
+    contains_west <-
+      (latitude >= latitude_min) &
+      (latitude <= latitude_max) &
+      (longitude >= -180) &
+      (longitude <= longitude_max)
+
+    argo_do_filter(tbl, contains_east | contains_west)
+  } else {
+    argo_do_filter(
+      tbl,
+      latitude >= latitude_min,
+      latitude <= latitude_max,
+      longitude >= longitude_min,
+      longitude <= longitude_max
+    )
+  }
+}
+
+filter_rect_rect <- function(tbl, latitude_min, latitude_max, longitude_min, longitude_max) {
+  abort("Not implemented")
+}
+
+tbl_has_latlon_or_rect <- function(tbl) {
+  if (!is.data.frame(tbl)) {
+    abort("`tbl` must be a data.frame.")
+  }
+
+  latlon_cols <- c("latitude", "longitude")
+  rect_cols <- c("latitude_min", "latitude_max", "longitude_min", "longitude_max")
+
+  if (all(latlon_cols %in% names(tbl))) {
+    "latlon"
+  } else if(all(rect_cols %in% names(tbl))) {
+    "rect"
+  } else {
+    latlon_lab <- glue::glue_collapse(paste0("'", latlon_cols, "'"), sep = ", ", last = " and ")
+    rect_lab <- glue::glue_collapse(paste0("'", rect_cols, "'"), sep = ", ", last = " and ")
+
+    abort(
+      glue(
+        paste0(
+          "`tbl` must contain columns { latlon_lab }\n",
+          "or columns { rect_lab } to filter by location."
+        )
+      )
+    )
+  }
 }
 
 argo_do_filter <- function(tbl, ..., .reduce = "&") {

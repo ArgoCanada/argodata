@@ -25,6 +25,7 @@ Imports:
     vctrs,
     tibble
 Suggests: 
-    testthat
+    testthat,
+    dplyr
 URL: https://github.com/ArgoCanada/argodata
 BugReports: https://github.com/ArgoCanada/argodata/issues

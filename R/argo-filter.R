@@ -17,11 +17,7 @@
 #' @param date_min,date_max,date_update_min,date_update_max A range of
 #'   datetimes. Users are responsible for setting the timezone for these
 #'   objects and are encouraged to used UTC.
-#' @param parameters A case-insensitive vector of parameters such as those
-#'   contained in the [argo_global_bio_prof()] `parameters` column.
-#' @param parameter_data_mode,data_mode A case-insensitive vector of data modes
-#'   (realtime or delayed) or abbreviations of data modes (R for realtime, D
-#'   for delayed).
+#' @param data_mode One of "realtime" or "delayed".
 #' @param float A float identifier.
 #'
 #' @rdname argo_filter
@@ -108,20 +104,55 @@ argo_filter_updated <- function(tbl, date_update_min, date_update_max = Sys.time
 
 #' @rdname argo_filter
 #' @export
-argo_filter_parameters <- function(tbl, parameters, parameter_data_mode = NULL) {
-  abort("Not implemented")
-}
-
-#' @rdname argo_filter
-#' @export
 argo_filter_float <- function(tbl, float) {
-  abort("Not implemented")
+  argo_assert_columns(tbl, "file")
+
+  bad_float <- !stringr::str_detect(float, "^[0-9]+$")
+  if (any(bad_float)) {
+    values <- if (sum(bad_float) != 1) "values" else "value"
+    are <- if (sum(bad_float) != 1) "are" else "is"
+    bad_float_lab <- glue::glue_collapse(paste0("'", float, "'"), sep = ", ", last = " and ")
+    abort(
+      glue(
+        paste0(
+          "`float` must be a numeric identifier. ",
+          "The following { values } { are } not valid:\n{ bad_float_lab }"
+        )
+      )
+    )
+  }
+
+  if (length(float) == 0) {
+    return(tbl[integer(0), , drop = FALSE])
+  }
+
+
+  file_regex <- paste0("[^0-9](", paste0(float, collapse = "|"), ")[^0-9][^/]*$")
+  argo_do_filter(tbl, stringr::str_detect(tbl$file, file_regex))
 }
 
 #' @rdname argo_filter
 #' @export
 argo_filter_data_mode <- function(tbl, data_mode) {
-  abort("Not implemented")
+  argo_assert_columns(tbl, "file")
+
+  data_mode_choices <- c("R", "D", "r", "d", "realtime", "delayed")
+  if (!isTRUE(data_mode %in% data_mode_choices)) {
+    choices <- glue::glue_collapse(paste0("'", data_mode_choices, "'"), sep = ", ", last = " or ")
+    abort(
+      glue(
+        "`data_mode` must be one of { choices }"
+      )
+    )
+  }
+
+  data_mode <- toupper(substr(data_mode, 1, 1))
+
+  regex_prof <- paste0(data_mode, "[0-9]+[^/]+$")
+  regex_non_prof <- paste0("[0-9]+_(B|S)?", data_mode, "(traj|prof|tech|meta)\\.nc$")
+
+  file_regex <- paste0("(", regex_prof, ")|(", regex_non_prof, ")")
+  argo_do_filter(tbl, stringr::str_detect(tbl$file, file_regex))
 }
 
 filter_latlon_radius <- function(tbl, xy, radius_km) {

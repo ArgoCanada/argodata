@@ -5,7 +5,6 @@
 \alias{argo_filter_rect}
 \alias{argo_filter_date}
 \alias{argo_filter_updated}
-\alias{argo_filter_parameters}
 \alias{argo_filter_float}
 \alias{argo_filter_data_mode}
 \title{Select rows of Argo tables}
@@ -17,8 +16,6 @@ argo_filter_rect(tbl, latitude_min, latitude_max, longitude_min, longitude_max)
 argo_filter_date(tbl, date_min, date_max = Sys.time())
 
 argo_filter_updated(tbl, date_update_min, date_update_max = Sys.time())
-
-argo_filter_parameters(tbl, parameters, parameter_data_mode = NULL)
 
 argo_filter_float(tbl, float)
 
@@ -35,7 +32,7 @@ and family. The column conventions used by the global indexes is assumed
 \code{longitude}.}
 
 \item{latitude_max, latitude_min, longitude_max, longitude_min}{A rectangle
-describing the desired bounds. Rectangle where \code{longitude_min} is greater
+describing the desired bounds. A rectangle where \code{longitude_min} is greater
 than \code{longitude_max} are interpreted as wrapping across the international
 date line.}
 
@@ -43,14 +40,9 @@ date line.}
 datetimes. Users are responsible for setting the timezone for these
 objects and are encouraged to used UTC.}
 
-\item{parameters}{A case-insensitive vector of parameters such as those
-contained in the \code{\link[=argo_global_bio_prof]{argo_global_bio_prof()}} \code{parameters} column.}
-
-\item{parameter_data_mode, data_mode}{A case-insensitive vector of data modes
-(realtime or delayed) or abbreviations of data modes (R for realtime, D
-for delayed).}
-
 \item{float}{A float identifier.}
+
+\item{data_mode}{One of "realtime" or "delayed".}
 }
 \value{
 \code{tbl} with rows that match the search criteria.

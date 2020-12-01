@@ -1,4 +1,28 @@
 
+test_that("argo_filter_float() works", {
+  tbl <- tibble::tibble(
+    file = c("0123/456.nc", "0123/789.nc")
+  )
+
+  expect_identical(argo_filter_float(tbl, "0123"), tbl[integer(0), ])
+  expect_identical(argo_filter_float(tbl, "456"), tbl[1, ])
+  expect_identical(argo_filter_float(tbl, "789"), tbl[2, ])
+  expect_identical(argo_filter_float(tbl, c("456", "789")), tbl)
+  expect_identical(argo_filter_float(tbl, "45"), tbl[integer(0), ])
+
+  expect_error(argo_filter_float(tbl, c("abc", "def")), "must be a numeric identifier")
+})
+
+test_that("argo_filter_data_mode() works", {
+  tbl <- tibble::tibble(
+    file = c("D456_stuff.nc", "R456_stuff.nc", "123_Dprof.nc", "123_Rtraj.nc")
+  )
+
+  expect_identical(argo_filter_data_mode(tbl, "realtime"), tbl[c(2, 4), ])
+  expect_identical(argo_filter_data_mode(tbl, "delayed"), tbl[c(1, 3), ])
+  expect_error(argo_filter_data_mode(tbl, "fishing"), "must be one of")
+})
+
 test_that("argo_filter_radius() works for lat/lon", {
   tbl <- tibble::tibble(
     latitude = c(0, 45),

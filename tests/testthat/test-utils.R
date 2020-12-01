@@ -150,6 +150,25 @@ test_that("rect_split_dateline() works", {
   )
 })
 
+test_that("rect_approx_points() works", {
+  expect_identical(
+    rect_approx_points(
+      list(xmin = c(0, 10), xmax = c(2, 12), ymin = c(1, 11), ymax = c(3, 13)),
+      n_detail = 3
+    ),
+    list(
+      x = c(
+        0, 1, 2, 0, 1, 2, 0, 1, 2,
+        10, 11, 12, 10, 11, 12, 10, 11, 12
+      ),
+      y = c(
+        1, 1, 1, 2, 2, 2, 3, 3, 3,
+        11, 11, 11, 12, 12, 12, 13, 13, 13
+      )
+    )
+  )
+})
+
 test_that("arg sanitizer works", {
   thing <- "something"
   expect_identical(vec_sanitize(thing, character()), thing)

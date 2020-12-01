@@ -11,6 +11,19 @@ test_that("argo_filter_radius() works for lat/lon", {
   expect_identical(argo_filter_radius(tbl, 45, -64, -10), tbl[integer(0), ])
 })
 
+test_that("argo_filter_radius() works for rect", {
+  tbl <- tibble::tibble(
+    latitude_min = c(0, 12),
+    latitude_max = c(12, 24),
+    longitude_min = c(0, 170),
+    longitude_max = c(10, -170)
+  )
+
+  expect_identical(argo_filter_radius(tbl, 0, 0, 1000), tbl[1, ])
+  expect_identical(argo_filter_radius(tbl, -7, -7, 1000), tbl[integer(0), ])
+  expect_identical(argo_filter_radius(tbl, 12, 180, 1000), tbl[2, ])
+})
+
 test_that("argo_filter_rect() works for lat/lon", {
   tbl <- tibble::tibble(
     latitude = c(0, 12),
@@ -23,7 +36,7 @@ test_that("argo_filter_rect() works for lat/lon", {
   expect_identical(argo_filter_rect(tbl, 11, 13, 180, -160), tbl[2, ])
 })
 
-test_that("argo_filter_rect() works on rect", {
+test_that("argo_filter_rect() works for rect", {
   tbl <- tibble::tibble(
     latitude_min = c(0, 12),
     latitude_max = c(12, 24),

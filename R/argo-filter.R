@@ -29,8 +29,6 @@
 #' @export
 #'
 argo_filter_radius <- function(tbl, latitude, longitude, radius_km) {
-  argo_assert_columns(tbl, c("latitude", "longitude"))
-
   latitude <- vec_sanitize(latitude, double(), 1)
   longitude <- vec_sanitize(longitude, double(), 1)
   radius_km <- vec_sanitize(radius_km, double(), 1)
@@ -139,8 +137,44 @@ filter_latlon_radius <- function(tbl, xy, radius_km) {
   argo_do_filter(tbl, dist <= radius_km)
 }
 
-filter_rect_radius <- function(tbl, xy, radius_km) {
-  abort("Not implemented")
+filter_rect_radius <- function(tbl, xy, radius_km, n_detail = 100) {
+  r_tbl <- list(
+    xmin = normalize_lng(tbl$longitude_min), xmax = normalize_lng(tbl$longitude_max),
+    ymin = normalize_lat(tbl$latitude_min), ymax = normalize_lat(tbl$latitude_max)
+  )
+  r_tbl_split <- rect_split_dateline((r_tbl))
+
+  # approximate radius as a rectangle
+  radius_deg <- radius_km / 6371.01 * 180 / pi
+  r_query <- list(
+    xmin = normalize_lng(xy$x - radius_deg),
+    xmax = normalize_lng(xy$x + radius_deg),
+    ymin = pmax(normalize_lat(xy$y - radius_deg), -90),
+    ymax = pmin(normalize_lat(xy$y + radius_deg), 90)
+  )
+  r_query_split <- rect_split_dateline(r_query)
+
+  intersected <- list(
+    rect_intersection(r_tbl_split[[1]], r_query_split[[1]]),
+    rect_intersection(r_tbl_split[[1]], r_query_split[[2]]),
+    rect_intersection(r_tbl_split[[2]], r_query_split[[1]]),
+    rect_intersection(r_tbl_split[[2]], r_query_split[[2]])
+  )
+
+  approximated <- lapply(intersected, rect_approx_points, n_detail = 10)
+  approximate_which_intersects <- lapply(approximated, function(approx_xy) {
+    dist <- geodist_lnglat(
+      approx_xy$x, approx_xy$y,
+      xy$x, xy$y,
+      R = 6371.01
+    )
+
+    i <- which(dist <= radius_km)
+    (i - 1) %/% 100 + 1
+  })
+
+  approximate_which_intersects_any <- unique(unlist(approximate_which_intersects))
+  tbl[approximate_which_intersects_any, , drop = FALSE]
 }
 
 filter_latlon_rect <- function(tbl, r_query) {

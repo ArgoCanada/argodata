@@ -120,6 +120,29 @@ rect_split_dateline <- function(r) {
   )
 }
 
+rect_approx_points <- function(r, n_detail = 10) {
+  nr <- length(r$xmin)
+  ni <-  n_detail * n_detail
+  nout <- nr * ni
+  xout <- double(nout)
+  yout <- double(nout)
+
+  seq_n_detail01 <- seq(0, 1, length.out = n_detail)
+
+  for (i in seq_along(r$xmin)) {
+    out_start <- (i - 1) * ni + 1
+    out_end <- out_start + ni - 1
+
+    xs <- r$xmin[i] + seq_n_detail01 * (r$xmax[i] - r$xmin[i])
+    ys <- r$ymin[i] + seq_n_detail01 * (r$ymax[i] - r$ymin[i])
+
+    xout[out_start:out_end] <- vctrs::vec_rep(xs, n_detail)
+    yout[out_start:out_end] <- vctrs::vec_rep_each(ys, n_detail)
+  }
+
+  list(x = xout, y = yout)
+}
+
 normalize_lng <- function(longitude) {
   # -999.999 is occasionally used to denote missing in the profile index
   # some longitudes are greater than 180, probably so that Cartesian logic

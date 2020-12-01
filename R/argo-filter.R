@@ -24,6 +24,37 @@
 #' @return `tbl` with rows that match the search criteria.
 #' @export
 #'
+#' @examples
+#' library(dplyr)
+#'
+#' with_argo_example_cache({
+#'   argo_global_traj() %>%
+#'     # within 500 km of Halifax, Nova Scotia
+#'     argo_filter_radius(45, -64, 500)
+#' })
+#'
+#' with_argo_example_cache({
+#'   argo_global_traj() %>%
+#'     argo_filter_rect(40, 60, -64, -54)
+#' })
+#'
+#' with_argo_example_cache({
+#'   argo_global_traj() %>%
+#'     argo_filter_updated("2020-01-01 00:00") %>%
+#'     select(date_update, everything())
+#' })
+#'
+#' with_argo_example_cache({
+#'   argo_global_traj() %>%
+#'     argo_filter_float(c("13857", "15851"))
+#' })
+#'
+#' with_argo_example_cache({
+#'   argo_global_traj() %>%
+#'     argo_filter_data_mode("delayed")
+#' })
+#'
+#'
 argo_filter_radius <- function(tbl, latitude, longitude, radius_km) {
   latitude <- vec_sanitize(latitude, double(), 1)
   longitude <- vec_sanitize(longitude, double(), 1)

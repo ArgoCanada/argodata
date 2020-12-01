@@ -51,3 +51,35 @@ objects and are encouraged to used UTC.}
 These functions are intended to be applied to \code{\link[=argo_global_meta]{argo_global_meta()}} and
 other global index tables in the \verb{argo_global_*()} family.
 }
+\examples{
+library(dplyr)
+
+with_argo_example_cache({
+  argo_global_traj() \%>\%
+    # within 500 km of Halifax, Nova Scotia
+    argo_filter_radius(45, -64, 500)
+})
+
+with_argo_example_cache({
+  argo_global_traj() \%>\%
+    argo_filter_rect(40, 60, -64, -54)
+})
+
+with_argo_example_cache({
+  argo_global_traj() \%>\%
+    argo_filter_updated("2020-01-01 00:00") \%>\%
+    select(date_update, everything())
+})
+
+with_argo_example_cache({
+  argo_global_traj() \%>\%
+    argo_filter_float(c("13857", "15851"))
+})
+
+with_argo_example_cache({
+  argo_global_traj() \%>\%
+    argo_filter_data_mode("delayed")
+})
+
+
+}

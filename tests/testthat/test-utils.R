@@ -101,6 +101,37 @@ test_that("rectangle intersector predicate works", {
   )
 })
 
+test_that("rectangle contains predicate works", {
+  expect_true(
+    rect_contains(
+      list(xmin = 0, xmax = 10, ymin = 0, ymax = 10),
+      list(x = 5, y = 2)
+    )
+  )
+
+  expect_false(
+    rect_contains(
+      list(xmin = 0, xmax = 10, ymin = 0, ymax = 10),
+      list(x = 11, y = 2)
+    )
+  )
+
+  expect_false(
+    rect_contains(
+      list(xmin = 0, xmax = 10, ymin = 0, ymax = 10),
+      list(x = 5, y = 11)
+    )
+  )
+
+  expect_identical(
+    rect_contains(
+      list(xmin = 0, xmax = 10, ymin = 0, ymax = 10),
+      list(x = NA_real_, y = 2)
+    ),
+    NA
+  )
+})
+
 test_that("rect_split_dateline() works", {
   expect_identical(
     rect_split_dateline(list(xmin = 0, xmax = 10, ymin = 0, ymax = 10)),

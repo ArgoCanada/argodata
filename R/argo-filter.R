@@ -141,30 +141,17 @@ filter_latlon_rect <- function(tbl, latitude_min, latitude_max, longitude_min, l
   longitude <- normalize_lng(tbl$longitude)
   latitude <- normalize_lat(tbl$latitude)
 
-  # apply two rectangles in a wrap-around-the-date-line situation
-  if (longitude_max < longitude_min) {
-    contains_east <-
-      (latitude >= latitude_min) &
-      (latitude <= latitude_max) &
-      (longitude >= 180) &
-      (longitude <= longitude_min)
+  r_query <- list(
+    xmin = longitude_min, xmax = longitude_max,
+    ymin = latitude_min, ymax = latitude_max
+  )
 
-    contains_west <-
-      (latitude >= latitude_min) &
-      (latitude <= latitude_max) &
-      (longitude >= -180) &
-      (longitude <= longitude_max)
+  xy_tbl <- list(x = normalize_lng(tbl$longitude), y = normalize_lat(tbl$latitude))
+  r_query_split <- rect_split_dateline(r_query)
+  intersects <- rect_contains(r_query_split[[1]], xy_tbl) |
+    rect_contains(r_query_split[[1]], xy_tbl)
 
-    argo_do_filter(tbl, contains_east | contains_west)
-  } else {
-    argo_do_filter(
-      tbl,
-      latitude >= latitude_min,
-      latitude <= latitude_max,
-      longitude >= longitude_min,
-      longitude <= longitude_max
-    )
-  }
+  argo_do_filter(tbl, intersects)
 }
 
 filter_rect_rect <- function(tbl, latitude_min, latitude_max, longitude_min, longitude_max) {

@@ -93,6 +93,13 @@ rect_intersects <- function(r1, r2) {
   (limits$xmax >= limits$xmin) & (limits$ymax >= limits$ymin)
 }
 
+rect_contains <- function(r, xy) {
+  (xy$x >= r$xmin) &
+    (xy$x <= r$xmax) &
+    (xy$y >= r$ymin) &
+    (xy$y <= r$ymax)
+}
+
 rect_split_dateline <- function(r) {
   # create two copies that both satisfy xmin <= xmax
   is_wrap <- r$xmax < r$xmin

@@ -130,8 +130,6 @@ other global index tables in the <code>argo_global_*()</code> family.</p>
 
 <span class='fu'>argo_filter_updated</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='va'>date_update_min</span>, date_update_max <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>argo_filter_parameters</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='va'>parameters</span>, parameter_data_mode <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
-
 <span class='fu'>argo_filter_float</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='va'>float</span><span class='op'>)</span>
 
 <span class='fu'>argo_filter_data_mode</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='va'>data_mode</span><span class='op'>)</span></pre>
@@ -157,7 +155,7 @@ and family. The column conventions used by the global indexes is assumed
     <tr>
       <th>latitude_max, latitude_min, longitude_max, longitude_min</th>
       <td><p>A rectangle
-describing the desired bounds. Rectangle where <code>longitude_min</code> is greater
+describing the desired bounds. A rectangle where <code>longitude_min</code> is greater
 than <code>longitude_max</code> are interpreted as wrapping across the international
 date line.</p></td>
     </tr>
@@ -168,19 +166,12 @@ datetimes. Users are responsible for setting the timezone for these
 objects and are encouraged to used UTC.</p></td>
     </tr>
     <tr>
-      <th>parameters</th>
-      <td><p>A case-insensitive vector of parameters such as those
-contained in the <code><a href='argo_global_meta.html'>argo_global_bio_prof()</a></code> <code>parameters</code> column.</p></td>
-    </tr>
-    <tr>
-      <th>parameter_data_mode, data_mode</th>
-      <td><p>A case-insensitive vector of data modes
-(realtime or delayed) or abbreviations of data modes (R for realtime, D
-for delayed).</p></td>
-    </tr>
-    <tr>
       <th>float</th>
       <td><p>A float identifier.</p></td>
+    </tr>
+    <tr>
+      <th>data_mode</th>
+      <td><p>One of "realtime" or "delayed".</p></td>
     </tr>
     </table>
 

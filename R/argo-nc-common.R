@@ -10,7 +10,7 @@ argo_read_many <- function(assert_fun, read_fun, ...,
   # joined with one of the global tables
   names(cached) <- stringr::str_remove(path, "^dac/")
 
-  tbls <- lapply(
+  tbls <- argo_map(
     cached,
     read_fun,
     vars = argo_unsanitize_vars(vars),

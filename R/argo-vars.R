@@ -37,7 +37,7 @@ argo_vars <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   cached <- argo_download(path, download = download, quiet = quiet)
   names(cached) <- stringr::str_remove(path, "^dac/")
 
-  tbls <- lapply(cached, argo_read_vars, vars = argo_unsanitize_vars(vars))
+  tbls <- argo_map(cached, argo_read_vars, vars = argo_unsanitize_vars(vars))
   tbl <- vctrs::vec_rbind(!!! tbls, .names_to = "file")
   tbl$name <- tolower(tbl$name)
   tbl$name <- stringr::str_replace(tbl$name, "^juld", "date")

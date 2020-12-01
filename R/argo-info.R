@@ -32,7 +32,7 @@ argo_info <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   # joined with one of the global tables
   names(cached) <- stringr::str_remove(path, "^dac/")
 
-  tbls <- lapply(
+  tbls <- argo_map(
     cached,
     argo_read_info,
     vars = if(is.null(vars)) NULL else toupper(vars)

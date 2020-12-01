@@ -49,6 +49,76 @@ test_that("geodist functions work", {
   )
 })
 
+test_that("rectangle intersector works", {
+  expect_identical(
+    rect_intersection(
+      list(xmin = 0, xmax = 10, ymin = 0, ymax = 10),
+      list(xmin = 5, xmax = 15, ymin = 5, ymax = 15)
+    ),
+    list(xmin = 5, xmax = 10, ymin = 5, ymax = 10)
+  )
+
+  expect_identical(
+    rect_intersection(
+      list(xmin = 0, xmax = 10, ymin = 0, ymax = 10),
+      list(xmin = 15, xmax = 25, ymin = 15, ymax = 25)
+    ),
+    list(xmin = NA_real_, xmax = NA_real_, ymin = NA_real_, ymax = NA_real_)
+  )
+
+  expect_identical(
+    rect_intersection(
+      list(xmin = NA_real_, xmax = 10, ymin = 0, ymax = 10),
+      list(xmin = 15, xmax = 25, ymin = 15, ymax = 25)
+    ),
+    list(xmin = NA_real_, xmax = NA_real_, ymin = NA_real_, ymax = NA_real_)
+  )
+})
+
+test_that("rectangle intersector predicate works", {
+  expect_identical(
+    rect_intersects(
+      list(xmin = 0, xmax = 10, ymin = 0, ymax = 10),
+      list(xmin = 5, xmax = 15, ymin = 5, ymax = 15)
+    ),
+    TRUE
+  )
+
+  expect_identical(
+    rect_intersects(
+      list(xmin = 0, xmax = 10, ymin = 0, ymax = 10),
+      list(xmin = 15, xmax = 25, ymin = 15, ymax = 25)
+    ),
+    FALSE
+  )
+
+  expect_identical(
+    rect_intersects(
+      list(xmin = NA_real_, xmax = 10, ymin = 0, ymax = 10),
+      list(xmin = 5, xmax = 15, ymin = 5, ymax = 15)
+    ),
+    NA
+  )
+})
+
+test_that("rect_split_dateline() works", {
+  expect_identical(
+    rect_split_dateline(list(xmin = 0, xmax = 10, ymin = 0, ymax = 10)),
+    list(
+      list(xmin = 0, xmax = 10, ymin = 0, ymax = 10),
+      list(xmin = 0, xmax = 10, ymin = 0, ymax = 10)
+    )
+  )
+
+  expect_identical(
+    rect_split_dateline(list(xmin = 170, xmax = -170, ymin = 0, ymax = 10)),
+    list(
+      list(xmin = -180, xmax = -170, ymin = 0, ymax = 10),
+      list(xmin = 170, xmax = 180, ymin = 0, ymax = 10)
+    )
+  )
+})
+
 test_that("arg sanitizer works", {
   thing <- "something"
   expect_identical(vec_sanitize(thing, character()), thing)

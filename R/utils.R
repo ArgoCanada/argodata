@@ -31,6 +31,22 @@ insert_vector <- function(x, y, pos) {
   c(x[seq_len(pos - 1)], y, x[pos - 1 + seq_len(length(x) - pos + 1)])
 }
 
+vec_sanitize <- function(x, ptype, size = NULL) {
+  x_quo <- rlang::enquo(x)
+  out <- tryCatch(
+    vctrs::vec_cast(x, ptype),
+    vctrs_error_incompatible_type = function(e) {
+      abort(glue("Can't convert `{ rlang::as_label(x_quo) }` to <{ class(ptype)[1] }>"))
+    }
+  )
+
+  if (!is.null(size)) {
+    out <- vctrs::vec_assert(out, ptype, size = size, arg = rlang::as_label(x_quo))
+  }
+
+  out
+}
+
 # earth mean radius according to s2::s2_earth_radius_meters()
 geodist_lnglat <-  function(x1, y1, x2, y2, R = 6371010) {
   geodist_rad(
@@ -48,20 +64,53 @@ geodist_rad <- function(long1, lat1, long2, lat2, R = 6371010) {
   R * c
 }
 
-vec_sanitize <- function(x, ptype, size = NULL) {
-  x_quo <- rlang::enquo(x)
-  out <- tryCatch(
-    vctrs::vec_cast(x, ptype),
-    vctrs_error_incompatible_type = function(e) {
-      abort(glue("Can't convert `{ rlang::as_label(x_quo) }` to <{ class(ptype)[1] }>"))
-    }
+rect_intersection <- function(r1, r2) {
+  limits <- list(
+    xmin = pmax(r1$xmin, r2$xmin),
+    xmax = pmin(r1$xmax, r2$xmax),
+    ymin = pmax(r1$ymin, r2$ymin),
+    ymax = pmin(r1$ymax, r2$ymax)
   )
 
-  if (!is.null(size)) {
-    out <- vctrs::vec_assert(out, ptype, size = size, arg = rlang::as_label(x_quo))
-  }
+  any_na <- Reduce("|", lapply(limits, is.na))
+  not_valid <- any_na | !((limits$xmax >= limits$xmin) & (limits$ymax >= limits$ymin))
+  limits$xmin[not_valid] <- NA_real_
+  limits$xmax[not_valid] <- NA_real_
+  limits$ymin[not_valid] <- NA_real_
+  limits$ymax[not_valid] <- NA_real_
 
-  out
+  limits
+}
+
+rect_intersects <- function(r1, r2) {
+  limits <- list(
+    xmin = pmax(r1$xmin, r2$xmin),
+    xmax = pmin(r1$xmax, r2$xmax),
+    ymin = pmax(r1$ymin, r2$ymin),
+    ymax = pmin(r1$ymax, r2$ymax)
+  )
+
+  (limits$xmax >= limits$xmin) & (limits$ymax >= limits$ymin)
+}
+
+rect_split_dateline <- function(r) {
+  # create two copies that both satisfy xmin <= xmax
+  is_wrap <- r$xmax < r$xmin
+  xmin1 <- ifelse(is_wrap, -180, r$xmin)
+  xmin2 <- r$xmin
+  xmax1 <- r$xmax
+  xmax2 <- ifelse(is_wrap, 180, r$xmax)
+
+  list(
+    list(
+      xmin = xmin1, xmax = xmax1,
+      ymin = r$ymin, ymax = r$ymax
+    ),
+    list(
+      xmin = xmin2, xmax = xmax2,
+      ymin = r$ymin, ymax = r$ymax
+    )
+  )
 }
 
 normalize_lng <- function(longitude) {

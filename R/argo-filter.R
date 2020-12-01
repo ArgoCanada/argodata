@@ -48,21 +48,15 @@ argo_filter_radius <- function(tbl, latitude, longitude, radius_km) {
 #' @rdname argo_filter
 #' @export
 argo_filter_rect <- function(tbl, latitude_min, latitude_max, longitude_min, longitude_max) {
-  argo_assert_columns(tbl, c("latitude", "longitude"))
-
   latitude_min <- vec_sanitize(latitude_min, double(), 1)
   latitude_max <- vec_sanitize(latitude_max, double(), 1)
   longitude_min <- vec_sanitize(longitude_min, double(), 1)
   longitude_max <- vec_sanitize(longitude_max, double(), 1)
 
-  # makes all values between -180 and 180 or NA if missing
-  longitude <- normalize_lng(tbl$longitude)
-  latitude <- normalize_lat(tbl$latitude)
-
-  if (tbl_has_latlon_or_rect(tbl) == "latlon") {
-    filter_latlon_rect(tbl, latitude_min, latitude_max, longitude_min, longitude_max)
-  } else {
+  if (tbl_has_latlon_or_rect(tbl) == "rect") {
     filter_rect_rect(tbl, latitude_min, latitude_max, longitude_min, longitude_max)
+  } else {
+    filter_latlon_rect(tbl, latitude_min, latitude_max, longitude_min, longitude_max)
   }
 }
 
@@ -143,10 +137,11 @@ filter_rect_radius <- function(tbl, latitude, longitude, radius_km) {
 }
 
 filter_latlon_rect <- function(tbl, latitude_min, latitude_max, longitude_min, longitude_max) {
-  # apply two rectangles in a wrap-around-the-date-line situation
-  latitude <- tbl$latitude
-  longitude <- tbl$longitude
+  # makes all values between -180 and 180 or NA if missing
+  longitude <- normalize_lng(tbl$longitude)
+  latitude <- normalize_lat(tbl$latitude)
 
+  # apply two rectangles in a wrap-around-the-date-line situation
   if (longitude_max < longitude_min) {
     contains_east <-
       (latitude >= latitude_min) &
@@ -173,7 +168,26 @@ filter_latlon_rect <- function(tbl, latitude_min, latitude_max, longitude_min, l
 }
 
 filter_rect_rect <- function(tbl, latitude_min, latitude_max, longitude_min, longitude_max) {
-  abort("Not implemented")
+  r_query <- list(
+    xmin = longitude_min, xmax = longitude_max,
+    ymin = latitude_min, ymax = latitude_max
+  )
+
+  r_tbl <- list(
+    xmin = normalize_lng(tbl$longitude_min), xmax = normalize_lng(tbl$longitude_max),
+    ymin = normalize_lat(tbl$latitude_min), ymax = normalize_lat(tbl$latitude_max)
+  )
+
+  r_query_split <- rect_split_dateline(r_query)
+  r_tbl_split <- rect_split_dateline((r_tbl))
+  intersects <- list(
+    rect_intersects(r_query_split[[1]], r_tbl_split[[1]]),
+    rect_intersects(r_query_split[[1]], r_tbl_split[[2]]),
+    rect_intersects(r_query_split[[2]], r_tbl_split[[1]]),
+    rect_intersects(r_query_split[[2]], r_tbl_split[[2]])
+  )
+
+  argo_do_filter(tbl, !!! intersects, .reduce = "|")
 }
 
 tbl_has_latlon_or_rect <- function(tbl) {

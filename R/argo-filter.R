@@ -27,11 +27,11 @@
 #' @examples
 #' library(dplyr)
 #'
-#' with_argo_example_cache({
-#'   argo_global_traj() %>%
-#'     # within 500 km of Halifax, Nova Scotia
-#'     argo_filter_radius(45, -64, 500)
-#' })
+#' \dontrun{
+#' argo_global_prof() %>%
+#'   # within 500 km of Halifax, Nova Scotia
+#'   argo_filter_radius(45, -64, 500)
+#' }
 #'
 #' with_argo_example_cache({
 #'   argo_global_traj() %>%

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read Argo NetCDF variable metadata — argo_vars • argodata</title>
+<title>Load Argo NetCDF variable metadata — argo_vars • argodata</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Read Argo NetCDF variable metadata — argo_vars" />
-<meta property="og:description" content="Read Argo NetCDF variable metadata" />
+<meta property="og:title" content="Load Argo NetCDF variable metadata — argo_vars" />
+<meta property="og:description" content="Load Argo NetCDF variable metadata" />
 
 
 
@@ -111,20 +111,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read Argo NetCDF variable metadata</h1>
+    <h1>Load Argo NetCDF variable metadata</h1>
     <small class="dont-index">Source: <a href='https://github.com/ArgoCanada/argodata/blob/master/R/argo-vars.R'><code>R/argo-vars.R</code></a></small>
     <div class="hidden name"><code>argo_vars.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Read Argo NetCDF variable metadata</p>
+    <p>Load Argo NetCDF variable metadata</p>
     </div>
 
-    <pre class="usage"><span class='fu'>argo_vars</span><span class='op'>(</span><span class='va'>path</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='fu'>argo_read_vars</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
-
-<span class='fu'>argo_nc_read_vars</span><span class='op'>(</span><span class='va'>nc</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>argo_vars</span><span class='op'>(</span><span class='va'>path</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,14 +152,6 @@ do not exist in the cache.</p></td>
       <td><p>Use <code>FALSE</code> to show which files are downloaded and for more
 verbose error messages.</p></td>
     </tr>
-    <tr>
-      <th>file</th>
-      <td><p>A previously downloaded Argo NetCDF file.</p></td>
-    </tr>
-    <tr>
-      <th>nc</th>
-      <td><p>A handle created using <code><a href='https://rdrr.io/pkg/ncdf4/man/nc_open.html'>ncdf4::nc_open()</a></code>.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -194,49 +182,6 @@ to produce a tibble with one row per variable per dimension.</p>
 #&gt; </span><span style='color: #555555;'>#   att_standard_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_units </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_resolution </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   att_axis </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_valid_min </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, att_valid_max </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   att_c_format </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_fortran_format </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_comment </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
-<span class='va'>prof_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
-  <span class='st'>"cache-test/dac/csio/2900313/profiles/D2900313_000.nc"</span>,
-  package <span class='op'>=</span> <span class='st'>"argodata"</span>
-<span class='op'>)</span>
-
-<span class='fu'>argo_read_vars</span><span class='op'>(</span><span class='va'>prof_file</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 64 x 18</span><span>
-#&gt;    name  longname units prec  ndims size  dim   att_long_name att_conventions
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lis&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lis&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #555555;'> 1</span><span> DATA… Data ty… </span><span style='color: #555555;'>""</span><span>    char      1 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Data type     Argo reference…
-#&gt; </span><span style='color: #555555;'> 2</span><span> FORM… File fo… </span><span style='color: #555555;'>""</span><span>    char      1 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… File format … </span><span style='color: #BB0000;'>NA</span><span>             
-#&gt; </span><span style='color: #555555;'> 3</span><span> HAND… Data ha… </span><span style='color: #555555;'>""</span><span>    char      1 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Data handboo… </span><span style='color: #BB0000;'>NA</span><span>             
-#&gt; </span><span style='color: #555555;'> 4</span><span> REFE… Date of… </span><span style='color: #555555;'>""</span><span>    char      1 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Date of refe… YYYYMMDDHHMISS 
-#&gt; </span><span style='color: #555555;'> 5</span><span> DATE… Date of… </span><span style='color: #555555;'>""</span><span>    char      1 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Date of file… YYYYMMDDHHMISS 
-#&gt; </span><span style='color: #555555;'> 6</span><span> DATE… Date of… </span><span style='color: #555555;'>""</span><span>    char      1 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Date of upda… YYYYMMDDHHMISS 
-#&gt; </span><span style='color: #555555;'> 7</span><span> PLAT… Float u… </span><span style='color: #555555;'>""</span><span>    char      2 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Float unique… WMO float iden…
-#&gt; </span><span style='color: #555555;'> 8</span><span> PLAT… Type of… </span><span style='color: #555555;'>""</span><span>    char      2 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Type of float Argo reference…
-#&gt; </span><span style='color: #555555;'> 9</span><span> PROJ… Name of… </span><span style='color: #555555;'>""</span><span>    char      2 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Name of the … </span><span style='color: #BB0000;'>NA</span><span>             
-#&gt; </span><span style='color: #555555;'>10</span><span> PI_N… Name of… </span><span style='color: #555555;'>""</span><span>    char      2 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Name of the … </span><span style='color: #BB0000;'>NA</span><span>             
-#&gt; </span><span style='color: #555555;'># … with 54 more rows, and 9 more variables: att_standard_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   att_units </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_resolution </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, att_axis </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_valid_min </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   att_valid_max </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, att_C_format </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_FORTRAN_format </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   att_comment </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
-<span class='va'>nc_prof</span> <span class='op'>&lt;-</span> <span class='fu'>ncdf4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ncdf4/man/nc_open.html'>nc_open</a></span><span class='op'>(</span><span class='va'>prof_file</span><span class='op'>)</span>
-<span class='fu'>argo_nc_read_vars</span><span class='op'>(</span><span class='va'>nc_prof</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 64 x 18</span><span>
-#&gt;    name  longname units prec  ndims size  dim   att_long_name att_conventions
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lis&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lis&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #555555;'> 1</span><span> DATA… Data ty… </span><span style='color: #555555;'>""</span><span>    char      1 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Data type     Argo reference…
-#&gt; </span><span style='color: #555555;'> 2</span><span> FORM… File fo… </span><span style='color: #555555;'>""</span><span>    char      1 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… File format … </span><span style='color: #BB0000;'>NA</span><span>             
-#&gt; </span><span style='color: #555555;'> 3</span><span> HAND… Data ha… </span><span style='color: #555555;'>""</span><span>    char      1 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Data handboo… </span><span style='color: #BB0000;'>NA</span><span>             
-#&gt; </span><span style='color: #555555;'> 4</span><span> REFE… Date of… </span><span style='color: #555555;'>""</span><span>    char      1 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Date of refe… YYYYMMDDHHMISS 
-#&gt; </span><span style='color: #555555;'> 5</span><span> DATE… Date of… </span><span style='color: #555555;'>""</span><span>    char      1 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Date of file… YYYYMMDDHHMISS 
-#&gt; </span><span style='color: #555555;'> 6</span><span> DATE… Date of… </span><span style='color: #555555;'>""</span><span>    char      1 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Date of upda… YYYYMMDDHHMISS 
-#&gt; </span><span style='color: #555555;'> 7</span><span> PLAT… Float u… </span><span style='color: #555555;'>""</span><span>    char      2 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Float unique… WMO float iden…
-#&gt; </span><span style='color: #555555;'> 8</span><span> PLAT… Type of… </span><span style='color: #555555;'>""</span><span>    char      2 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Type of float Argo reference…
-#&gt; </span><span style='color: #555555;'> 9</span><span> PROJ… Name of… </span><span style='color: #555555;'>""</span><span>    char      2 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Name of the … </span><span style='color: #BB0000;'>NA</span><span>             
-#&gt; </span><span style='color: #555555;'>10</span><span> PI_N… Name of… </span><span style='color: #555555;'>""</span><span>    char      2 </span><span style='color: #555555;'>&lt;int</span><span>… </span><span style='color: #555555;'>&lt;chr</span><span>… Name of the … </span><span style='color: #BB0000;'>NA</span><span>             
-#&gt; </span><span style='color: #555555;'># … with 54 more rows, and 9 more variables: att_standard_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   att_units </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_resolution </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, att_axis </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_valid_min </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   att_valid_max </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, att_C_format </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_FORTRAN_format </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   att_comment </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'><span class='fu'>ncdf4</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ncdf4/man/nc_close.html'>nc_close</a></span><span class='op'>(</span><span class='va'>nc_prof</span><span class='op'>)</span>
-
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

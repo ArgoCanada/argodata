@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load NetCDF general information — argo_info • argodata</title>
+<title>Read NetCDF general information — argo_read_info • argodata</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Load NetCDF general information — argo_info" />
-<meta property="og:description" content="Load NetCDF general information" />
+<meta property="og:title" content="Read NetCDF general information — argo_read_info" />
+<meta property="og:description" content="Read NetCDF general information" />
 
 
 
@@ -111,26 +111,23 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Load NetCDF general information</h1>
+    <h1>Read NetCDF general information</h1>
     <small class="dont-index">Source: <a href='https://github.com/ArgoCanada/argodata/blob/master/R/argo-info.R'><code>R/argo-info.R</code></a></small>
-    <div class="hidden name"><code>argo_info.Rd</code></div>
+    <div class="hidden name"><code>argo_read_info.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Load NetCDF general information</p>
+    <p>Read NetCDF general information</p>
     </div>
 
-    <pre class="usage"><span class='fu'>argo_info</span><span class='op'>(</span><span class='va'>path</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>argo_read_info</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>path</th>
-      <td><p>A path relative to the root directory of
-<code><a href='argo_mirror.html'>argo_mirror()</a></code> or <code><a href='argo_cache_dir.html'>argo_cache_dir()</a></code>. This value can also
-be a data.frame with a <code>file</code> column (e.g., a global index as
-returned by <code><a href='argo_global_meta.html'>argo_global_meta()</a></code> and others).</p></td>
+      <th>file</th>
+      <td><p>A previously downloaded Argo NetCDF file.</p></td>
     </tr>
     <tr>
       <th>vars</th>
@@ -140,18 +137,6 @@ exist are ignored. For <code>nc_read_*()</code> and <code>read_*()</code> varian
 these are the raw variable names (all caps, without "date"
 substituted for "juld").</p></td>
     </tr>
-    <tr>
-      <th>download</th>
-      <td><p>A logical vector indicating whether or not
-a file should be downloaded. Defaults to the value of
-<code><a href='argo_download.html'>argo_should_download()</a></code>, which is <code>TRUE</code> for files that
-do not exist in the cache.</p></td>
-    </tr>
-    <tr>
-      <th>quiet</th>
-      <td><p>Use <code>FALSE</code> to show which files are downloaded and for more
-verbose error messages.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -159,17 +144,20 @@ verbose error messages.</p></td>
     <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
-  <span class='fu'>argo_info</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/profiles/D2900313_000.nc"</span><span class='op'>)</span>
-<span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 16</span><span>
-#&gt;   file  data_type format_version handbook_version reference_date_time
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'>1</span><span> csio… Argo pro… 3.1            1.2              1950-01-01 </span><span style='color: #555555;'>00:00:00</span><span>
-#&gt; </span><span style='color: #555555;'># … with 11 more variables: date_creation </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span style='color: #555555;'>, date_update </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   att_title </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_institution </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_source </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   att_history </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_references </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_comment </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   att_user_manual_version </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_conventions </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_featuretype </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>prof_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
+  <span class='st'>"cache-test/dac/csio/2900313/profiles/D2900313_000.nc"</span>,
+  package <span class='op'>=</span> <span class='st'>"argodata"</span>
+<span class='op'>)</span>
+
+<span class='fu'>argo_read_info</span><span class='op'>(</span><span class='va'>prof_file</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 15</span><span>
+#&gt;   DATA_TYPE FORMAT_VERSION HANDBOOK_VERSION REFERENCE_DATE_… DATE_CREATION
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        
+#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>"</span><span>Argo pr… </span><span style='color: #555555;'>"</span><span>3.1 </span><span style='color: #555555;'>"</span><span>         </span><span style='color: #555555;'>"</span><span>1.2 </span><span style='color: #555555;'>"</span><span>           19500101000000   200509261036…
+#&gt; </span><span style='color: #555555;'># … with 10 more variables: DATE_UPDATE </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_title </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   att_institution </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_source </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_history </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   att_references </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_comment </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_user_manual_version </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   att_Conventions </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, att_featureType </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

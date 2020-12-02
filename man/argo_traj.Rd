@@ -4,9 +4,6 @@
 \alias{argo_traj_meas}
 \alias{argo_traj_cycle}
 \alias{argo_traj_history}
-\alias{argo_read_traj_meas}
-\alias{argo_read_traj_cycle}
-\alias{argo_read_traj_history}
 \title{Load Argo trajectories}
 \usage{
 argo_traj_meas(path, vars = NULL, download = NULL, quiet = FALSE)
@@ -14,12 +11,6 @@ argo_traj_meas(path, vars = NULL, download = NULL, quiet = FALSE)
 argo_traj_cycle(path, vars = NULL, download = NULL, quiet = FALSE)
 
 argo_traj_history(path, vars = NULL, download = NULL, quiet = FALSE)
-
-argo_read_traj_meas(file, vars = NULL)
-
-argo_read_traj_cycle(file, vars = NULL)
-
-argo_read_traj_history(file, vars = NULL)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
@@ -40,8 +31,6 @@ do not exist in the cache.}
 
 \item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
 verbose error messages.}
-
-\item{file}{A previously downloaded Argo NetCDF file.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}}.
@@ -224,14 +213,5 @@ with_argo_example_cache({
 with_argo_example_cache({
   argo_traj_history("dac/csio/2900313/2900313_Rtraj.nc")
 })
-
-traj_file <- system.file(
-  "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
-  package = "argodata"
-)
-
-argo_read_traj_meas(traj_file)
-argo_read_traj_cycle(traj_file)
-argo_read_traj_history(traj_file)
 
 }

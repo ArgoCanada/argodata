@@ -7,12 +7,6 @@
 \alias{argo_meta_launch_config_param}
 \alias{argo_meta_sensor}
 \alias{argo_meta_param}
-\alias{argo_read_meta_config_param}
-\alias{argo_read_meta_missions}
-\alias{argo_read_meta_trans_system}
-\alias{argo_read_meta_launch_config_param}
-\alias{argo_read_meta_sensor}
-\alias{argo_read_meta_param}
 \title{Load Argo float meta}
 \usage{
 argo_meta_config_param(path, download = NULL, quiet = FALSE)
@@ -26,18 +20,6 @@ argo_meta_launch_config_param(path, download = NULL, quiet = FALSE)
 argo_meta_sensor(path, download = NULL, quiet = FALSE)
 
 argo_meta_param(path, download = NULL, quiet = FALSE)
-
-argo_read_meta_config_param(file, vars = NULL)
-
-argo_read_meta_missions(file, vars = NULL)
-
-argo_read_meta_trans_system(file, vars = NULL)
-
-argo_read_meta_launch_config_param(file, vars = NULL)
-
-argo_read_meta_sensor(file, vars = NULL)
-
-argo_read_meta_param(file, vars = NULL)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
@@ -52,14 +34,6 @@ do not exist in the cache.}
 
 \item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
 verbose error messages.}
-
-\item{file}{A previously downloaded Argo NetCDF file.}
-
-\item{vars}{A vector of variable names to include. The ordering
-of the variables is not guaranteed, and variables that do not
-exist are ignored. For \verb{nc_read_*()} and \verb{read_*()} variants,
-these are the raw variable names (all caps, without "date"
-substituted for "juld").}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}}.
@@ -91,17 +65,5 @@ with_argo_example_cache({
 with_argo_example_cache({
   argo_meta_param("dac/csio/2900313/2900313_meta.nc")
 })
-
-meta_file <- system.file(
-  "cache-test/dac/csio/2900313/2900313_meta.nc",
-  package = "argodata"
-)
-
-argo_read_meta_config_param(meta_file)
-argo_read_meta_missions(meta_file)
-argo_read_meta_trans_system(meta_file)
-argo_read_meta_launch_config_param(meta_file)
-argo_read_meta_sensor(meta_file)
-argo_read_meta_param(meta_file)
 
 }

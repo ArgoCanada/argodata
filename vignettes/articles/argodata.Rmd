@@ -11,6 +11,9 @@ knitr::opts_chunk$set(
   dpi = 300
 )
 
+# when rendering articles, this causes tibble printing to be ugly
+options(crayon.enabled = FALSE)
+
 library(argodata)
 
 # this is a cheap way to avoid putting 'magrittr' in Suggests

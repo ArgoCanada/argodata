@@ -4,9 +4,6 @@
 \alias{argo_prof_levels}
 \alias{argo_prof_prof}
 \alias{argo_prof_history}
-\alias{argo_read_prof_levels}
-\alias{argo_read_prof_prof}
-\alias{argo_read_prof_history}
 \title{Load Argo profiles}
 \usage{
 argo_prof_levels(path, vars = NULL, download = NULL, quiet = FALSE)
@@ -14,12 +11,6 @@ argo_prof_levels(path, vars = NULL, download = NULL, quiet = FALSE)
 argo_prof_prof(path, vars = NULL, download = NULL, quiet = FALSE)
 
 argo_prof_history(path, vars = NULL, download = NULL, quiet = FALSE)
-
-argo_read_prof_levels(file, vars = NULL, meta = NULL)
-
-argo_read_prof_prof(file, vars = NULL)
-
-argo_read_prof_history(file, vars = NULL, meta = NULL)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
@@ -40,11 +31,6 @@ do not exist in the cache.}
 
 \item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
 verbose error messages.}
-
-\item{file}{A previously downloaded Argo NetCDF file.}
-
-\item{meta}{A character vector of meta variable names for
-each profile. These can be found using \code{\link[=argo_vars]{argo_vars()}}.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}}.
@@ -140,14 +126,5 @@ with_argo_example_cache({
 with_argo_example_cache({
   argo_prof_history("dac/csio/2900313/profiles/D2900313_000.nc")
 })
-
-prof_file <- system.file(
-  "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
-  package = "argodata"
-)
-
-argo_read_prof_levels(prof_file)
-argo_read_prof_prof(prof_file)
-argo_read_prof_history(prof_file)
 
 }

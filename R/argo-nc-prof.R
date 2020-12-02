@@ -1,7 +1,7 @@
 
 #' Read Argo profile NetCDF files
 #'
-#' @inheritParams argo_vars
+#' @inheritParams argo_nc_read_vars
 #' @param meta A character vector of meta variable names for
 #'   each profile. These can be found using [argo_vars()].
 #'

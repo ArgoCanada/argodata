@@ -1,0 +1,29 @@
+
+reference:
+- title: Load and filter indexes
+  contents:
+  - starts_with("argo_global_")
+  - starts_with("argo_filter_")
+  - argo_path_info
+
+- title: Load tables from (filtered) indexes
+  contents:
+  - starts_with("argo_meta_")
+  - starts_with("argo_traj_")
+  - starts_with("argo_prof_")
+  - argo_info
+  - argo_vars
+
+- title: Global options
+  contents:
+  - starts_with("argo_set")
+  - argo_download
+  - argo_url
+
+- title: Read raw tables from files
+  contents:
+  - starts_with("argo_read_")
+
+- title: Read raw tables from 'ncdf4' objects
+  contents:
+  - starts_with("argo_nc_")

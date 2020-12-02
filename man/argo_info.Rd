@@ -2,15 +2,9 @@
 % Please edit documentation in R/argo-info.R
 \name{argo_info}
 \alias{argo_info}
-\alias{argo_read_info}
-\alias{argo_nc_read_info}
-\title{Read NetCDF general information}
+\title{Load NetCDF general information}
 \usage{
 argo_info(path, vars = NULL, download = NULL, quiet = FALSE)
-
-argo_read_info(file, vars = NULL)
-
-argo_nc_read_info(nc, vars = NULL)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
@@ -31,31 +25,16 @@ do not exist in the cache.}
 
 \item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
 verbose error messages.}
-
-\item{file}{A previously downloaded Argo NetCDF file.}
-
-\item{nc}{A handle created using \code{\link[ncdf4:nc_open]{ncdf4::nc_open()}}.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}}
 }
 \description{
-Read NetCDF general information
+Load NetCDF general information
 }
 \examples{
 with_argo_example_cache({
   argo_info("dac/csio/2900313/profiles/D2900313_000.nc")
 })
-
-prof_file <- system.file(
-  "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
-  package = "argodata"
-)
-
-argo_read_info(prof_file)
-
-nc_prof <- ncdf4::nc_open(prof_file)
-argo_nc_read_info(nc_prof)
-ncdf4::nc_close(nc_prof)
 
 }

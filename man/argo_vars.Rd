@@ -2,15 +2,9 @@
 % Please edit documentation in R/argo-vars.R
 \name{argo_vars}
 \alias{argo_vars}
-\alias{argo_read_vars}
-\alias{argo_nc_read_vars}
-\title{Read Argo NetCDF variable metadata}
+\title{Load Argo NetCDF variable metadata}
 \usage{
 argo_vars(path, vars = NULL, download = NULL, quiet = FALSE)
-
-argo_read_vars(file, vars = NULL)
-
-argo_nc_read_vars(nc, vars = NULL)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
@@ -31,10 +25,6 @@ do not exist in the cache.}
 
 \item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
 verbose error messages.}
-
-\item{file}{A previously downloaded Argo NetCDF file.}
-
-\item{nc}{A handle created using \code{\link[ncdf4:nc_open]{ncdf4::nc_open()}}.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}} with one row per variable and columns \code{name},
@@ -43,22 +33,11 @@ A \code{\link[tibble:tibble]{tibble::tibble()}} with one row per variable and co
 to produce a tibble with one row per variable per dimension.
 }
 \description{
-Read Argo NetCDF variable metadata
+Load Argo NetCDF variable metadata
 }
 \examples{
 with_argo_example_cache({
   argo_vars("dac/csio/2900313/profiles/D2900313_000.nc")
 })
-
-prof_file <- system.file(
-  "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
-  package = "argodata"
-)
-
-argo_read_vars(prof_file)
-
-nc_prof <- ncdf4::nc_open(prof_file)
-argo_nc_read_vars(nc_prof)
-ncdf4::nc_close(nc_prof)
 
 }

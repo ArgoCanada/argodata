@@ -88,15 +88,6 @@
 #'   argo_prof_history("dac/csio/2900313/profiles/D2900313_000.nc")
 #' })
 #'
-#' prof_file <- system.file(
-#'   "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
-#'   package = "argodata"
-#' )
-#'
-#' argo_read_prof_levels(prof_file)
-#' argo_read_prof_prof(prof_file)
-#' argo_read_prof_history(prof_file)
-#'
 argo_prof_levels <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   argo_read_many(
     assert_argo_prof_file,
@@ -136,8 +127,26 @@ argo_prof_history <- function(path, vars = NULL, download = NULL, quiet = FALSE)
   )
 }
 
-#' @rdname argo_prof
+
+#' Read Argo profiles
+#'
+#' @inheritParams argo_read_vars
+#' @inheritParams argo_nc_prof_read_levels
+#'
+#' @return A [tibble::tibble()]
 #' @export
+#' @rdname argo_read_prof
+#'
+#' @examples
+#' prof_file <- system.file(
+#'   "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+#'   package = "argodata"
+#' )
+#'
+#' argo_read_prof_levels(prof_file)
+#' argo_read_prof_prof(prof_file)
+#' argo_read_prof_history(prof_file)
+#'
 argo_read_prof_levels <- function(file, vars = NULL, meta = NULL) {
   with_argo_nc_file(
     file,
@@ -146,7 +155,7 @@ argo_read_prof_levels <- function(file, vars = NULL, meta = NULL) {
   )
 }
 
-#' @rdname argo_prof
+#' @rdname argo_read_prof
 #' @export
 argo_read_prof_prof <- function(file, vars = NULL) {
   with_argo_nc_file(
@@ -156,7 +165,7 @@ argo_read_prof_prof <- function(file, vars = NULL) {
   )
 }
 
-#' @rdname argo_prof
+#' @rdname argo_read_prof
 #' @export
 argo_read_prof_history <- function(file, vars = NULL, meta = NULL) {
   with_argo_nc_file(

@@ -1,14 +1,8 @@
 
-#' Read Argo NetCDF variable metadata
+#' Load Argo NetCDF variable metadata
 #'
 #' @inheritParams argo_download
-#' @param nc A handle created using [ncdf4::nc_open()].
-#' @param vars A vector of variable names to include. The ordering
-#'   of the variables is not guaranteed, and variables that do not
-#'   exist are ignored. For `nc_read_*()` and `read_*()` variants,
-#'   these are the raw variable names (all caps, without "date"
-#'   substituted for "juld").
-#' @param file A previously downloaded Argo NetCDF file.
+#' @inheritParams argo_nc_read_vars
 #'
 #' @return A [tibble::tibble()] with one row per variable and columns `name`,
 #'   `longname`, `units`, `prec`, `ndims`, `size`, and `dim`. Columns
@@ -20,17 +14,6 @@
 #' with_argo_example_cache({
 #'   argo_vars("dac/csio/2900313/profiles/D2900313_000.nc")
 #' })
-#'
-#' prof_file <- system.file(
-#'   "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
-#'   package = "argodata"
-#' )
-#'
-#' argo_read_vars(prof_file)
-#'
-#' nc_prof <- ncdf4::nc_open(prof_file)
-#' argo_nc_read_vars(nc_prof)
-#' ncdf4::nc_close(nc_prof)
 #'
 argo_vars <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   path <- as_argo_path(path)
@@ -49,14 +32,56 @@ argo_vars <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   tbl
 }
 
-#' @rdname argo_vars
+
+#' Read NetCDF variable metadata
+#'
+#' @param file A previously downloaded Argo NetCDF file.
+#' @inheritParams argo_nc_read_vars
+#'
+#' @return A [tibble::tibble()] with one row per variable and columns `name`,
+#'   `longname`, `units`, `prec`, `ndims`, `size`, and `dim`. Columns
+#'   `size` and `dim` can be unnested (e.g., using [tidyr::unnest()])
+#'   to produce a tibble with one row per variable per dimension.
 #' @export
+#'
+#' @examples
+#' prof_file <- system.file(
+#'   "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+#'   package = "argodata"
+#' )
+#'
+#' argo_read_vars(prof_file)
+#'
 argo_read_vars <- function(file, vars = NULL) {
   with_argo_nc_file(file, argo_nc_read_vars, vars = vars)
 }
 
-#' @rdname argo_vars
+
+#' Read NetCDF variable metadata from a 'ncdf4' object
+#'
+#' @param nc A handle created using [ncdf4::nc_open()].
+#' @param vars A vector of variable names to include. The ordering
+#'   of the variables is not guaranteed, and variables that do not
+#'   exist are ignored. For `nc_read_*()` and `read_*()` variants,
+#'   these are the raw variable names (all caps, without "date"
+#'   substituted for "juld").
+#'
+#' @return A [tibble::tibble()] with one row per variable and columns `name`,
+#'   `longname`, `units`, `prec`, `ndims`, `size`, and `dim`. Columns
+#'   `size` and `dim` can be unnested (e.g., using [tidyr::unnest()])
+#'   to produce a tibble with one row per variable per dimension.
 #' @export
+#'
+#' @examples
+#' prof_file <- system.file(
+#'   "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+#'   package = "argodata"
+#' )
+#'
+#' nc_prof <- ncdf4::nc_open(prof_file)
+#' argo_nc_read_vars(nc_prof)
+#' ncdf4::nc_close(nc_prof)
+#'
 argo_nc_read_vars <- function(nc, vars = NULL) {
   vars <- if (is.null(vars)) names(nc$var) else intersect(vars, names(nc$var))
   ncdf4_vars <- lapply(unclass(nc$var[vars]), argo_nc_var_as_tbl)

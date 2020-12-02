@@ -176,15 +176,6 @@
 #'   argo_traj_history("dac/csio/2900313/2900313_Rtraj.nc")
 #' })
 #'
-#' traj_file <- system.file(
-#'   "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
-#'   package = "argodata"
-#' )
-#'
-#' argo_read_traj_meas(traj_file)
-#' argo_read_traj_cycle(traj_file)
-#' argo_read_traj_history(traj_file)
-#'
 argo_traj_meas <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   argo_read_many(
     assert_argo_traj_file,
@@ -222,8 +213,24 @@ argo_traj_history <- function(path, vars = NULL, download = NULL, quiet = FALSE)
   )
 }
 
-#' @rdname argo_traj
+#' Read Argo trajectories
+#'
+#' @inheritParams argo_read_vars
+#'
+#' @return A [tibble::tibble()].
 #' @export
+#' @rdname argo_read_traj
+#'
+#' @examples
+#' traj_file <- system.file(
+#'   "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
+#'   package = "argodata"
+#' )
+#'
+#' argo_read_traj_meas(traj_file)
+#' argo_read_traj_cycle(traj_file)
+#' argo_read_traj_history(traj_file)
+#'
 argo_read_traj_meas <- function(file, vars = NULL) {
   with_argo_nc_file(
     file,
@@ -232,7 +239,7 @@ argo_read_traj_meas <- function(file, vars = NULL) {
   )
 }
 
-#' @rdname argo_traj
+#' @rdname argo_read_traj
 #' @export
 argo_read_traj_cycle <- function(file, vars = NULL) {
   with_argo_nc_file(
@@ -242,7 +249,7 @@ argo_read_traj_cycle <- function(file, vars = NULL) {
   )
 }
 
-#' @rdname argo_traj
+#' @rdname argo_read_traj
 #' @export
 argo_read_traj_history <- function(file, vars = NULL) {
   with_argo_nc_file(

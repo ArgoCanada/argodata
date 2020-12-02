@@ -25,7 +25,7 @@
 #' @export
 #'
 #' @examples
-#' library(dplyr)
+#' library(dplyr, warn.conflicts = FALSE)
 #'
 #' \dontrun{
 #' argo_global_prof() %>%

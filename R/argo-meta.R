@@ -32,18 +32,6 @@
 #'   argo_meta_param("dac/csio/2900313/2900313_meta.nc")
 #' })
 #'
-#' meta_file <- system.file(
-#'   "cache-test/dac/csio/2900313/2900313_meta.nc",
-#'   package = "argodata"
-#' )
-#'
-#' argo_read_meta_config_param(meta_file)
-#' argo_read_meta_missions(meta_file)
-#' argo_read_meta_trans_system(meta_file)
-#' argo_read_meta_launch_config_param(meta_file)
-#' argo_read_meta_sensor(meta_file)
-#' argo_read_meta_param(meta_file)
-#'
 argo_meta_config_param <- function(path, download = NULL, quiet = FALSE) {
   tbl <- argo_read_many(
     assert_argo_meta_file,
@@ -144,8 +132,28 @@ argo_meta_param <- function(path, download = NULL, quiet = FALSE) {
   tbl
 }
 
-#' @rdname argo_meta
+
+#' Read Argo float meta
+#'
+#' @inheritParams argo_read_vars
+#'
+#' @return A [tibble::tibble()]
 #' @export
+#' @rdname argo_read_meta
+#'
+#' @examples
+#' meta_file <- system.file(
+#'   "cache-test/dac/csio/2900313/2900313_meta.nc",
+#'   package = "argodata"
+#' )
+#'
+#' argo_read_meta_config_param(meta_file)
+#' argo_read_meta_missions(meta_file)
+#' argo_read_meta_trans_system(meta_file)
+#' argo_read_meta_launch_config_param(meta_file)
+#' argo_read_meta_sensor(meta_file)
+#' argo_read_meta_param(meta_file)
+#'
 argo_read_meta_config_param <- function(file, vars = NULL) {
   with_argo_nc_file(
     file,
@@ -153,7 +161,7 @@ argo_read_meta_config_param <- function(file, vars = NULL) {
   )
 }
 
-#' @rdname argo_meta
+#' @rdname argo_read_meta
 #' @export
 argo_read_meta_missions <- function(file, vars = NULL) {
   with_argo_nc_file(
@@ -162,7 +170,7 @@ argo_read_meta_missions <- function(file, vars = NULL) {
   )
 }
 
-#' @rdname argo_meta
+#' @rdname argo_read_meta
 #' @export
 argo_read_meta_trans_system <- function(file, vars = NULL) {
   with_argo_nc_file(
@@ -171,7 +179,7 @@ argo_read_meta_trans_system <- function(file, vars = NULL) {
   )
 }
 
-#' @rdname argo_meta
+#' @rdname argo_read_meta
 #' @export
 argo_read_meta_launch_config_param <- function(file, vars = NULL) {
   with_argo_nc_file(
@@ -180,7 +188,7 @@ argo_read_meta_launch_config_param <- function(file, vars = NULL) {
   )
 }
 
-#' @rdname argo_meta
+#' @rdname argo_read_meta
 #' @export
 argo_read_meta_sensor <- function(file, vars = NULL) {
   with_argo_nc_file(
@@ -189,7 +197,7 @@ argo_read_meta_sensor <- function(file, vars = NULL) {
   )
 }
 
-#' @rdname argo_meta
+#' @rdname argo_read_meta
 #' @export
 argo_read_meta_param <- function(file, vars = NULL) {
   with_argo_nc_file(

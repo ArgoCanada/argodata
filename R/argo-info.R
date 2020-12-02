@@ -1,5 +1,5 @@
 
-#' Read NetCDF general information
+#' Load NetCDF general information
 #'
 #' @inheritParams argo_vars
 #'
@@ -10,17 +10,6 @@
 #' with_argo_example_cache({
 #'   argo_info("dac/csio/2900313/profiles/D2900313_000.nc")
 #' })
-#'
-#' prof_file <- system.file(
-#'   "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
-#'   package = "argodata"
-#' )
-#'
-#' argo_read_info(prof_file)
-#'
-#' nc_prof <- ncdf4::nc_open(prof_file)
-#' argo_nc_read_info(nc_prof)
-#' ncdf4::nc_close(nc_prof)
 #'
 argo_info <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   path <- as_argo_path(path)
@@ -59,14 +48,43 @@ argo_info <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   tbl
 }
 
-#' @rdname argo_info
+#' Read NetCDF general information
+#'
+#' @inheritParams argo_read_vars
+#'
+#' @return A [tibble::tibble()]
 #' @export
+#'
+#' @examples
+#' prof_file <- system.file(
+#'   "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+#'   package = "argodata"
+#' )
+#'
+#' argo_read_info(prof_file)
+#'
 argo_read_info <- function(file, vars = NULL) {
   with_argo_nc_file(file, argo_nc_read_info, vars = vars)
 }
 
-#' @rdname argo_info
+
+#' Read NetCDF general information from 'ncdf4' objects
+#'
+#' @inheritParams argo_nc_read_vars
+#'
+#' @return A [tibble::tibble()]
 #' @export
+#'
+#' @examples
+#' prof_file <- system.file(
+#'   "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+#'   package = "argodata"
+#' )
+#'
+#' nc_prof <- ncdf4::nc_open(prof_file)
+#' argo_nc_read_info(nc_prof)
+#' ncdf4::nc_close(nc_prof)
+#'
 argo_nc_read_info <- function(nc, vars = NULL) {
   # some global metadata is stored as variables along a string dimension
   all_vars <- argo_nc_read_vars(nc)

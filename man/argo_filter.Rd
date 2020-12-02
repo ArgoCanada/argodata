@@ -52,7 +52,7 @@ These functions are intended to be applied to \code{\link[=argo_global_meta]{arg
 other global index tables in the \verb{argo_global_*()} family.
 }
 \examples{
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 
 \dontrun{
 argo_global_prof() \%>\%

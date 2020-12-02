@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Argo institution code reference — argo_reference_institution • argodata</title>
+<title>Argo history step reference — argo_reference_history_steps • argodata</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Argo institution code reference — argo_reference_institution" />
-<meta property="og:description" content="Argo institution code reference" />
+<meta property="og:title" content="Argo history step reference — argo_reference_history_steps" />
+<meta property="og:description" content="Argo history step reference" />
 
 
 
@@ -111,38 +111,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Argo institution code reference</h1>
+    <h1>Argo history step reference</h1>
     <small class="dont-index">Source: <a href='https://github.com/ArgoCanada/argodata/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>argo_reference_institution.Rd</code></div>
+    <div class="hidden name"><code>argo_reference_history_steps.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Argo institution code reference</p>
+    <p>Argo history step reference</p>
     </div>
 
-    <pre class="usage"><span class='va'>argo_reference_institution</span></pre>
+    <pre class="usage"><span class='va'>argo_reference_history_steps</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 25 rows and 2 columns.</p>
+    <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 9 rows and 2 columns.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>argo_reference_institution</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 25 x 2</span><span>
-#&gt;    institution institution_long                            
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                       
-#&gt; </span><span style='color: #555555;'> 1</span><span> AO          AOML, USA                                   
-#&gt; </span><span style='color: #555555;'> 2</span><span> BO          BODC, United Kingdom                        
-#&gt; </span><span style='color: #555555;'> 3</span><span> CI          Institute of Ocean Sciences, Canada         
-#&gt; </span><span style='color: #555555;'> 4</span><span> CS          CSIRO, Australia                            
-#&gt; </span><span style='color: #555555;'> 5</span><span> GE          BSH, Germany                                
-#&gt; </span><span style='color: #555555;'> 6</span><span> GT          GTS : used for data coming from WMO GTS netw
-#&gt; </span><span style='color: #555555;'> 7</span><span> HZ          CSIO, China Second Institute of Oceanography
-#&gt; </span><span style='color: #555555;'> 8</span><span> IF          Ifremer, France                             
-#&gt; </span><span style='color: #555555;'> 9</span><span> IN          INCOIS, India                               
-#&gt; </span><span style='color: #555555;'>10</span><span> JA          JMA, Japan                                  
-#&gt; </span><span style='color: #555555;'># … with 15 more rows</span><span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>argo_reference_history_steps</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 9 x 2</span><span>
+#&gt;   history_step_code history_step_description                                    
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                       
+#&gt; </span><span style='color: #555555;'>1</span><span> ARFM              Convert raw data from telecommunications system to a proces…
+#&gt; </span><span style='color: #555555;'>2</span><span> ARGQ              Automatic QC of data reported in real-time has been perform…
+#&gt; </span><span style='color: #555555;'>3</span><span> IGO3              Checking for duplicates has been performed                  
+#&gt; </span><span style='color: #555555;'>4</span><span> ARSQ              Delayed mode QC has been performed                          
+#&gt; </span><span style='color: #555555;'>5</span><span> ARCA              Calibration has been performed                              
+#&gt; </span><span style='color: #555555;'>6</span><span> ARUP              Real-time data have been archived locally and sent to GDACs 
+#&gt; </span><span style='color: #555555;'>7</span><span> ARDU              Delayed mode data have been archived locally and sent to GD…
+#&gt; </span><span style='color: #555555;'>8</span><span> RFMT              Reformat software to convert hexadecimal format reported by…
+#&gt; </span><span style='color: #555555;'>9</span><span> COOA              Coriolis objective analysis performed                       </div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

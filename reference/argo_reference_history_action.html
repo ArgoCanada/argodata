@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Argo institution code reference — argo_reference_institution • argodata</title>
+<title>Argo history action reference — argo_reference_history_action • argodata</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Argo institution code reference — argo_reference_institution" />
-<meta property="og:description" content="Argo institution code reference" />
+<meta property="og:title" content="Argo history action reference — argo_reference_history_action" />
+<meta property="og:description" content="Argo history action reference" />
 
 
 
@@ -111,38 +111,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Argo institution code reference</h1>
+    <h1>Argo history action reference</h1>
     <small class="dont-index">Source: <a href='https://github.com/ArgoCanada/argodata/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>argo_reference_institution.Rd</code></div>
+    <div class="hidden name"><code>argo_reference_history_action.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Argo institution code reference</p>
+    <p>Argo history action reference</p>
     </div>
 
-    <pre class="usage"><span class='va'>argo_reference_institution</span></pre>
+    <pre class="usage"><span class='va'>argo_reference_history_action</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 25 rows and 2 columns.</p>
+    <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 14 rows and 2 columns.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>argo_reference_institution</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 25 x 2</span><span>
-#&gt;    institution institution_long                            
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                       
-#&gt; </span><span style='color: #555555;'> 1</span><span> AO          AOML, USA                                   
-#&gt; </span><span style='color: #555555;'> 2</span><span> BO          BODC, United Kingdom                        
-#&gt; </span><span style='color: #555555;'> 3</span><span> CI          Institute of Ocean Sciences, Canada         
-#&gt; </span><span style='color: #555555;'> 4</span><span> CS          CSIRO, Australia                            
-#&gt; </span><span style='color: #555555;'> 5</span><span> GE          BSH, Germany                                
-#&gt; </span><span style='color: #555555;'> 6</span><span> GT          GTS : used for data coming from WMO GTS netw
-#&gt; </span><span style='color: #555555;'> 7</span><span> HZ          CSIO, China Second Institute of Oceanography
-#&gt; </span><span style='color: #555555;'> 8</span><span> IF          Ifremer, France                             
-#&gt; </span><span style='color: #555555;'> 9</span><span> IN          INCOIS, India                               
-#&gt; </span><span style='color: #555555;'>10</span><span> JA          JMA, Japan                                  
-#&gt; </span><span style='color: #555555;'># … with 15 more rows</span><span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>argo_reference_history_action</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 14 x 2</span><span>
+#&gt;    history_action_code history_action_meaning                                   
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                    
+#&gt; </span><span style='color: #555555;'> 1</span><span> CF                  Change a quality flag                                    
+#&gt; </span><span style='color: #555555;'> 2</span><span> CR                  Create record                                            
+#&gt; </span><span style='color: #555555;'> 3</span><span> CV                  Change value                                             
+#&gt; </span><span style='color: #555555;'> 4</span><span> DC                  Station was checked by duplicate checking software       
+#&gt; </span><span style='color: #555555;'> 5</span><span> ED                  Edit a parameter value                                   
+#&gt; </span><span style='color: #555555;'> 6</span><span> IP                  This history group operates on the complete input record 
+#&gt; </span><span style='color: #555555;'> 7</span><span> NG                  No good trace                                            
+#&gt; </span><span style='color: #555555;'> 8</span><span> PE                  Position error. Profile position has been erroneously en…
+#&gt; </span><span style='color: #555555;'> 9</span><span> QC                  Quality Control                                          
+#&gt; </span><span style='color: #555555;'>10</span><span> QCF$                Tests failed                                             
+#&gt; </span><span style='color: #555555;'>11</span><span> QCP$                Test performed                                           
+#&gt; </span><span style='color: #555555;'>12</span><span> SV                  Set a value                                              
+#&gt; </span><span style='color: #555555;'>13</span><span> TE                  Time error. Profile date/time has been erroneously encod…
+#&gt; </span><span style='color: #555555;'>14</span><span> UP                  Station passed through the update program                </div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

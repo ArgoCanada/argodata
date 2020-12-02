@@ -10,12 +10,22 @@ argo_read_many <- function(assert_fun, read_fun, ...,
   # joined with one of the global tables
   names(cached) <- stringr::str_remove(path, "^dac/")
 
-  tbls <- argo_map(
-    cached,
-    read_fun,
-    vars = argo_unsanitize_vars(vars),
-    ...
-  )
+  if (quiet) {
+    prog_wrapper <- progressr::without_progress
+  } else {
+    prog_wrapper <- progressr::with_progress
+    old_handlers <- progressr::handlers("progress") %||% "progress"
+    on.exit(progressr::handlers(old_handlers))
+  }
+
+  prog_wrapper({
+    tbls <- argo_map(
+      cached,
+      read_fun,
+      vars = argo_unsanitize_vars(vars),
+      ...
+    )
+  })
 
   tbl <- vctrs::vec_rbind(!!! tbls, .names_to = "file")
   names(tbl) <- argo_sanitize_vars(names(tbl))

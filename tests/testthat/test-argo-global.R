@@ -5,9 +5,9 @@ test_that("argo_global_meta() works", {
   with_argo_cache_dir(tmp_cache, {
     with_argo_mirror(argo_test_mirror(), {
       expect_error(argo_global_meta(download = FALSE), "does not exist")
-      expect_message(argo_global_meta(download = NULL, quiet = FALSE), "ar_index")
+      expect_message(argo_global_meta(download = NULL, quiet = FALSE), "Downloading")
       expect_silent(argo_global_meta(download = NULL, quiet = FALSE))
-      expect_message(argo_global_meta(download = TRUE, quiet = FALSE), "ar_index")
+      expect_message(argo_global_meta(download = TRUE, quiet = FALSE), "Downloading")
       expect_is(argo_global_meta(), "tbl_df")
       expect_identical(
         names(argo_global_meta()),
@@ -39,9 +39,9 @@ test_that("argo_global_tech() works", {
   with_argo_cache_dir(tmp_cache, {
     with_argo_mirror(argo_test_mirror(), {
       expect_error(argo_global_tech(download = FALSE), "does not exist")
-      expect_message(argo_global_tech(download = NULL, quiet = FALSE), "ar_index")
+      expect_message(argo_global_tech(download = NULL, quiet = FALSE), "Downloading")
       expect_silent(argo_global_tech(download = NULL, quiet = FALSE))
-      expect_message(argo_global_tech(download = TRUE, quiet = FALSE), "ar_index")
+      expect_message(argo_global_tech(download = TRUE, quiet = FALSE), "Downloading")
       expect_is(argo_global_tech(), "tbl_df")
       expect_identical(
         names(argo_global_tech()),
@@ -59,9 +59,9 @@ test_that("argo_global_traj() works", {
   with_argo_cache_dir(tmp_cache, {
     with_argo_mirror(argo_test_mirror(), {
       expect_error(argo_global_traj(download = FALSE), "does not exist")
-      expect_message(argo_global_traj(download = NULL, quiet = FALSE), "ar_index")
+      expect_message(argo_global_traj(download = NULL, quiet = FALSE), "Downloading")
       expect_silent(argo_global_traj(download = NULL, quiet = FALSE))
-      expect_message(argo_global_traj(download = TRUE, quiet = FALSE), "ar_index")
+      expect_message(argo_global_traj(download = TRUE, quiet = FALSE), "Downloading")
       expect_is(argo_global_traj(), "tbl_df")
       expect_identical(
         names(argo_global_traj()),

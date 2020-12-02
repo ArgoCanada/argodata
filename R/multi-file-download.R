@@ -1,5 +1,5 @@
 
-multi_file_download <- function(url, dest, quiet = FALSE) {
+multi_file_download <- function(url, dest) {
   stopifnot(
     is.character(url),
     is.character(dest)
@@ -12,9 +12,12 @@ multi_file_download <- function(url, dest, quiet = FALSE) {
     return(invisible(character(0)))
   }
 
+  p <- progressr::progressor(along = url)
+
   # download the files!
   error_message <- vapply(seq_along(url), function(i) {
-    if (!quiet) message(glue("'{ url[i] }' => '{ dest[i] }'"))
+    p(message = basename(url[i]))
+
     if (!dir.exists(dirname(dest[i]))) {
       dir.create(dirname(dest[i]), recursive = TRUE, showWarnings = FALSE)
     }
@@ -51,7 +54,7 @@ multi_file_download <- function(url, dest, quiet = FALSE) {
   invisible(dest)
 }
 
-multi_file_download_async <- function(url, dest, quiet = FALSE) {
+multi_file_download_async <- function(url, dest) {
   stopifnot(
     is.character(url),
     is.character(dest)
@@ -68,14 +71,15 @@ multi_file_download_async <- function(url, dest, quiet = FALSE) {
   }
 
   pool <- curl::new_pool(total_con = 6, host_con = 6)
+  p <- progressr::progressor(along = url)
+  key <- paste(url, dest)
 
   for (i in seq_along(url)) {
-    if (!quiet) message(glue::glue("Fetching '{ url[i] }'"))
     results[[paste(url[i], dest[i])]] <- FALSE
     curl::curl_fetch_multi(
       url[i],
-      multi_download_async_success(url[i], dest[i], results, quiet = quiet),
-      multi_download_async_failure(url[i], dest[i], results, quiet = quiet),
+      multi_download_async_success(url[i], dest[i], results, p),
+      multi_download_async_failure(url[i], dest[i], results, p),
       pool = pool
     )
   }
@@ -87,26 +91,31 @@ multi_file_download_async <- function(url, dest, quiet = FALSE) {
 
   if (n_error > 0) {
     files <- if (n_error != 1) "files" else "file"
-    abort(glue("{ n_error }/{ length(url) } { files } failed to download."))
+    bad_urls <- paste0("'", url[!unlist(as.list(results)[key])], "'", collapse = "\n")
+    abort(glue("{ n_error }/{ length(url) } { files } failed to download:\n{ bad_urls }"))
   }
 
   invisible(dest)
 }
 
-multi_download_async_success <- function(url, dest, results, quiet = FALSE) {
+multi_download_async_success <- function(url, dest, results, prog) {
   force(url)
   force(dest)
-  force(quiet)
   force(results)
+  force(prog)
 
   function(res) {
+    prog(message = basename(url))
+
     if (res$status_code >= 300) {
-      if (!quiet) message(glue("Fetching '{ url }' failed with status { res$status_code }"))
+      prog(
+        message = glue("Fetching '{ url }' failed with status { res$status_code }"),
+        amount = 0,
+        class = "sticky"
+      )
       results[[paste(url, dest)]] <- FALSE
       return()
     }
-
-    if (!quiet) message(glue("Writing '{ dest }'"))
 
     if (!dir.exists(dirname(dest))) dir.create(dirname(dest), recursive = TRUE)
     con <- file(dest, "wb")
@@ -117,14 +126,20 @@ multi_download_async_success <- function(url, dest, results, quiet = FALSE) {
   }
 }
 
-multi_download_async_failure <- function(url, dest, results, quiet = FALSE) {
+multi_download_async_failure <- function(url, dest, results, prog) {
   force(url)
   force(dest)
-  force(quiet)
   force(results)
+  force(prog)
 
   function(msg) {
-    if (!quiet) message(glue::glue("Fetching '{ url }' failed ({ msg })"))
+    prog(message = basename(url))
+    prog(
+      message = glue("Fetching '{ url }' failed ({ msg })"),
+      amount = 0,
+      class = "sticky"
+    )
+
     results[[paste(url, dest)]] <- FALSE
   }
 }

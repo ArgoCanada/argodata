@@ -28,11 +28,23 @@ argo_download <- function(path, download = NULL, async = NULL, quiet = FALSE) {
   url_download <- argo_url(path_download)
   cached_download <- rlang::set_names(argo_cached(path_download), path_download)
 
-  if (async) {
-    multi_file_download_async(url_download, cached_download, quiet = quiet)
+  if (quiet) {
+    prog_wrapper <- progressr::without_progress
   } else {
-    multi_file_download(url_download, cached_download, quiet = quiet)
+    files_word <- if (length(url_download) != 1) "files" else "file"
+    message(glue("Downloading { length(url_download) } { files_word }"))
+    prog_wrapper <- progressr::with_progress
+    old_handlers <- progressr::handlers("progress") %||% "progress"
+    on.exit(progressr::handlers(old_handlers))
   }
+
+  prog_wrapper({
+    if (async) {
+      multi_file_download_async(url_download, cached_download)
+    } else {
+      multi_file_download(url_download, cached_download)
+    }
+  })
 
   invisible(argo_cached(path))
 }

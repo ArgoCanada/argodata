@@ -7,18 +7,12 @@ test_that("multi_file_download() works", {
   skip_if_offline()
 
   dest <- tempfile()
-  expect_message(
-    expect_identical(multi_file_download("https://httpbin.org/get", dest), dest),
-    "https://httpbin"
-  )
+  expect_identical(multi_file_download("https://httpbin.org/get", dest), dest)
+
   expect_true(file.exists(dest))
 
-  expect_silent(
-    multi_file_download("https://httpbin.org/get", dest, quiet = TRUE)
-  )
-
   expect_error(
-    multi_file_download("https://httpbin.org/not_an_endpoint", dest, quiet = TRUE),
+    multi_file_download("https://httpbin.org/not_an_endpoint", dest),
     "HTTP error 404"
   )
 
@@ -26,7 +20,7 @@ test_that("multi_file_download() works", {
 
   dest2 <- tempfile()
   expect_identical(
-    multi_file_download("https://httpbin.org/get", c(dest, dest2), quiet = TRUE),
+    multi_file_download("https://httpbin.org/get", c(dest, dest2)),
     c(dest, dest2)
   )
   expect_true(file.exists(dest2))
@@ -42,7 +36,7 @@ test_that("multi_file_download() creates missing directories", {
   missing_dir <- tempfile()
   dest <- file.path(missing_dir, "some_file.json")
   expect_false(dir.exists(missing_dir))
-  multi_file_download("https://httpbin.org/get", dest, quiet = TRUE)
+  multi_file_download("https://httpbin.org/get", dest)
   expect_true(dir.exists(missing_dir))
   unlink(missing_dir, recursive = TRUE)
 })
@@ -55,24 +49,17 @@ test_that("multi_file_download_async() works", {
   skip_if_offline()
 
   dest <- tempfile()
-  expect_message(
-    expect_identical(multi_file_download_async("https://httpbin.org/get", dest), dest),
-    "https://httpbin"
-  )
+  expect_identical(multi_file_download_async("https://httpbin.org/get", dest), dest)
   expect_true(file.exists(dest))
 
-  expect_silent(
-    multi_file_download_async("https://httpbin.org/get", dest, quiet = TRUE)
-  )
-
   expect_error(
-    multi_file_download_async("https://httpbin.org/not_an_endpoint", dest, quiet = TRUE),
+    multi_file_download_async("https://httpbin.org/not_an_endpoint", dest),
     "1/1 file failed"
   )
 
   expect_error(
     expect_message(
-      multi_file_download_async("https://httpbin.org/not_an_endpoint", dest, quiet = FALSE),
+      multi_file_download_async("https://httpbin.org/not_an_endpoint", dest),
       "failed with status 404"
     ),
     "1/1 file failed"
@@ -80,7 +67,7 @@ test_that("multi_file_download_async() works", {
 
   expect_error(
     expect_message(
-      multi_file_download_async("file://path/to/nowhere", dest, quiet = FALSE),
+      multi_file_download_async("file://path/to/nowhere", dest),
       "Fetching 'file://path/to/nowhere/' failed"
     ),
     "1/1 file failed"
@@ -90,7 +77,7 @@ test_that("multi_file_download_async() works", {
 
   dest2 <- tempfile()
   expect_identical(
-    multi_file_download_async("https://httpbin.org/get", c(dest, dest2), quiet = TRUE),
+    multi_file_download_async("https://httpbin.org/get", c(dest, dest2)),
     c(dest, dest2)
   )
   expect_true(file.exists(dest2))
@@ -106,7 +93,7 @@ test_that("multi_file_download_async() creates missing directories", {
   missing_dir <- tempfile()
   dest <- file.path(missing_dir, "some_file.json")
   expect_false(dir.exists(missing_dir))
-  multi_file_download_async("https://httpbin.org/get", dest, quiet = TRUE)
+  multi_file_download_async("https://httpbin.org/get", dest)
   expect_true(dir.exists(missing_dir))
   unlink(missing_dir, recursive = TRUE)
 })

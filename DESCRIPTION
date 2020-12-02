@@ -24,7 +24,8 @@ Imports:
     ncdf4,
     vctrs,
     tibble,
-    progressr
+    progressr,
+    progress
 Suggests: 
     testthat,
     dplyr,

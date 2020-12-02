@@ -13,12 +13,17 @@
 #' @export
 #'
 #' @examples
-#' # use multisession future and `argo_map_future()` to load files in parallel
 #' \dontrun{
-#' library(future)
-#' plan(multisession)
-#' argo_set_mapper(argo_map_future)
 #' many_profiles <- head(argo_global_prof(), 300)
+#'
+#' # use `argo_map_multisession` to load files in parallel
+#' argo_set_mapper(argo_map_multisession)
+#' argo_prof_levels(many_profiles)
+#'
+#' # use `argo_map_future` with some other future backend
+#' library(future)
+#' plan(multisession) # cluster, multicore, etc.
+#' argo_set_mapper(argo_map_future)
 #' argo_prof_levels(many_profiles)
 #' }
 #'
@@ -41,7 +46,7 @@ argo_map_default <- function(.x, .f, ...) {
   force(.f)
   p <- progressr::progressor(along = .x)
   .f_with_progress <- function(file, ...) {
-    p(message = basename(x))
+    p(message = basename(file))
     .f(file, ...)
   }
 
@@ -50,8 +55,25 @@ argo_map_default <- function(.x, .f, ...) {
 
 #' @rdname argo_map
 #' @export
+argo_map_multisession <- function(.x, .f, ...) {
+  force(.f)
+  prev_plan <- future::plan(future::multisession, .skip = TRUE)
+  on.exit(future::plan(prev_plan, .skip = TRUE))
+
+  p <- progressr::progressor(along = .x)
+  .f_with_progress <- function(file, ...) {
+    p(message = basename(file))
+    .f(file, ...)
+  }
+
+  future.apply::future_lapply(.x, .f_with_progress, ...)
+}
+
+#' @rdname argo_map
+#' @export
 argo_map_future <- function(.x, .f, ...) {
   force(.f)
+
   p <- progressr::progressor(along = .x)
   .f_with_progress <- function(file, ...) {
     p(message = basename(file))
@@ -91,6 +113,9 @@ argo_progress_wrapper <- function(quiet) {
 }
 
 argo_progress_wrapper_default <- function(expr) {
+  # progress handler displays messages which are used extensively here
+  # to communicate filenames/urls
+  requireNamespace("progress", quietly = TRUE)
   old_handlers <- progressr::handlers("progress") %||% "txtprogressbar"
   on.exit(progressr::handlers(old_handlers))
   progressr::with_progress(expr)

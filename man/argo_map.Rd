@@ -4,6 +4,7 @@
 \alias{argo_map}
 \alias{argo_set_mapper}
 \alias{argo_map_default}
+\alias{argo_map_multisession}
 \alias{argo_map_future}
 \title{Configure iteration over NetCDF files}
 \usage{
@@ -12,6 +13,8 @@ argo_map(.x, .f, ...)
 argo_set_mapper(.f)
 
 argo_map_default(.x, .f, ...)
+
+argo_map_multisession(.x, .f, ...)
 
 argo_map_future(.x, .f, ...)
 }
@@ -29,12 +32,17 @@ display progress during these operations; these functions allow custom
 mappers and/or progress handlers to be set.
 }
 \examples{
-# use multisession future and `argo_map_future()` to load files in parallel
 \dontrun{
-library(future)
-plan(multisession)
-argo_set_mapper(argo_map_future)
 many_profiles <- head(argo_global_prof(), 300)
+
+# use `argo_map_multisession` to load files in parallel
+argo_set_mapper(argo_map_multisession)
+argo_prof_levels(many_profiles)
+
+# use `argo_map_future` with some other future backend
+library(future)
+plan(multisession) # cluster, multicore, etc.
+argo_set_mapper(argo_map_future)
 argo_prof_levels(many_profiles)
 }
 

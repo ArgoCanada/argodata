@@ -14,6 +14,10 @@ reference:
   - argo_info
   - argo_vars
 
+- title: Argo reference tables
+  contents:
+  - starts_with("argo_reference")
+
 - title: Global options
   contents:
   - starts_with("argo_set")

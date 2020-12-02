@@ -33,3 +33,5 @@ Suggests:
     future
 URL: https://github.com/ArgoCanada/argodata
 BugReports: https://github.com/ArgoCanada/argodata/issues
+Depends: 
+    R (>= 2.10)

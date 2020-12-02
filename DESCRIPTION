@@ -28,6 +28,7 @@ Imports:
 Suggests: 
     testthat,
     dplyr,
-    future.apply
+    future.apply,
+    future
 URL: https://github.com/ArgoCanada/argodata
 BugReports: https://github.com/ArgoCanada/argodata/issues

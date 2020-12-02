@@ -5,7 +5,7 @@
 \alias{argo_set_mapper}
 \alias{argo_map_default}
 \alias{argo_map_future}
-\title{Configure Long-Running Iteration}
+\title{Configure iteration over NetCDF files}
 \usage{
 argo_map(.x, .f, ...)
 
@@ -16,15 +16,26 @@ argo_map_default(.x, .f, ...)
 argo_map_future(.x, .f, ...)
 }
 \arguments{
-\item{.x}{A vector}
+\item{.x}{A vector of NetCDF files.}
 
 \item{.f}{A function}
 
 \item{...}{Passed to \code{.f}}
 }
 \description{
-Several operations in argodata require long-running iteration (e.g.,
-over many NetCDF files). Users may wish to use parallel processing and/or
+Several operations in argodata require iteration over many NetCDF files.
+Users may wish to use parallel processing and/or
 display progress during these operations; these functions allow custom
-mappers to be set for these operations. You can configure
+mappers and/or progress handlers to be set.
+}
+\examples{
+# use multisession future and `argo_map_future()` to load files in parallel
+\dontrun{
+library(future)
+plan(multisession)
+argo_set_mapper(argo_map_future)
+many_profiles <- head(argo_global_prof(), 300)
+argo_prof_levels(many_profiles)
+}
+
 }

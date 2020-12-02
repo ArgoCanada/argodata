@@ -1,16 +1,26 @@
 
-#' Configure Long-Running Iteration
+#' Configure iteration over NetCDF files
 #'
-#' Several operations in argodata require long-running iteration (e.g.,
-#' over many NetCDF files). Users may wish to use parallel processing and/or
+#' Several operations in argodata require iteration over many NetCDF files.
+#' Users may wish to use parallel processing and/or
 #' display progress during these operations; these functions allow custom
-#' mappers to be set for these operations. You can configure
+#' mappers and/or progress handlers to be set.
 #'
-#' @param .x A vector
+#' @param .x A vector of NetCDF files.
 #' @param .f A function
 #' @param ... Passed to `.f`
 #'
 #' @export
+#'
+#' @examples
+#' # use multisession future and `argo_map_future()` to load files in parallel
+#' \dontrun{
+#' library(future)
+#' plan(multisession)
+#' argo_set_mapper(argo_map_future)
+#' many_profiles <- head(argo_global_prof(), 300)
+#' argo_prof_levels(many_profiles)
+#' }
 #'
 argo_map <- function(.x, .f, ...) {
   args <- rlang::list2(.x, .f, ...)
@@ -30,9 +40,9 @@ argo_set_mapper <- function(.f) {
 argo_map_default <- function(.x, .f, ...) {
   force(.f)
   p <- progressr::progressor(along = .x)
-  .f_with_progress <- function(...) {
-    p()
-    .f(...)
+  .f_with_progress <- function(file, ...) {
+    p(message = basename(x))
+    .f(file, ...)
   }
 
   lapply(.x, .f_with_progress, ...)
@@ -43,9 +53,9 @@ argo_map_default <- function(.x, .f, ...) {
 argo_map_future <- function(.x, .f, ...) {
   force(.f)
   p <- progressr::progressor(along = .x)
-  .f_with_progress <- function(...) {
-    p()
-    .f(...)
+  .f_with_progress <- function(file, ...) {
+    p(message = basename(file))
+    .f(file, ...)
   }
 
   future.apply::future_lapply(.x, .f_with_progress, ...)

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Configure Long-Running Iteration — argo_map • argodata</title>
+<title>Configure iteration over NetCDF files — argo_map • argodata</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,11 @@
 
 
 
-<meta property="og:title" content="Configure Long-Running Iteration — argo_map" />
-<meta property="og:description" content="Several operations in argodata require long-running iteration (e.g.,
-over many NetCDF files). Users may wish to use parallel processing and/or
+<meta property="og:title" content="Configure iteration over NetCDF files — argo_map" />
+<meta property="og:description" content="Several operations in argodata require iteration over many NetCDF files.
+Users may wish to use parallel processing and/or
 display progress during these operations; these functions allow custom
-mappers to be set for these operations. You can configure" />
+mappers and/or progress handlers to be set." />
 
 
 
@@ -114,16 +114,16 @@ mappers to be set for these operations. You can configure" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Configure Long-Running Iteration</h1>
+    <h1>Configure iteration over NetCDF files</h1>
     <small class="dont-index">Source: <a href='https://github.com/ArgoCanada/argodata/blob/master/R/argo-map.R'><code>R/argo-map.R</code></a></small>
     <div class="hidden name"><code>argo_map.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Several operations in argodata require long-running iteration (e.g.,
-over many NetCDF files). Users may wish to use parallel processing and/or
+    <p>Several operations in argodata require iteration over many NetCDF files.
+Users may wish to use parallel processing and/or
 display progress during these operations; these functions allow custom
-mappers to be set for these operations. You can configure</p>
+mappers and/or progress handlers to be set.</p>
     </div>
 
     <pre class="usage"><span class='fu'>argo_map</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -132,6 +132,8 @@ mappers to be set for these operations. You can configure</p>
 
 <span class='fu'>argo_map_default</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
 
+<span class='fu'>argo_map_multisession</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span>
+
 <span class='fu'>argo_map_future</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.f</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -139,7 +141,7 @@ mappers to be set for these operations. You can configure</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.x</th>
-      <td><p>A vector</p></td>
+      <td><p>A vector of NetCDF files.</p></td>
     </tr>
     <tr>
       <th>.f</th>
@@ -152,6 +154,52 @@ mappers to be set for these operations. You can configure</p>
     </table>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># \dontrun{</span>
+<span class='va'>many_profiles</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='argo_global_meta.html'>argo_global_prof</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='fl'>300</span><span class='op'>)</span>
+
+<span class='co'># use `argo_map_multisession` to load files in parallel</span>
+<span class='fu'>argo_set_mapper</span><span class='op'>(</span><span class='va'>argo_map_multisession</span><span class='op'>)</span>
+<span class='fu'><a href='argo_prof_levels.html'>argo_prof_levels</a></span><span class='op'>(</span><span class='va'>many_profiles</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Downloading 300 files from 'https://data-argo.ifremer.fr'</span></div><div class='output co'>#&gt; <span class='message'>Extracting from 300 files</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 29,516 x 13</span><span>
+#&gt;    file  cycle_number date                 pres pres_qc pres_adjusted
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  11.9 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 2</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  17   1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 3</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  22.1 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 4</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  27.2 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 5</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  32.3 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 6</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  37.4 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 7</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  42.5 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 8</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  47.5 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 9</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  52.6 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'>10</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  57.7 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'># … with 29,506 more rows, and 7 more variables: pres_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   pres_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, temp </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, temp_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, temp_adjusted </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   temp_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, temp_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
+<span class='co'># use `argo_map_future` with some other future backend</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/HenrikBengtsson/future'>future</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/future/man/plan.html'>plan</a></span><span class='op'>(</span><span class='va'>multisession</span><span class='op'>)</span> <span class='co'># cluster, multicore, etc.</span>
+<span class='fu'>argo_set_mapper</span><span class='op'>(</span><span class='va'>argo_map_future</span><span class='op'>)</span>
+<span class='fu'><a href='argo_prof_levels.html'>argo_prof_levels</a></span><span class='op'>(</span><span class='va'>many_profiles</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 300 files</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 29,516 x 13</span><span>
+#&gt;    file  cycle_number date                 pres pres_qc pres_adjusted
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  11.9 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 2</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  17   1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 3</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  22.1 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 4</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  27.2 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 5</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  32.3 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 6</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  37.4 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 7</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  42.5 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 8</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  47.5 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 9</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  52.6 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'>10</span><span> aoml…            1 1997-07-29 </span><span style='color: #555555;'>20:03:00</span><span>  57.7 1                  </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'># … with 29,506 more rows, and 7 more variables: pres_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   pres_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, temp </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, temp_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, temp_adjusted </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   temp_adjusted_qc </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, temp_adjusted_error </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'><span class='co'># }</span>
+
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

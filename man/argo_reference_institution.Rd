@@ -13,4 +13,8 @@ argo_reference_institution
 \description{
 Argo institution code reference
 }
+\examples{
+argo_reference_institution
+
+}
 \keyword{datasets}

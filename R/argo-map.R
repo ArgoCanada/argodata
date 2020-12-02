@@ -63,3 +63,25 @@ argo_mapper <- function() {
     abort("`getOption('argodata.mapper')` must be a string (e.g., 'pkg::fun') or a function.")
   }
 }
+
+with_argo_progress <- function(expr, quiet = FALSE, title = NULL) {
+  if (!is.null(title) && !quiet) {
+    message(title)
+  }
+
+  argo_progress_wrapper(quiet)(expr)
+}
+
+argo_progress_wrapper <- function(quiet) {
+  if (quiet) {
+    progressr::without_progress
+  } else {
+    getOption("argodata.progress_wrapper", argo_progress_wrapper_default)
+  }
+}
+
+argo_progress_wrapper_default <- function(expr) {
+  old_handlers <- progressr::handlers("progress") %||% "txtprogressbar"
+  on.exit(progressr::handlers(old_handlers))
+  progressr::with_progress(expr)
+}

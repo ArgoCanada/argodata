@@ -10,22 +10,16 @@ argo_read_many <- function(assert_fun, read_fun, ...,
   # joined with one of the global tables
   names(cached) <- stringr::str_remove(path, "^dac/")
 
-  if (quiet) {
-    prog_wrapper <- progressr::without_progress
-  } else {
-    prog_wrapper <- progressr::with_progress
-    old_handlers <- progressr::handlers("progress") %||% "progress"
-    on.exit(progressr::handlers(old_handlers))
-  }
+  files_word <- if (length(cached) != 1) "files" else "file"
 
-  prog_wrapper({
+  with_argo_progress({
     tbls <- argo_map(
       cached,
       read_fun,
       vars = argo_unsanitize_vars(vars),
       ...
     )
-  })
+  }, quiet = quiet, title = glue("Extracting from { length(cached) } { files_word }"))
 
   tbl <- vctrs::vec_rbind(!!! tbls, .names_to = "file")
   names(tbl) <- argo_sanitize_vars(names(tbl))

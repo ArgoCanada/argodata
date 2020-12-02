@@ -7,6 +7,7 @@
 \alias{argo_filter_updated}
 \alias{argo_filter_float}
 \alias{argo_filter_data_mode}
+\alias{argo_filter_direction}
 \title{Select rows of Argo tables}
 \usage{
 argo_filter_radius(tbl, latitude, longitude, radius_km)
@@ -20,6 +21,8 @@ argo_filter_updated(tbl, date_update_min, date_update_max = Sys.time())
 argo_filter_float(tbl, float)
 
 argo_filter_data_mode(tbl, data_mode)
+
+argo_filter_direction(tbl, direction)
 }
 \arguments{
 \item{tbl}{A data.frame, ideally derived from \code{\link[=argo_global_meta]{argo_global_meta()}}
@@ -43,6 +46,8 @@ objects and are encouraged to used UTC.}
 \item{float}{A float identifier.}
 
 \item{data_mode}{One of "realtime" or "delayed".}
+
+\item{direction}{One of "ascending" or "descending"}
 }
 \value{
 \code{tbl} with rows that match the search criteria.

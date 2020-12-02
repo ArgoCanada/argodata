@@ -51,8 +51,13 @@ argo_path_info <- function(path) {
   file_cycle <- ifelse(is_prof, as.integer(extract_prof[, 5]), NA_integer_)
   file_data_mode <- ifelse(is_prof, extract_prof[, 3], extract_non_prof[, 4])
   file_modifier <- ifelse(is_prof, extract_prof[, 2], extract_non_prof[, 3])
+  file_descending <- ifelse(is_prof, !is.na(extract_prof[, 6]), NA)
 
-  tibble::tibble(file, file_float, file_type, file_cycle, file_data_mode, file_modifier)
+  tibble::tibble(
+    file, file_float, file_type,
+    file_cycle, file_data_mode,
+    file_modifier, file_descending
+  )
 }
 
 #' @rdname argo_path_info

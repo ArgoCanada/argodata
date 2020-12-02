@@ -156,3 +156,13 @@ test_that("latlon/rect checker gives reasonable errors", {
 
   expect_error(tbl_has_latlon_or_rect(data.frame()), "must contain columns")
 })
+
+test_that("argo_filter_direction() works", {
+  tbl <- tibble::tibble(
+    file = c("R13857_010.nc", "R3901309_001D.nc")
+  )
+
+  expect_identical(argo_filter_direction(tbl, "ascending"), tbl[1, ])
+  expect_identical(argo_filter_direction(tbl, "descending"), tbl[2, ])
+  expect_error(argo_filter_direction(tbl, "sideways, bro"), "must be one of")
+})

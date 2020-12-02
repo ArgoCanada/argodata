@@ -18,6 +18,7 @@
 #'   datetimes. Users are responsible for setting the timezone for these
 #'   objects and are encouraged to used UTC.
 #' @param data_mode One of "realtime" or "delayed".
+#' @param direction One of "ascending" or "descending"
 #' @param float A float identifier.
 #'
 #' @rdname argo_filter
@@ -184,6 +185,23 @@ argo_filter_data_mode <- function(tbl, data_mode) {
 
   file_regex <- paste0("(", regex_prof, ")|(", regex_non_prof, ")")
   argo_do_filter(tbl, stringr::str_detect(tbl$file, file_regex))
+}
+
+#' @rdname argo_filter
+#' @export
+argo_filter_direction <- function(tbl, direction) {
+  argo_assert_columns(tbl, "file")
+
+  if (!isTRUE(direction %in% c("ascending", "descending"))) {
+    abort("`direction` must be one of 'ascending' or 'descending'")
+  }
+
+  is_descending <- str_detect(tbl$file, "[0-9]{3,4}D\\.nc")
+  if (direction == "descending") {
+    argo_do_filter(tbl, is_descending)
+  } else {
+    argo_do_filter(tbl, !is_descending)
+  }
 }
 
 filter_latlon_radius <- function(tbl, xy, radius_km) {

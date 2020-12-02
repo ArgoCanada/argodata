@@ -8,13 +8,6 @@
 \alias{argo_global_bio_traj}
 \alias{argo_global_bio_prof}
 \alias{argo_global_synthetic_prof}
-\alias{argo_read_global_meta}
-\alias{argo_read_global_prof}
-\alias{argo_read_global_tech}
-\alias{argo_read_global_traj}
-\alias{argo_read_global_bio_traj}
-\alias{argo_read_global_bio_prof}
-\alias{argo_read_global_synthetic_prof}
 \title{Load Argo global index files}
 \usage{
 argo_global_meta(download = NULL, quiet = FALSE)
@@ -30,20 +23,6 @@ argo_global_bio_traj(download = NULL, quiet = FALSE)
 argo_global_bio_prof(download = NULL, quiet = FALSE)
 
 argo_global_synthetic_prof(download = NULL, quiet = FALSE)
-
-argo_read_global_meta(file)
-
-argo_read_global_prof(file)
-
-argo_read_global_tech(file)
-
-argo_read_global_traj(file)
-
-argo_read_global_bio_traj(file)
-
-argo_read_global_bio_prof(file)
-
-argo_read_global_synthetic_prof(file)
 }
 \arguments{
 \item{download}{A logical vector indicating whether or not
@@ -53,8 +32,6 @@ do not exist in the cache.}
 
 \item{quiet}{Use \code{FALSE} to show which files are downloaded and for more
 verbose error messages.}
-
-\item{file}{A path to a previously downloaded index file.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}}.

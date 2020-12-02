@@ -2,7 +2,6 @@
 #' Load Argo global index files
 #'
 #' @inheritParams argo_download
-#' @param file A path to a previously downloaded index file.
 #'
 #' @return A [tibble::tibble()].
 #' @export
@@ -113,8 +112,14 @@ argo_global_synthetic_prof <- function(download = NULL, quiet = FALSE) {
   )
 }
 
-#' @rdname argo_global_meta
+
+#' Read global index files
+#'
+#' @param file A path to a previously downloaded index file.
+#'
+#' @return A [tibble::tibble()]
 #' @export
+#'
 argo_read_global_meta <- function(file) {
   readr::read_csv(
     file,
@@ -128,7 +133,7 @@ argo_read_global_meta <- function(file) {
   )
 }
 
-#' @rdname argo_global_meta
+#' @rdname argo_read_global_meta
 #' @export
 argo_read_global_prof <- function(file) {
   readr::read_csv(
@@ -147,7 +152,7 @@ argo_read_global_prof <- function(file) {
   )
 }
 
-#' @rdname argo_global_meta
+#' @rdname argo_read_global_meta
 #' @export
 argo_read_global_tech <- function(file) {
   readr::read_csv(
@@ -161,7 +166,7 @@ argo_read_global_tech <- function(file) {
   )
 }
 
-#' @rdname argo_global_meta
+#' @rdname argo_read_global_meta
 #' @export
 argo_read_global_traj <- function(file) {
   readr::read_csv(
@@ -180,7 +185,7 @@ argo_read_global_traj <- function(file) {
   )
 }
 
-#' @rdname argo_global_meta
+#' @rdname argo_read_global_meta
 #' @export
 argo_read_global_bio_traj <- function(file) {
   readr::read_csv(
@@ -200,7 +205,7 @@ argo_read_global_bio_traj <- function(file) {
   )
 }
 
-#' @rdname argo_global_meta
+#' @rdname argo_read_global_meta
 #' @export
 argo_read_global_bio_prof <- function(file) {
   readr::read_csv(
@@ -221,7 +226,7 @@ argo_read_global_bio_prof <- function(file) {
   )
 }
 
-#' @rdname argo_global_meta
+#' @rdname argo_read_global_meta
 #' @export
 argo_read_global_synthetic_prof <- function(file) {
   readr::read_csv(

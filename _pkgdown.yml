@@ -17,6 +17,7 @@ reference:
 - title: Argo reference tables
   contents:
   - starts_with("argo_reference")
+  - argo_unnest_history_qctest
 
 - title: Global options
   contents:

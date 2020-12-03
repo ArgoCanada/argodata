@@ -22,13 +22,14 @@
 #' This table contains the quality control descriptions of the one-character
 #' flags that appear in variables that end with `_qc`. These variables appear
 #' in [argo_prof_levels()], [argo_prof_prof()], and [argo_traj_meas()]. See
-#' also [argo_reference_qctest][argo_reference_qctest] for information about
-#' specific tests.
+#' also [argo_reference_history_qctest][argo_reference_history_qctest]
+#' for information about specific tests.
 #'
 #' @inheritSection argo_reference_data_type References
 #'
 #' @examples
 #' library(dplyr, warn.conflicts = FALSE)
+#'
 #' with_argo_example_cache({
 #'   argo_prof_levels(
 #'     "dac/csio/2902746/profiles/BR2902746_001.nc",
@@ -142,23 +143,32 @@
 #' Contains a reference for values in the `history_qctest` column of
 #' [argo_prof_history()] and [argo_traj_history()]. The values in this
 #' column are a hexadecimal representation of the sum of the `qctest_value`
-#' column.
+#' column. See [argo_unnest_history_qctest()] to generate the values needed
+#' to join this table.
 #'
 #' @inheritSection argo_reference_data_type References
 #'
 #' @examples
+#' library(dplyr, warn.conflicts = FALSE)
+#'
 #' with_argo_example_cache({
 #'   argo_prof_history(
 #'     "dac/csio/2902746/profiles/BR2902746_001.nc",
 #'     vars = "history_qctest"
-#'   )
+#'   ) %>%
+#'     argo_unnest_history_qctest() %>%
+#'     left_join(argo_reference_history_qctest, by = "history_qctest") %>%
+#'     select(history_qctest_description, everything())
 #' })
 #'
-#' argo_reference_qctest
+#' argo_reference_history_qctest
 #'
-"argo_reference_qctest"
+"argo_reference_history_qctest"
 
 #' Argo history step reference
+#'
+#' Contains a reference for values in the `history_test` column of
+#' [argo_prof_history()] and [argo_traj_history()].
 #'
 #' @inheritSection argo_reference_data_type References
 #'

@@ -11,7 +11,8 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 argo_reference_history_step
 }
 \description{
-Argo history step reference
+Contains a reference for values in the \code{history_test} column of
+\code{\link[=argo_prof_history]{argo_prof_history()}} and \code{\link[=argo_traj_history]{argo_traj_history()}}.
 }
 \section{References}{
 
@@ -20,6 +21,7 @@ Argo User's Manual, November 2019. \url{https://doi.org/10.13155/29825}
 
 \examples{
 library(dplyr, warn.conflicts = FALSE)
+
 with_argo_example_cache({
   argo_prof_history(
     "dac/csio/2902746/profiles/BR2902746_001.nc",

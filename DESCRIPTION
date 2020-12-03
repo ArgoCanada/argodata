@@ -30,7 +30,8 @@ Suggests:
     testthat,
     dplyr,
     future.apply,
-    future
+    future,
+    tidyr
 URL: https://github.com/ArgoCanada/argodata
 BugReports: https://github.com/ArgoCanada/argodata/issues
 Depends: 

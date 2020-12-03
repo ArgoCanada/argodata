@@ -14,8 +14,8 @@ argo_reference_qc_flag
 This table contains the quality control descriptions of the one-character
 flags that appear in variables that end with \verb{_qc}. These variables appear
 in \code{\link[=argo_prof_levels]{argo_prof_levels()}}, \code{\link[=argo_prof_prof]{argo_prof_prof()}}, and \code{\link[=argo_traj_meas]{argo_traj_meas()}}. See
-also \link{argo_reference_qctest} for information about
-specific tests.
+also \link{argo_reference_history_qctest}
+for information about specific tests.
 }
 \section{References}{
 
@@ -24,6 +24,7 @@ Argo User's Manual, November 2019. \url{https://doi.org/10.13155/29825}
 
 \examples{
 library(dplyr, warn.conflicts = FALSE)
+
 with_argo_example_cache({
   argo_prof_levels(
     "dac/csio/2902746/profiles/BR2902746_001.nc",

@@ -166,9 +166,9 @@ NONE For profile file only: if an estimated position is based on two or more pos
   as_tibble()
 
 
-# argo_reference_qctest (Reference table 11) ----
+# argo_reference_history_qctest (Reference table 11) ----
 
-argo_reference_qctest <- str_trim("
+argo_reference_history_qctest <- str_trim("
 1 2 Platform Identification test
 2 4 Impossible Date test
 3 8 Impossible Location test
@@ -195,7 +195,12 @@ argo_reference_qctest <- str_trim("
   read_lines() %>%
   str_split_fixed(" ", n = 3) %>%
   as.data.frame() %>%
-  set_names(c("qctest_number", "qctest_binary", "qctest_description")) %>%
+  set_names(c("history_qctest_number", "history_qctest_flag", "history_qctest_description")) %>%
+  mutate(
+    history_qctest_number = as.integer(history_qctest_number),
+    history_qctest_flag = as.integer(history_qctest_flag),
+    history_qctest = sprintf("%X", history_qctest_flag)
+  ) %>%
   as_tibble()
 
 # argo_reference_history_step (Reference table 12) ----
@@ -226,5 +231,5 @@ usethis::use_data(argo_reference_location_class, overwrite = TRUE)
 usethis::use_data(argo_reference_history_action, overwrite = TRUE)
 usethis::use_data(argo_reference_profiler, overwrite = TRUE)
 usethis::use_data(argo_reference_positioning_system, overwrite = TRUE)
-usethis::use_data(argo_reference_qctest, overwrite = TRUE)
+usethis::use_data(argo_reference_history_qctest, overwrite = TRUE)
 usethis::use_data(argo_reference_history_step, overwrite = TRUE)

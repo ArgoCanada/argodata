@@ -196,7 +196,7 @@ argo_filter_direction <- function(tbl, direction) {
     abort("`direction` must be one of 'ascending' or 'descending'")
   }
 
-  is_descending <- str_detect(tbl$file, "[0-9]{3,4}D\\.nc")
+  is_descending <- stringr::str_detect(tbl$file, "[0-9]{3,4}D\\.nc")
   if (direction == "descending") {
     argo_do_filter(tbl, is_descending)
   } else {

@@ -198,9 +198,9 @@ argo_reference_qctest <- str_trim("
   set_names(c("qctest_number", "qctest_binary", "qctest_description")) %>%
   as_tibble()
 
-# argo_reference_history_steps (Reference table 12) ----
+# argo_reference_history_step (Reference table 12) ----
 
-argo_reference_history_steps <- str_trim("
+argo_reference_history_step <- str_trim("
 ARFM Convert raw data from telecommunications system to a processing format
 ARGQ Automatic QC of data reported in real-time has been performed
 IGO3 Checking for duplicates has been performed
@@ -214,7 +214,7 @@ COOA Coriolis objective analysis performed
   read_lines() %>%
   str_split_fixed(" ", n = 2) %>%
   as.data.frame() %>%
-  set_names(c("history_step_code", "history_step_description")) %>%
+  set_names(c("history_step", "history_step_description")) %>%
   as_tibble()
 
 # write data ----
@@ -227,4 +227,4 @@ usethis::use_data(argo_reference_history_action, overwrite = TRUE)
 usethis::use_data(argo_reference_profiler, overwrite = TRUE)
 usethis::use_data(argo_reference_positioning_system, overwrite = TRUE)
 usethis::use_data(argo_reference_qctest, overwrite = TRUE)
-usethis::use_data(argo_reference_history_steps, overwrite = TRUE)
+usethis::use_data(argo_reference_history_step, overwrite = TRUE)

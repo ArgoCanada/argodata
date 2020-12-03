@@ -28,6 +28,7 @@
 #' @inheritSection argo_reference_data_type References
 #'
 #' @examples
+#' library(dplyr, warn.conflicts = FALSE)
 #' with_argo_example_cache({
 #'   argo_prof_levels(
 #'     "dac/csio/2902746/profiles/BR2902746_001.nc",
@@ -162,6 +163,16 @@
 #' @inheritSection argo_reference_data_type References
 #'
 #' @examples
-#' argo_reference_history_steps
+#' library(dplyr, warn.conflicts = FALSE)
 #'
-"argo_reference_history_steps"
+#' with_argo_example_cache({
+#'   argo_prof_history(
+#'     "dac/csio/2902746/profiles/BR2902746_001.nc",
+#'     vars = "history_step"
+#'   ) %>%
+#'     left_join(argo_reference_history_step, by = "history_step")
+#' })
+#'
+#' argo_reference_history_step
+#'
+"argo_reference_history_step"

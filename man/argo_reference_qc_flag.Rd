@@ -23,6 +23,7 @@ Argo User's Manual, November 2019. \url{https://doi.org/10.13155/29825}
 }
 
 \examples{
+library(dplyr, warn.conflicts = FALSE)
 with_argo_example_cache({
   argo_prof_levels(
     "dac/csio/2902746/profiles/BR2902746_001.nc",

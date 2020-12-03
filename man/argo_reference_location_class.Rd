@@ -13,6 +13,11 @@ argo_reference_location_class
 \description{
 Argo location class reference
 }
+\section{References}{
+
+Argo User's Manual, November 2019. \url{https://doi.org/10.13155/29825}
+}
+
 \examples{
 argo_reference_location_class
 

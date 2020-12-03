@@ -35,6 +35,18 @@ test_that("argo_meta_trans_system() works", {
   })
 })
 
+test_that("argo_meta_positioning_system() works", {
+  with_argo_example_cache({
+    meta <- argo_meta_positioning_system("dac/csio/2900313/2900313_meta.nc", quiet = TRUE)
+    expect_true(
+      all(
+        c("positioning_system") %in%
+          names(meta)
+      )
+    )
+  })
+})
+
 test_that("argo_meta_launch_config_param() works", {
   with_argo_example_cache({
     meta <- argo_meta_launch_config_param("dac/csio/2900313/2900313_meta.nc", quiet = TRUE)
@@ -102,6 +114,18 @@ test_that("argo_read_meta_missions() works", {
 test_that("argo_read_meta_trans_system() works", {
   expect_is(
     argo_read_meta_trans_system(
+      system.file(
+        "cache-test/dac/csio/2900313/2900313_meta.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+test_that("argo_read_meta_trans_system() works", {
+  expect_is(
+    argo_read_meta_positioning_system(
       system.file(
         "cache-test/dac/csio/2900313/2900313_meta.nc",
         package = "argodata"

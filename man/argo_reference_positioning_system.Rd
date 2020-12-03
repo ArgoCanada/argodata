@@ -11,9 +11,22 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 argo_reference_positioning_system
 }
 \description{
-Argo positioning system reference
+Contains a reference for values in the \code{positioning_system} column of
+\code{\link[=argo_meta_positioning_system]{argo_meta_positioning_system()}}.
 }
+\section{References}{
+
+Argo User's Manual, November 2019. \url{https://doi.org/10.13155/29825}
+}
+
 \examples{
+library(dplyr, warn.conflicts = FALSE)
+
+with_argo_example_cache({
+  argo_meta_positioning_system("dac/csio/2900313/2900313_meta.nc") \%>\%
+    left_join(argo_reference_positioning_system, by = "positioning_system")
+})
+
 argo_reference_positioning_system
 
 }

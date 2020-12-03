@@ -11,9 +11,23 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 argo_reference_profiler
 }
 \description{
-Argo profiler reference
+Contains a reference for values in the \code{profiler_type} column in the
+\code{\link[=argo_global_meta]{argo_global_meta()}}.
 }
+\section{References}{
+
+Argo User's Manual, November 2019. \url{https://doi.org/10.13155/29825}
+}
+
 \examples{
+library(dplyr, warn.conflicts = FALSE)
+
+with_argo_example_cache({
+  argo_global_meta() \%>\%
+    select(file, profiler_type) \%>\%
+    left_join(argo_reference_profiler, by = "profiler_type")
+})
+
 argo_reference_profiler
 
 }

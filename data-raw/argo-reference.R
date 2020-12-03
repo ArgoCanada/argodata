@@ -8,12 +8,12 @@ library(rvest)
 # argo_reference_data_type (Reference table 1) ----
 
 argo_reference_data_type <- tibble(
-  name = c(
+  data_type = c(
     "Argo profile", "Argo trajectory", "Argo meta-data", "Argo technical data",
     "B-Argo profile", "B-Argo trajectory", "Argo profile merged", "Argo trajectory merged",
     "Argo synthetic profile"
   ),
-  is_obsolete = c(F, F, F, F, F, T, T, T, F)
+  data_type_is_obsolete = c(F, F, F, F, F, T, T, T, F)
 )
 
 # argo_reference_qc_flag (Reference table 2) ----
@@ -23,19 +23,25 @@ argo_reference_qc_flag <- html_table(prof_doc, header = TRUE)[[1]] %>%
   rename_all(str_to_lower) %>%
   rename_all(str_replace_all, " ", "_") %>%
   mutate_all(na_if, "") %>%
+  transmute(
+    qc_flag = as.character(qc_flag),
+    qc_description = meaning,
+    qc_comment_realtime = real_time_comment,
+    qc_comment_delayed = delayed_mode_comment
+  ) %>%
   as_tibble()
 
 
 # argo_reference_institution (Reference table 4) ----
 
 argo_reference_institution <- tibble::tribble(
-  ~institution,                              ~institution_long,
+  ~institution,                              ~institution_description,
           "AO",                                    "AOML, USA",
           "BO",                         "BODC, United Kingdom",
           "CI",          "Institute of Ocean Sciences, Canada",
           "CS",                             "CSIRO, Australia",
           "GE",                                 "BSH, Germany",
-          "GT", "GTS : used for data coming from WMO GTS netw",
+          "GT", "GTS : used for data coming from WMO GTS network",
           "HZ", "CSIO, China Second Institute of Oceanography",
           "IF",                              "Ifremer, France",
           "IN",                                "INCOIS, India",
@@ -81,7 +87,7 @@ argo_reference_location_class <- tibble::tribble(
 # argo_reference_history_action (Reference table 7) ----
 
 argo_reference_history_action <- tibble::tribble(
-  ~history_action_code,                                                                ~history_action_meaning,
+  ~history_action,                                                                ~history_action_description,
                   "CF",                                                                "Change a quality flag",
                   "CR",                                                                        "Create record",
                   "CV",                                                                         "Change value",
@@ -137,6 +143,7 @@ argo_reference_profiler <- str_trim("
   str_split_fixed(" ", n = 2) %>%
   as.data.frame() %>%
   set_names(c("profiler_type", "profiler_description")) %>%
+  mutate(profiler_type = as.numeric(profiler_type)) %>%
   as_tibble()
 
 # argo_reference_positioning_system (Reference table 9) ----
@@ -159,9 +166,9 @@ NONE For profile file only: if an estimated position is based on two or more pos
   as_tibble()
 
 
-# argo_reference_qc_test (Reference table 11) ----
+# argo_reference_qctest (Reference table 11) ----
 
-argo_reference_qc_test <- str_trim("
+argo_reference_qctest <- str_trim("
 1 2 Platform Identification test
 2 4 Impossible Date test
 3 8 Impossible Location test
@@ -188,7 +195,7 @@ argo_reference_qc_test <- str_trim("
   read_lines() %>%
   str_split_fixed(" ", n = 3) %>%
   as.data.frame() %>%
-  set_names(c("qc_test_number", "qc_test_binary", "qc_test_description")) %>%
+  set_names(c("qctest_number", "qctest_binary", "qctest_description")) %>%
   as_tibble()
 
 # argo_reference_history_steps (Reference table 12) ----
@@ -219,5 +226,5 @@ usethis::use_data(argo_reference_location_class, overwrite = TRUE)
 usethis::use_data(argo_reference_history_action, overwrite = TRUE)
 usethis::use_data(argo_reference_profiler, overwrite = TRUE)
 usethis::use_data(argo_reference_positioning_system, overwrite = TRUE)
-usethis::use_data(argo_reference_qc_test, overwrite = TRUE)
+usethis::use_data(argo_reference_qctest, overwrite = TRUE)
 usethis::use_data(argo_reference_history_steps, overwrite = TRUE)

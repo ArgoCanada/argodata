@@ -11,9 +11,28 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 argo_reference_history_action
 }
 \description{
-Argo history action reference
+This table contains descriptions for the codes used in the \code{history_action}
+column present in \code{\link[=argo_prof_history]{argo_prof_history()}} and \code{\link[=argo_traj_history]{argo_traj_history()}}.
 }
+\section{References}{
+
+Argo User's Manual, November 2019. \url{https://doi.org/10.13155/29825}
+}
+
 \examples{
+library(dplyr, warn.conflicts = TRUE)
+
+with_argo_example_cache({
+  argo_prof_history(
+    "dac/csio/2902746/profiles/BR2902746_001.nc",
+    vars = "history_action"
+  ) \%>\%
+    left_join(
+      argo_reference_history_action,
+      by = "history_action"
+    )
+})
+
 argo_reference_history_action
 
 }

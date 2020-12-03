@@ -4,6 +4,7 @@
 \alias{argo_read_meta_config_param}
 \alias{argo_read_meta_missions}
 \alias{argo_read_meta_trans_system}
+\alias{argo_read_meta_positioning_system}
 \alias{argo_read_meta_launch_config_param}
 \alias{argo_read_meta_sensor}
 \alias{argo_read_meta_param}
@@ -14,6 +15,8 @@ argo_read_meta_config_param(file, vars = NULL)
 argo_read_meta_missions(file, vars = NULL)
 
 argo_read_meta_trans_system(file, vars = NULL)
+
+argo_read_meta_positioning_system(file, vars = NULL)
 
 argo_read_meta_launch_config_param(file, vars = NULL)
 
@@ -45,6 +48,7 @@ meta_file <- system.file(
 argo_read_meta_config_param(meta_file)
 argo_read_meta_missions(meta_file)
 argo_read_meta_trans_system(meta_file)
+argo_read_meta_positioning_system(meta_file)
 argo_read_meta_launch_config_param(meta_file)
 argo_read_meta_sensor(meta_file)
 argo_read_meta_param(meta_file)

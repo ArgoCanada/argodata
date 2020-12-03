@@ -11,9 +11,29 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 argo_reference_qc_flag
 }
 \description{
-Argo QC flag reference
+This table contains the quality control descriptions of the one-character
+flags that appear in variables that end with \verb{_qc}. These variables appear
+in \code{\link[=argo_prof_levels]{argo_prof_levels()}}, \code{\link[=argo_prof_prof]{argo_prof_prof()}}, and \code{\link[=argo_traj_meas]{argo_traj_meas()}}. See
+also \link{argo_reference_qctest} for information about
+specific tests.
 }
+\section{References}{
+
+Argo User's Manual, November 2019. \url{https://doi.org/10.13155/29825}
+}
+
 \examples{
+with_argo_example_cache({
+  argo_prof_levels(
+    "dac/csio/2902746/profiles/BR2902746_001.nc",
+    vars = c("pres", "pres_qc", "doxy", "doxy_qc")
+  ) \%>\%
+    dplyr::left_join(
+      argo_reference_qc_flag,
+      by = c("doxy_qc" = "qc_flag")
+    )
+})
+
 argo_reference_qc_flag
 
 }

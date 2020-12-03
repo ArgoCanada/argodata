@@ -21,6 +21,10 @@
 #' })
 #'
 #' with_argo_example_cache({
+#'   argo_meta_positioning_system("dac/csio/2900313/2900313_meta.nc")
+#' })
+#'
+#' with_argo_example_cache({
 #'   argo_meta_launch_config_param("dac/csio/2900313/2900313_meta.nc")
 #' })
 #'
@@ -70,6 +74,23 @@ argo_meta_trans_system <- function(path, download = NULL, quiet = FALSE) {
   tbl <- argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_trans_system,
+    path = path,
+    vars = NULL,
+    download = download,
+    quiet = quiet
+  )
+
+  is_char <- vapply(tbl, is.character, logical(1))
+  tbl[is_char] <- lapply(tbl[is_char], stringr::str_trim)
+  tbl
+}
+
+#' @rdname argo_meta
+#' @export
+argo_meta_positioning_system <- function(path, download = NULL, quiet = FALSE) {
+  tbl <- argo_read_many(
+    assert_argo_meta_file,
+    argo_read_meta_positioning_system,
     path = path,
     vars = NULL,
     download = download,
@@ -150,6 +171,7 @@ argo_meta_param <- function(path, download = NULL, quiet = FALSE) {
 #' argo_read_meta_config_param(meta_file)
 #' argo_read_meta_missions(meta_file)
 #' argo_read_meta_trans_system(meta_file)
+#' argo_read_meta_positioning_system(meta_file)
 #' argo_read_meta_launch_config_param(meta_file)
 #' argo_read_meta_sensor(meta_file)
 #' argo_read_meta_param(meta_file)
@@ -176,6 +198,15 @@ argo_read_meta_trans_system <- function(file, vars = NULL) {
   with_argo_nc_file(
     file,
     argo_nc_meta_read_trans_system
+  )
+}
+
+#' @rdname argo_read_meta
+#' @export
+argo_read_meta_positioning_system <- function(file, vars = NULL) {
+  with_argo_nc_file(
+    file,
+    argo_nc_meta_read_positioning_system
   )
 }
 

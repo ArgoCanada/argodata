@@ -4,6 +4,7 @@
 \alias{argo_meta_config_param}
 \alias{argo_meta_missions}
 \alias{argo_meta_trans_system}
+\alias{argo_meta_positioning_system}
 \alias{argo_meta_launch_config_param}
 \alias{argo_meta_sensor}
 \alias{argo_meta_param}
@@ -14,6 +15,8 @@ argo_meta_config_param(path, download = NULL, quiet = FALSE)
 argo_meta_missions(path, download = NULL, quiet = FALSE)
 
 argo_meta_trans_system(path, download = NULL, quiet = FALSE)
+
+argo_meta_positioning_system(path, download = NULL, quiet = FALSE)
 
 argo_meta_launch_config_param(path, download = NULL, quiet = FALSE)
 
@@ -52,6 +55,10 @@ with_argo_example_cache({
 
 with_argo_example_cache({
   argo_meta_trans_system("dac/csio/2900313/2900313_meta.nc")
+})
+
+with_argo_example_cache({
+  argo_meta_positioning_system("dac/csio/2900313/2900313_meta.nc")
 })
 
 with_argo_example_cache({

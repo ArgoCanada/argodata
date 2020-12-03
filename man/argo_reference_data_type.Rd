@@ -11,9 +11,20 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 argo_reference_data_type
 }
 \description{
-Argo data type reference
+This table contains the acceptable values for the \code{data_type} field in
+Argo NetCDF files. This field can be examined using \code{\link[=argo_info]{argo_info()}}.
+See Reference Table 1 in the Argo User's Manual.
 }
+\section{References}{
+
+Argo User's Manual, November 2019. \url{https://doi.org/10.13155/29825}
+}
+
 \examples{
+with_argo_example_cache({
+  argo_info("dac/csio/2900313/2900313_meta.nc", vars = "data_type")
+})
+
 argo_reference_data_type
 
 }

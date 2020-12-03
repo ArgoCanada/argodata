@@ -40,7 +40,8 @@
 
 
 <meta property="og:title" content="Argo history action reference — argo_reference_history_action" />
-<meta property="og:description" content="Argo history action reference" />
+<meta property="og:description" content="This table contains descriptions for the codes used in the history_action
+column present in argo_prof_history() and argo_traj_history()." />
 
 
 
@@ -117,7 +118,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Argo history action reference</p>
+    <p>This table contains descriptions for the codes used in the <code>history_action</code>
+column present in <code><a href='argo_prof_levels.html'>argo_prof_history()</a></code> and <code><a href='argo_traj_meas.html'>argo_traj_history()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='va'>argo_reference_history_action</span></pre>
@@ -126,26 +128,50 @@
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 14 rows and 2 columns.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    
+
+<p>Argo User's Manual, November 2019. <a href='https://doi.org/10.13155/29825'>https://doi.org/10.13155/29825</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>argo_reference_history_action</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 14 x 2</span><span>
-#&gt;    history_action_code history_action_meaning                                   
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                    
-#&gt; </span><span style='color: #555555;'> 1</span><span> CF                  Change a quality flag                                    
-#&gt; </span><span style='color: #555555;'> 2</span><span> CR                  Create record                                            
-#&gt; </span><span style='color: #555555;'> 3</span><span> CV                  Change value                                             
-#&gt; </span><span style='color: #555555;'> 4</span><span> DC                  Station was checked by duplicate checking software       
-#&gt; </span><span style='color: #555555;'> 5</span><span> ED                  Edit a parameter value                                   
-#&gt; </span><span style='color: #555555;'> 6</span><span> IP                  This history group operates on the complete input record 
-#&gt; </span><span style='color: #555555;'> 7</span><span> NG                  No good trace                                            
-#&gt; </span><span style='color: #555555;'> 8</span><span> PE                  Position error. Profile position has been erroneously en…
-#&gt; </span><span style='color: #555555;'> 9</span><span> QC                  Quality Control                                          
-#&gt; </span><span style='color: #555555;'>10</span><span> QCF$                Tests failed                                             
-#&gt; </span><span style='color: #555555;'>11</span><span> QCP$                Test performed                                           
-#&gt; </span><span style='color: #555555;'>12</span><span> SV                  Set a value                                              
-#&gt; </span><span style='color: #555555;'>13</span><span> TE                  Time error. Profile date/time has been erroneously encod…
-#&gt; </span><span style='color: #555555;'>14</span><span> UP                  Station passed through the update program                </div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>, warn.conflicts <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
+  <span class='fu'><a href='argo_prof_levels.html'>argo_prof_history</a></span><span class='op'>(</span>
+    <span class='st'>"dac/csio/2902746/profiles/BR2902746_001.nc"</span>,
+    vars <span class='op'>=</span> <span class='st'>"history_action"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span>
+      <span class='va'>argo_reference_history_action</span>,
+      by <span class='op'>=</span> <span class='st'>"history_action"</span>
+    <span class='op'>)</span>
+<span class='op'>}</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 5</span><span>
+#&gt;   file      cycle_number date                history_action history_action_desc…
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>               
+#&gt; </span><span style='color: #555555;'>1</span><span> csio/290…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> IP             This history group …
+#&gt; </span><span style='color: #555555;'>2</span><span> csio/290…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> IP             This history group …
+#&gt; </span><span style='color: #555555;'>3</span><span> csio/290…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> QCP$           Test performed      
+#&gt; </span><span style='color: #555555;'>4</span><span> csio/290…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> QCP$           Test performed      </div><div class='input'>
+<span class='va'>argo_reference_history_action</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 14 x 2</span><span>
+#&gt;    history_action history_action_description                                    
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                         
+#&gt; </span><span style='color: #555555;'> 1</span><span> CF             Change a quality flag                                         
+#&gt; </span><span style='color: #555555;'> 2</span><span> CR             Create record                                                 
+#&gt; </span><span style='color: #555555;'> 3</span><span> CV             Change value                                                  
+#&gt; </span><span style='color: #555555;'> 4</span><span> DC             Station was checked by duplicate checking software            
+#&gt; </span><span style='color: #555555;'> 5</span><span> ED             Edit a parameter value                                        
+#&gt; </span><span style='color: #555555;'> 6</span><span> IP             This history group operates on the complete input record      
+#&gt; </span><span style='color: #555555;'> 7</span><span> NG             No good trace                                                 
+#&gt; </span><span style='color: #555555;'> 8</span><span> PE             Position error. Profile position has been erroneously encoded…
+#&gt; </span><span style='color: #555555;'> 9</span><span> QC             Quality Control                                               
+#&gt; </span><span style='color: #555555;'>10</span><span> QCF$           Tests failed                                                  
+#&gt; </span><span style='color: #555555;'>11</span><span> QCP$           Test performed                                                
+#&gt; </span><span style='color: #555555;'>12</span><span> SV             Set a value                                                   
+#&gt; </span><span style='color: #555555;'>13</span><span> TE             Time error. Profile date/time has been erroneously encoded. C…
+#&gt; </span><span style='color: #555555;'>14</span><span> UP             Station passed through the update program                     </div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

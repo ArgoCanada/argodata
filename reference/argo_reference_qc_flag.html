@@ -40,7 +40,11 @@
 
 
 <meta property="og:title" content="Argo QC flag reference — argo_reference_qc_flag" />
-<meta property="og:description" content="Argo QC flag reference" />
+<meta property="og:description" content="This table contains the quality control descriptions of the one-character
+flags that appear in variables that end with _qc. These variables appear
+in argo_prof_levels(), argo_prof_prof(), and argo_traj_meas(). See
+also argo_reference_qctest for information about
+specific tests." />
 
 
 
@@ -117,7 +121,11 @@
     </div>
 
     <div class="ref-description">
-    <p>Argo QC flag reference</p>
+    <p>This table contains the quality control descriptions of the one-character
+flags that appear in variables that end with <code>_qc</code>. These variables appear
+in <code><a href='argo_prof_levels.html'>argo_prof_levels()</a></code>, <code><a href='argo_prof_levels.html'>argo_prof_prof()</a></code>, and <code><a href='argo_traj_meas.html'>argo_traj_meas()</a></code>. See
+also <a href='argo_reference_qctest.html'>argo_reference_qctest</a> for information about
+specific tests.</p>
     </div>
 
     <pre class="usage"><span class='va'>argo_reference_qc_flag</span></pre>
@@ -126,22 +134,52 @@
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 10 rows and 4 columns.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    
+
+<p>Argo User's Manual, November 2019. <a href='https://doi.org/10.13155/29825'>https://doi.org/10.13155/29825</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>argo_reference_qc_flag</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 4</span><span>
-#&gt;    qc_flag meaning        real_time_comment           delayed_mode_comment      
-#&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                     
-#&gt; </span><span style='color: #555555;'> 1</span><span>       0 No QC perform… No QC performed             No QC performed           
-#&gt; </span><span style='color: #555555;'> 2</span><span>       1 Good data      All real time QC tests pas… The adjusted value is sta…
-#&gt; </span><span style='color: #555555;'> 3</span><span>       2 Probably good… </span><span style='color: #BB0000;'>NA</span><span>                          Probably good             
-#&gt; </span><span style='color: #555555;'> 4</span><span>       3 Bad data that… Test 15 or Test 16 or Test… An adjustment has been ap…
-#&gt; </span><span style='color: #555555;'> 5</span><span>       4 Bad data       Data have failed one or mo… Bad data.  Not adjustable.
-#&gt; </span><span style='color: #555555;'> 6</span><span>       5 Value changed  Value changed               Value changed             
-#&gt; </span><span style='color: #555555;'> 7</span><span>       6 Not currently… Not currently used          Not currently used        
-#&gt; </span><span style='color: #555555;'> 8</span><span>       7 Not currently… Not currently used          Not currently used        
-#&gt; </span><span style='color: #555555;'> 9</span><span>       8 Estimated      Estimated value (interpola… Estimated value (interpol…
-#&gt; </span><span style='color: #555555;'>10</span><span>       9 Missing value  Missing value               Missing value             </div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
+  <span class='fu'><a href='argo_prof_levels.html'>argo_prof_levels</a></span><span class='op'>(</span>
+    <span class='st'>"dac/csio/2902746/profiles/BR2902746_001.nc"</span>,
+    vars <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pres"</span>, <span class='st'>"pres_qc"</span>, <span class='st'>"doxy"</span>, <span class='st'>"doxy_qc"</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span>
+      <span class='va'>argo_reference_qc_flag</span>,
+      by <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"doxy_qc"</span> <span class='op'>=</span> <span class='st'>"qc_flag"</span><span class='op'>)</span>
+    <span class='op'>)</span>
+<span class='op'>}</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 101 x 9</span><span>
+#&gt;    file  cycle_number date                 pres  doxy doxy_qc qc_description
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
+#&gt; </span><span style='color: #555555;'> 1</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 0.200  188. 3       Bad data that…
+#&gt; </span><span style='color: #555555;'> 2</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 0.900  188. 3       Bad data that…
+#&gt; </span><span style='color: #555555;'> 3</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 1.90   188. 3       Bad data that…
+#&gt; </span><span style='color: #555555;'> 4</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 2.90   190. 3       Bad data that…
+#&gt; </span><span style='color: #555555;'> 5</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 4      190. 3       Bad data that…
+#&gt; </span><span style='color: #555555;'> 6</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 5      190. 3       Bad data that…
+#&gt; </span><span style='color: #555555;'> 7</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 6      190. 3       Bad data that…
+#&gt; </span><span style='color: #555555;'> 8</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 7.10   191. 3       Bad data that…
+#&gt; </span><span style='color: #555555;'> 9</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 8.20   191. 3       Bad data that…
+#&gt; </span><span style='color: #555555;'>10</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 9.30   191. 3       Bad data that…
+#&gt; </span><span style='color: #555555;'># … with 91 more rows, and 2 more variables: qc_comment_realtime </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   qc_comment_delayed </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
+<span class='va'>argo_reference_qc_flag</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 4</span><span>
+#&gt;    qc_flag qc_description     qc_comment_realtime       qc_comment_delayed      
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                   
+#&gt; </span><span style='color: #555555;'> 1</span><span> 0       No QC performed    No QC performed           No QC performed         
+#&gt; </span><span style='color: #555555;'> 2</span><span> 1       Good data          All real time QC tests p… The adjusted value is s…
+#&gt; </span><span style='color: #555555;'> 3</span><span> 2       Probably good data </span><span style='color: #BB0000;'>NA</span><span>                        Probably good           
+#&gt; </span><span style='color: #555555;'> 4</span><span> 3       Bad data that are… Test 15 or Test 16 or Te… An adjustment has been …
+#&gt; </span><span style='color: #555555;'> 5</span><span> 4       Bad data           Data have failed one or … Bad data.  Not adjustab…
+#&gt; </span><span style='color: #555555;'> 6</span><span> 5       Value changed      Value changed             Value changed           
+#&gt; </span><span style='color: #555555;'> 7</span><span> 6       Not currently used Not currently used        Not currently used      
+#&gt; </span><span style='color: #555555;'> 8</span><span> 7       Not currently used Not currently used        Not currently used      
+#&gt; </span><span style='color: #555555;'> 9</span><span> 8       Estimated          Estimated value (interpo… Estimated value (interp…
+#&gt; </span><span style='color: #555555;'>10</span><span> 9       Missing value      Missing value             Missing value           </div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

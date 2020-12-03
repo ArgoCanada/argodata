@@ -126,6 +126,8 @@
 
 <span class='fu'>argo_read_meta_trans_system</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
+<span class='fu'>argo_read_meta_positioning_system</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+
 <span class='fu'>argo_read_meta_launch_config_param</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
 <span class='fu'>argo_read_meta_sensor</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
@@ -177,7 +179,11 @@ substituted for "juld").</p></td>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 3</span><span>
 #&gt;   TRANS_SYSTEM       TRANS_SYSTEM_ID                    TRANS_FREQUENCY   
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             
-#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>"</span><span>ARGOS           </span><span style='color: #555555;'>"</span><span> </span><span style='color: #555555;'>"</span><span>02528                           </span><span style='color: #555555;'>"</span><span> </span><span style='color: #555555;'>"</span><span>1/45            </span><span style='color: #555555;'>"</span><span></div><div class='input'><span class='fu'>argo_read_meta_launch_config_param</span><span class='op'>(</span><span class='va'>meta_file</span><span class='op'>)</span>
+#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>"</span><span>ARGOS           </span><span style='color: #555555;'>"</span><span> </span><span style='color: #555555;'>"</span><span>02528                           </span><span style='color: #555555;'>"</span><span> </span><span style='color: #555555;'>"</span><span>1/45            </span><span style='color: #555555;'>"</span><span></div><div class='input'><span class='fu'>argo_read_meta_positioning_system</span><span class='op'>(</span><span class='va'>meta_file</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 1 x 1</span><span>
+#&gt;   POSITIONING_SYSTEM
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             
+#&gt; </span><span style='color: #555555;'>1</span><span> </span><span style='color: #555555;'>"</span><span>ARGOS   </span><span style='color: #555555;'>"</span><span>        </div><div class='input'><span class='fu'>argo_read_meta_launch_config_param</span><span class='op'>(</span><span class='va'>meta_file</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 7 x 2</span><span>
 #&gt;   LAUNCH_CONFIG_PARAMETER_NAME                           LAUNCH_CONFIG_PARAMETE…
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                                    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>

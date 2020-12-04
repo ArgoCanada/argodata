@@ -43,11 +43,14 @@ argo_nc_prof_read_levels <- function(nc, vars = NULL, meta = NULL) {
 
   # assign values
   meta_values <- c(
-    list(N_PROF = nc$dim$N_PROF$vals) %||% rep(NA_integer_, n_prof),
+    list(N_PROF = nc$dim$N_PROF$vals) %||% vctrs::vec_rep(NA_integer_, n_prof),
     argo_nc_values(nc, meta)
   )
   values <- c(
-    list(N_LEVELS = nc$dim$N_LEVELS$vals) %||% rep(NA_integer_, n),
+    list(
+      N_LEVELS = vctrs::vec_rep(nc$dim$N_LEVELS$vals, n_prof) %||%
+        vctrs::vec_rep(NA_integer_, n * n_prof)
+    ),
     argo_nc_values(nc, vars)
   )
 

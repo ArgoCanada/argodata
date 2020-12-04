@@ -53,25 +53,30 @@ Optionally, you can set `options(argodata.cache_dir = "my/argo/cache")` in your 
 
 ## Example
 
+The main workflow supported by argodata is:
+
+- Start with `argo_global_prof()`, `argo_global_traj()`, or `argo_global_meta()`
+- Use `argo_filter_radius()`, other `argo_filter_*()` functions, or `dplyr::filter()` to subset the index
+- Use `argo_prof_levels()`, `argo_traj_meas()`, or `argo_meta_missions()` to extract and row-bind tables for all files in the index
+
 ```{r example}
 library(tidyverse)
 library(argodata)
 
-# search for profiles that match some criteria
-(prof_ns_may_2020 <-  argo_global_prof() %>% 
+# filter profile index using search criteria
+prof_lab_may_2020 <- argo_global_prof() %>%
+  argo_filter_rect(50, 60, -60, -50) %>% 
   filter(
-    latitude >= 50, latitude <= 60,
-    longitude >= -60, longitude <= -50,
     lubridate::year(date) == 2020, 
     lubridate::month(date) == 5
-  ))
+  )
 
-# downloads, caches, and reads the NetCDF files
-(levels_ns_may_2020 <- prof_ns_may_2020 %>% 
-  argo_prof_levels() )
+# download, cache, and load NetCDF files
+levels_lab_may_2020 <- prof_lab_may_2020 %>% 
+  argo_prof_levels()
 
 # plot!
-levels_ns_may_2020 %>% 
+levels_lab_may_2020 %>% 
   filter(psal_qc == 1) %>% 
   ggplot(aes(x = psal, y = pres, col = temp)) +
   geom_point() +
@@ -79,15 +84,17 @@ levels_ns_may_2020 %>%
   theme_bw()
 ```
 
-In RStudio, you can use the [leaflet](https://rstudio.github.io/leaflet/) package to view locations of profiles interactively.
+See the reference for `argo_prof_levels()` for more ways to load Argo profiles from `argo_global_prof()`, `argo_global_bio_prof()` and `argo_global_synthetic_prof()`; see `argo_traj_meas()` for ways to load Argo trajectories from `argo_global_traj()` or `argo_global_bio_traj()`; see `argo_meta_missions()` for ways to load float meta from `argo_global_meta()`; and see `argo_info()` and `argo_vars()` for ways to load arbitrary metadata from Argo NetCDF files.
 
-```{r, eval=FALSE}
-library(leaflet)
+## Advanced
 
-prof_ns_may_2020 %>% 
-  leaflet() %>% 
-  addTiles() %>% 
-  addMarkers(lng = ~longitude, lat = ~latitude, label = ~file)
+The argodata package also exports the low-level readers it uses to produce tables from Argo NetCDF files. You can access these using `argo_read_*()` functions.
+
+```{r}
+prof_file <- system.file(
+  "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+  package = "argodata"
+)
+
+argo_read_prof_levels(prof_file)
 ```
-
-![Leaflet Widget](man/figures/README-leaflet.png)

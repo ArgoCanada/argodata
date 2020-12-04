@@ -47,57 +47,37 @@ updated occasionally; update these using `argo_update_data()`).
 
 ## Example
 
+The main workflow supported by argodata is:
+
+  - Start with `argo_global_prof()`, `argo_global_traj()`, or
+    `argo_global_meta()`
+  - Use `argo_filter_radius()`, other `argo_filter_*()` functions, or
+    `dplyr::filter()` to subset the index
+  - Use `argo_prof_levels()`, `argo_traj_meas()`, or
+    `argo_meta_missions()` to extract and row-bind tables for all files
+    in the index
+
+<!-- end list -->
+
 ``` r
 library(tidyverse)
 library(argodata)
 
-# search for profiles that match some criteria
-(prof_ns_may_2020 <-  argo_global_prof() %>% 
+# filter profile index using search criteria
+prof_lab_may_2020 <- argo_global_prof() %>%
+  argo_filter_rect(50, 60, -60, -50) %>% 
   filter(
-    latitude >= 50, latitude <= 60,
-    longitude >= -60, longitude <= -50,
     lubridate::year(date) == 2020, 
     lubridate::month(date) == 5
-  ))
-#> # A tibble: 55 x 8
-#>    file  date                latitude longitude ocean profiler_type institution
-#>    <chr> <dttm>                 <dbl>     <dbl> <chr>         <dbl> <chr>      
-#>  1 bodc~ 2020-05-05 16:48:52     56.9     -55.6 A               846 BO         
-#>  2 bodc~ 2020-05-15 14:51:15     56.3     -55.2 A               846 BO         
-#>  3 bodc~ 2020-05-25 16:41:59     55.6     -54.0 A               846 BO         
-#>  4 bodc~ 2020-05-02 16:13:53     59.5     -51.6 A               846 BO         
-#>  5 bodc~ 2020-05-12 17:51:58     59.7     -53.0 A               846 BO         
-#>  6 bodc~ 2020-05-22 16:12:39     59.1     -53.9 A               846 BO         
-#>  7 bodc~ 2020-05-04 01:44:23     59.4     -59.6 A               846 BO         
-#>  8 bodc~ 2020-05-13 21:17:51     58.8     -58.1 A               846 BO         
-#>  9 bodc~ 2020-05-23 16:30:46     58.2     -57.5 A               846 BO         
-#> 10 cori~ 2020-05-04 07:14:14     58.0     -52.8 A               846 IF         
-#> # ... with 45 more rows, and 1 more variable: date_update <dttm>
+  )
 
-# downloads, caches, and reads the NetCDF files
-(levels_ns_may_2020 <- prof_ns_may_2020 %>% 
-  argo_prof_levels() )
-#> # A tibble: 15,596 x 18
-#>    float cycle_number date                 pres  psal  temp pres_qc psal_qc
-#>    <chr>        <int> <dttm>              <dbl> <dbl> <dbl> <chr>   <chr>  
-#>  1 bodc~          213 2020-05-05 16:48:51  4.20  34.8  3.45 1       1      
-#>  2 bodc~          213 2020-05-05 16:48:51  9.80  34.8  3.45 1       1      
-#>  3 bodc~          213 2020-05-05 16:48:51 15.3   34.8  3.45 1       1      
-#>  4 bodc~          213 2020-05-05 16:48:51 20     34.8  3.45 1       1      
-#>  5 bodc~          213 2020-05-05 16:48:51 25     34.8  3.44 1       1      
-#>  6 bodc~          213 2020-05-05 16:48:51 29.8   34.8  3.44 1       1      
-#>  7 bodc~          213 2020-05-05 16:48:51 34.7   34.8  3.45 1       1      
-#>  8 bodc~          213 2020-05-05 16:48:51 40.2   34.8  3.44 1       1      
-#>  9 bodc~          213 2020-05-05 16:48:51 50.1   34.8  3.43 1       1      
-#> 10 bodc~          213 2020-05-05 16:48:51 59.4   34.8  3.43 1       1      
-#> # ... with 15,586 more rows, and 10 more variables: temp_qc <chr>,
-#> #   pres_adjusted <dbl>, psal_adjusted <dbl>, temp_adjusted <dbl>,
-#> #   pres_adjusted_qc <chr>, psal_adjusted_qc <chr>, temp_adjusted_qc <chr>,
-#> #   pres_adjusted_error <dbl>, psal_adjusted_error <dbl>,
-#> #   temp_adjusted_error <dbl>
+# download, cache, and load NetCDF files
+levels_lab_may_2020 <- prof_lab_may_2020 %>% 
+  argo_prof_levels()
+#> Extracting from 55 files
 
 # plot!
-levels_ns_may_2020 %>% 
+levels_lab_may_2020 %>% 
   filter(psal_qc == 1) %>% 
   ggplot(aes(x = psal, y = pres, col = temp)) +
   geom_point() +
@@ -107,17 +87,46 @@ levels_ns_may_2020 %>%
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
-In RStudio, you can use the
-[leaflet](https://rstudio.github.io/leaflet/) package to view locations
-of profiles interactively.
+See the reference for `argo_prof_levels()` for more ways to load Argo
+profiles from `argo_global_prof()`, `argo_global_bio_prof()` and
+`argo_global_synthetic_prof()`; see `argo_traj_meas()` for ways to load
+Argo trajectories from `argo_global_traj()` or `argo_global_bio_traj()`;
+see `argo_meta_missions()` for ways to load float meta from
+`argo_global_meta()`; and see `argo_info()` and `argo_vars()` for ways
+to load arbitrary metadata from Argo NetCDF files.
+
+## Advanced
+
+The argodata package also exports the low-level readers it uses to
+produce tables from Argo NetCDF files. You can access these using
+`argo_read_*()` functions.
 
 ``` r
-library(leaflet)
+prof_file <- system.file(
+  "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+  package = "argodata"
+)
 
-prof_ns_may_2020 %>% 
-  leaflet() %>% 
-  addTiles() %>% 
-  addMarkers(lng = ~longitude, lat = ~latitude, label = ~file)
+argo_read_prof_levels(prof_file)
+#> # A tibble: 70 x 30
+#>    N_PROF CYCLE_NUMBER DIRECTION DATA_MODE   JULD JULD_QC JULD_LOCATION LATITUDE
+#>     <int>        <int> <chr>     <chr>      <dbl> <chr>           <dbl>    <dbl>
+#>  1      1            0 A         D         19582. 1              19582.     23.2
+#>  2      1            0 A         D         19582. 1              19582.     23.2
+#>  3      1            0 A         D         19582. 1              19582.     23.2
+#>  4      1            0 A         D         19582. 1              19582.     23.2
+#>  5      1            0 A         D         19582. 1              19582.     23.2
+#>  6      1            0 A         D         19582. 1              19582.     23.2
+#>  7      1            0 A         D         19582. 1              19582.     23.2
+#>  8      1            0 A         D         19582. 1              19582.     23.2
+#>  9      1            0 A         D         19582. 1              19582.     23.2
+#> 10      1            0 A         D         19582. 1              19582.     23.2
+#> # ... with 60 more rows, and 22 more variables: LONGITUDE <dbl>,
+#> #   POSITION_QC <chr>, PROFILE_PRES_QC <chr>, PROFILE_TEMP_QC <chr>,
+#> #   PROFILE_PSAL_QC <chr>, CONFIG_MISSION_NUMBER <int>, N_LEVELS <int>,
+#> #   PRES <dbl>, PRES_QC <chr>, PRES_ADJUSTED <dbl>, PRES_ADJUSTED_QC <chr>,
+#> #   PRES_ADJUSTED_ERROR <dbl>, TEMP <dbl>, TEMP_QC <chr>, TEMP_ADJUSTED <dbl>,
+#> #   TEMP_ADJUSTED_QC <chr>, TEMP_ADJUSTED_ERROR <dbl>, PSAL <dbl>,
+#> #   PSAL_QC <chr>, PSAL_ADJUSTED <dbl>, PSAL_ADJUSTED_QC <chr>,
+#> #   PSAL_ADJUSTED_ERROR <dbl>
 ```
-
-![Leaflet Widget](man/figures/README-leaflet.png)

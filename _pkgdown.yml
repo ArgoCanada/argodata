@@ -14,10 +14,14 @@ reference:
   - argo_info
   - argo_vars
 
+- title: Transform Argo tables
+  contents:
+  - argo_qc_censor_if
+  - argo_unnest_history_qctest
+
 - title: Argo reference tables
   contents:
   - starts_with("argo_reference")
-  - argo_unnest_history_qctest
 
 - title: Global options
   contents:

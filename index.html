@@ -92,72 +92,72 @@
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p>The main workflow supported by argodata is:</p>
+<ul>
+<li>Start with <code><a href="reference/argo_global_meta.html">argo_global_prof()</a></code>, <code><a href="reference/argo_global_meta.html">argo_global_traj()</a></code>, or <code><a href="reference/argo_global_meta.html">argo_global_meta()</a></code>
+</li>
+<li>Use <code><a href="reference/argo_filter_radius.html">argo_filter_radius()</a></code>, other <code>argo_filter_*()</code> functions, or <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code> to subset the index</li>
+<li>Use <code><a href="reference/argo_prof_levels.html">argo_prof_levels()</a></code>, <code><a href="reference/argo_traj_meas.html">argo_traj_meas()</a></code>, or <code><a href="reference/argo_meta_config_param.html">argo_meta_missions()</a></code> to extract and row-bind tables for all files in the index</li>
+</ul>
+<!-- end list --><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ArgoCanada/argodata">argodata</a></span><span class="op">)</span>
 
-<span class="co"># search for profiles that match some criteria</span>
-<span class="op">(</span><span class="va">prof_ns_may_2020</span> <span class="op">&lt;-</span>  <span class="fu"><a href="reference/argo_global_meta.html">argo_global_prof</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="co"># filter profile index using search criteria</span>
+<span class="va">prof_lab_may_2020</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/argo_global_meta.html">argo_global_prof</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/argo_filter_radius.html">argo_filter_rect</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">60</span>, <span class="op">-</span><span class="fl">60</span>, <span class="op">-</span><span class="fl">50</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span>
-    <span class="va">latitude</span> <span class="op">&gt;=</span> <span class="fl">50</span>, <span class="va">latitude</span> <span class="op">&lt;=</span> <span class="fl">60</span>,
-    <span class="va">longitude</span> <span class="op">&gt;=</span> <span class="op">-</span><span class="fl">60</span>, <span class="va">longitude</span> <span class="op">&lt;=</span> <span class="op">-</span><span class="fl">50</span>,
     <span class="fu">lubridate</span><span class="fu">::</span><span class="fu">year</span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2020</span>, 
     <span class="fu">lubridate</span><span class="fu">::</span><span class="fu">month</span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">==</span> <span class="fl">5</span>
-  <span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 55 x 8</span>
-<span class="co">#&gt;    file  date                latitude longitude ocean profiler_type institution</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;dttm&gt;                 &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;      </span>
-<span class="co">#&gt;  1 bodc~ 2020-05-05 16:48:52     56.9     -55.6 A               846 BO         </span>
-<span class="co">#&gt;  2 bodc~ 2020-05-15 14:51:15     56.3     -55.2 A               846 BO         </span>
-<span class="co">#&gt;  3 bodc~ 2020-05-25 16:41:59     55.6     -54.0 A               846 BO         </span>
-<span class="co">#&gt;  4 bodc~ 2020-05-02 16:13:53     59.5     -51.6 A               846 BO         </span>
-<span class="co">#&gt;  5 bodc~ 2020-05-12 17:51:58     59.7     -53.0 A               846 BO         </span>
-<span class="co">#&gt;  6 bodc~ 2020-05-22 16:12:39     59.1     -53.9 A               846 BO         </span>
-<span class="co">#&gt;  7 bodc~ 2020-05-04 01:44:23     59.4     -59.6 A               846 BO         </span>
-<span class="co">#&gt;  8 bodc~ 2020-05-13 21:17:51     58.8     -58.1 A               846 BO         </span>
-<span class="co">#&gt;  9 bodc~ 2020-05-23 16:30:46     58.2     -57.5 A               846 BO         </span>
-<span class="co">#&gt; 10 cori~ 2020-05-04 07:14:14     58.0     -52.8 A               846 IF         </span>
-<span class="co">#&gt; # ... with 45 more rows, and 1 more variable: date_update &lt;dttm&gt;</span>
+  <span class="op">)</span>
 
-<span class="co"># downloads, caches, and reads the NetCDF files</span>
-<span class="op">(</span><span class="va">levels_ns_may_2020</span> <span class="op">&lt;-</span> <span class="va">prof_ns_may_2020</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/argo_prof_levels.html">argo_prof_levels</a></span><span class="op">(</span><span class="op">)</span> <span class="op">)</span>
-<span class="co">#&gt; # A tibble: 15,596 x 18</span>
-<span class="co">#&gt;    float cycle_number date                 pres  psal  temp pres_qc psal_qc</span>
-<span class="co">#&gt;    &lt;chr&gt;        &lt;int&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;  </span>
-<span class="co">#&gt;  1 bodc~          213 2020-05-05 16:48:51  4.20  34.8  3.45 1       1      </span>
-<span class="co">#&gt;  2 bodc~          213 2020-05-05 16:48:51  9.80  34.8  3.45 1       1      </span>
-<span class="co">#&gt;  3 bodc~          213 2020-05-05 16:48:51 15.3   34.8  3.45 1       1      </span>
-<span class="co">#&gt;  4 bodc~          213 2020-05-05 16:48:51 20     34.8  3.45 1       1      </span>
-<span class="co">#&gt;  5 bodc~          213 2020-05-05 16:48:51 25     34.8  3.44 1       1      </span>
-<span class="co">#&gt;  6 bodc~          213 2020-05-05 16:48:51 29.8   34.8  3.44 1       1      </span>
-<span class="co">#&gt;  7 bodc~          213 2020-05-05 16:48:51 34.7   34.8  3.45 1       1      </span>
-<span class="co">#&gt;  8 bodc~          213 2020-05-05 16:48:51 40.2   34.8  3.44 1       1      </span>
-<span class="co">#&gt;  9 bodc~          213 2020-05-05 16:48:51 50.1   34.8  3.43 1       1      </span>
-<span class="co">#&gt; 10 bodc~          213 2020-05-05 16:48:51 59.4   34.8  3.43 1       1      </span>
-<span class="co">#&gt; # ... with 15,586 more rows, and 10 more variables: temp_qc &lt;chr&gt;,</span>
-<span class="co">#&gt; #   pres_adjusted &lt;dbl&gt;, psal_adjusted &lt;dbl&gt;, temp_adjusted &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   pres_adjusted_qc &lt;chr&gt;, psal_adjusted_qc &lt;chr&gt;, temp_adjusted_qc &lt;chr&gt;,</span>
-<span class="co">#&gt; #   pres_adjusted_error &lt;dbl&gt;, psal_adjusted_error &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   temp_adjusted_error &lt;dbl&gt;</span>
+<span class="co"># download, cache, and load NetCDF files</span>
+<span class="va">levels_lab_may_2020</span> <span class="op">&lt;-</span> <span class="va">prof_lab_may_2020</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="reference/argo_prof_levels.html">argo_prof_levels</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Extracting from 55 files</span>
 
 <span class="co"># plot!</span>
-<span class="va">levels_ns_may_2020</span> <span class="op">%&gt;%</span> 
+<span class="va">levels_lab_may_2020</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">psal_qc</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">psal</span>, y <span class="op">=</span> <span class="va">pres</span>, col <span class="op">=</span> <span class="va">temp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_y_reverse</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-example-1.png" width="100%"></p>
-<p>In RStudio, you can use the <a href="https://rstudio.github.io/leaflet/">leaflet</a> package to view locations of profiles interactively.</p>
+<p>See the reference for <code><a href="reference/argo_prof_levels.html">argo_prof_levels()</a></code> for more ways to load Argo profiles from <code><a href="reference/argo_global_meta.html">argo_global_prof()</a></code>, <code><a href="reference/argo_global_meta.html">argo_global_bio_prof()</a></code> and <code><a href="reference/argo_global_meta.html">argo_global_synthetic_prof()</a></code>; see <code><a href="reference/argo_traj_meas.html">argo_traj_meas()</a></code> for ways to load Argo trajectories from <code><a href="reference/argo_global_meta.html">argo_global_traj()</a></code> or <code><a href="reference/argo_global_meta.html">argo_global_bio_traj()</a></code>; see <code><a href="reference/argo_meta_config_param.html">argo_meta_missions()</a></code> for ways to load float meta from <code><a href="reference/argo_global_meta.html">argo_global_meta()</a></code>; and see <code><a href="reference/argo_info.html">argo_info()</a></code> and <code><a href="reference/argo_vars.html">argo_vars()</a></code> for ways to load arbitrary metadata from Argo NetCDF files.</p>
+</div>
+<div id="advanced" class="section level2">
+<h2 class="hasAnchor">
+<a href="#advanced" class="anchor"></a>Advanced</h2>
+<p>The argodata package also exports the low-level readers it uses to produce tables from Argo NetCDF files. You can access these using <code>argo_read_*()</code> functions.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">leaflet</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">prof_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span>
+  <span class="st">"cache-test/dac/csio/2900313/profiles/D2900313_000.nc"</span>,
+  package <span class="op">=</span> <span class="st">"argodata"</span>
+<span class="op">)</span>
 
-<span class="va">prof_ns_may_2020</span> <span class="op">%&gt;%</span> 
-  <span class="fu">leaflet</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">addTiles</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">addMarkers</span><span class="op">(</span>lng <span class="op">=</span> <span class="op">~</span><span class="va">longitude</span>, lat <span class="op">=</span> <span class="op">~</span><span class="va">latitude</span>, label <span class="op">=</span> <span class="op">~</span><span class="va">file</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-leaflet.png" alt="Leaflet Widget"></p>
+<span class="fu"><a href="reference/argo_read_prof_levels.html">argo_read_prof_levels</a></span><span class="op">(</span><span class="va">prof_file</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 70 x 30</span>
+<span class="co">#&gt;    N_PROF CYCLE_NUMBER DIRECTION DATA_MODE   JULD JULD_QC JULD_LOCATION LATITUDE</span>
+<span class="co">#&gt;     &lt;int&gt;        &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt;  1      1            0 A         D         19582. 1              19582.     23.2</span>
+<span class="co">#&gt;  2      1            0 A         D         19582. 1              19582.     23.2</span>
+<span class="co">#&gt;  3      1            0 A         D         19582. 1              19582.     23.2</span>
+<span class="co">#&gt;  4      1            0 A         D         19582. 1              19582.     23.2</span>
+<span class="co">#&gt;  5      1            0 A         D         19582. 1              19582.     23.2</span>
+<span class="co">#&gt;  6      1            0 A         D         19582. 1              19582.     23.2</span>
+<span class="co">#&gt;  7      1            0 A         D         19582. 1              19582.     23.2</span>
+<span class="co">#&gt;  8      1            0 A         D         19582. 1              19582.     23.2</span>
+<span class="co">#&gt;  9      1            0 A         D         19582. 1              19582.     23.2</span>
+<span class="co">#&gt; 10      1            0 A         D         19582. 1              19582.     23.2</span>
+<span class="co">#&gt; # ... with 60 more rows, and 22 more variables: LONGITUDE &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   POSITION_QC &lt;chr&gt;, PROFILE_PRES_QC &lt;chr&gt;, PROFILE_TEMP_QC &lt;chr&gt;,</span>
+<span class="co">#&gt; #   PROFILE_PSAL_QC &lt;chr&gt;, CONFIG_MISSION_NUMBER &lt;int&gt;, N_LEVELS &lt;int&gt;,</span>
+<span class="co">#&gt; #   PRES &lt;dbl&gt;, PRES_QC &lt;chr&gt;, PRES_ADJUSTED &lt;dbl&gt;, PRES_ADJUSTED_QC &lt;chr&gt;,</span>
+<span class="co">#&gt; #   PRES_ADJUSTED_ERROR &lt;dbl&gt;, TEMP &lt;dbl&gt;, TEMP_QC &lt;chr&gt;, TEMP_ADJUSTED &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   TEMP_ADJUSTED_QC &lt;chr&gt;, TEMP_ADJUSTED_ERROR &lt;dbl&gt;, PSAL &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   PSAL_QC &lt;chr&gt;, PSAL_ADJUSTED &lt;dbl&gt;, PSAL_ADJUSTED_QC &lt;chr&gt;,</span>
+<span class="co">#&gt; #   PSAL_ADJUSTED_ERROR &lt;dbl&gt;</span></code></pre></div>
 </div>
 </div>
   </div>

@@ -10,7 +10,7 @@ test_that("argo_traj_meas() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(traj), c("file", "cycle_number", "longitude"))
+    expect_identical(names(traj), c("file", "n_measurement", "cycle_number", "longitude"))
   })
 })
 
@@ -25,7 +25,7 @@ test_that("argo_traj_cycle() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(traj), c("file", "date_descent_start"))
+    expect_identical(names(traj), c("file", "n_cycle", "date_descent_start"))
   })
 })
 
@@ -40,7 +40,10 @@ test_that("argo_traj_history() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(traj), c("file", "history_index_dimension", "history_software"))
+    expect_identical(
+      names(traj),
+      c("file", "n_history", "history_index_dimension", "history_software")
+    )
   })
 })
 

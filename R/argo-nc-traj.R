@@ -34,7 +34,10 @@ argo_nc_traj_read_meas <- function(nc, vars = NULL) {
     abort(glue("'{ nc$filename }' is missing dimension 'N_MEASUREMENT'"))
   }
 
-  values <- argo_nc_values(nc, vars)
+  values <- c(
+    list(N_MEASUREMENT = nc$dim$N_MEASUREMENT$vals %||% rep(NA_integer_, n)),
+    argo_nc_values(nc, vars)
+  )
   values <- argo_string_to_chars_tbl(values)
 
   tibble::new_tibble(values, nrow = n)
@@ -51,7 +54,10 @@ argo_nc_traj_read_cycle <- function(nc, vars = NULL) {
     abort(glue("'{ nc$filename }' is missing dimension 'N_CYCLE'"))
   }
 
-  values <- argo_nc_values(nc, vars)
+  values <- c(
+    list(N_CYCLE = nc$dim$N_CYCLE$vals %||% rep(NA_integer_, n)),
+    argo_nc_values(nc, vars)
+  )
   values <- argo_string_to_chars_tbl(values)
 
   tibble::new_tibble(values, nrow = n)
@@ -73,7 +79,10 @@ argo_nc_traj_read_history <- function(nc, vars = NULL) {
 
   # regular values don't have a string dimension, so need
   # argo_string_to_chars_tbl()
-  values <- argo_nc_values(nc, intersect(vars, nc_vars_reg))
+  values <- c(
+    list(N_HISTORY = nc$dim$N_HISTORY$vals %||% rep(NA_integer_, n)),
+    argo_nc_values(nc, intersect(vars, nc_vars_reg))
+  )
   values <- argo_string_to_chars_tbl(values)
 
   # string values are fixed-width, so need whitespace trimmed

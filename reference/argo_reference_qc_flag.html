@@ -153,21 +153,21 @@ for information about specific tests.</p>
       by <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"doxy_qc"</span> <span class='op'>=</span> <span class='st'>"qc_flag"</span><span class='op'>)</span>
     <span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 101 x 9</span><span>
-#&gt;    file  cycle_number date                 pres  doxy doxy_qc qc_description
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         
-#&gt; </span><span style='color: #555555;'> 1</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 0.200  188. 3       Bad data that…
-#&gt; </span><span style='color: #555555;'> 2</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 0.900  188. 3       Bad data that…
-#&gt; </span><span style='color: #555555;'> 3</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 1.90   188. 3       Bad data that…
-#&gt; </span><span style='color: #555555;'> 4</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 2.90   190. 3       Bad data that…
-#&gt; </span><span style='color: #555555;'> 5</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 4      190. 3       Bad data that…
-#&gt; </span><span style='color: #555555;'> 6</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 5      190. 3       Bad data that…
-#&gt; </span><span style='color: #555555;'> 7</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 6      190. 3       Bad data that…
-#&gt; </span><span style='color: #555555;'> 8</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 7.10   191. 3       Bad data that…
-#&gt; </span><span style='color: #555555;'> 9</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 8.20   191. 3       Bad data that…
-#&gt; </span><span style='color: #555555;'>10</span><span> csio…            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span> 9.30   191. 3       Bad data that…
-#&gt; </span><span style='color: #555555;'># … with 91 more rows, and 2 more variables: qc_comment_realtime </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   qc_comment_delayed </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 101 x 11</span><span>
+#&gt;    file  n_prof cycle_number date                n_levels  pres  doxy doxy_qc
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  
+#&gt; </span><span style='color: #555555;'> 1</span><span> csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>        1 0.200  188. 3      
+#&gt; </span><span style='color: #555555;'> 2</span><span> csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>        2 0.900  188. 3      
+#&gt; </span><span style='color: #555555;'> 3</span><span> csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>        3 1.90   188. 3      
+#&gt; </span><span style='color: #555555;'> 4</span><span> csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>        4 2.90   190. 3      
+#&gt; </span><span style='color: #555555;'> 5</span><span> csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>        5 4      190. 3      
+#&gt; </span><span style='color: #555555;'> 6</span><span> csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>        6 5      190. 3      
+#&gt; </span><span style='color: #555555;'> 7</span><span> csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>        7 6      190. 3      
+#&gt; </span><span style='color: #555555;'> 8</span><span> csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>        8 7.10   191. 3      
+#&gt; </span><span style='color: #555555;'> 9</span><span> csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>        9 8.20   191. 3      
+#&gt; </span><span style='color: #555555;'>10</span><span> csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>       10 9.30   191. 3      
+#&gt; </span><span style='color: #555555;'># … with 91 more rows, and 3 more variables: qc_description </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   qc_comment_realtime </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, qc_comment_delayed </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
 <span class='va'>argo_reference_qc_flag</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 10 x 4</span><span>
 #&gt;    qc_flag qc_description     qc_comment_realtime       qc_comment_delayed      

@@ -42,8 +42,14 @@ argo_nc_prof_read_levels <- function(nc, vars = NULL, meta = NULL) {
   }
 
   # assign values
-  meta_values <- argo_nc_values(nc, meta)
-  values <- argo_nc_values(nc, vars)
+  meta_values <- c(
+    list(N_PROF = nc$dim$N_PROF$vals) %||% rep(NA_integer_, n_prof),
+    argo_nc_values(nc, meta)
+  )
+  values <- c(
+    list(N_LEVELS = nc$dim$N_LEVELS$vals) %||% rep(NA_integer_, n),
+    argo_nc_values(nc, vars)
+  )
 
   # expand strings to characters
   meta_values <- argo_string_to_chars_tbl(meta_values)
@@ -66,7 +72,10 @@ argo_nc_prof_read_prof <- function(nc, vars = NULL) {
     abort(glue("'{ nc$filename }' is missing dimension 'N_PROF'"))
   }
 
-  values <- argo_nc_values(nc, vars)
+  values <- c(
+    list(N_PROF = nc$dim$N_PROF$vals) %||% rep(NA_integer_, n),
+    argo_nc_values(nc, vars)
+  )
   values <- argo_string_to_chars_tbl(values)
 
   tibble::new_tibble(values, nrow = n)
@@ -99,8 +108,14 @@ argo_nc_prof_read_history <- function(nc, vars = NULL, meta = NULL) {
   }
 
   # assign values
-  meta_values <- argo_nc_values(nc, meta)
-  values <- argo_nc_values(nc, intersect(vars, nc_vars_reg))
+  meta_values <- c(
+    list(N_PROF = nc$dim$N_PROF$vals) %||% rep(NA_integer_, n_prof),
+    argo_nc_values(nc, meta)
+  )
+  values <- c(
+    list(N_HISTORY = nc$dim$N_HISTORY$vals) %||% rep(NA_integer_, n),
+    argo_nc_values(nc, intersect(vars, nc_vars_reg))
+  )
   values_string <- argo_nc_values(nc, intersect(vars, nc_vars_string))
 
   # expand strings to characters

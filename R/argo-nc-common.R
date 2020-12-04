@@ -28,7 +28,9 @@ argo_read_many <- function(assert_fun, read_fun, ...,
 }
 
 with_argo_nc_file <- function(file, fun, ...) {
-  nc <- ncdf4::nc_open(file, suppress_dimvals = TRUE)
+  # the dimension values are used in almost every function and
+  # suppressing them saves little time
+  nc <- ncdf4::nc_open(file)
   on.exit(ncdf4::nc_close(nc))
   fun(nc, ...)
 }

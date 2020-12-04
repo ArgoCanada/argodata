@@ -11,7 +11,10 @@ test_that("argo_prof_levels() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(prof), c("file", "cycle_number", "date", "pres", "temp"))
+    expect_identical(
+      names(prof),
+      c("file", "n_prof", "cycle_number", "date", "n_levels", "pres", "temp")
+    )
   })
 })
 
@@ -28,7 +31,7 @@ test_that("argo_prof_prof() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(prof), c("file", "longitude", "latitude"))
+    expect_identical(names(prof), c("file", "n_prof", "longitude", "latitude"))
   })
 })
 
@@ -44,7 +47,10 @@ test_that("argo_prof_history() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(prof), c("file", "cycle_number", "date", "history_qctest"))
+    expect_identical(
+      names(prof),
+      c("file", "n_prof", "cycle_number", "date", "n_history", "history_qctest")
+    )
   })
 })
 

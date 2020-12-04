@@ -12,10 +12,10 @@ test_that("argo_nc_prof_*_levels() works for single-profile nc files", {
   expect_true(all(argo_nc_prof_vars_prof(nc) %in% names(nc_all)))
 
   nc_no_meta <- argo_nc_prof_read_levels(nc, vars = c("TEMP", "PRES", "EMPTY"), meta = character(0))
-  expect_identical(names(nc_no_meta), c("TEMP", "PRES"))
+  expect_identical(names(nc_no_meta), c("N_PROF", "N_LEVELS", "TEMP", "PRES"))
 
   nc_no_vals <- argo_nc_prof_read_levels(nc, vars = character(0), meta = c("CYCLE_NUMBER", "EMPTY"))
-  expect_identical(names(nc_no_vals), c("CYCLE_NUMBER"))
+  expect_identical(names(nc_no_vals), c("N_PROF", "CYCLE_NUMBER", "N_LEVELS"))
 
   ncdf4::nc_close(nc)
 })
@@ -56,7 +56,7 @@ test_that("argo_nc_prof_*_prof() works for single-profile nc files", {
   expect_true(all(argo_nc_prof_vars_prof(nc) %in% names(nc_all)))
 
   nc_no_vals <- argo_nc_prof_read_levels(nc, vars = character(0), meta = c("CYCLE_NUMBER", "EMPTY"))
-  expect_identical(names(nc_no_vals), c("CYCLE_NUMBER"))
+  expect_identical(names(nc_no_vals), c("N_PROF", "CYCLE_NUMBER", "N_LEVELS"))
 
   ncdf4::nc_close(nc)
 })
@@ -103,10 +103,13 @@ test_that("argo_nc_prof_*_history() works for single-profile nc files", {
     vars = c("HISTORY_START_PRES", "HISTORY_QCTEST", "EMPTY"),
     meta = character(0)
   )
-  expect_identical(names(nc_no_meta), c("HISTORY_START_PRES", "HISTORY_QCTEST"))
+  expect_identical(
+    names(nc_no_meta),
+    c("N_PROF", "N_HISTORY", "HISTORY_START_PRES", "HISTORY_QCTEST")
+  )
 
   nc_no_vals <- argo_nc_prof_read_history(nc, vars = character(0), meta = c("CYCLE_NUMBER", "EMPTY"))
-  expect_identical(names(nc_no_vals), c("CYCLE_NUMBER"))
+  expect_identical(names(nc_no_vals), c("N_PROF", "CYCLE_NUMBER", "N_HISTORY"))
 
   ncdf4::nc_close(nc)
 })

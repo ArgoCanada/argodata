@@ -40,7 +40,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -51,7 +51,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ArgoCanada/argodata/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -94,7 +94,7 @@
 <li>Start with <code><a href="reference/argo_global_meta.html">argo_global_prof()</a></code>, <code><a href="reference/argo_global_meta.html">argo_global_traj()</a></code>, or <code><a href="reference/argo_global_meta.html">argo_global_meta()</a></code>
 </li>
 <li>Use <code><a href="reference/argo_filter_radius.html">argo_filter_radius()</a></code>, other <code>argo_filter_*()</code> functions, or <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code> to subset the index</li>
-<li>Use <code><a href="reference/argo_prof_levels.html">argo_prof_levels()</a></code>, <code><a href="reference/argo_traj_meas.html">argo_traj_meas()</a></code>, or <code><a href="reference/argo_meta_config_param.html">argo_meta_missions()</a></code> to extract and row-bind tables for all files in the index</li>
+<li>Use <code><a href="reference/argo_prof_levels.html">argo_prof_levels()</a></code>, <code><a href="reference/argo_traj_measurement.html">argo_traj_measurement()</a></code>, or <code><a href="reference/argo_meta_config_param.html">argo_meta_missions()</a></code> to extract and row-bind tables for all files in the index</li>
 </ul>
 <!-- end list --><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span>
@@ -121,7 +121,7 @@
   <span class="fu">scale_y_reverse</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-example-1.png" width="100%"></p>
-<p>See the reference for <code><a href="reference/argo_prof_levels.html">argo_prof_levels()</a></code> for more ways to load Argo profiles from <code><a href="reference/argo_global_meta.html">argo_global_prof()</a></code>, <code><a href="reference/argo_global_meta.html">argo_global_bio_prof()</a></code> and <code><a href="reference/argo_global_meta.html">argo_global_synthetic_prof()</a></code>; see <code><a href="reference/argo_traj_meas.html">argo_traj_meas()</a></code> for ways to load Argo trajectories from <code><a href="reference/argo_global_meta.html">argo_global_traj()</a></code> or <code><a href="reference/argo_global_meta.html">argo_global_bio_traj()</a></code>; see <code><a href="reference/argo_meta_config_param.html">argo_meta_missions()</a></code> for ways to load float meta from <code><a href="reference/argo_global_meta.html">argo_global_meta()</a></code>; and see <code><a href="reference/argo_info.html">argo_info()</a></code> and <code><a href="reference/argo_vars.html">argo_vars()</a></code> for ways to load arbitrary metadata from Argo NetCDF files.</p>
+<p>See the reference for <code><a href="reference/argo_prof_levels.html">argo_prof_levels()</a></code> for more ways to load Argo profiles from <code><a href="reference/argo_global_meta.html">argo_global_prof()</a></code>, <code><a href="reference/argo_global_meta.html">argo_global_bio_prof()</a></code> and <code><a href="reference/argo_global_meta.html">argo_global_synthetic_prof()</a></code>; see <code><a href="reference/argo_traj_measurement.html">argo_traj_measurement()</a></code> for ways to load Argo trajectories from <code><a href="reference/argo_global_meta.html">argo_global_traj()</a></code> or <code><a href="reference/argo_global_meta.html">argo_global_bio_traj()</a></code>; see <code><a href="reference/argo_meta_config_param.html">argo_meta_missions()</a></code> for ways to load float meta from <code><a href="reference/argo_global_meta.html">argo_global_meta()</a></code>; and see <code><a href="reference/argo_info.html">argo_info()</a></code> and <code><a href="reference/argo_vars.html">argo_vars()</a></code> for ways to load arbitrary metadata from Argo NetCDF files.</p>
 </div>
 <div id="advanced" class="section level2">
 <h2 class="hasAnchor">

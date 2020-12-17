@@ -40,7 +40,8 @@
 
 
 <meta property="og:title" content="Read Argo float meta — argo_read_meta_config_param" />
-<meta property="og:description" content="Read Argo float meta" />
+<meta property="og:description" content="Read Argo float meta
+Read Argo float technical parameters" />
 
 
 
@@ -109,12 +110,13 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Read Argo float meta</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ArgoCanada/argodata/blob/master/R/argo-meta.R'><code>R/argo-meta.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ArgoCanada/argodata/blob/master/R/argo-meta.R'><code>R/argo-meta.R</code></a>, <a href='https://github.com/ArgoCanada/argodata/blob/master/R/argo-tech.R'><code>R/argo-tech.R</code></a></small>
     <div class="hidden name"><code>argo_read_meta.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Read Argo float meta</p>
+<p>Read Argo float technical parameters</p>
     </div>
 
     <pre class="usage"><span class='fu'>argo_read_meta_config_param</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
@@ -129,7 +131,9 @@
 
 <span class='fu'>argo_read_meta_sensor</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>argo_read_meta_param</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+<span class='fu'>argo_read_meta_param</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+
+<span class='fu'>argo_read_tech_tech_param</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,6 +155,7 @@ substituted for "juld").</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code></p>
+<p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>meta_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
@@ -205,6 +210,26 @@ substituted for "juld").</p></td>
 #&gt; </span><span style='color: #555555;'>3</span><span> </span><span style='color: #555555;'>"</span><span>PRES   … </span><span style='color: #555555;'>"</span><span>CTD_PRES      … </span><span style='color: #555555;'>"</span><span>dbar         … </span><span style='color: #555555;'>"</span><span>1.5%          … </span><span style='color: #555555;'>"</span><span>0.1 dbar      …
 #&gt; </span><span style='color: #555555;'># … with 3 more variables: PREDEPLOYMENT_CALIB_EQUATION </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   PREDEPLOYMENT_CALIB_COEFFICIENT </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, PREDEPLOYMENT_CALIB_COMMENT </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
+<span class='va'>tech_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>
+  <span class='st'>"cache-test/dac/csio/2900313/2900313_tech.nc"</span>,
+  package <span class='op'>=</span> <span class='st'>"argodata"</span>
+<span class='op'>)</span>
+
+<span class='fu'>argo_read_tech_tech_param</span><span class='op'>(</span><span class='va'>tech_file</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 96 x 2</span><span>
+#&gt;    TECHNICAL_PARAMETER_NAME               TECHNICAL_PARAMETER_VALUE             
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                 
+#&gt; </span><span style='color: #555555;'> 1</span><span> </span><span style='color: #555555;'>"</span><span>NUMBER_ValveActionsAtSurfaceDuringDe… </span><span style='color: #555555;'>"</span><span>150                                 …
+#&gt; </span><span style='color: #555555;'> 2</span><span> </span><span style='color: #555555;'>"</span><span>CLOCK_InitialStabilizationDuringDesc… </span><span style='color: #555555;'>"</span><span> 0.2                                …
+#&gt; </span><span style='color: #555555;'> 3</span><span> </span><span style='color: #555555;'>"</span><span>NUMBER_PumpActionsDuringDescentToPar… </span><span style='color: #555555;'>"</span><span>0                                   …
+#&gt; </span><span style='color: #555555;'> 4</span><span> </span><span style='color: #555555;'>"</span><span>NUMBER_RepositionsDuringPark_COUNT  … </span><span style='color: #555555;'>"</span><span>0                                   …
+#&gt; </span><span style='color: #555555;'> 5</span><span> </span><span style='color: #555555;'>"</span><span>NUMBER_PumpActionsDuringAscentToSurf… </span><span style='color: #555555;'>"</span><span>14                                  …
+#&gt; </span><span style='color: #555555;'> 6</span><span> </span><span style='color: #555555;'>"</span><span>NUMBER_PumpActionsAtSurface_COUNT   … </span><span style='color: #555555;'>"</span><span>2                                   …
+#&gt; </span><span style='color: #555555;'> 7</span><span> </span><span style='color: #555555;'>"</span><span>PRES_SurfaceOffsetCorrectedNotResetN… </span><span style='color: #555555;'>"</span><span>1.025                               …
+#&gt; </span><span style='color: #555555;'> 8</span><span> </span><span style='color: #555555;'>"</span><span>PRESSURE_InternalVacuumAtSurface_mba… </span><span style='color: #555555;'>"</span><span>740.0                               …
+#&gt; </span><span style='color: #555555;'> 9</span><span> </span><span style='color: #555555;'>"</span><span>NUMBER_AscentArgosMessages_COUNT    … </span><span style='color: #555555;'>"</span><span>14                                  …
+#&gt; </span><span style='color: #555555;'>10</span><span> </span><span style='color: #555555;'>"</span><span>NUMBER_AscentSamples_COUNT          … </span><span style='color: #555555;'>"</span><span>71                                  …
+#&gt; </span><span style='color: #555555;'># … with 86 more rows</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

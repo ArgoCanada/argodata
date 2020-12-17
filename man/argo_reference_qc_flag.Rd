@@ -13,7 +13,7 @@ argo_reference_qc_flag
 \description{
 This table contains the quality control descriptions of the one-character
 flags that appear in variables that end with \verb{_qc}. These variables appear
-in \code{\link[=argo_prof_levels]{argo_prof_levels()}}, \code{\link[=argo_prof_prof]{argo_prof_prof()}}, and \code{\link[=argo_traj_meas]{argo_traj_meas()}}. See
+in \code{\link[=argo_prof_levels]{argo_prof_levels()}}, \code{\link[=argo_prof_prof]{argo_prof_prof()}}, and \code{\link[=argo_traj_measurement]{argo_traj_measurement()}}. See
 also \link{argo_reference_history_qctest}
 for information about specific tests.
 }

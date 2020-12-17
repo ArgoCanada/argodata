@@ -2,7 +2,7 @@
 #' Load Argo trajectories
 #'
 #' Trajectory files contain (1) location measurements and (2)
-#' detailed information about each cycle. Use [argo_traj_meas()]
+#' detailed information about each cycle. Use [argo_traj_measurement()]
 #' output containing one row per location measurement; use
 #' [argo_traj_cycle()] for output containing one row per
 #' cycle. Finally, use [argo_traj_history()] to view quality
@@ -165,7 +165,7 @@
 #'
 #' @examples
 #' with_argo_example_cache({
-#'   argo_traj_meas("dac/csio/2900313/2900313_Rtraj.nc")
+#'   argo_traj_measurement("dac/csio/2900313/2900313_Rtraj.nc")
 #' })
 #'
 #' with_argo_example_cache({
@@ -176,10 +176,10 @@
 #'   argo_traj_history("dac/csio/2900313/2900313_Rtraj.nc")
 #' })
 #'
-argo_traj_meas <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
+argo_traj_measurement <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   argo_read_many(
     assert_argo_traj_file,
-    argo_read_traj_meas,
+    argo_read_traj_measurement,
     path = path,
     vars = vars,
     download = download,
@@ -227,14 +227,14 @@ argo_traj_history <- function(path, vars = NULL, download = NULL, quiet = FALSE)
 #'   package = "argodata"
 #' )
 #'
-#' argo_read_traj_meas(traj_file)
+#' argo_read_traj_measurement(traj_file)
 #' argo_read_traj_cycle(traj_file)
 #' argo_read_traj_history(traj_file)
 #'
-argo_read_traj_meas <- function(file, vars = NULL) {
+argo_read_traj_measurement <- function(file, vars = NULL) {
   with_argo_nc_file(
     file,
-    argo_nc_traj_read_meas,
+    argo_nc_traj_read_measurement,
     vars = vars
   )
 }

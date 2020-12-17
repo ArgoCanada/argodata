@@ -43,11 +43,11 @@ traj_file <- system.file(
 )
 traj_nc <- ncdf4::nc_open(traj_file)
 
-traj_vars_meas <- argo_nc_traj_vars_meas(traj_nc)
+traj_vars_measurement <- argo_nc_traj_vars_measurement(traj_nc)
 traj_vars_cycle <- argo_nc_traj_vars_cycle(traj_nc)
 traj_vars_history <- argo_nc_traj_vars_history(traj_nc)
 
-argo_vars("dac/csio/2900313/2900313_Rtraj.nc", vars = traj_vars_meas) %>%
+argo_vars("dac/csio/2900313/2900313_Rtraj.nc", vars = traj_vars_measurement) %>%
   doc_from_vars() %>%
   clipr::write_clip()
 

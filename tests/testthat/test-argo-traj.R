@@ -1,10 +1,10 @@
 
-test_that("argo_traj_meas() works", {
+test_that("argo_traj_measurement() works", {
   with_argo_example_cache({
-    traj <- argo_traj_meas("dac/csio/2900313/2900313_Rtraj.nc", quiet = TRUE)
+    traj <- argo_traj_measurement("dac/csio/2900313/2900313_Rtraj.nc", quiet = TRUE)
     expect_true(all(c("file", "cycle_number", "longitude", "latitude") %in% names(traj)))
 
-    traj <- argo_traj_meas(
+    traj <- argo_traj_measurement(
       "dac/csio/2900313/2900313_Rtraj.nc",
       vars = c("cycle_number", "longitude", "empty"),
       quiet = TRUE
@@ -47,9 +47,9 @@ test_that("argo_traj_history() works", {
   })
 })
 
-test_that("argo_read_traj_meas() works", {
+test_that("argo_read_traj_measurement() works", {
   expect_is(
-    argo_read_traj_meas(
+    argo_read_traj_measurement(
       system.file(
         "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
         package = "argodata"
@@ -83,9 +83,9 @@ test_that("argo_read_traj_history() works", {
   )
 })
 
-test_that("argo_read_traj_meas() works for bio files", {
+test_that("argo_read_traj_measurement() works for bio files", {
   expect_is(
-    argo_read_traj_meas(
+    argo_read_traj_measurement(
       system.file(
         "cache-test/dac/csio/2902746/2902746_BRtraj.nc",
         package = "argodata"

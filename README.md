@@ -53,7 +53,7 @@ The main workflow supported by argodata is:
     `argo_global_meta()`
   - Use `argo_filter_radius()`, other `argo_filter_*()` functions, or
     `dplyr::filter()` to subset the index
-  - Use `argo_prof_levels()`, `argo_traj_meas()`, or
+  - Use `argo_prof_levels()`, `argo_traj_measurement()`, or
     `argo_meta_missions()` to extract and row-bind tables for all files
     in the index
 
@@ -89,7 +89,7 @@ levels_lab_may_2020 %>%
 
 See the reference for `argo_prof_levels()` for more ways to load Argo
 profiles from `argo_global_prof()`, `argo_global_bio_prof()` and
-`argo_global_synthetic_prof()`; see `argo_traj_meas()` for ways to load
+`argo_global_synthetic_prof()`; see `argo_traj_measurement()` for ways to load
 Argo trajectories from `argo_global_traj()` or `argo_global_bio_traj()`;
 see `argo_meta_missions()` for ways to load float meta from
 `argo_global_meta()`; and see `argo_info()` and `argo_vars()` for ways

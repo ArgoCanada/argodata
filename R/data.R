@@ -21,7 +21,7 @@
 #'
 #' This table contains the quality control descriptions of the one-character
 #' flags that appear in variables that end with `_qc`. These variables appear
-#' in [argo_prof_levels()], [argo_prof_prof()], and [argo_traj_meas()]. See
+#' in [argo_prof_levels()], [argo_prof_prof()], and [argo_traj_measurement()]. See
 #' also [argo_reference_history_qctest][argo_reference_history_qctest]
 #' for information about specific tests.
 #'

@@ -11,6 +11,7 @@ reference:
   - starts_with("argo_meta_")
   - starts_with("argo_traj_")
   - starts_with("argo_prof_")
+  - starts_with("argo_tech_")
   - argo_info
   - argo_vars
 

@@ -44,7 +44,9 @@ argo_path_info <- function(path) {
   is_prof[is.na(extract_prof[, 1]) & is.na(extract_non_prof[, 1])] <- NA
 
   if (is.null(file)) {
-    file <- stringr::str_remove(path, "^dac/")
+    # stringr::str_replace() / stringr::str_remove() crash R when doing this
+    # with all three profile indexes rbinded together for an unknown reason
+    file <- gsub("^dac/", "", path)
   }
   file_float <- ifelse(is_prof, extract_prof[, 4], extract_non_prof[, 2])
   file_type <- ifelse(is_prof, "prof", extract_non_prof[, 5])

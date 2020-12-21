@@ -19,6 +19,7 @@ reference:
   contents:
   - argo_qc_censor_if
   - argo_unnest_history_qctest
+  - argo_use_adjusted
 
 - title: Argo reference tables
   contents:

@@ -27,11 +27,6 @@ argo_tech_tech_param <- function(path, download = NULL, quiet = FALSE) {
   tbl
 }
 
-argo_tech_pivot_wider <- function(tbl) {
-
-}
-
-
 #' Read Argo float technical parameters
 #'
 #' @inheritParams argo_read_vars

@@ -20,6 +20,7 @@ reference:
   - argo_qc_censor_if
   - argo_unnest_history_qctest
   - argo_use_adjusted
+  - argo_pivot_longer
 
 - title: Argo reference tables
   contents:

@@ -179,7 +179,7 @@ argo_read_prof_history <- function(file, vars = NULL, meta = NULL) {
 assert_argo_prof_file <- function(path) {
   argo_assert_path_type(
     path,
-    "^dac/[a-z]+/([0-9a-zA-Z]+)/profiles/(B|S)?(R|D)\\1_[0-9]+D?\\.nc$",
+    "^dac/[a-z]+/([0-9a-zA-Z]+)/((profiles/(B|S)?(R|D)\\1_[0-9]+D?\\.nc)|(\\1_[A-Z]*prof\\.nc))$",
     "profile"
   )
 }

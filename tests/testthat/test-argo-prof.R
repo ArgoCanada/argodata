@@ -176,5 +176,13 @@ test_that("assert_argo_prof_file() works", {
     assert_argo_prof_file("dac/csio/2902746/profiles/SR2902746_001.nc"),
     "dac/csio/2902746/profiles/SR2902746_001.nc"
   )
+  expect_identical(
+    assert_argo_prof_file("dac/csio/2900313/2900313_prof.nc"),
+    "dac/csio/2900313/2900313_prof.nc"
+  )
+  expect_identical(
+    assert_argo_prof_file("dac/csio/2902746/2902746_Sprof.nc"),
+    "dac/csio/2902746/2902746_Sprof.nc"
+  )
   expect_error(assert_argo_prof_file("not a file"), "Found 1 invalid Argo profile path")
 })

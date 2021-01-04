@@ -13,3 +13,4 @@
 ^pkgdown$
 ^codecov\.yml$
 ^vignettes$
+^vignettes/articles$

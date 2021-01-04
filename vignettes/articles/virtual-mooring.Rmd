@@ -1,0 +1,222 @@
+---
+title: "Virtual moorings and sections"
+---
+
+```{r, include = FALSE}
+library(argodata)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(ggplot2)
+library(ggspatial)
+theme_set(theme_bw())
+argo_global_prof()
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+We'll start by loading a few packages.
+
+```{r setup, eval=FALSE}
+library(argodata)
+library(tidyverse)
+library(lubridate)
+theme_set(theme_bw())
+```
+
+## Fetch
+
+The first step is to choose which area is representative of the region for which you would like to create an aggregated/summarized set of profiles. One way to do this is using a point and radius, for which `argo_filter_radius()` is provided to subset the global profile index `argo_global_prof()`. For example, the following point/radius results in approximately 475 profiles between Labrador and Greenland in the Labrador Sea. For the purposes of the virtual mooring, the radius needs to be small enough that the profiles are related to the conditions in the region you are attempting to model and large enough that there are enough profiles for window point of time you would like to model.
+
+```{r}
+mooring_lat <- 55.7
+mooring_lon <- -49.5
+mooring_radius_km <- 150
+```
+
+The next step is to (optionally) choose a window of time to consider. For the purposes of this article, we'll consider the years between 2011 and 2019, inclusive.
+
+```{r}
+mooring_start <- as.Date("2011-01-01")
+mooring_end <- as.Date("2019-12-31")
+```
+
+Finally, it is worth considering whether or not the "realtime" or "delayed" data sets best suits your use-case. The delayed data set is more likely to have poor-quality measurements corrected; however, the realtime data set may have more profiles available. You should pick one or the other to avoid double-counting profiles collected by the same float! In this article we will use the realtime data set.
+
+An index of all profiles available from the Argo program is available by calling `argo_global_prof()`. This will take 20-60 seconds to load depending on your internet connection; if you would like to avoid downloading the index file more than once you can [configure a persistent cache directory](https://github.com/ArgoCanada/argodata#installation), but be aware that this index is updated frequently.
+
+```{r}
+profiles <- argo_global_prof() %>%
+  argo_filter_radius(
+    latitude = mooring_lat,
+    longitude = mooring_lon,
+    radius_km = mooring_radius_km
+  ) %>% 
+  argo_filter_date(
+    date_min = mooring_start,
+    date_max = mooring_end
+  ) %>% 
+  argo_filter_data_mode("realtime") %>% 
+  argo_extract_path_info() %>% 
+  select(file, file_float, date, latitude, longitude, everything()) %>% 
+  arrange(date)
+
+profiles
+```
+
+A good sanity check is to examine the distribution of profiles in space and time, as we'll be spending a lot of time examining the interactions between these dimensions. Below I've created a bar plot to examine the distribution of profiles both within and between years: there is a lot of variability! We will come back to this later on.
+
+```{r}
+ggplot(
+  profiles,
+  aes(
+    x = factor(year(date)),
+    fill = factor(month(date))
+  )
+) +
+  geom_bar()
+```
+
+
+For a quick view of the locations I used the [ggspatial](https://github.com/paleolimbot/ggspatial) package:
+
+
+```{r, warning=FALSE}
+library(ggspatial)
+
+ggplot(profiles, aes(x = longitude, y = latitude, col = )) +
+  annotation_map_tile(zoomin = -1, progress = "none") +
+  geom_spatial_rect(
+    aes(ymin = 50, ymax = 65, xmin = -70, xmax = -30),
+    fill = NA,
+    # data = tibble(x = NA),
+    inherit.aes = FALSE,
+    crs = 4326
+  ) +
+  geom_spatial_point(crs = 4326) +
+  facet_wrap(vars(year(date)))
+```
+
+You can use plots like this to ensure that you have a reasonable density of samples in both space and time for the question you are trying to answer. Once you've done this, you can load profile levels using `argo_prof_levels()`. This will download the files from the Argo server and load them into a table with one row per profile per sampling level. This will take about 90 seconds depending on your internet connection and system configuration (if you do this often, see `argo_set_mapper()` for how to use multiple cores on your computer to do this faster).
+
+```{r}
+levels <- argo_prof_levels(profiles) %>% 
+  select(file, date, pres, temp, temp_qc, everything())
+
+levels
+```
+
+## Clean
+
+Again, the first step once we have the data is to plot! Here I've coloured the points by the `_qc` column for temperature, since temperature is what we'll be examining later on. There is a `_qc` column for most variables in the levels table; you can learn more about what each flag means in the `argo_reference_qc_flag` table or the [Argo User's Manual](https://doi.org/10.13155/29825).
+
+```{r}
+ggplot(levels, aes(y = pres, x = temp, col = temp_qc)) +
+  geom_point() +
+  scale_y_reverse()
+```
+
+From this plot it's clear that there are some points with clearly bad values that we need to take care of. A similar plot of `pres_qc` indicates that there are some bad pressure values as well. Depending what stage you are at in your analysis, you may want to remove rows that you can't use in future analysis or set these values to `NA`. I'll demonstrate the latter here using `argo_qc_censor_if_not()`, which sets values to `NA` where the paired `_qc` column is not in a specified vector of values. The only value that makes sense to keep based on a plot of our results is `1`, which corresponds to "good data" in the reference table (beware that not all data marked "good" has been checked with the same degree of scrutiny!).
+
+```{r}
+levels_clean <- levels %>%
+  argo_qc_censor_if_not(c(temp, pres), qc_flag = 1)
+
+levels_clean %>% 
+  filter(is.finite(temp), is.finite(pres)) %>% 
+  ggplot(aes(y = pres, x = temp)) +
+  geom_point(alpha = 0.01) +
+  scale_y_reverse()
+```
+
+## Model
+
+### Bin/Aggregate
+
+```{r}
+levels_binned <- levels_clean %>% 
+  mutate(
+    pres_bin = floor(pres / 100) * 100 + 50,
+    date_bin = lubridate::year(date)
+  ) %>% 
+  select(pres_bin, date_bin, everything())
+
+levels_binned
+```
+
+
+```{r}
+levels_aggregated <- levels_binned %>% 
+  group_by(date_bin, pres_bin) %>% 
+  summarise(
+    temp_mean = mean(temp, na.rm = TRUE),
+    temp_median = median(temp, na.rm = TRUE),
+    temp_q05 = quantile(temp, 0.05, na.rm = TRUE),
+    temp_q95 = quantile(temp, 0.95, na.rm = TRUE),
+    n = n(),
+    temp_n_finite = sum(is.finite(temp))
+  ) %>% 
+  ungroup()
+```
+```{r}
+ggplot(levels_aggregated, aes(x = date_bin, y = pres_bin, fill = log10(temp_n_finite))) +
+  geom_raster() +
+  scale_y_reverse()
+```
+
+
+
+```{r}
+set.seed(3948)
+
+levels_aggregated_randomized <- levels_binned %>%
+  filter(!is.na(pres), !is.na(temp), pres > 0) %>% 
+  crossing(tibble(sample_number = 1:9)) %>%
+  group_by(sample_number, date_bin, pres_bin) %>%
+  sample_n(size = 100, replace = TRUE) %>% 
+  summarise(
+    temp_mean = mean(temp, na.rm = TRUE),
+    temp_median = median(temp, na.rm = TRUE),
+    temp_q05 = quantile(temp, 0.05, na.rm = TRUE),
+    temp_q95 = quantile(temp, 0.95, na.rm = TRUE),
+    n = n(),
+    temp_n_finite = sum(is.finite(temp))
+  ) %>% 
+  ungroup()
+```
+
+```{r}
+ggplot(levels_aggregated_randomized, aes(x = date_bin, y = pres_bin, fill = temp_median)) +
+  geom_raster() +
+  scale_y_reverse() +
+  facet_wrap(vars(sample_number))
+```
+
+```{r}
+levels_aggregated_randomized %>% 
+  group_by(date_bin, pres_bin) %>% 
+  summarise(
+    temp_median_median = median(temp_median),
+    temp_median_q05 = quantile(temp_median, 0.05),
+    temp_median_q95 = quantile(temp_median, 0.95)
+  ) %>% 
+  ggplot(aes(y = pres_bin)) +
+  geom_line(aes(x = temp_median_median), orientation = "y") +
+  geom_ribbon(
+    aes(xmin = temp_median_q05, xmax = temp_median_q95),
+    alpha = 0.4,
+    orientation = "y"
+  ) +
+  facet_wrap(vars(date_bin)) +
+  scale_y_reverse()
+```
+
+## Sections
+
+As an example, we'll choose 
+
+43.437, 44.356
+
+-61.515, -41.783

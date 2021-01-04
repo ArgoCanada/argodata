@@ -45,7 +45,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ runner.temp }}/argo-cache-dir
-          key: argo-cache-dir-coverage-1
+          key: argo-cache-dir-coverage-2
 
       - name: Test coverage
         env:

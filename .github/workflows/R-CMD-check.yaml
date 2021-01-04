@@ -73,7 +73,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ runner.temp }}/argo-cache-dir
-          key: argo-cache-dir-check-1
+          key: argo-cache-dir-check-2
 
       - name: Check
         env:

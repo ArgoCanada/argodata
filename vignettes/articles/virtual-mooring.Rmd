@@ -9,6 +9,7 @@ library(tidyr)
 library(lubridate)
 library(ggplot2)
 library(ggspatial)
+library(Hmisc)
 theme_set(theme_bw())
 argo_global_prof()
 knitr::opts_chunk$set(
@@ -135,82 +136,115 @@ levels_clean %>%
 
 ### Bin/Aggregate
 
+Combining information collected at specific locations over time is an entire subfield of spatial statistics. For our purposes, binning and aggregating along a few dimensions of interest is probably sufficient and should always be attempted before invoking a more complex method.
+
+There are a few complexities associated with combining information from multiple profiles. Notably, there is a severe sampling bias: the nature of the Argo float is such that it collects detailed data along its trajectory which is clumped in both space and time. This means that certain areas and timeframes are intensely sampled whereas other areas and/or timeframes may have poor coverage. Another complexity is that certain locations may represent the "virtual mooring" location or region poorly.
+
+We will mitigate the effects of both these complicating behaviours using weighting. To ensure that a single float does not contribute unduly to any particular prediction, we can weight each profile as `1 / n`, where `n` is the number of profiles in a given time frame contributed by a single float. We can also weight profiles taken farther from the mooring location less than those taken close to the mooring location; however, the choice of how severely to punish profiles taken far from the mooring location makes a considerable difference to the result. One method is to use the inverse of the distance, which produces a rather severe punishment as distance from the centre increases. Here we will use `1 / sqrt(distance)` to mitigate the penalty. The distance weights we can calculate before binning; the float weights depend on our choice of bins.
+
+```{r}
+profile_weighted <- profiles %>%
+  mutate(
+    distance_km = s2::s2_distance(
+      s2::s2_lnglat(longitude, latitude), 
+      s2::s2_lnglat(mooring_lon, mooring_lat)
+    ) / 1000,
+    distance_weight = 1 / sqrt(distance_km)
+  ) %>% 
+  select(file, longitude, latitude, distance_km, distance_weight)
+
+profile_weighted
+```
+
+The next step is to choose bins that are appropriate to the scale of the problem. In this case, we're interested in monthly bins (regardless of year) and depth bins 10 decibars in height. These bin sizes reflect the amount of data we have: if we were only summarizing 2019, for which there are many profiles with high-resolution sampling intervals, we may be able to use smaller bins (e.g., one bin per month per year or 1 decibar height).
+
 ```{r}
 levels_binned <- levels_clean %>% 
   mutate(
     pres_bin = floor(pres / 100) * 100 + 50,
-    date_bin = lubridate::year(date)
+    date_bin = month(date)
   ) %>% 
   select(pres_bin, date_bin, everything())
 
 levels_binned
 ```
 
+Next we can calculate the weights to ensure each profile does not contribute more than its share to the values calculated for a given bin and apply the weights based on distance we calculated above.
 
 ```{r}
-levels_aggregated <- levels_binned %>% 
+levels_binned_weighted <- levels_binned %>% 
+  group_by(pres_bin, date_bin, file, n_prof) %>% 
+  mutate(profile_weight = 1 / n()) %>% 
+  ungroup() %>% 
+  left_join(profile_weighted, by = "file") %>% 
+  mutate(weight = profile_weight * distance_weight) %>% 
+  group_by(pres_bin, date_bin) %>% 
+  mutate(weight = weight / sum(weight)) %>% 
+  ungroup() %>% 
+  select(pres_bin, date_bin, weight, file, date, pres, temp, everything())
+
+levels_binned_weighted
+```
+
+The most stragithforward way to aggregate is using `weighted.mean()`, which is a good way to get a preliminary view of our results:
+
+```{r}
+library(Hmisc)
+
+levels_aggregated <- levels_binned_weighted %>% 
   group_by(date_bin, pres_bin) %>% 
+  filter(sum(is.finite(temp)) > 1) %>% 
   summarise(
-    temp_mean = mean(temp, na.rm = TRUE),
-    temp_median = median(temp, na.rm = TRUE),
-    temp_q05 = quantile(temp, 0.05, na.rm = TRUE),
-    temp_q95 = quantile(temp, 0.95, na.rm = TRUE),
-    n = n(),
-    temp_n_finite = sum(is.finite(temp))
+    temp_mean = weighted.mean(temp, w = weight, na.rm = TRUE),
+    temp_q05 = wtd.quantile(temp, weight, 0.05, na.rm = TRUE),
+    temp_median = wtd.quantile(temp, weight, 0.5, na.rm = TRUE),
+    temp_q95 = wtd.quantile(temp, weight, 0.95, na.rm = TRUE)
   ) %>% 
   ungroup()
 ```
 ```{r}
-ggplot(levels_aggregated, aes(x = date_bin, y = pres_bin, fill = log10(temp_n_finite))) +
-  geom_raster() +
-  scale_y_reverse()
+ggplot(levels_aggregated, aes(x = temp_median, y = pres_bin)) +
+  geom_ribbon(
+    aes(xmin = temp_q05, xmax = temp_q95),
+    alpha = 0.3
+  ) +
+  geom_point() +
+  scale_y_reverse() +
+  facet_wrap(vars(date_bin))
 ```
 
+This is a good first step in your analysis: if the above diagram was not in line with our knowledge of the ocean at this location, it is a clue that some part of our analysis went wrong. However, it is not able to communicate the spread of values that we observed in each bin. Are the profiles for a given month of the year similar over the last 10 years or not? 
 
+One technique that allows calculation of error in this way is sampling: we can draw a random sample of size `n` from the values available for each bin (applying the weights such that values with a higher weight are more likely to be drawn than others). We can repeat this analysis `k` times and use the distribution of the values we observe for each bin to communicate the uncertainty of our results.
 
 ```{r}
 set.seed(3948)
 
-levels_aggregated_randomized <- levels_binned %>%
-  filter(!is.na(pres), !is.na(temp), pres > 0) %>% 
-  crossing(tibble(sample_number = 1:9)) %>%
+levels_aggregated_randomized <- levels_binned_weighted %>%
+  crossing(tibble(sample_number = 1:100)) %>%
   group_by(sample_number, date_bin, pres_bin) %>%
-  sample_n(size = 100, replace = TRUE) %>% 
+  sample_n(size = n(), replace = TRUE) %>% 
   summarise(
-    temp_mean = mean(temp, na.rm = TRUE),
-    temp_median = median(temp, na.rm = TRUE),
-    temp_q05 = quantile(temp, 0.05, na.rm = TRUE),
-    temp_q95 = quantile(temp, 0.95, na.rm = TRUE),
-    n = n(),
-    temp_n_finite = sum(is.finite(temp))
+    temp_weighted_mean = weighted.mean(temp, w = weight, na.rm = TRUE),
+  ) %>%
+  group_by(pres_bin, date_bin) %>% 
+  summarise(
+    temp_weighted_mean_q05 = quantile(temp_weighted_mean, 0.05, na.rm = TRUE),
+    temp_weighted_mean_q50 = median(temp_weighted_mean, na.rm = TRUE),
+    temp_weighted_mean_q95 = quantile(temp_weighted_mean, 0.95, na.rm = TRUE)
   ) %>% 
   ungroup()
 ```
 
 ```{r}
-ggplot(levels_aggregated_randomized, aes(x = date_bin, y = pres_bin, fill = temp_median)) +
-  geom_raster() +
-  scale_y_reverse() +
-  facet_wrap(vars(sample_number))
-```
-
-```{r}
-levels_aggregated_randomized %>% 
-  group_by(date_bin, pres_bin) %>% 
-  summarise(
-    temp_median_median = median(temp_median),
-    temp_median_q05 = quantile(temp_median, 0.05),
-    temp_median_q95 = quantile(temp_median, 0.95)
-  ) %>% 
-  ggplot(aes(y = pres_bin)) +
-  geom_line(aes(x = temp_median_median), orientation = "y") +
+ggplot(levels_aggregated_randomized, aes(x = temp_weighted_mean_q50, y = pres_bin)) +
   geom_ribbon(
-    aes(xmin = temp_median_q05, xmax = temp_median_q95),
-    alpha = 0.4,
-    orientation = "y"
+    aes(xmin = temp_weighted_mean_q05, xmax = temp_weighted_mean_q95),
+    alpha = 0.3
   ) +
-  facet_wrap(vars(date_bin)) +
-  scale_y_reverse()
+  geom_point() +
+  scale_y_reverse() +
+  facet_wrap(vars(date_bin))
 ```
 
 ## Sections

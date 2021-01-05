@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
-          install.packages(c("pkgdown", "rmarkdown", "lubridate", "ggplot2"), type = "binary")
+          install.packages(c("pkgdown", "rmarkdown", "lubridate", "ggplot2", "ggspatial"), type = "binary")
         shell: Rscript {0}
 
       - name: Install package

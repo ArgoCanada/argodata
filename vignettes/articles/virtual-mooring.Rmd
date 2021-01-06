@@ -316,7 +316,7 @@ section_profile_weighted <- section_profiles %>%
   filter(
     !s2_equals(point_on_section, section_start),
     !s2_equals(point_on_section, section_end)
-  ) %>% 
+  ) %>%
   select(
     file, geog, point_on_section,
     distance_km, distance_along_section_km, distance_weight
@@ -407,11 +407,16 @@ section_levels_binned
 As above, we can aggregate using `weighted.mean()` to get a preliminary view of our results:
 
 ```{r}
-section_levels_aggregated <- section_levels_binned %>% 
+section_levels_aggregated <- section_levels_binned %>%
+  group_by(distance_bin, pres_bin, file, n_prof) %>% 
+  mutate(
+    profile_weight = 1 / n(),
+    weight = profile_weight * distance_weight
+  ) %>%
   group_by(distance_bin, pres_bin) %>% 
   filter(sum(is.finite(temp)) > 1) %>% 
   summarise(
-    temp_mean = weighted.mean(temp, w = distance_weight, na.rm = TRUE)
+    temp_mean = weighted.mean(temp, w = weight, na.rm = TRUE)
   ) %>% 
   ungroup()
 
@@ -421,7 +426,7 @@ section_levels_aggregated
 There are too many bins to examine all of them for quality. Instead, I'll examine a subset of them to make sure our `weighted.mean()` calculation didn't create unrealistic estimates.
 
 ```{r}
-test_distance_bins <- c(20, 320, 620, 820)
+test_distance_bins <- c(20, 220, 620, 820)
 
 section_levels_aggregated %>% 
   filter(distance_bin %in% test_distance_bins) %>% 

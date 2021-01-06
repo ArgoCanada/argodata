@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
-          install.packages(c("pkgdown", "rmarkdown", "lubridate", "ggplot2", "ggspatial", "Hmisc", "s2"), type = "binary")
+          install.packages(c("pkgdown", "rmarkdown", "lubridate", "ggplot2", "ggspatial", "lwgeom", "s2"), type = "binary")
         shell: Rscript {0}
 
       - name: Install package
@@ -41,7 +41,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ runner.temp }}/argo-cache-dir
-          key: argo-cache-dir-pkgdown-2
+          key: argo-cache-dir-pkgdown-3
 
       - name: Deploy package
         env:

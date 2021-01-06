@@ -125,12 +125,24 @@ From this plot it's clear that there are some points with clearly bad values tha
 levels_clean <- levels %>%
   argo_qc_censor_if_not(c(temp, pres), qc_flag = 1)
 
-levels_clean %>% 
-  filter(is.finite(temp), is.finite(pres)) %>% 
-  ggplot(aes(y = pres, x = temp)) +
-  geom_point(alpha = 0.01) +
+ggplot(levels_clean, aes(y = pres, x = temp)) +
+  geom_line(
+    aes(group = interaction(file, n_prof)),
+    orientation = "y",
+    alpha = 0.05
+  ) +
   scale_y_reverse()
 ```
+
+We've set a lot of values to `NA` - in some cases many profiles worth. While we do want to keep a record of levels even if the temperature was set to `NA` because of its `_qc` column value, we also don't need profiles where there is little temperature information, and including them in our data moving forward is not useful.
+
+```{r}
+levels_clean <- levels_clean %>% 
+  group_by(file, n_prof) %>% 
+  filter(mean(is.finite(temp)) > 0.5) %>% 
+  ungroup()
+```
+
 
 ## Model
 
@@ -186,27 +198,24 @@ levels_binned_weighted <- levels_binned %>%
 levels_binned_weighted
 ```
 
-The most stragithforward way to aggregate is using `weighted.mean()`, which is a good way to get a preliminary view of our results:
+The most straightforward way to aggregate is using `weighted.mean()`, which is a good way to get a preliminary view of our results:
 
 ```{r}
-library(Hmisc)
-
 levels_aggregated <- levels_binned_weighted %>% 
   group_by(date_bin, pres_bin) %>% 
   filter(sum(is.finite(temp)) > 1) %>% 
   summarise(
-    temp_mean = weighted.mean(temp, w = weight, na.rm = TRUE),
-    temp_q05 = wtd.quantile(temp, weight, 0.05, na.rm = TRUE),
-    temp_median = wtd.quantile(temp, weight, 0.5, na.rm = TRUE),
-    temp_q95 = wtd.quantile(temp, weight, 0.95, na.rm = TRUE)
+    temp_mean = weighted.mean(temp, w = weight, na.rm = TRUE)
   ) %>% 
   ungroup()
 ```
 ```{r}
-ggplot(levels_aggregated, aes(x = temp_median, y = pres_bin)) +
-  geom_ribbon(
-    aes(xmin = temp_q05, xmax = temp_q95),
-    alpha = 0.3
+ggplot(levels_aggregated, aes(x = temp_mean, y = pres_bin)) +
+  geom_line(
+    aes(x = temp, y = pres, group = interaction(file, n_prof)), 
+    col = "grey80",
+    orientation = "y", 
+    data = levels_binned
   ) +
   geom_point() +
   scale_y_reverse() +
@@ -238,19 +247,205 @@ levels_aggregated_randomized <- levels_binned_weighted %>%
 
 ```{r}
 ggplot(levels_aggregated_randomized, aes(x = temp_weighted_mean_q50, y = pres_bin)) +
+  geom_line(
+    aes(x = temp, y = pres, group = interaction(file, n_prof)), 
+    col = "grey80",
+    orientation = "y", 
+    data = levels_binned
+  ) +
   geom_ribbon(
     aes(xmin = temp_weighted_mean_q05, xmax = temp_weighted_mean_q95),
-    alpha = 0.3
+    alpha = 0.5
   ) +
   geom_point() +
   scale_y_reverse() +
   facet_wrap(vars(date_bin))
 ```
 
+In this case the weighted mean and randomized approach give the same results. This is a good thing! Another thing to note is that in the above example the weighted mean varies little even with the bootstrapping approach (the `geom_ribbon()` behind each profile is barely if at all visible).
+
+### Kriging
+
+(subsurface geology folks are all over this kind of thing but I have to look up what the best way to go about doing it is)
+
 ## Sections
 
-As an example, we'll choose 
+Computing a section based on a collection of Argo profiles is similar to computing an average profile from a single point except we have an added dimension along which we want to bin the profiles. 
 
-43.437, 44.356
+As an example, we'll look at a cross-section of the Gulf stream off Nova Scotia. The first step is to pick a line that defines your section. The calculations are easier when your section can be defined by exactly two points, but you can use a section with an arbitrary number of points. Because we'll be using the [s2 package](https://r-spatial.github.io/s2/) for our calculations, I'll also construct an s2 geography for the start point, end point, and the line between them.
 
--61.515, -41.783
+```{r}
+library(s2)
+
+section_points_lon <- c(-62.0, -55.9)
+section_points_lat <- c(42.0, 35.9)
+
+section_start <- s2_geog_point(section_points_lon[1], section_points_lat[1])
+section_end <- s2_geog_point(section_points_lon[2], section_points_lat[2])
+section_line <- s2_make_line(section_points_lon, section_points_lat)
+```
+
+We can use the line to subset profiles based on the criteria we discussed above, this time adding in `s2::s2_dwithin()` to find profiles within a specified distance of our profile line. I've chosen a threshold of 100 km in this case. Because s2 package functions work on s2_geography objects, I've kept the geography vector representing the point where the profile was collected so that we can use it later without recalculating.
+
+```{r}
+section_profiles <- argo_global_prof() %>%
+  argo_filter_data_mode("delayed") %>% 
+  argo_filter_date(
+    date_min = mooring_start,
+    date_max = mooring_end
+  ) %>% 
+  mutate(geog = s2_geog_point(longitude, latitude)) %>% 
+  filter(s2_dwithin(geog, section_line, 100 * 1000))
+
+section_profiles
+```
+
+Similar to the profile calculation, we need to calculate some information about the suitability of each profile to our section. In addition to the distance from the section line, we will also need a measure of how far along the section line each profile is so that we can bin it accordingly. I also add a filter here to remove profiles that are "off the end" of the section (whose closest point *is* the start or end point). This is where the two-point section definition makes our life easier: distance along the profile is just the distance from the start point. If you really need a section defined by multiple points you will need to use a projection and the linear referencing function `geos::geos_project()`.
+
+```{r}
+section_profile_weighted <- section_profiles %>% 
+  mutate(
+    point_on_section = s2_closest_point(section_line, geog),
+    distance_km = s2_distance(section_line, geog) / 1000,
+    distance_along_section_km = s2_distance(
+      point_on_section, 
+      section_start
+    ) / 1000,
+    distance_weight = 1 / sqrt(distance_km)
+  ) %>% 
+  filter(
+    !s2_equals(point_on_section, section_start),
+    !s2_equals(point_on_section, section_end)
+  ) %>% 
+  select(
+    file, geog, point_on_section,
+    distance_km, distance_along_section_km, distance_weight
+  )
+```
+
+Now is a good time to plot our section to make sure that our math was correct!
+
+```{r}
+ggplot() +
+  layer_spatial(
+    sf::st_segmentize(sf::st_as_sfc(section_line), 10000),
+    size = 1
+  ) +
+  layer_spatial(
+    s2_minimum_clearance_line_between(
+      section_line, 
+      section_profile_weighted$geog
+    ),
+    col = "grey40"
+  ) +
+  layer_spatial(section_profile_weighted$geog)
+```
+
+From here we have enough information to load our levels.
+
+```{r}
+section_levels <- argo_prof_levels(section_profile_weighted)
+```
+
+Again, the first step once the levels are loaded is to check which QC flag values we can use to ensure reasonable values in our result. Because we're working with delayed mode data, there is a chance that the `temp_adjusted` column contains higher quality results. I've plotted both below.
+
+```{r}
+ggplot(section_levels, aes(y = pres, x = temp, col = temp_qc)) +
+  geom_point() +
+  scale_y_reverse()
+
+ggplot(section_levels, aes(y = pres, x = temp_adjusted, col = temp_adjusted_qc)) +
+  geom_point() +
+  scale_y_reverse()
+```
+
+In many cases the adjusted values are identical to the non-adjusted values, but it is reasonable to use the adjusted values where they have been made available. Some adjusted data has been marked as not "good data", however, which we need to censor before "preferring" the adjusted value over the non-adjusted one.
+
+```{r}
+section_levels_clean <- section_levels %>% 
+  argo_qc_censor_if_not(
+    c(temp, pres, temp_adjusted, pres_adjusted),
+    qc_flag = 1
+  ) %>% 
+  argo_use_adjusted(c(temp, pres))
+```
+
+As above, we can remove profiles that contain few temperature values to simplify the upcoming analysis.
+
+```{r}
+section_levels_clean <- section_levels_clean %>% 
+  group_by(file, n_prof) %>% 
+  filter(mean(is.finite(temp)) > 0.5) %>% 
+  ungroup()
+```
+
+Finally, we can visualize all the profiles to make sure our profiles are composed of reasonable values.
+
+```{r}
+ggplot(section_levels_clean, aes(y = pres, x = temp)) +
+  geom_line(
+    aes(group = interaction(file, n_prof)),
+    orientation = "y",
+    alpha = 0.02
+  ) +
+  scale_y_reverse()
+```
+
+Now we're ready to bin! While it is also valid to bin using a `date_bin` if enough profiles are available, in this case I'm going to demonstrate binning along the transect such that there are still two bin dimensions. When calculating uncertainty, this should show up in our results for the top pressure bins whose temperature responds most readily to seasonal fluctuations.
+
+```{r}
+section_levels_binned <- section_levels_clean %>%
+  left_join(section_profile_weighted, by = "file") %>% 
+  mutate(
+    pres_bin = floor(pres / 100) * 100 + 50,
+    distance_bin = floor(distance_along_section_km / 40) * 40 + 20
+  )
+
+section_levels_binned
+```
+
+As above, we can aggregate using `weighted.mean()` to get a preliminary view of our results:
+
+```{r}
+section_levels_aggregated <- section_levels_binned %>% 
+  group_by(distance_bin, pres_bin) %>% 
+  filter(sum(is.finite(temp)) > 1) %>% 
+  summarise(
+    temp_mean = weighted.mean(temp, w = distance_weight, na.rm = TRUE)
+  ) %>% 
+  ungroup()
+
+section_levels_aggregated
+```
+
+There are too many bins to examine all of them for quality. Instead, I'll examine a subset of them to make sure our `weighted.mean()` calculation didn't create unrealistic estimates.
+
+```{r}
+test_distance_bins <- c(20, 320, 620, 820)
+
+section_levels_aggregated %>% 
+  filter(distance_bin %in% test_distance_bins) %>% 
+  ggplot(aes(x = temp_mean, y = pres_bin)) +
+  geom_line(
+    aes(x = temp, y = pres, group = interaction(file, n_prof)),
+    col = "grey80",
+    orientation = "y",
+    data = section_levels_binned %>% 
+      filter(distance_bin %in% test_distance_bins)
+  ) +
+  geom_point() +
+  scale_y_reverse() +
+  facet_wrap(vars(distance_bin))
+```
+
+Finally, we can visualize all of the bins together!
+
+```{r}
+ggplot(
+  section_levels_aggregated,
+  aes(x = distance_bin, y = pres_bin, fill = temp_mean)
+) +
+  geom_raster() +
+  scale_fill_viridis_c() +
+  scale_y_reverse()
+```

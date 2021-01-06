@@ -224,11 +224,41 @@
 <div id="binaggregate" class="section level3">
 <h3 class="hasAnchor">
 <a href="#binaggregate" class="anchor"></a>Bin/Aggregate</h3>
+<p>Combining information collected at specific locations over time is an entire subfield of spatial statistics. For our purposes, binning and aggregating along a few dimensions of interest is probably sufficient and should always be attempted before invoking a more complex method.</p>
+<p>There are a few complexities associated with combining information from multiple profiles. Notably, there is a severe sampling bias: the nature of the Argo float is such that it collects detailed data along its trajectory which is clumped in both space and time. This means that certain areas and timeframes are intensely sampled whereas other areas and/or timeframes may have poor coverage. Another complexity is that certain locations may represent the “virtual mooring” location or region poorly.</p>
+<p>We will mitigate the effects of both these complicating behaviours using weighting. To ensure that a single float does not contribute unduly to any particular prediction, we can weight each profile as <code>1 / n</code>, where <code>n</code> is the number of profiles in a given time frame contributed by a single float. We can also weight profiles taken farther from the mooring location less than those taken close to the mooring location; however, the choice of how severely to punish profiles taken far from the mooring location makes a considerable difference to the result. One method is to use the inverse of the distance, which produces a rather severe punishment as distance from the centre increases. Here we will use <code>1 / sqrt(distance)</code> to mitigate the penalty. The distance weights we can calculate before binning; the float weights depend on our choice of bins.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">profile_weighted</span> <span class="op">&lt;-</span> <span class="va">profiles</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+    distance_km <span class="op">=</span> <span class="fu">s2</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/s2/reference/s2_is_collection.html">s2_distance</a></span><span class="op">(</span>
+      <span class="fu">s2</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/s2/reference/s2_lnglat.html">s2_lnglat</a></span><span class="op">(</span><span class="va">longitude</span>, <span class="va">latitude</span><span class="op">)</span>, 
+      <span class="fu">s2</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/s2/reference/s2_lnglat.html">s2_lnglat</a></span><span class="op">(</span><span class="va">mooring_lon</span>, <span class="va">mooring_lat</span><span class="op">)</span>
+    <span class="op">)</span> <span class="op">/</span> <span class="fl">1000</span>,
+    distance_weight <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">distance_km</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">file</span>, <span class="va">longitude</span>, <span class="va">latitude</span>, <span class="va">distance_km</span>, <span class="va">distance_weight</span><span class="op">)</span>
+
+<span class="va">profile_weighted</span>
+<span class="co">#&gt; [90m# A tibble: 216 x 5[39m</span>
+<span class="co">#&gt;    file                           longitude latitude distance_km distance_weight</span>
+<span class="co">#&gt;    [3m[90m&lt;chr&gt;[39m[23m                              [3m[90m&lt;dbl&gt;[39m[23m    [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m           [3m[90m&lt;dbl&gt;[39m[23m</span>
+<span class="co">#&gt; [90m 1[39m meds/4901167/profiles/R490116…     -[31m51[39m[31m.[39m[31m8[39m     56.1       150.           0.081[4m7[24m</span>
+<span class="co">#&gt; [90m 2[39m meds/4901167/profiles/R490116…     -[31m51[39m[31m.[39m[31m5[39m     56.3       139.           0.084[4m7[24m</span>
+<span class="co">#&gt; [90m 3[39m meds/4901167/profiles/R490116…     -[31m51[39m[31m.[39m[31m4[39m     56.2       127.           0.088[4m6[24m</span>
+<span class="co">#&gt; [90m 4[39m meds/4901163/profiles/R490116…     -[31m48[39m[31m.[39m[31m6[39m     56.7       129.           0.087[4m9[24m</span>
+<span class="co">#&gt; [90m 5[39m meds/4901167/profiles/R490116…     -[31m51[39m[31m.[39m[31m1[39m     56.0       107.           0.096[4m8[24m</span>
+<span class="co">#&gt; [90m 6[39m meds/4901163/profiles/R490116…     -[31m48[39m[31m.[39m[31m7[39m     56.8       137.           0.085[4m5[24m</span>
+<span class="co">#&gt; [90m 7[39m meds/4901167/profiles/R490116…     -[31m51[39m[31m.[39m[31m0[39m     55.8        96.2          0.102 </span>
+<span class="co">#&gt; [90m 8[39m meds/4901163/profiles/R490116…     -[31m49[39m[31m.[39m[31m1[39m     56.8       125.           0.089[4m5[24m</span>
+<span class="co">#&gt; [90m 9[39m meds/4901167/profiles/R490116…     -[31m50[39m[31m.[39m[31m2[39m     56.5        93.7          0.103 </span>
+<span class="co">#&gt; [90m10[39m meds/4901163/profiles/R490116…     -[31m49[39m[31m.[39m[31m3[39m     56.7       117.           0.092[4m4[24m</span>
+<span class="co">#&gt; [90m# … with 206 more rows[39m</span></code></pre></div>
+<p>The next step is to choose bins that are appropriate to the scale of the problem. In this case, we’re interested in monthly bins (regardless of year) and depth bins 10 decibars in height. These bin sizes reflect the amount of data we have: if we were only summarizing 2019, for which there are many profiles with high-resolution sampling intervals, we may be able to use smaller bins (e.g., one bin per month per year or 1 decibar height).</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">levels_binned</span> <span class="op">&lt;-</span> <span class="va">levels_clean</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     pres_bin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="va">pres</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span> <span class="op">+</span> <span class="fl">50</span>,
-    date_bin <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>
+    date_bin <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">pres_bin</span>, <span class="va">date_bin</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
@@ -236,85 +266,113 @@
 <span class="co">#&gt; [90m# A tibble: 233,909 x 22[39m</span>
 <span class="co">#&gt;    pres_bin date_bin file  date                 pres  temp temp_qc n_prof</span>
 <span class="co">#&gt;       [3m[90m&lt;dbl&gt;[39m[23m    [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;chr&gt;[39m[23m [3m[90m&lt;dttm&gt;[39m[23m              [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;chr&gt;[39m[23m    [3m[90m&lt;int&gt;[39m[23m</span>
-<span class="co">#&gt; [90m 1[39m       50     [4m2[24m011 meds… 2011-07-03 [90m12:58:00[39m  6.70  7.24 1            1</span>
-<span class="co">#&gt; [90m 2[39m       50     [4m2[24m011 meds… 2011-07-03 [90m12:58:00[39m 10.8   6.83 1            1</span>
-<span class="co">#&gt; [90m 3[39m       50     [4m2[24m011 meds… 2011-07-03 [90m12:58:00[39m 20.1   5.51 1            1</span>
-<span class="co">#&gt; [90m 4[39m       50     [4m2[24m011 meds… 2011-07-03 [90m12:58:00[39m 30.2   3.85 1            1</span>
-<span class="co">#&gt; [90m 5[39m       50     [4m2[24m011 meds… 2011-07-03 [90m12:58:00[39m 40.5   3.68 1            1</span>
-<span class="co">#&gt; [90m 6[39m       50     [4m2[24m011 meds… 2011-07-03 [90m12:58:00[39m 49.9   3.88 1            1</span>
-<span class="co">#&gt; [90m 7[39m       50     [4m2[24m011 meds… 2011-07-03 [90m12:58:00[39m 59.8   4.01 1            1</span>
-<span class="co">#&gt; [90m 8[39m       50     [4m2[24m011 meds… 2011-07-03 [90m12:58:00[39m 69     3.95 1            1</span>
-<span class="co">#&gt; [90m 9[39m       50     [4m2[24m011 meds… 2011-07-03 [90m12:58:00[39m 80.6   3.63 1            1</span>
-<span class="co">#&gt; [90m10[39m       50     [4m2[24m011 meds… 2011-07-03 [90m12:58:00[39m 90.6   3.94 1            1</span>
+<span class="co">#&gt; [90m 1[39m       50        7 meds… 2011-07-03 [90m12:58:00[39m  6.70  7.24 1            1</span>
+<span class="co">#&gt; [90m 2[39m       50        7 meds… 2011-07-03 [90m12:58:00[39m 10.8   6.83 1            1</span>
+<span class="co">#&gt; [90m 3[39m       50        7 meds… 2011-07-03 [90m12:58:00[39m 20.1   5.51 1            1</span>
+<span class="co">#&gt; [90m 4[39m       50        7 meds… 2011-07-03 [90m12:58:00[39m 30.2   3.85 1            1</span>
+<span class="co">#&gt; [90m 5[39m       50        7 meds… 2011-07-03 [90m12:58:00[39m 40.5   3.68 1            1</span>
+<span class="co">#&gt; [90m 6[39m       50        7 meds… 2011-07-03 [90m12:58:00[39m 49.9   3.88 1            1</span>
+<span class="co">#&gt; [90m 7[39m       50        7 meds… 2011-07-03 [90m12:58:00[39m 59.8   4.01 1            1</span>
+<span class="co">#&gt; [90m 8[39m       50        7 meds… 2011-07-03 [90m12:58:00[39m 69     3.95 1            1</span>
+<span class="co">#&gt; [90m 9[39m       50        7 meds… 2011-07-03 [90m12:58:00[39m 80.6   3.63 1            1</span>
+<span class="co">#&gt; [90m10[39m       50        7 meds… 2011-07-03 [90m12:58:00[39m 90.6   3.94 1            1</span>
 <span class="co">#&gt; [90m# … with 233,899 more rows, and 14 more variables: cycle_number [3m[90m&lt;int&gt;[90m[23m,[39m</span>
 <span class="co">#&gt; [90m#   n_levels [3m[90m&lt;int&gt;[90m[23m, pres_qc [3m[90m&lt;chr&gt;[90m[23m, pres_adjusted [3m[90m&lt;dbl&gt;[90m[23m, pres_adjusted_qc [3m[90m&lt;chr&gt;[90m[23m,[39m</span>
 <span class="co">#&gt; [90m#   pres_adjusted_error [3m[90m&lt;dbl&gt;[90m[23m, temp_adjusted [3m[90m&lt;dbl&gt;[90m[23m, temp_adjusted_qc [3m[90m&lt;chr&gt;[90m[23m,[39m</span>
 <span class="co">#&gt; [90m#   temp_adjusted_error [3m[90m&lt;dbl&gt;[90m[23m, psal [3m[90m&lt;dbl&gt;[90m[23m, psal_qc [3m[90m&lt;chr&gt;[90m[23m, psal_adjusted [3m[90m&lt;dbl&gt;[90m[23m,[39m</span>
 <span class="co">#&gt; [90m#   psal_adjusted_qc [3m[90m&lt;chr&gt;[90m[23m, psal_adjusted_error [3m[90m&lt;dbl&gt;[90m[23m[39m</span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">levels_aggregated</span> <span class="op">&lt;-</span> <span class="va">levels_binned</span> <span class="op">%&gt;%</span> 
+<p>Next we can calculate the weights to ensure each profile does not contribute more than its share to the values calculated for a given bin and apply the weights based on distance we calculated above.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">levels_binned_weighted</span> <span class="op">&lt;-</span> <span class="va">levels_binned</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">pres_bin</span>, <span class="va">date_bin</span>, <span class="va">file</span>, <span class="va">n_prof</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>profile_weight <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">profile_weighted</span>, by <span class="op">=</span> <span class="st">"file"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="va">profile_weight</span> <span class="op">*</span> <span class="va">distance_weight</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">pres_bin</span>, <span class="va">date_bin</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="va">weight</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">weight</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">pres_bin</span>, <span class="va">date_bin</span>, <span class="va">weight</span>, <span class="va">file</span>, <span class="va">date</span>, <span class="va">pres</span>, <span class="va">temp</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">levels_binned_weighted</span>
+<span class="co">#&gt; [90m# A tibble: 233,909 x 28[39m</span>
+<span class="co">#&gt;    pres_bin date_bin  weight file  date                 pres  temp temp_qc</span>
+<span class="co">#&gt;       [3m[90m&lt;dbl&gt;[39m[23m    [3m[90m&lt;dbl&gt;[39m[23m   [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;chr&gt;[39m[23m [3m[90m&lt;dttm&gt;[39m[23m              [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;chr&gt;[39m[23m  </span>
+<span class="co">#&gt; [90m 1[39m       50        7 0.001[4m6[24m[4m7[24m meds… 2011-07-03 [90m12:58:00[39m  6.70  7.24 1      </span>
+<span class="co">#&gt; [90m 2[39m       50        7 0.001[4m6[24m[4m7[24m meds… 2011-07-03 [90m12:58:00[39m 10.8   6.83 1      </span>
+<span class="co">#&gt; [90m 3[39m       50        7 0.001[4m6[24m[4m7[24m meds… 2011-07-03 [90m12:58:00[39m 20.1   5.51 1      </span>
+<span class="co">#&gt; [90m 4[39m       50        7 0.001[4m6[24m[4m7[24m meds… 2011-07-03 [90m12:58:00[39m 30.2   3.85 1      </span>
+<span class="co">#&gt; [90m 5[39m       50        7 0.001[4m6[24m[4m7[24m meds… 2011-07-03 [90m12:58:00[39m 40.5   3.68 1      </span>
+<span class="co">#&gt; [90m 6[39m       50        7 0.001[4m6[24m[4m7[24m meds… 2011-07-03 [90m12:58:00[39m 49.9   3.88 1      </span>
+<span class="co">#&gt; [90m 7[39m       50        7 0.001[4m6[24m[4m7[24m meds… 2011-07-03 [90m12:58:00[39m 59.8   4.01 1      </span>
+<span class="co">#&gt; [90m 8[39m       50        7 0.001[4m6[24m[4m7[24m meds… 2011-07-03 [90m12:58:00[39m 69     3.95 1      </span>
+<span class="co">#&gt; [90m 9[39m       50        7 0.001[4m6[24m[4m7[24m meds… 2011-07-03 [90m12:58:00[39m 80.6   3.63 1      </span>
+<span class="co">#&gt; [90m10[39m       50        7 0.001[4m6[24m[4m7[24m meds… 2011-07-03 [90m12:58:00[39m 90.6   3.94 1      </span>
+<span class="co">#&gt; [90m# … with 233,899 more rows, and 20 more variables: n_prof [3m[90m&lt;int&gt;[90m[23m,[39m</span>
+<span class="co">#&gt; [90m#   cycle_number [3m[90m&lt;int&gt;[90m[23m, n_levels [3m[90m&lt;int&gt;[90m[23m, pres_qc [3m[90m&lt;chr&gt;[90m[23m, pres_adjusted [3m[90m&lt;dbl&gt;[90m[23m,[39m</span>
+<span class="co">#&gt; [90m#   pres_adjusted_qc [3m[90m&lt;chr&gt;[90m[23m, pres_adjusted_error [3m[90m&lt;dbl&gt;[90m[23m, temp_adjusted [3m[90m&lt;dbl&gt;[90m[23m,[39m</span>
+<span class="co">#&gt; [90m#   temp_adjusted_qc [3m[90m&lt;chr&gt;[90m[23m, temp_adjusted_error [3m[90m&lt;dbl&gt;[90m[23m, psal [3m[90m&lt;dbl&gt;[90m[23m,[39m</span>
+<span class="co">#&gt; [90m#   psal_qc [3m[90m&lt;chr&gt;[90m[23m, psal_adjusted [3m[90m&lt;dbl&gt;[90m[23m, psal_adjusted_qc [3m[90m&lt;chr&gt;[90m[23m,[39m</span>
+<span class="co">#&gt; [90m#   psal_adjusted_error [3m[90m&lt;dbl&gt;[90m[23m, profile_weight [3m[90m&lt;dbl&gt;[90m[23m, longitude [3m[90m&lt;dbl&gt;[90m[23m,[39m</span>
+<span class="co">#&gt; [90m#   latitude [3m[90m&lt;dbl&gt;[90m[23m, distance_km [3m[90m&lt;dbl&gt;[90m[23m, distance_weight [3m[90m&lt;dbl&gt;[90m[23m[39m</span></code></pre></div>
+<p>The most stragithforward way to aggregate is using <code><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean()</a></code>, which is a good way to get a preliminary view of our results:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hbiostat.org/R/Hmisc/">Hmisc</a></span><span class="op">)</span>
+
+<span class="va">levels_aggregated</span> <span class="op">&lt;-</span> <span class="va">levels_binned_weighted</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">date_bin</span>, <span class="va">pres_bin</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.finite</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>
-    temp_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">temp</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-    temp_median <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">temp</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-    temp_q05 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">temp</span>, <span class="fl">0.05</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-    temp_q95 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">temp</span>, <span class="fl">0.95</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-    n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,
-    temp_n_finite <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.finite</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span><span class="op">)</span>
+    temp_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean</a></span><span class="op">(</span><span class="va">temp</span>, w <span class="op">=</span> <span class="va">weight</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+    temp_q05 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/wtd.stats.html">wtd.quantile</a></span><span class="op">(</span><span class="va">temp</span>, <span class="va">weight</span>, <span class="fl">0.05</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+    temp_median <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/wtd.stats.html">wtd.quantile</a></span><span class="op">(</span><span class="va">temp</span>, <span class="va">weight</span>, <span class="fl">0.5</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+    temp_q95 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/Hmisc/man/wtd.stats.html">wtd.quantile</a></span><span class="op">(</span><span class="va">temp</span>, <span class="va">weight</span>, <span class="fl">0.95</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; `summarise()` regrouping output by 'date_bin' (override with `.groups` argument)</span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">levels_aggregated</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_bin</span>, y <span class="op">=</span> <span class="va">pres_bin</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">temp_n_finite</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_raster</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_y_reverse</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Removed 9 rows containing missing values (geom_raster).</span></code></pre></div>
-<p><img src="virtual-mooring_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">levels_aggregated</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">temp_median</span>, y <span class="op">=</span> <span class="va">pres_bin</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_ribbon</span><span class="op">(</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">temp_q05</span>, xmax <span class="op">=</span> <span class="va">temp_q95</span><span class="op">)</span>,
+    alpha <span class="op">=</span> <span class="fl">0.3</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">scale_y_reverse</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">date_bin</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Warning: Removed 9 rows containing missing values (geom_point).</span></code></pre></div>
+<p><img src="virtual-mooring_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p>This is a good first step in your analysis: if the above diagram was not in line with our knowledge of the ocean at this location, it is a clue that some part of our analysis went wrong. However, it is not able to communicate the spread of values that we observed in each bin. Are the profiles for a given month of the year similar over the last 10 years or not?</p>
+<p>One technique that allows calculation of error in this way is sampling: we can draw a random sample of size <code>n</code> from the values available for each bin (applying the weights such that values with a higher weight are more likely to be drawn than others). We can repeat this analysis <code>k</code> times and use the distribution of the values we observe for each bin to communicate the uncertainty of our results.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">3948</span><span class="op">)</span>
 
-<span class="va">levels_aggregated_randomized</span> <span class="op">&lt;-</span> <span class="va">levels_binned</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">pres</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span>, <span class="va">pres</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">crossing</span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>sample_number <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">levels_aggregated_randomized</span> <span class="op">&lt;-</span> <span class="va">levels_binned_weighted</span> <span class="op">%&gt;%</span>
+  <span class="fu">crossing</span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>sample_number <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sample_number</span>, <span class="va">date_bin</span>, <span class="va">pres_bin</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">100</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>
-    temp_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">temp</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-    temp_median <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">temp</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-    temp_q05 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">temp</span>, <span class="fl">0.05</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-    temp_q95 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">temp</span>, <span class="fl">0.95</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-    n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,
-    temp_n_finite <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.finite</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span><span class="op">)</span>
+    temp_weighted_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean</a></span><span class="op">(</span><span class="va">temp</span>, w <span class="op">=</span> <span class="va">weight</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">pres_bin</span>, <span class="va">date_bin</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>
+    temp_weighted_mean_q05 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">temp_weighted_mean</span>, <span class="fl">0.05</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+    temp_weighted_mean_q50 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">temp_weighted_mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+    temp_weighted_mean_q95 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">temp_weighted_mean</span>, <span class="fl">0.95</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` regrouping output by 'sample_number', 'date_bin' (override with `.groups` argument)</span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">levels_aggregated_randomized</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_bin</span>, y <span class="op">=</span> <span class="va">pres_bin</span>, fill <span class="op">=</span> <span class="va">temp_median</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_raster</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_y_reverse</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">sample_number</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Raster pixels are placed at uneven horizontal intervals and will be</span>
-<span class="co">#&gt; shifted. Consider using geom_tile() instead.</span></code></pre></div>
-<p><img src="virtual-mooring_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">levels_aggregated_randomized</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">date_bin</span>, <span class="va">pres_bin</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>
-    temp_median_median <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">temp_median</span><span class="op">)</span>,
-    temp_median_q05 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">temp_median</span>, <span class="fl">0.05</span><span class="op">)</span>,
-    temp_median_q95 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">temp_median</span>, <span class="fl">0.95</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">pres_bin</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">temp_median_median</span><span class="op">)</span>, orientation <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span> <span class="op">+</span>
+<span class="co">#&gt; `summarise()` regrouping output by 'sample_number', 'date_bin' (override with `.groups` argument)</span>
+<span class="co">#&gt; `summarise()` regrouping output by 'pres_bin' (override with `.groups` argument)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">levels_aggregated_randomized</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">temp_weighted_mean_q50</span>, y <span class="op">=</span> <span class="va">pres_bin</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_ribbon</span><span class="op">(</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">temp_median_q05</span>, xmax <span class="op">=</span> <span class="va">temp_median_q95</span><span class="op">)</span>,
-    alpha <span class="op">=</span> <span class="fl">0.4</span>,
-    orientation <span class="op">=</span> <span class="st">"y"</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">temp_weighted_mean_q05</span>, xmax <span class="op">=</span> <span class="va">temp_weighted_mean_q95</span><span class="op">)</span>,
+    alpha <span class="op">=</span> <span class="fl">0.3</span>
   <span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">date_bin</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_y_reverse</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` regrouping output by 'date_bin' (override with `.groups` argument)</span></code></pre></div>
-<p><img src="virtual-mooring_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">scale_y_reverse</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">date_bin</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Warning: Removed 12 rows containing missing values (geom_point).</span></code></pre></div>
+<p><img src="virtual-mooring_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 </div>
 </div>
 <div id="sections" class="section level2">

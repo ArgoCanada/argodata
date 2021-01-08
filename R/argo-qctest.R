@@ -32,7 +32,7 @@ argo_unnest_history_qctest <- function(tbl) {
   tbl$history_qctest <- lapply(
     as.integer(
       ifelse(
-        tbl[["history_qctest"]] == "",
+        stringr::str_trim(tbl[["history_qctest"]]) == "",
         NA_character_,
         paste0("0x", tbl[["history_qctest"]])
       )

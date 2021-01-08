@@ -35,6 +35,21 @@ test_that("argo_prof_prof() works", {
   })
 })
 
+test_that("argo_prof_calib() works", {
+  with_argo_example_cache({
+    prof <- argo_prof_calib("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
+    expect_true(all(c("file", "parameter", "n_param", "n_calib", "n_prof") %in% names(prof)))
+
+    prof <- argo_prof_calib(
+      "dac/csio/2900313/profiles/D2900313_000.nc",
+      vars = c("scientific_calib_equation", "empty"),
+      quiet = TRUE
+    )
+
+    expect_identical(names(prof), c("file", "n_param", "n_calib", "n_prof", "scientific_calib_equation"))
+  })
+})
+
 test_that("argo_prof_history() works", {
   with_argo_example_cache({
     prof <- argo_prof_history("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
@@ -69,6 +84,18 @@ test_that("argo_read_prof_levels() works", {
 test_that("argo_read_prof_prof() works", {
   expect_is(
     argo_read_prof_prof(
+      system.file(
+        "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+test_that("argo_read_prof_calib() works", {
+  expect_is(
+    argo_read_prof_calib(
       system.file(
         "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
         package = "argodata"

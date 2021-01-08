@@ -115,6 +115,19 @@ argo_prof_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 
 #' @rdname argo_prof
 #' @export
+argo_prof_calib <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
+  argo_read_many(
+    assert_argo_prof_file,
+    argo_read_prof_calib,
+    path = path,
+    vars = vars,
+    download = download,
+    quiet = quiet
+  )
+}
+
+#' @rdname argo_prof
+#' @export
 argo_prof_history <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   argo_read_many(
     assert_argo_prof_file,
@@ -161,6 +174,16 @@ argo_read_prof_prof <- function(file, vars = NULL) {
   with_argo_nc_file(
     file,
     argo_nc_prof_read_prof,
+    vars = vars
+  )
+}
+
+#' @rdname argo_read_prof
+#' @export
+argo_read_prof_calib <- function(file, vars = NULL) {
+  with_argo_nc_file(
+    file,
+    argo_nc_prof_read_calib,
     vars = vars
   )
 }

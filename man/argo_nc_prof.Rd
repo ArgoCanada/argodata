@@ -3,9 +3,11 @@
 \name{argo_nc_prof_read_levels}
 \alias{argo_nc_prof_read_levels}
 \alias{argo_nc_prof_read_prof}
+\alias{argo_nc_prof_read_calib}
 \alias{argo_nc_prof_read_history}
 \alias{argo_nc_prof_vars_levels}
 \alias{argo_nc_prof_vars_prof}
+\alias{argo_nc_prof_vars_calib}
 \alias{argo_nc_prof_vars_history}
 \title{Read Argo profile NetCDF files}
 \usage{
@@ -13,11 +15,15 @@ argo_nc_prof_read_levels(nc, vars = NULL, meta = NULL)
 
 argo_nc_prof_read_prof(nc, vars = NULL)
 
+argo_nc_prof_read_calib(nc, vars = NULL)
+
 argo_nc_prof_read_history(nc, vars = NULL, meta = NULL)
 
 argo_nc_prof_vars_levels(nc)
 
 argo_nc_prof_vars_prof(nc)
+
+argo_nc_prof_vars_calib(nc)
 
 argo_nc_prof_vars_history(nc)
 }

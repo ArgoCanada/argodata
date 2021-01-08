@@ -30,7 +30,13 @@ argo_unnest_history_qctest <- function(tbl) {
   argo_assert_columns(tbl, "history_qctest")
 
   tbl$history_qctest <- lapply(
-    as.integer(paste0("0x", tbl[["history_qctest"]])),
+    as.integer(
+      ifelse(
+        tbl[["history_qctest"]] == "",
+        NA_character_,
+        paste0("0x", tbl[["history_qctest"]])
+      )
+    ),
     unpack_flags,
     flags = argodata::argo_reference_history_qctest$history_qctest_flag,
     values = argodata::argo_reference_history_qctest$history_qctest
@@ -40,7 +46,11 @@ argo_unnest_history_qctest <- function(tbl) {
 }
 
 unpack_flags <- function(flag_union,
-                         flags = argodata::argo_reference_qctest$history_qctest_flag,
-                         values = argodata::argo_reference_qctest$history_qctest) {
-  values[bitwAnd(flag_union, flags) != 0]
+                         flags = argodata::argo_reference_history_qctest$history_qctest_flag,
+                         values = argodata::argo_reference_history_qctest$history_qctest) {
+  if (is.na(flag_union)) {
+    NA_character_
+  } else {
+    values[bitwAnd(flag_union, flags) != 0]
+  }
 }

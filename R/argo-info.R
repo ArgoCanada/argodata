@@ -101,7 +101,9 @@ argo_nc_read_info <- function(nc, vars = NULL) {
   # to avoid name collisions that could result from making variable names
   # lowercase, namespace these as att_{ name }
   attrs <- ncdf4::ncatt_get(nc, 0)
-  names(attrs) <- stringr::str_c("att_", names(attrs))
+  if (length(attrs) > 0) {
+    names(attrs) <- stringr::str_c("att_", names(attrs))
+  }
 
   all_names <- c(vars_tbl$name, names(attrs))
   var_names <- if (!is.null(vars)) intersect_any_case(all_names, vars) else all_names

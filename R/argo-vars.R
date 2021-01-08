@@ -116,6 +116,9 @@ argo_nc_var_attr_as_tbl <- function(var, nc) {
   # this doesn't work with variables of multiple types and is covered by
   # missval in the output
   attrs[["_FillValue"]] <- NULL
-  names(attrs) <- stringr::str_c("att_", names(attrs))
+  if (length(attrs) > 0) {
+    names(attrs) <- stringr::str_c("att_", names(attrs))
+  }
+
   tibble::new_tibble(attrs, nrow = 1)
 }

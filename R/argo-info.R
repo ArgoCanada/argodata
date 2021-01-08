@@ -40,7 +40,12 @@ argo_info <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   )
 
   var_is_datetime <- names(tbl) %in% date_vars
-  tbl[var_is_datetime] <- lapply(tbl[var_is_datetime], readr::parse_datetime, format = "%Y%m%d%H%M%S")
+  tbl[var_is_datetime] <- lapply(
+    tbl[var_is_datetime],
+    strptime,
+    format = "%Y%m%d%H%M%S",
+    tz = "UTC"
+  )
 
   val_is_char <- vapply(tbl, is.character, logical(1))
   tbl[val_is_char] <- lapply(tbl[val_is_char], stringr::str_trim)

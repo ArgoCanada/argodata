@@ -121,13 +121,13 @@ argo_global_synthetic_prof <- function(download = NULL, quiet = FALSE) {
 #' @export
 #'
 argo_read_global_meta <- function(file) {
-  readr::read_csv(
-    file,
-    col_types = readr::cols(
-      file = readr::col_character(),
-      profiler_type = readr::col_double(),
-      institution = readr::col_character(),
-      date_update = readr::col_datetime("%Y%m%d%H%M%S")
+  vroom::vroom(
+    file, delim = ",",
+    col_types = vroom::cols(
+      file = vroom::col_character(),
+      profiler_type = vroom::col_double(),
+      institution = vroom::col_character(),
+      date_update = vroom::col_datetime("%Y%m%d%H%M%S")
     ),
     comment = "#"
   )
@@ -136,17 +136,17 @@ argo_read_global_meta <- function(file) {
 #' @rdname argo_read_global_meta
 #' @export
 argo_read_global_prof <- function(file) {
-  readr::read_csv(
-    file,
-    col_types = readr::cols(
-      file = readr::col_character(),
-      date = readr::col_datetime("%Y%m%d%H%M%S"),
-      latitude = readr::col_double(),
-      longitude = readr::col_double(),
-      ocean = readr::col_character(),
-      profiler_type = readr::col_double(),
-      institution = readr::col_character(),
-      date_update = readr::col_datetime("%Y%m%d%H%M%S")
+  vroom::vroom(
+    file, delim = ",",
+    col_types = vroom::cols(
+      file = vroom::col_character(),
+      date = vroom::col_datetime("%Y%m%d%H%M%S"),
+      latitude = vroom::col_double(),
+      longitude = vroom::col_double(),
+      ocean = vroom::col_character(),
+      profiler_type = vroom::col_double(),
+      institution = vroom::col_character(),
+      date_update = vroom::col_datetime("%Y%m%d%H%M%S")
     ),
     comment = "#"
   )
@@ -155,12 +155,12 @@ argo_read_global_prof <- function(file) {
 #' @rdname argo_read_global_meta
 #' @export
 argo_read_global_tech <- function(file) {
-  readr::read_csv(
-    file,
-    col_types = readr::cols(
-      file = readr::col_character(),
-      institution = readr::col_character(),
-      date_update = readr::col_datetime("%Y%m%d%H%M%S")
+  vroom::vroom(
+    file, delim = ",",
+    col_types = vroom::cols(
+      file = vroom::col_character(),
+      institution = vroom::col_character(),
+      date_update = vroom::col_datetime("%Y%m%d%H%M%S")
     ),
     comment = "#"
   )
@@ -169,17 +169,17 @@ argo_read_global_tech <- function(file) {
 #' @rdname argo_read_global_meta
 #' @export
 argo_read_global_traj <- function(file) {
-  readr::read_csv(
-    file,
-    col_types = readr::cols(
-      file = readr::col_character(),
-      latitude_max = readr::col_double(),
-      latitude_min = readr::col_double(),
-      longitude_max = readr::col_double(),
-      longitude_min = readr::col_double(),
-      profiler_type = readr::col_double(),
-      institution = readr::col_character(),
-      date_update = readr::col_datetime("%Y%m%d%H%M%S")
+  vroom::vroom(
+    file, delim = ",",
+    col_types = vroom::cols(
+      file = vroom::col_character(),
+      latitude_max = vroom::col_double(),
+      latitude_min = vroom::col_double(),
+      longitude_max = vroom::col_double(),
+      longitude_min = vroom::col_double(),
+      profiler_type = vroom::col_double(),
+      institution = vroom::col_character(),
+      date_update = vroom::col_datetime("%Y%m%d%H%M%S")
     ),
     comment = "#"
   )
@@ -188,18 +188,18 @@ argo_read_global_traj <- function(file) {
 #' @rdname argo_read_global_meta
 #' @export
 argo_read_global_bio_traj <- function(file) {
-  readr::read_csv(
-    file,
-    col_types = readr::cols(
-      file = readr::col_character(),
-      latitude_max = readr::col_double(),
-      latitude_min = readr::col_double(),
-      longitude_max = readr::col_double(),
-      longitude_min = readr::col_double(),
-      profiler_type = readr::col_double(),
-      institution = readr::col_character(),
-      parameters = readr::col_character(),
-      date_update = readr::col_datetime("%Y%m%d%H%M%S")
+  vroom::vroom(
+    file, delim = ",",
+    col_types = vroom::cols(
+      file = vroom::col_character(),
+      latitude_max = vroom::col_double(),
+      latitude_min = vroom::col_double(),
+      longitude_max = vroom::col_double(),
+      longitude_min = vroom::col_double(),
+      profiler_type = vroom::col_double(),
+      institution = vroom::col_character(),
+      parameters = vroom::col_character(),
+      date_update = vroom::col_datetime("%Y%m%d%H%M%S")
     ),
     comment = "#"
   )
@@ -208,19 +208,19 @@ argo_read_global_bio_traj <- function(file) {
 #' @rdname argo_read_global_meta
 #' @export
 argo_read_global_bio_prof <- function(file) {
-  readr::read_csv(
-    file,
-    col_types = readr::cols(
-      file = readr::col_character(),
-      date = readr::col_datetime("%Y%m%d%H%M%S"),
-      latitude = readr::col_double(),
-      longitude = readr::col_double(),
-      ocean = readr::col_character(),
-      profiler_type = readr::col_double(),
-      institution = readr::col_character(),
-      parameters = readr::col_character(),
-      parameter_data_mode = readr::col_character(),
-      date_update = readr::col_datetime("%Y%m%d%H%M%S")
+  vroom::vroom(
+    file, delim = ",",
+    col_types = vroom::cols(
+      file = vroom::col_character(),
+      date = vroom::col_datetime("%Y%m%d%H%M%S"),
+      latitude = vroom::col_double(),
+      longitude = vroom::col_double(),
+      ocean = vroom::col_character(),
+      profiler_type = vroom::col_double(),
+      institution = vroom::col_character(),
+      parameters = vroom::col_character(),
+      parameter_data_mode = vroom::col_character(),
+      date_update = vroom::col_datetime("%Y%m%d%H%M%S")
     ),
     comment = "#"
   )
@@ -229,19 +229,19 @@ argo_read_global_bio_prof <- function(file) {
 #' @rdname argo_read_global_meta
 #' @export
 argo_read_global_synthetic_prof <- function(file) {
-  readr::read_csv(
-    file,
-    col_types = readr::cols(
-      file = readr::col_character(),
-      date = readr::col_datetime("%Y%m%d%H%M%S"),
-      latitude = readr::col_double(),
-      longitude = readr::col_double(),
-      ocean = readr::col_character(),
-      profiler_type = readr::col_double(),
-      institution = readr::col_character(),
-      parameters = readr::col_character(),
-      parameter_data_mode = readr::col_character(),
-      date_update = readr::col_datetime("%Y%m%d%H%M%S")
+  vroom::vroom(
+    file, delim = ",",
+    col_types = vroom::cols(
+      file = vroom::col_character(),
+      date = vroom::col_datetime("%Y%m%d%H%M%S"),
+      latitude = vroom::col_double(),
+      longitude = vroom::col_double(),
+      ocean = vroom::col_character(),
+      profiler_type = vroom::col_double(),
+      institution = vroom::col_character(),
+      parameters = vroom::col_character(),
+      parameter_data_mode = vroom::col_character(),
+      date_update = vroom::col_datetime("%Y%m%d%H%M%S")
     ),
     comment = "#"
   )

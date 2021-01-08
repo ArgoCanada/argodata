@@ -19,7 +19,7 @@ Imports:
     rlang,
     fs,
     glue,
-    readr,
+    vroom,
     stringr,
     ncdf4,
     vctrs,

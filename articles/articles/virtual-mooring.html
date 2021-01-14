@@ -127,7 +127,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>
 
 <span class="va">profiles</span>
-<span class="co">#&gt; # A tibble: 216 x 14</span>
+<span class="co">#&gt; # A tibble: 173 x 14</span>
 <span class="co">#&gt;    file  file_float date                latitude longitude file_type file_cycle</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;      &lt;dttm&gt;                 &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;          &lt;int&gt;</span>
 <span class="co">#&gt;  1 meds… 4901167    2011-07-03 12:58:00     56.1     -51.8 prof               6</span>
@@ -140,7 +140,7 @@
 <span class="co">#&gt;  8 meds… 4901163    2011-08-19 16:41:00     56.8     -49.1 prof              10</span>
 <span class="co">#&gt;  9 meds… 4901167    2011-08-22 14:24:00     56.5     -50.2 prof              11</span>
 <span class="co">#&gt; 10 meds… 4901163    2011-08-29 18:08:00     56.7     -49.3 prof              11</span>
-<span class="co">#&gt; # … with 206 more rows, and 7 more variables: file_data_mode &lt;chr&gt;,</span>
+<span class="co">#&gt; # … with 163 more rows, and 7 more variables: file_data_mode &lt;chr&gt;,</span>
 <span class="co">#&gt; #   file_modifier &lt;chr&gt;, file_descending &lt;lgl&gt;, ocean &lt;chr&gt;,</span>
 <span class="co">#&gt; #   profiler_type &lt;dbl&gt;, institution &lt;chr&gt;, date_update &lt;dttm&gt;</span></code></pre></div>
 <p>A good sanity check is to examine the distribution of profiles in space and time, as we’ll be spending a lot of time examining the interactions between these dimensions. Below I’ve created a bar plot to examine the distribution of profiles both within and between years: there is a lot of variability! We will come back to this later on.</p>
@@ -174,11 +174,11 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/argo_prof_levels.html">argo_prof_levels</a></span><span class="op">(</span><span class="va">profiles</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">file</span>, <span class="va">date</span>, <span class="va">pres</span>, <span class="va">temp</span>, <span class="va">temp_qc</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Downloading 216 files from 'https://data-argo.ifremer.fr'</span>
-<span class="co">#&gt; Extracting from 216 files</span>
+<span class="co">#&gt; Downloading 173 files from 'https://data-argo.ifremer.fr'</span>
+<span class="co">#&gt; Extracting from 173 files</span>
 
 <span class="va">levels</span>
-<span class="co">#&gt; # A tibble: 233,909 x 20</span>
+<span class="co">#&gt; # A tibble: 217,312 x 20</span>
 <span class="co">#&gt;    file  date                 pres  temp temp_qc n_prof cycle_number n_levels</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt;        &lt;int&gt;    &lt;int&gt;</span>
 <span class="co">#&gt;  1 meds… 2011-07-03 12:58:00  6.70  7.24 1            1            6        1</span>
@@ -191,7 +191,7 @@
 <span class="co">#&gt;  8 meds… 2011-07-03 12:58:00 69     3.95 1            1            6        8</span>
 <span class="co">#&gt;  9 meds… 2011-07-03 12:58:00 80.6   3.63 1            1            6        9</span>
 <span class="co">#&gt; 10 meds… 2011-07-03 12:58:00 90.6   3.94 1            1            6       10</span>
-<span class="co">#&gt; # … with 233,899 more rows, and 12 more variables: pres_qc &lt;chr&gt;,</span>
+<span class="co">#&gt; # … with 217,302 more rows, and 12 more variables: pres_qc &lt;chr&gt;,</span>
 <span class="co">#&gt; #   pres_adjusted &lt;dbl&gt;, pres_adjusted_qc &lt;chr&gt;, pres_adjusted_error &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;, temp_adjusted_error &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;, psal_adjusted_qc &lt;chr&gt;,</span>
@@ -205,7 +205,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">levels</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">pres</span>, x <span class="op">=</span> <span class="va">temp</span>, col <span class="op">=</span> <span class="va">temp_qc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_y_reverse</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Removed 170850 rows containing missing values (geom_point).</span></code></pre></div>
+<span class="co">#&gt; Warning: Removed 167274 rows containing missing values (geom_point).</span></code></pre></div>
 <p><img src="virtual-mooring_files/figure-html/unnamed-chunk-8-1.png" width="2187.5"></p>
 <p>From this plot it’s clear that there are some points with clearly bad values that we need to take care of. A similar plot of <code>pres_qc</code> indicates that there are some bad pressure values as well. Depending what stage you are at in your analysis, you may want to remove rows that you can’t use in future analysis or set these values to <code>NA</code>. I’ll demonstrate the latter here using <code><a href="../../reference/argo_qc_censor_if_not.html">argo_qc_censor_if_not()</a></code>, which sets values to <code>NA</code> where the paired <code>_qc</code> column is not in a specified vector of values. The only value that makes sense to keep based on a plot of our results is <code>1</code>, which corresponds to “good data” in the reference table (beware that not all data marked “good” has been checked with the same degree of scrutiny!).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -219,7 +219,7 @@
     alpha <span class="op">=</span> <span class="fl">0.05</span>
   <span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_y_reverse</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Removed 174353 row(s) containing missing values (geom_path).</span></code></pre></div>
+<span class="co">#&gt; Warning: Removed 169016 row(s) containing missing values (geom_path).</span></code></pre></div>
 <p><img src="virtual-mooring_files/figure-html/unnamed-chunk-9-1.png" width="2187.5"></p>
 <p>We’ve set a lot of values to <code>NA</code> - in some cases many profiles worth. While we do want to keep a record of levels even if the temperature was set to <code>NA</code> because of its <code>_qc</code> column value, we also don’t need profiles where there is little temperature information, and including them in our data moving forward is not useful.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -249,7 +249,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">file</span>, <span class="va">longitude</span>, <span class="va">latitude</span>, <span class="va">distance_km</span>, <span class="va">distance_weight</span><span class="op">)</span>
 
 <span class="va">profile_weighted</span>
-<span class="co">#&gt; # A tibble: 216 x 5</span>
+<span class="co">#&gt; # A tibble: 173 x 5</span>
 <span class="co">#&gt;    file                           longitude latitude distance_km distance_weight</span>
 <span class="co">#&gt;    &lt;chr&gt;                              &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 meds/4901167/profiles/R490116…     -51.8     56.1       150.           0.0817</span>
@@ -262,7 +262,7 @@
 <span class="co">#&gt;  8 meds/4901163/profiles/R490116…     -49.1     56.8       125.           0.0895</span>
 <span class="co">#&gt;  9 meds/4901167/profiles/R490116…     -50.2     56.5        93.7          0.103 </span>
 <span class="co">#&gt; 10 meds/4901163/profiles/R490116…     -49.3     56.7       117.           0.0924</span>
-<span class="co">#&gt; # … with 206 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 163 more rows</span></code></pre></div>
 <p>The next step is to choose bins that are appropriate to the scale of the problem. In this case, we’re interested in monthly bins (regardless of year) and depth bins 10 decibars in height. These bin sizes reflect the amount of data we have: if we were only summarizing 2019, for which there are many profiles with high-resolution sampling intervals, we may be able to use smaller bins (e.g., one bin per month per year or 1 decibar height).</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">levels_binned</span> <span class="op">&lt;-</span> <span class="va">levels_clean</span> <span class="op">%&gt;%</span> 
@@ -273,7 +273,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">pres_bin</span>, <span class="va">date_bin</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">levels_binned</span>
-<span class="co">#&gt; # A tibble: 49,753 x 22</span>
+<span class="co">#&gt; # A tibble: 38,557 x 22</span>
 <span class="co">#&gt;    pres_bin date_bin file  date                 pres  temp temp_qc n_prof</span>
 <span class="co">#&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt;</span>
 <span class="co">#&gt;  1       50        7 meds… 2011-07-03 12:58:00  6.70  7.24 1            1</span>
@@ -286,7 +286,7 @@
 <span class="co">#&gt;  8       50        7 meds… 2011-07-03 12:58:00 69     3.95 1            1</span>
 <span class="co">#&gt;  9       50        7 meds… 2011-07-03 12:58:00 80.6   3.63 1            1</span>
 <span class="co">#&gt; 10       50        7 meds… 2011-07-03 12:58:00 90.6   3.94 1            1</span>
-<span class="co">#&gt; # … with 49,743 more rows, and 14 more variables: cycle_number &lt;int&gt;,</span>
+<span class="co">#&gt; # … with 38,547 more rows, and 14 more variables: cycle_number &lt;int&gt;,</span>
 <span class="co">#&gt; #   n_levels &lt;int&gt;, pres_qc &lt;chr&gt;, pres_adjusted &lt;dbl&gt;, pres_adjusted_qc &lt;chr&gt;,</span>
 <span class="co">#&gt; #   pres_adjusted_error &lt;dbl&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span>
 <span class="co">#&gt; #   temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span>
@@ -305,20 +305,20 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">pres_bin</span>, <span class="va">date_bin</span>, <span class="va">weight</span>, <span class="va">file</span>, <span class="va">date</span>, <span class="va">pres</span>, <span class="va">temp</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">levels_binned_weighted</span>
-<span class="co">#&gt; # A tibble: 49,753 x 28</span>
+<span class="co">#&gt; # A tibble: 38,557 x 28</span>
 <span class="co">#&gt;    pres_bin date_bin  weight file  date                 pres  temp temp_qc</span>
 <span class="co">#&gt;       &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  </span>
-<span class="co">#&gt;  1       50        7 0.00623 meds… 2011-07-03 12:58:00  6.70  7.24 1      </span>
-<span class="co">#&gt;  2       50        7 0.00623 meds… 2011-07-03 12:58:00 10.8   6.83 1      </span>
-<span class="co">#&gt;  3       50        7 0.00623 meds… 2011-07-03 12:58:00 20.1   5.51 1      </span>
-<span class="co">#&gt;  4       50        7 0.00623 meds… 2011-07-03 12:58:00 30.2   3.85 1      </span>
-<span class="co">#&gt;  5       50        7 0.00623 meds… 2011-07-03 12:58:00 40.5   3.68 1      </span>
-<span class="co">#&gt;  6       50        7 0.00623 meds… 2011-07-03 12:58:00 49.9   3.88 1      </span>
-<span class="co">#&gt;  7       50        7 0.00623 meds… 2011-07-03 12:58:00 59.8   4.01 1      </span>
-<span class="co">#&gt;  8       50        7 0.00623 meds… 2011-07-03 12:58:00 69     3.95 1      </span>
-<span class="co">#&gt;  9       50        7 0.00623 meds… 2011-07-03 12:58:00 80.6   3.63 1      </span>
-<span class="co">#&gt; 10       50        7 0.00623 meds… 2011-07-03 12:58:00 90.6   3.94 1      </span>
-<span class="co">#&gt; # … with 49,743 more rows, and 20 more variables: n_prof &lt;int&gt;,</span>
+<span class="co">#&gt;  1       50        7 0.00861 meds… 2011-07-03 12:58:00  6.70  7.24 1      </span>
+<span class="co">#&gt;  2       50        7 0.00861 meds… 2011-07-03 12:58:00 10.8   6.83 1      </span>
+<span class="co">#&gt;  3       50        7 0.00861 meds… 2011-07-03 12:58:00 20.1   5.51 1      </span>
+<span class="co">#&gt;  4       50        7 0.00861 meds… 2011-07-03 12:58:00 30.2   3.85 1      </span>
+<span class="co">#&gt;  5       50        7 0.00861 meds… 2011-07-03 12:58:00 40.5   3.68 1      </span>
+<span class="co">#&gt;  6       50        7 0.00861 meds… 2011-07-03 12:58:00 49.9   3.88 1      </span>
+<span class="co">#&gt;  7       50        7 0.00861 meds… 2011-07-03 12:58:00 59.8   4.01 1      </span>
+<span class="co">#&gt;  8       50        7 0.00861 meds… 2011-07-03 12:58:00 69     3.95 1      </span>
+<span class="co">#&gt;  9       50        7 0.00861 meds… 2011-07-03 12:58:00 80.6   3.63 1      </span>
+<span class="co">#&gt; 10       50        7 0.00861 meds… 2011-07-03 12:58:00 90.6   3.94 1      </span>
+<span class="co">#&gt; # … with 38,547 more rows, and 20 more variables: n_prof &lt;int&gt;,</span>
 <span class="co">#&gt; #   cycle_number &lt;int&gt;, n_levels &lt;int&gt;, pres_qc &lt;chr&gt;, pres_adjusted &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   pres_adjusted_qc &lt;chr&gt;, pres_adjusted_error &lt;dbl&gt;, temp_adjusted &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   temp_adjusted_qc &lt;chr&gt;, temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;,</span>

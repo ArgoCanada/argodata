@@ -143,7 +143,7 @@ argo_nc_prof_read_history <- function(nc, vars = NULL, meta = NULL) {
     argo_nc_values(nc, meta)
   )
   values <- c(
-    list(N_HISTORY = nc$dim$N_HISTORY$vals) %||% rep(NA_integer_, n),
+    list(N_HISTORY = vctrs::vec_rep_each(nc$dim$N_HISTORY$vals %||% rep(NA_integer_, n), n_prof)),
     argo_nc_values(nc, intersect(vars, nc_vars_reg))
   )
   values_string <- argo_nc_values(nc, intersect(vars, nc_vars_string))

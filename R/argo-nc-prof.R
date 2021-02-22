@@ -62,6 +62,9 @@ argo_nc_prof_read_levels <- function(nc, vars = NULL) {
 argo_nc_prof_read_prof <- function(nc, vars = NULL) {
   nc_vars <- argo_nc_prof_vars_prof(nc)
   vars <- if (is.null(vars)) nc_vars else intersect(vars, nc_vars)
+  vars_string <- intersect(vars, argo_nc_vars_by_dimension(nc, 2, "N_PROF"))
+  vars_non_string <- setdiff(vars, vars_string)
+
   n <- nc$dim$N_PROF$len
 
   if (is.null(n)) {
@@ -72,7 +75,7 @@ argo_nc_prof_read_prof <- function(nc, vars = NULL) {
     list(N_PROF = nc$dim$N_PROF$vals) %||% rep(NA_integer_, n),
     argo_nc_values(nc, vars)
   )
-  values <- argo_string_to_chars_tbl(values)
+  values[vars_non_string] <- argo_string_to_chars_tbl(values[vars_non_string])
 
   tibble::new_tibble(values, nrow = n)
 }
@@ -158,12 +161,18 @@ argo_nc_prof_vars_levels <- function(nc) {
 #' @rdname argo_nc_prof
 #' @export
 argo_nc_prof_vars_prof <- function(nc) {
-  var_has_n_prof <- vapply(nc$var, function(x) {
-    if (length(x$dim) != 1) return(FALSE)
-    x$dim[[1]]$name == "N_PROF"
-  }, logical(1))
+  # scalar variables all have N_PROF as first dimension
+  vars_prof_1 <- argo_nc_vars_by_dimension(nc, 1, "N_PROF")
 
-  names(nc$var)[var_has_n_prof]
+  # string variables all have N_PROF as second dimension
+  vars_prof_2 <- argo_nc_vars_by_dimension(nc, 2, "N_PROF")
+
+  # history also has N_PROF as first dimension
+  # levels also have N_PROF as second dimension
+  setdiff(
+    c(vars_prof_1, vars_prof_2),
+    c(argo_nc_prof_vars_history(nc), argo_nc_prof_vars_levels(nc))
+  )
 }
 
 #' @rdname argo_nc_prof

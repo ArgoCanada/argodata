@@ -102,7 +102,7 @@ argo_prof_levels <- function(path, vars = NULL, download = NULL, quiet = FALSE) 
 #' @rdname argo_prof
 #' @export
 argo_prof_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
-  argo_read_many(
+  tbl <- argo_read_many(
     assert_argo_prof_file,
     argo_read_prof_prof,
     path = path,
@@ -110,6 +110,10 @@ argo_prof_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
     download = download,
     quiet = quiet
   )
+
+  val_is_char <- vapply(tbl, is.character, logical(1))
+  tbl[val_is_char] <- lapply(tbl[val_is_char], stringr::str_trim)
+  tbl
 }
 
 #' @rdname argo_prof

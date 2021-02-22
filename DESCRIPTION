@@ -24,13 +24,10 @@ Imports:
     ncdf4,
     vctrs,
     tibble,
-    progressr,
     progress
 Suggests: 
     testthat,
     dplyr,
-    future.apply,
-    future,
     tidyr
 URL: https://github.com/ArgoCanada/argodata
 BugReports: https://github.com/ArgoCanada/argodata/issues

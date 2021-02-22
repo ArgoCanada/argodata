@@ -21,14 +21,17 @@ argo_info <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
   # joined with one of the global tables
   names(cached) <- stringr::str_remove(path, "^dac/")
 
-  files_word <- if (length(cached) != 1) "files" else "file"
-  with_argo_progress({
-    tbls <- argo_map(
-      cached,
-      argo_read_info,
-      vars = if(is.null(vars)) NULL else toupper(vars)
-    )
-  }, quiet = quiet, title = glue("Extracting from { length(cached) } { files_word }"))
+  if (!quiet) {
+    files_word <- if (length(cached) != 1) "files" else "file"
+    title <- glue("Extracting from { length(cached) } { files_word }")
+    message(title)
+  }
+
+  tbls <- argo_map(
+    cached,
+    argo_read_info,
+    vars = if(is.null(vars)) NULL else toupper(vars)
+  )
 
   tbl <- vctrs::vec_rbind(!!! tbls, .names_to = "file")
   names(tbl) <- tolower(names(tbl))

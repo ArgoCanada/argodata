@@ -28,20 +28,17 @@ argo_download <- function(path, download = NULL, async = NULL, quiet = FALSE) {
   url_download <- argo_url(path_download)
   cached_download <- rlang::set_names(argo_cached(path_download), path_download)
 
-  if (length(cached_download) > 0) {
+  if (!quiet && length(cached_download) > 0) {
     files_word <- if (length(url_download) != 1) "files" else "file"
     title <- glue("Downloading { length(url_download) } { files_word } from '{ argo_mirror() }'")
-  } else {
-    title <- NULL
+    message(title)
   }
 
-  with_argo_progress({
-    if (async) {
-      multi_file_download_async(url_download, cached_download)
-    } else {
-      multi_file_download(url_download, cached_download)
-    }
-  }, quiet = quiet, title = title)
+  if (async) {
+    multi_file_download_async(url_download, cached_download)
+  } else {
+    multi_file_download(url_download, cached_download)
+  }
 
   invisible(argo_cached(path))
 }

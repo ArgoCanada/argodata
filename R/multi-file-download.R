@@ -12,11 +12,15 @@ multi_file_download <- function(url, dest) {
     return(invisible(character(0)))
   }
 
-  p <- progressr::progressor(along = url)
+  pb <- progress::progress_bar$new(
+    "[:bar] :file",
+    total = length(url)
+  )
+  pb$tick(0)
 
   # download the files!
   error_message <- vapply(seq_along(url), function(i) {
-    p(message = basename(url[i]))
+    pb$tick(tokens = list(file = basename(url[i])))
 
     if (!dir.exists(dirname(dest[i]))) {
       dir.create(dirname(dest[i]), recursive = TRUE, showWarnings = FALSE)
@@ -71,15 +75,19 @@ multi_file_download_async <- function(url, dest) {
   }
 
   pool <- curl::new_pool(total_con = 6, host_con = 6)
-  p <- progressr::progressor(along = url)
+  pb <- progress::progress_bar$new(
+    "[:bar] :file",
+    total = length(url)
+  )
+  pb$tick(0)
   key <- paste(url, dest)
 
   for (i in seq_along(url)) {
     results[[paste(url[i], dest[i])]] <- FALSE
     curl::curl_fetch_multi(
       url[i],
-      multi_download_async_success(url[i], dest[i], results, p),
-      multi_download_async_failure(url[i], dest[i], results, p),
+      multi_download_async_success(url[i], dest[i], results, pb),
+      multi_download_async_failure(url[i], dest[i], results, pb),
       pool = pool
     )
   }
@@ -98,21 +106,16 @@ multi_file_download_async <- function(url, dest) {
   invisible(dest)
 }
 
-multi_download_async_success <- function(url, dest, results, prog) {
+multi_download_async_success <- function(url, dest, results, pb) {
   force(url)
   force(dest)
   force(results)
-  force(prog)
+  force(pb)
 
   function(res) {
-    prog(message = basename(url))
+    pb$tick(tokens = list(file = basename(url)))
 
     if (res$status_code >= 300) {
-      prog(
-        message = glue("Fetching '{ url }' failed with status { res$status_code }"),
-        amount = 0,
-        class = "sticky"
-      )
       results[[paste(url, dest)]] <- FALSE
       return()
     }
@@ -126,20 +129,14 @@ multi_download_async_success <- function(url, dest, results, prog) {
   }
 }
 
-multi_download_async_failure <- function(url, dest, results, prog) {
+multi_download_async_failure <- function(url, dest, results, pb) {
   force(url)
   force(dest)
   force(results)
-  force(prog)
+  force(pb)
 
   function(msg) {
-    prog(message = basename(url))
-    prog(
-      message = glue("Fetching '{ url }' failed ({ msg })"),
-      amount = 0,
-      class = "sticky"
-    )
-
+    pb$tick(tokens = list(file = basename(url)))
     results[[paste(url, dest)]] <- FALSE
   }
 }

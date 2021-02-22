@@ -8,12 +8,6 @@ test_that("argo_mapper() can use functions and strings", {
   expect_identical(argo_mapper(), lapply)
   expect_identical(argo_map(c("1", "2"), paste, "3"), list("1 3", "2 3"))
 
-  argo_set_mapper(argo_map_future)
-  expect_identical(argo_map(c("1", "2"), paste, "3"), list("1 3", "2 3"))
-
-  argo_set_mapper(argo_map_multisession)
-  expect_identical(argo_map(c("1", "2"), paste, "3"), list("1 3", "2 3"))
-
   argo_set_mapper(123)
   expect_error(argo_mapper(), "must be a string")
 

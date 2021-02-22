@@ -166,31 +166,30 @@ on the <code>history_qctest</code> column.</p>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>argo_reference_history_qctest</span>, by <span class='op'>=</span> <span class='st'>"history_qctest"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>history_qctest_description</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 20 x 9</span><span>
-#&gt;    history_qctest_… file  n_prof cycle_number date                n_history
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>                  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Platform Identi… csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'> 2</span><span> Impossible Date… csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'> 3</span><span> Impossible Loca… csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'> 4</span><span> Position on Lan… csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'> 5</span><span> Impossible Spee… csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'> 6</span><span> Global Range te… csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'> 7</span><span> Regional Global… csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'> 8</span><span> Pressure Increa… csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'> 9</span><span> Spike test       csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'>10</span><span> Gradient test    csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'>11</span><span> Digit Rollover … csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'>12</span><span> Stuck Value test csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'>13</span><span> Density Inversi… csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'>14</span><span> Gross Salinity … csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'>15</span><span> Frozen profile … csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'>16</span><span> Deepest pressur… csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         1
-#&gt; </span><span style='color: #555555;'>17</span><span> Global Range te… csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         3
-#&gt; </span><span style='color: #555555;'>18</span><span> Spike test       csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         3
-#&gt; </span><span style='color: #555555;'>19</span><span> Gradient test    csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         3
-#&gt; </span><span style='color: #555555;'>20</span><span> Frozen profile … csio…      1            1 2018-05-24 </span><span style='color: #555555;'>05:44:42</span><span>         3
-#&gt; </span><span style='color: #555555;'># … with 3 more variables: history_qctest </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, history_qctest_number </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   history_qctest_flag </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 20 x 7</span><span>
+#&gt;    history_qctest_… file  n_prof n_history history_qctest history_qctest_…
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> Platform Identi… csio…      1         1 2                             1
+#&gt; </span><span style='color: #555555;'> 2</span><span> Impossible Date… csio…      1         1 4                             2
+#&gt; </span><span style='color: #555555;'> 3</span><span> Impossible Loca… csio…      1         1 8                             3
+#&gt; </span><span style='color: #555555;'> 4</span><span> Position on Lan… csio…      1         1 10                            4
+#&gt; </span><span style='color: #555555;'> 5</span><span> Impossible Spee… csio…      1         1 20                            5
+#&gt; </span><span style='color: #555555;'> 6</span><span> Global Range te… csio…      1         1 40                            6
+#&gt; </span><span style='color: #555555;'> 7</span><span> Regional Global… csio…      1         1 80                            7
+#&gt; </span><span style='color: #555555;'> 8</span><span> Pressure Increa… csio…      1         1 100                           8
+#&gt; </span><span style='color: #555555;'> 9</span><span> Spike test       csio…      1         1 200                           9
+#&gt; </span><span style='color: #555555;'>10</span><span> Gradient test    csio…      1         1 800                          11
+#&gt; </span><span style='color: #555555;'>11</span><span> Digit Rollover … csio…      1         1 1000                         12
+#&gt; </span><span style='color: #555555;'>12</span><span> Stuck Value test csio…      1         1 2000                         13
+#&gt; </span><span style='color: #555555;'>13</span><span> Density Inversi… csio…      1         1 4000                         14
+#&gt; </span><span style='color: #555555;'>14</span><span> Gross Salinity … csio…      1         1 10000                        16
+#&gt; </span><span style='color: #555555;'>15</span><span> Frozen profile … csio…      1         1 3FC18                        18
+#&gt; </span><span style='color: #555555;'>16</span><span> Deepest pressur… csio…      1         1 80000                        19
+#&gt; </span><span style='color: #555555;'>17</span><span> Global Range te… csio…      1         3 40                            6
+#&gt; </span><span style='color: #555555;'>18</span><span> Spike test       csio…      1         3 200                           9
+#&gt; </span><span style='color: #555555;'>19</span><span> Gradient test    csio…      1         3 800                          11
+#&gt; </span><span style='color: #555555;'>20</span><span> Frozen profile … csio…      1         3 3FC18                        18
+#&gt; </span><span style='color: #555555;'># … with 1 more variable: history_qctest_flag </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

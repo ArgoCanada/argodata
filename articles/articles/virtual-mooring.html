@@ -127,7 +127,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>
 
 <span class="va">profiles</span>
-<span class="co">#&gt; # A tibble: 173 x 14</span>
+<span class="co">#&gt; # A tibble: 166 x 14</span>
 <span class="co">#&gt;    file  file_float date                latitude longitude file_type file_cycle</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;      &lt;dttm&gt;                 &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;          &lt;int&gt;</span>
 <span class="co">#&gt;  1 meds… 4901167    2011-07-03 12:58:00     56.1     -51.8 prof               6</span>
@@ -140,7 +140,7 @@
 <span class="co">#&gt;  8 meds… 4901163    2011-08-19 16:41:00     56.8     -49.1 prof              10</span>
 <span class="co">#&gt;  9 meds… 4901167    2011-08-22 14:24:00     56.5     -50.2 prof              11</span>
 <span class="co">#&gt; 10 meds… 4901163    2011-08-29 18:08:00     56.7     -49.3 prof              11</span>
-<span class="co">#&gt; # … with 163 more rows, and 7 more variables: file_data_mode &lt;chr&gt;,</span>
+<span class="co">#&gt; # … with 156 more rows, and 7 more variables: file_data_mode &lt;chr&gt;,</span>
 <span class="co">#&gt; #   file_modifier &lt;chr&gt;, file_descending &lt;lgl&gt;, ocean &lt;chr&gt;,</span>
 <span class="co">#&gt; #   profiler_type &lt;dbl&gt;, institution &lt;chr&gt;, date_update &lt;dttm&gt;</span></code></pre></div>
 <p>A good sanity check is to examine the distribution of profiles in space and time, as we’ll be spending a lot of time examining the interactions between these dimensions. Below I’ve created a bar plot to examine the distribution of profiles both within and between years: there is a lot of variability! We will come back to this later on.</p>
@@ -158,7 +158,7 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/ggspatial/">ggspatial</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">profiles</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">longitude</span>, y <span class="op">=</span> <span class="va">latitude</span>, col <span class="op">=</span> <span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">profiles</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">longitude</span>, y <span class="op">=</span> <span class="va">latitude</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://paleolimbot.github.io/ggspatial/reference/annotation_map_tile.html">annotation_map_tile</a></span><span class="op">(</span>zoomin <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, progress <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://paleolimbot.github.io/ggspatial/reference/geom_spatial_rect.html">geom_spatial_rect</a></span><span class="op">(</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="fl">50</span>, ymax <span class="op">=</span> <span class="fl">65</span>, xmin <span class="op">=</span> <span class="op">-</span><span class="fl">70</span>, xmax <span class="op">=</span> <span class="op">-</span><span class="fl">30</span><span class="op">)</span>,
@@ -170,32 +170,31 @@
   <span class="fu"><a href="https://paleolimbot.github.io/ggspatial/reference/stat_spatial_identity.html">geom_spatial_point</a></span><span class="op">(</span>crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="virtual-mooring_files/figure-html/unnamed-chunk-6-1.png" width="2187.5"></p>
-<p>You can use plots like this to ensure that you have a reasonable density of samples in both space and time for the question you are trying to answer. Once you’ve done this, you can load profile levels using <code><a href="../../reference/argo_prof_levels.html">argo_prof_levels()</a></code>. This will download the files from the Argo server and load them into a table with one row per profile per sampling level. This will take about 90 seconds depending on your internet connection and system configuration (if you do this often, see <code><a href="../../reference/argo_map.html">argo_set_mapper()</a></code> for how to use multiple cores on your computer to do this faster).</p>
+<p>You can use plots like this to ensure that you have a reasonable density of samples in both space and time for the question you are trying to answer. Once you’ve done this, you can load profile levels using <code><a href="../../reference/argo_prof_levels.html">argo_prof_levels()</a></code>. This will download the files from the Argo server and load them into a table with one row per profile per sampling level. This will take about 90 seconds depending on your internet connection and system configuration.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/argo_prof_levels.html">argo_prof_levels</a></span><span class="op">(</span><span class="va">profiles</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">file</span>, <span class="va">date</span>, <span class="va">pres</span>, <span class="va">temp</span>, <span class="va">temp_qc</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Downloading 173 files from 'https://data-argo.ifremer.fr'</span>
-<span class="co">#&gt; Extracting from 173 files</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">file</span>, <span class="va">pres</span>, <span class="va">temp</span>, <span class="va">temp_qc</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Downloading 166 files from 'https://data-argo.ifremer.fr'</span>
+<span class="co">#&gt; Extracting from 166 files</span>
 
 <span class="va">levels</span>
-<span class="co">#&gt; # A tibble: 217,312 x 20</span>
-<span class="co">#&gt;    file  date                 pres  temp temp_qc n_prof cycle_number n_levels</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt;        &lt;int&gt;    &lt;int&gt;</span>
-<span class="co">#&gt;  1 meds… 2011-07-03 12:58:00  6.70  7.24 1            1            6        1</span>
-<span class="co">#&gt;  2 meds… 2011-07-03 12:58:00 10.8   6.83 1            1            6        2</span>
-<span class="co">#&gt;  3 meds… 2011-07-03 12:58:00 20.1   5.51 1            1            6        3</span>
-<span class="co">#&gt;  4 meds… 2011-07-03 12:58:00 30.2   3.85 1            1            6        4</span>
-<span class="co">#&gt;  5 meds… 2011-07-03 12:58:00 40.5   3.68 1            1            6        5</span>
-<span class="co">#&gt;  6 meds… 2011-07-03 12:58:00 49.9   3.88 1            1            6        6</span>
-<span class="co">#&gt;  7 meds… 2011-07-03 12:58:00 59.8   4.01 1            1            6        7</span>
-<span class="co">#&gt;  8 meds… 2011-07-03 12:58:00 69     3.95 1            1            6        8</span>
-<span class="co">#&gt;  9 meds… 2011-07-03 12:58:00 80.6   3.63 1            1            6        9</span>
-<span class="co">#&gt; 10 meds… 2011-07-03 12:58:00 90.6   3.94 1            1            6       10</span>
-<span class="co">#&gt; # … with 217,302 more rows, and 12 more variables: pres_qc &lt;chr&gt;,</span>
-<span class="co">#&gt; #   pres_adjusted &lt;dbl&gt;, pres_adjusted_qc &lt;chr&gt;, pres_adjusted_error &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;, temp_adjusted_error &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;, psal_adjusted_qc &lt;chr&gt;,</span>
-<span class="co">#&gt; #   psal_adjusted_error &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 213,372 x 18</span>
+<span class="co">#&gt;    file   pres  temp temp_qc n_prof n_levels pres_qc pres_adjusted</span>
+<span class="co">#&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt;    &lt;int&gt; &lt;chr&gt;           &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 meds…  6.70  7.24 1            1        1 1                6.90</span>
+<span class="co">#&gt;  2 meds… 10.8   6.83 1            1        2 1               11   </span>
+<span class="co">#&gt;  3 meds… 20.1   5.51 1            1        3 1               20.3 </span>
+<span class="co">#&gt;  4 meds… 30.2   3.85 1            1        4 1               30.4 </span>
+<span class="co">#&gt;  5 meds… 40.5   3.68 1            1        5 1               40.7 </span>
+<span class="co">#&gt;  6 meds… 49.9   3.88 1            1        6 1               50.1 </span>
+<span class="co">#&gt;  7 meds… 59.8   4.01 1            1        7 1               60   </span>
+<span class="co">#&gt;  8 meds… 69     3.95 1            1        8 1               69.2 </span>
+<span class="co">#&gt;  9 meds… 80.6   3.63 1            1        9 1               80.8 </span>
+<span class="co">#&gt; 10 meds… 90.6   3.94 1            1       10 1               90.8 </span>
+<span class="co">#&gt; # … with 213,362 more rows, and 10 more variables: pres_adjusted_qc &lt;chr&gt;,</span>
+<span class="co">#&gt; #   pres_adjusted_error &lt;dbl&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span>
+<span class="co">#&gt; #   temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   psal_adjusted_qc &lt;chr&gt;, psal_adjusted_error &lt;dbl&gt;</span></code></pre></div>
 </div>
 <div id="clean" class="section level2">
 <h2 class="hasAnchor">
@@ -249,7 +248,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">file</span>, <span class="va">longitude</span>, <span class="va">latitude</span>, <span class="va">distance_km</span>, <span class="va">distance_weight</span><span class="op">)</span>
 
 <span class="va">profile_weighted</span>
-<span class="co">#&gt; # A tibble: 173 x 5</span>
+<span class="co">#&gt; # A tibble: 166 x 5</span>
 <span class="co">#&gt;    file                           longitude latitude distance_km distance_weight</span>
 <span class="co">#&gt;    &lt;chr&gt;                              &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 meds/4901167/profiles/R490116…     -51.8     56.1       150.           0.0817</span>
@@ -262,10 +261,11 @@
 <span class="co">#&gt;  8 meds/4901163/profiles/R490116…     -49.1     56.8       125.           0.0895</span>
 <span class="co">#&gt;  9 meds/4901167/profiles/R490116…     -50.2     56.5        93.7          0.103 </span>
 <span class="co">#&gt; 10 meds/4901163/profiles/R490116…     -49.3     56.7       117.           0.0924</span>
-<span class="co">#&gt; # … with 163 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 156 more rows</span></code></pre></div>
 <p>The next step is to choose bins that are appropriate to the scale of the problem. In this case, we’re interested in monthly bins (regardless of year) and depth bins 10 decibars in height. These bin sizes reflect the amount of data we have: if we were only summarizing 2019, for which there are many profiles with high-resolution sampling intervals, we may be able to use smaller bins (e.g., one bin per month per year or 1 decibar height).</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">levels_binned</span> <span class="op">&lt;-</span> <span class="va">levels_clean</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">levels_binned</span> <span class="op">&lt;-</span> <span class="va">levels_clean</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">profiles</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">file</span>, <span class="va">date</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"file"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     pres_bin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="va">pres</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span> <span class="op">+</span> <span class="fl">50</span>,
     date_bin <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>
@@ -273,24 +273,24 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">pres_bin</span>, <span class="va">date_bin</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">levels_binned</span>
-<span class="co">#&gt; # A tibble: 38,557 x 22</span>
-<span class="co">#&gt;    pres_bin date_bin file  date                 pres  temp temp_qc n_prof</span>
-<span class="co">#&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt;</span>
-<span class="co">#&gt;  1       50        7 meds… 2011-07-03 12:58:00  6.70  7.24 1            1</span>
-<span class="co">#&gt;  2       50        7 meds… 2011-07-03 12:58:00 10.8   6.83 1            1</span>
-<span class="co">#&gt;  3       50        7 meds… 2011-07-03 12:58:00 20.1   5.51 1            1</span>
-<span class="co">#&gt;  4       50        7 meds… 2011-07-03 12:58:00 30.2   3.85 1            1</span>
-<span class="co">#&gt;  5       50        7 meds… 2011-07-03 12:58:00 40.5   3.68 1            1</span>
-<span class="co">#&gt;  6       50        7 meds… 2011-07-03 12:58:00 49.9   3.88 1            1</span>
-<span class="co">#&gt;  7       50        7 meds… 2011-07-03 12:58:00 59.8   4.01 1            1</span>
-<span class="co">#&gt;  8       50        7 meds… 2011-07-03 12:58:00 69     3.95 1            1</span>
-<span class="co">#&gt;  9       50        7 meds… 2011-07-03 12:58:00 80.6   3.63 1            1</span>
-<span class="co">#&gt; 10       50        7 meds… 2011-07-03 12:58:00 90.6   3.94 1            1</span>
-<span class="co">#&gt; # … with 38,547 more rows, and 14 more variables: cycle_number &lt;int&gt;,</span>
-<span class="co">#&gt; #   n_levels &lt;int&gt;, pres_qc &lt;chr&gt;, pres_adjusted &lt;dbl&gt;, pres_adjusted_qc &lt;chr&gt;,</span>
-<span class="co">#&gt; #   pres_adjusted_error &lt;dbl&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span>
-<span class="co">#&gt; #   temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   psal_adjusted_qc &lt;chr&gt;, psal_adjusted_error &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 34,617 x 21</span>
+<span class="co">#&gt;    pres_bin date_bin file   pres  temp temp_qc n_prof n_levels pres_qc</span>
+<span class="co">#&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt;    &lt;int&gt; &lt;chr&gt;  </span>
+<span class="co">#&gt;  1       50        7 meds…  6.70  7.24 1            1        1 1      </span>
+<span class="co">#&gt;  2       50        7 meds… 10.8   6.83 1            1        2 1      </span>
+<span class="co">#&gt;  3       50        7 meds… 20.1   5.51 1            1        3 1      </span>
+<span class="co">#&gt;  4       50        7 meds… 30.2   3.85 1            1        4 1      </span>
+<span class="co">#&gt;  5       50        7 meds… 40.5   3.68 1            1        5 1      </span>
+<span class="co">#&gt;  6       50        7 meds… 49.9   3.88 1            1        6 1      </span>
+<span class="co">#&gt;  7       50        7 meds… 59.8   4.01 1            1        7 1      </span>
+<span class="co">#&gt;  8       50        7 meds… 69     3.95 1            1        8 1      </span>
+<span class="co">#&gt;  9       50        7 meds… 80.6   3.63 1            1        9 1      </span>
+<span class="co">#&gt; 10       50        7 meds… 90.6   3.94 1            1       10 1      </span>
+<span class="co">#&gt; # … with 34,607 more rows, and 12 more variables: pres_adjusted &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   pres_adjusted_qc &lt;chr&gt;, pres_adjusted_error &lt;dbl&gt;, temp_adjusted &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   temp_adjusted_qc &lt;chr&gt;, temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;, psal_adjusted_qc &lt;chr&gt;,</span>
+<span class="co">#&gt; #   psal_adjusted_error &lt;dbl&gt;, date &lt;dttm&gt;</span></code></pre></div>
 <p>Next we can calculate the weights to ensure each profile does not contribute more than its share to the values calculated for a given bin and apply the weights based on distance we calculated above.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">levels_binned_weighted</span> <span class="op">&lt;-</span> <span class="va">levels_binned</span> <span class="op">%&gt;%</span> 
@@ -305,7 +305,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">pres_bin</span>, <span class="va">date_bin</span>, <span class="va">weight</span>, <span class="va">file</span>, <span class="va">date</span>, <span class="va">pres</span>, <span class="va">temp</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">levels_binned_weighted</span>
-<span class="co">#&gt; # A tibble: 38,557 x 28</span>
+<span class="co">#&gt; # A tibble: 34,617 x 27</span>
 <span class="co">#&gt;    pres_bin date_bin  weight file  date                 pres  temp temp_qc</span>
 <span class="co">#&gt;       &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  </span>
 <span class="co">#&gt;  1       50        7 0.00861 meds… 2011-07-03 12:58:00  6.70  7.24 1      </span>
@@ -318,13 +318,12 @@
 <span class="co">#&gt;  8       50        7 0.00861 meds… 2011-07-03 12:58:00 69     3.95 1      </span>
 <span class="co">#&gt;  9       50        7 0.00861 meds… 2011-07-03 12:58:00 80.6   3.63 1      </span>
 <span class="co">#&gt; 10       50        7 0.00861 meds… 2011-07-03 12:58:00 90.6   3.94 1      </span>
-<span class="co">#&gt; # … with 38,547 more rows, and 20 more variables: n_prof &lt;int&gt;,</span>
-<span class="co">#&gt; #   cycle_number &lt;int&gt;, n_levels &lt;int&gt;, pres_qc &lt;chr&gt;, pres_adjusted &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   pres_adjusted_qc &lt;chr&gt;, pres_adjusted_error &lt;dbl&gt;, temp_adjusted &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   temp_adjusted_qc &lt;chr&gt;, temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;, psal_adjusted_qc &lt;chr&gt;,</span>
-<span class="co">#&gt; #   psal_adjusted_error &lt;dbl&gt;, profile_weight &lt;dbl&gt;, longitude &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   latitude &lt;dbl&gt;, distance_km &lt;dbl&gt;, distance_weight &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; # … with 34,607 more rows, and 19 more variables: n_prof &lt;int&gt;, n_levels &lt;int&gt;,</span>
+<span class="co">#&gt; #   pres_qc &lt;chr&gt;, pres_adjusted &lt;dbl&gt;, pres_adjusted_qc &lt;chr&gt;,</span>
+<span class="co">#&gt; #   pres_adjusted_error &lt;dbl&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span>
+<span class="co">#&gt; #   temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   psal_adjusted_qc &lt;chr&gt;, psal_adjusted_error &lt;dbl&gt;, profile_weight &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   longitude &lt;dbl&gt;, latitude &lt;dbl&gt;, distance_km &lt;dbl&gt;, distance_weight &lt;dbl&gt;</span></code></pre></div>
 <p>The most straightforward way to aggregate is using <code><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean()</a></code>, which is a good way to get a preliminary view of our results:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">levels_aggregated</span> <span class="op">&lt;-</span> <span class="va">levels_binned_weighted</span> <span class="op">%&gt;%</span> 
@@ -334,7 +333,7 @@
     temp_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean</a></span><span class="op">(</span><span class="va">temp</span>, w <span class="op">=</span> <span class="va">weight</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` regrouping output by 'date_bin' (override with `.groups` argument)</span></code></pre></div>
+<span class="co">#&gt; `summarise()` has grouped output by 'date_bin'. You can override using the `.groups` argument.</span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">levels_aggregated</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">temp_mean</span>, y <span class="op">=</span> <span class="va">pres_bin</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_line</span><span class="op">(</span>
@@ -368,8 +367,8 @@
     temp_weighted_mean_q95 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">temp_weighted_mean</span>, <span class="fl">0.95</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` regrouping output by 'sample_number', 'date_bin' (override with `.groups` argument)</span>
-<span class="co">#&gt; `summarise()` regrouping output by 'pres_bin' (override with `.groups` argument)</span></code></pre></div>
+<span class="co">#&gt; `summarise()` has grouped output by 'sample_number', 'date_bin'. You can override using the `.groups` argument.</span>
+<span class="co">#&gt; `summarise()` has grouped output by 'pres_bin'. You can override using the `.groups` argument.</span></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">levels_aggregated_randomized</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">temp_weighted_mean_q50</span>, y <span class="op">=</span> <span class="va">pres_bin</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_line</span><span class="op">(</span>
@@ -422,7 +421,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/s2/reference/s2_contains.html">s2_dwithin</a></span><span class="op">(</span><span class="va">geog</span>, <span class="va">section_line</span>, <span class="fl">100</span> <span class="op">*</span> <span class="fl">1000</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">section_profiles</span>
-<span class="co">#&gt; # A tibble: 997 x 9</span>
+<span class="co">#&gt; # A tibble: 1,019 x 9</span>
 <span class="co">#&gt;    file  date                latitude longitude ocean profiler_type institution</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;dttm&gt;                 &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;      </span>
 <span class="co">#&gt;  1 aoml… 2012-10-22 10:34:31     39.4     -59.8 A               851 AO         </span>
@@ -435,7 +434,7 @@
 <span class="co">#&gt;  8 aoml… 2014-06-17 11:30:03     39.0     -60.0 A               851 AO         </span>
 <span class="co">#&gt;  9 aoml… 2014-06-27 11:28:16     40.4     -60.6 A               851 AO         </span>
 <span class="co">#&gt; 10 aoml… 2014-07-27 11:30:05     37.5     -58.7 A               851 AO         </span>
-<span class="co">#&gt; # … with 987 more rows, and 2 more variables: date_update &lt;dttm&gt;,</span>
+<span class="co">#&gt; # … with 1,009 more rows, and 2 more variables: date_update &lt;dttm&gt;,</span>
 <span class="co">#&gt; #   geog &lt;s2_geography&gt;</span></code></pre></div>
 <p>Similar to the profile calculation, we need to calculate some information about the suitability of each profile to our section. In addition to the distance from the section line, we will also need a measure of how far along the section line each profile is so that we can bin it accordingly. I also add a filter here to remove profiles that are “off the end” of the section (whose closest point <em>is</em> the start or end point). This is where the two-point section definition makes our life easier: distance along the profile is just the distance from the start point. If you really need a section defined by multiple points you will need to use a projection and the linear referencing function <code>geos::geos_project()</code>.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
@@ -477,21 +476,21 @@
 <p>From here we have enough information to load our levels.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">section_levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/argo_prof_levels.html">argo_prof_levels</a></span><span class="op">(</span><span class="va">section_profile_weighted</span><span class="op">)</span>
-<span class="co">#&gt; Downloading 816 files from 'https://data-argo.ifremer.fr'</span>
-<span class="co">#&gt; Extracting from 816 files</span></code></pre></div>
+<span class="co">#&gt; Downloading 835 files from 'https://data-argo.ifremer.fr'</span>
+<span class="co">#&gt; Extracting from 835 files</span></code></pre></div>
 <p>Again, the first step once the levels are loaded is to check which QC flag values we can use to ensure reasonable values in our result. Because we’re working with delayed mode data, there is a chance that the <code>temp_adjusted</code> column contains higher quality results. I’ve plotted both below.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">section_levels</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">pres</span>, x <span class="op">=</span> <span class="va">temp</span>, col <span class="op">=</span> <span class="va">temp_qc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_y_reverse</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Removed 175101 rows containing missing values (geom_point).</span></code></pre></div>
+<span class="co">#&gt; Warning: Removed 175187 rows containing missing values (geom_point).</span></code></pre></div>
 <p><img src="virtual-mooring_files/figure-html/unnamed-chunk-23-1.png" width="2187.5"></p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">section_levels</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">pres</span>, x <span class="op">=</span> <span class="va">temp_adjusted</span>, col <span class="op">=</span> <span class="va">temp_adjusted_qc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_y_reverse</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Removed 206088 rows containing missing values (geom_point).</span></code></pre></div>
+<span class="co">#&gt; Warning: Removed 206181 rows containing missing values (geom_point).</span></code></pre></div>
 <p><img src="virtual-mooring_files/figure-html/unnamed-chunk-23-2.png" width="2187.5"></p>
 <p>In many cases the adjusted values are identical to the non-adjusted values, but it is reasonable to use the adjusted values where they have been made available. Some adjusted data has been marked as not “good data”, however, which we need to censor before “preferring” the adjusted value over the non-adjusted one.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
@@ -516,7 +515,7 @@
     alpha <span class="op">=</span> <span class="fl">0.02</span>
   <span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_y_reverse</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Removed 11346 row(s) containing missing values (geom_path).</span></code></pre></div>
+<span class="co">#&gt; Warning: Removed 11432 row(s) containing missing values (geom_path).</span></code></pre></div>
 <p><img src="virtual-mooring_files/figure-html/unnamed-chunk-26-1.png" width="2187.5"></p>
 <p>Now we’re ready to bin! While it is also valid to bin using a <code>date_bin</code> if enough profiles are available, in this case I’m going to demonstrate binning along the transect such that there are still two bin dimensions. When calculating uncertainty, this should show up in our results for the top pressure bins whose temperature responds most readily to seasonal fluctuations.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
@@ -528,22 +527,21 @@
   <span class="op">)</span>
 
 <span class="va">section_levels_binned</span>
-<span class="co">#&gt; # A tibble: 362,580 x 32</span>
-<span class="co">#&gt;    file  n_prof cycle_number date                n_levels  pres pres_qc</span>
-<span class="co">#&gt;    &lt;chr&gt;  &lt;int&gt;        &lt;int&gt; &lt;dttm&gt;                 &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;  </span>
-<span class="co">#&gt;  1 aoml…      1           56 2012-10-22 10:34:30        1     5 1      </span>
-<span class="co">#&gt;  2 aoml…      1           56 2012-10-22 10:34:30        2    10 1      </span>
-<span class="co">#&gt;  3 aoml…      1           56 2012-10-22 10:34:30        3    15 1      </span>
-<span class="co">#&gt;  4 aoml…      1           56 2012-10-22 10:34:30        4    20 1      </span>
-<span class="co">#&gt;  5 aoml…      1           56 2012-10-22 10:34:30        5    25 1      </span>
-<span class="co">#&gt;  6 aoml…      1           56 2012-10-22 10:34:30        6    30 1      </span>
-<span class="co">#&gt;  7 aoml…      1           56 2012-10-22 10:34:30        7    35 1      </span>
-<span class="co">#&gt;  8 aoml…      1           56 2012-10-22 10:34:30        8    40 1      </span>
-<span class="co">#&gt;  9 aoml…      1           56 2012-10-22 10:34:30        9    45 1      </span>
-<span class="co">#&gt; 10 aoml…      1           56 2012-10-22 10:34:30       10    50 1      </span>
-<span class="co">#&gt; # … with 362,570 more rows, and 25 more variables: pres_adjusted &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   pres_adjusted_qc &lt;chr&gt;, pres_adjusted_error &lt;dbl&gt;, temp &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   temp_qc &lt;chr&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span>
+<span class="co">#&gt; # A tibble: 374,763 x 30</span>
+<span class="co">#&gt;    file  n_prof n_levels  pres pres_qc pres_adjusted pres_adjusted_qc</span>
+<span class="co">#&gt;    &lt;chr&gt;  &lt;int&gt;    &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;           </span>
+<span class="co">#&gt;  1 aoml…      1        1     5 1                   5 1               </span>
+<span class="co">#&gt;  2 aoml…      1        2    10 1                  10 1               </span>
+<span class="co">#&gt;  3 aoml…      1        3    15 1                  15 1               </span>
+<span class="co">#&gt;  4 aoml…      1        4    20 1                  20 1               </span>
+<span class="co">#&gt;  5 aoml…      1        5    25 1                  25 1               </span>
+<span class="co">#&gt;  6 aoml…      1        6    30 1                  30 1               </span>
+<span class="co">#&gt;  7 aoml…      1        7    35 1                  35 1               </span>
+<span class="co">#&gt;  8 aoml…      1        8    40 1                  40 1               </span>
+<span class="co">#&gt;  9 aoml…      1        9    45 1                  45 1               </span>
+<span class="co">#&gt; 10 aoml…      1       10    50 1                  50 1               </span>
+<span class="co">#&gt; # … with 374,753 more rows, and 23 more variables: pres_adjusted_error &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   temp &lt;dbl&gt;, temp_qc &lt;chr&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span>
 <span class="co">#&gt; #   temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   psal_adjusted_qc &lt;chr&gt;, psal_adjusted_error &lt;dbl&gt;, cndc &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   cndc_qc &lt;chr&gt;, cndc_adjusted &lt;dbl&gt;, cndc_adjusted_qc &lt;chr&gt;,</span>
@@ -565,23 +563,23 @@
     temp_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean</a></span><span class="op">(</span><span class="va">temp</span>, w <span class="op">=</span> <span class="va">weight</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` regrouping output by 'distance_bin' (override with `.groups` argument)</span>
+<span class="co">#&gt; `summarise()` has grouped output by 'distance_bin'. You can override using the `.groups` argument.</span>
 
 <span class="va">section_levels_aggregated</span>
-<span class="co">#&gt; # A tibble: 472 x 3</span>
+<span class="co">#&gt; # A tibble: 473 x 3</span>
 <span class="co">#&gt;    distance_bin pres_bin temp_mean</span>
 <span class="co">#&gt;           &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span>
 <span class="co">#&gt;  1           20       50     16.2 </span>
 <span class="co">#&gt;  2           20      150     14.2 </span>
-<span class="co">#&gt;  3           20      250     12.1 </span>
-<span class="co">#&gt;  4           20      350     10.0 </span>
-<span class="co">#&gt;  5           20      450      8.07</span>
-<span class="co">#&gt;  6           20      550      6.65</span>
+<span class="co">#&gt;  3           20      250     12.2 </span>
+<span class="co">#&gt;  4           20      350     10.1 </span>
+<span class="co">#&gt;  5           20      450      8.08</span>
+<span class="co">#&gt;  6           20      550      6.66</span>
 <span class="co">#&gt;  7           20      650      5.72</span>
 <span class="co">#&gt;  8           20      750      5.17</span>
 <span class="co">#&gt;  9           20      850      4.84</span>
-<span class="co">#&gt; 10           20      950      4.60</span>
-<span class="co">#&gt; # … with 462 more rows</span></code></pre></div>
+<span class="co">#&gt; 10           20      950      4.59</span>
+<span class="co">#&gt; # … with 463 more rows</span></code></pre></div>
 <p>There are too many bins to examine all of them for quality. Instead, I’ll examine a subset of them to make sure our <code><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean()</a></code> calculation didn’t create unrealistic estimates.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">test_distance_bins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">220</span>, <span class="fl">620</span>, <span class="fl">820</span><span class="op">)</span>

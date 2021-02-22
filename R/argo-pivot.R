@@ -21,7 +21,7 @@
 #'
 #' with_argo_example_cache({
 #'   argo_prof_levels("dac/csio/2902746/profiles/BR2902746_001.nc") %>%
-#'     argo_pivot_longer(id_cols = c(file, date, pres))
+#'     argo_pivot_longer(id_cols = c(file, n_prof, pres))
 #' })
 #'
 argo_pivot_longer <- function(tbl, id_cols) {

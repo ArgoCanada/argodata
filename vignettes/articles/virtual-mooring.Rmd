@@ -23,7 +23,7 @@ The [Argo international research program](https://argo.ucsd.edu/) has collected 
 
 We'll start by loading a few packages. In addition to argodata, we'll use the [tidyverse](https://tidyverse.org), [lubridate](https://lubridate.tidyverse.org), and later on we'll use [ggspatial](https://paleolimbot.github.io/ggspatial/) (for map mapking) and [s2](https://r-spatial.github.io/s2/) (for geometry calculations on the sphere). You can learn about the table manipulation functions and visualization functions we use here in the free online book [R for Data Science](https://r4ds.had.co.nz) (also available in [French](https://www.amazon.fr/pour-data-sciences-transformer-visualiser/dp/2212675712), [Spanish](https://es.r4ds.hadley.nz/), [German](https://oreilly.de/produkt/r-fuer-data-science/), and [Portuguese](https://www.amazon.com/R-Para-Data-Science-Portuguese-ebook/dp/B07ZPH2LVK)).
 
-```{r setup, eval=FALSE}
+```{r, eval=FALSE}
 library(argodata)
 library(tidyverse)
 library(lubridate)

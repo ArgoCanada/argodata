@@ -2,11 +2,8 @@
 #' Read Argo profile NetCDF files
 #'
 #' @inheritParams argo_nc_read_vars
-#' @param meta A character vector of meta variable names for
-#'   each profile. These can be found using [argo_vars()].
 #'
-#' @return A [tibble::tibble()] containing both `vars` and `meta`
-#'   columns.
+#' @return A [tibble::tibble()] containing `vars`.
 #' @export
 #' @rdname argo_nc_prof
 #'
@@ -27,11 +24,9 @@
 #'
 #' ncdf4::nc_close(nc_prof)
 #'
-argo_nc_prof_read_levels <- function(nc, vars = NULL, meta = NULL) {
-  nc_meta <- argo_nc_prof_vars_prof(nc)
+argo_nc_prof_read_levels <- function(nc, vars = NULL) {
   nc_vars <- argo_nc_prof_vars_levels(nc)
 
-  meta <- if (is.null(meta)) nc_meta else intersect(meta, nc_meta)
   vars <- if (is.null(vars)) nc_vars else intersect(vars, nc_vars)
 
   n <- nc$dim$N_LEVELS$len
@@ -43,8 +38,7 @@ argo_nc_prof_read_levels <- function(nc, vars = NULL, meta = NULL) {
 
   # assign values
   meta_values <- c(
-    list(N_PROF = nc$dim$N_PROF$vals) %||% vctrs::vec_rep(NA_integer_, n_prof),
-    argo_nc_values(nc, meta)
+    list(N_PROF = nc$dim$N_PROF$vals) %||% vctrs::vec_rep(NA_integer_, n_prof)
   )
   values <- c(
     list(
@@ -55,7 +49,6 @@ argo_nc_prof_read_levels <- function(nc, vars = NULL, meta = NULL) {
   )
 
   # expand strings to characters
-  meta_values <- argo_string_to_chars_tbl(meta_values)
   values <- argo_string_to_chars_tbl(values, n = n)
 
   # rep profile meta to match values
@@ -113,13 +106,11 @@ argo_nc_prof_read_calib <- function(nc, vars = NULL) {
 
 #' @rdname argo_nc_prof
 #' @export
-argo_nc_prof_read_history <- function(nc, vars = NULL, meta = NULL) {
-  nc_meta <- argo_nc_prof_vars_prof(nc)
+argo_nc_prof_read_history <- function(nc, vars = NULL) {
   nc_vars_reg <- argo_nc_vars_by_dimension(nc, 2, "N_HISTORY")
   nc_vars_string <- argo_nc_vars_by_dimension(nc, 3, "N_HISTORY")
   nc_vars <- c(nc_vars_reg, nc_vars_string)
 
-  meta <- if (is.null(meta)) nc_meta else intersect(meta, nc_meta)
   vars <- if (is.null(vars)) nc_vars else intersect(vars, nc_vars)
 
   n <- nc$dim$N_HISTORY$len
@@ -139,8 +130,7 @@ argo_nc_prof_read_history <- function(nc, vars = NULL, meta = NULL) {
 
   # assign values
   meta_values <- c(
-    list(N_PROF = nc$dim$N_PROF$vals) %||% rep(NA_integer_, n_prof),
-    argo_nc_values(nc, meta)
+    list(N_PROF = nc$dim$N_PROF$vals) %||% rep(NA_integer_, n_prof)
   )
   values <- c(
     list(N_HISTORY = vctrs::vec_rep_each(nc$dim$N_HISTORY$vals %||% rep(NA_integer_, n), n_prof)),

@@ -2,8 +2,8 @@
 test_that("argo_prof_levels() works", {
   with_argo_mirror(argo_test_mirror(), {
     prof <- argo_prof_levels("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
-    expect_true(all(c("file", "cycle_number", "pres", "temp") %in% names(prof)))
-    expect_true(all(prof$cycle_number == 0))
+    expect_true(all(c("file", "n_prof", "n_levels", "pres", "temp") %in% names(prof)))
+    expect_true(all(prof$n_prof == 1))
 
     prof <- argo_prof_levels(
       "dac/csio/2900313/profiles/D2900313_000.nc",
@@ -13,7 +13,7 @@ test_that("argo_prof_levels() works", {
 
     expect_identical(
       names(prof),
-      c("file", "n_prof", "cycle_number", "date", "n_levels", "pres", "temp")
+      c("file", "n_prof", "n_levels", "pres", "temp")
     )
   })
 })
@@ -22,7 +22,7 @@ test_that("argo_prof_prof() works", {
   with_argo_example_cache({
     prof <- argo_prof_prof("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
     expect_true(all(c("file", "cycle_number", "latitude", "longitude") %in% names(prof)))
-    expect_true(all(prof$cycle_number == 0))
+    expect_true(all(prof$n_prof == 1))
     expect_identical(nrow(prof), 1L)
 
     prof <- argo_prof_prof(
@@ -53,8 +53,8 @@ test_that("argo_prof_calib() works", {
 test_that("argo_prof_history() works", {
   with_argo_example_cache({
     prof <- argo_prof_history("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
-    expect_true(all(c("file", "cycle_number", "history_qctest") %in% names(prof)))
-    expect_true(all(prof$cycle_number == 0))
+    expect_true(all(c("file", "n_prof", "n_history", "history_qctest") %in% names(prof)))
+    expect_true(all(prof$n_prof == 1))
 
     prof <- argo_prof_history(
       "dac/csio/2900313/profiles/D2900313_000.nc",
@@ -64,7 +64,7 @@ test_that("argo_prof_history() works", {
 
     expect_identical(
       names(prof),
-      c("file", "n_prof", "cycle_number", "date", "n_history", "history_qctest")
+      c("file", "n_prof", "n_history", "history_qctest")
     )
   })
 })

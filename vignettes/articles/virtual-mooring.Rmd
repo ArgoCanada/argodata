@@ -2,7 +2,7 @@
 title: "Virtual moorings and sections"
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 library(argodata)
 library(dplyr)
 library(tidyr)
@@ -90,7 +90,7 @@ For a quick view of the locations I used the [ggspatial](https://github.com/pale
 ```{r, warning=FALSE}
 library(ggspatial)
 
-ggplot(profiles, aes(x = longitude, y = latitude, col = )) +
+ggplot(profiles, aes(x = longitude, y = latitude)) +
   annotation_map_tile(zoomin = -1, progress = "none") +
   geom_spatial_rect(
     aes(ymin = 50, ymax = 65, xmin = -70, xmax = -30),
@@ -103,11 +103,11 @@ ggplot(profiles, aes(x = longitude, y = latitude, col = )) +
   facet_wrap(vars(year(date)))
 ```
 
-You can use plots like this to ensure that you have a reasonable density of samples in both space and time for the question you are trying to answer. Once you've done this, you can load profile levels using `argo_prof_levels()`. This will download the files from the Argo server and load them into a table with one row per profile per sampling level. This will take about 90 seconds depending on your internet connection and system configuration (if you do this often, see `argo_set_mapper()` for how to use multiple cores on your computer to do this faster).
+You can use plots like this to ensure that you have a reasonable density of samples in both space and time for the question you are trying to answer. Once you've done this, you can load profile levels using `argo_prof_levels()`. This will download the files from the Argo server and load them into a table with one row per profile per sampling level. This will take about 90 seconds depending on your internet connection and system configuration.
 
 ```{r}
 levels <- argo_prof_levels(profiles) %>% 
-  select(file, date, pres, temp, temp_qc, everything())
+  select(file, pres, temp, temp_qc, everything())
 
 levels
 ```
@@ -174,7 +174,8 @@ profile_weighted
 The next step is to choose bins that are appropriate to the scale of the problem. In this case, we're interested in monthly bins (regardless of year) and depth bins 10 decibars in height. These bin sizes reflect the amount of data we have: if we were only summarizing 2019, for which there are many profiles with high-resolution sampling intervals, we may be able to use smaller bins (e.g., one bin per month per year or 1 decibar height).
 
 ```{r}
-levels_binned <- levels_clean %>% 
+levels_binned <- levels_clean %>%
+  left_join(profiles %>% select(file, date), by = "file") %>% 
   mutate(
     pres_bin = floor(pres / 100) * 100 + 50,
     date_bin = month(date)
@@ -212,6 +213,7 @@ levels_aggregated <- levels_binned_weighted %>%
   ) %>% 
   ungroup()
 ```
+
 ```{r}
 ggplot(levels_aggregated, aes(x = temp_mean, y = pres_bin)) +
   geom_line(

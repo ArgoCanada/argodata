@@ -7,13 +7,13 @@
 \alias{argo_read_prof_history}
 \title{Read Argo profiles}
 \usage{
-argo_read_prof_levels(file, vars = NULL, meta = NULL)
+argo_read_prof_levels(file, vars = NULL)
 
 argo_read_prof_prof(file, vars = NULL)
 
 argo_read_prof_calib(file, vars = NULL)
 
-argo_read_prof_history(file, vars = NULL, meta = NULL)
+argo_read_prof_history(file, vars = NULL)
 }
 \arguments{
 \item{file}{A previously downloaded Argo NetCDF file.}
@@ -23,9 +23,6 @@ of the variables is not guaranteed, and variables that do not
 exist are ignored. For \verb{nc_read_*()} and \verb{read_*()} variants,
 these are the raw variable names (all caps, without "date"
 substituted for "juld").}
-
-\item{meta}{A character vector of meta variable names for
-each profile. These can be found using \code{\link[=argo_vars]{argo_vars()}}.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}}

@@ -24,7 +24,9 @@
 #' ncdf4::nc_close(nc_meta)
 #'
 argo_nc_meta_read_config_param <- function(nc) {
-  argo_nc_assert_dimensions(nc, c("N_MISSIONS", "N_CONFIG_PARAM"))
+  if (!argo_nc_assert_dimensions(nc, c("N_MISSIONS", "N_CONFIG_PARAM"), action = warn_immediate)) {
+    return(NULL)
+  }
 
   n_missions <- nc$dim$N_MISSIONS$len
   n <- nc$dim$N_CONFIG_PARAM$len
@@ -40,7 +42,10 @@ argo_nc_meta_read_config_param <- function(nc) {
 #' @rdname argo_nc_meta
 #' @export
 argo_nc_meta_read_missions <- function(nc) {
-  argo_nc_assert_dimensions(nc, "N_MISSIONS")
+  if (!argo_nc_assert_dimensions(nc, "N_MISSIONS", action = warn_immediate)) {
+    return(NULL)
+  }
+
   mission_number <- argo_nc_values(nc, "CONFIG_MISSION_NUMBER")
   comment <- argo_nc_values(nc, "CONFIG_MISSION_COMMENT")
   tibble::new_tibble(c(mission_number, comment), nrow = nc$dim$N_MISSIONS$len)
@@ -49,7 +54,10 @@ argo_nc_meta_read_missions <- function(nc) {
 #' @rdname argo_nc_meta
 #' @export
 argo_nc_meta_read_trans_system <- function(nc) {
-  argo_nc_assert_dimensions(nc, "N_TRANS_SYSTEM")
+  if (!argo_nc_assert_dimensions(nc, "N_TRANS_SYSTEM", action = warn_immediate)) {
+    return(NULL)
+  }
+
   values <- argo_nc_values(nc, c("TRANS_SYSTEM", "TRANS_SYSTEM_ID", "TRANS_FREQUENCY"))
   tibble::new_tibble(values, nrow = nc$dim$N_TRANS_SYSTEM$len)
 }
@@ -57,7 +65,10 @@ argo_nc_meta_read_trans_system <- function(nc) {
 #' @rdname argo_nc_meta
 #' @export
 argo_nc_meta_read_positioning_system <- function(nc) {
-  argo_nc_assert_dimensions(nc, "N_POSITIONING_SYSTEM")
+  if (!argo_nc_assert_dimensions(nc, "N_POSITIONING_SYSTEM", action = warn_immediate)) {
+    return(NULL)
+  }
+
   values <- argo_nc_values(nc, "POSITIONING_SYSTEM")
   tibble::new_tibble(values, nrow = nc$dim$N_POSITIONING_SYSTEM$len)
 }
@@ -65,7 +76,10 @@ argo_nc_meta_read_positioning_system <- function(nc) {
 #' @rdname argo_nc_meta
 #' @export
 argo_nc_meta_read_launch_config_param <- function(nc) {
-  argo_nc_assert_dimensions(nc, "N_LAUNCH_CONFIG_PARAM")
+  if (!argo_nc_assert_dimensions(nc, "N_LAUNCH_CONFIG_PARAM", action = warn_immediate)) {
+    return(NULL)
+  }
+
   values <- argo_nc_values(nc, c("LAUNCH_CONFIG_PARAMETER_NAME", "LAUNCH_CONFIG_PARAMETER_VALUE"))
   tibble::new_tibble(values, nrow = nc$dim$N_LAUNCH_CONFIG_PARAM$len)
 }
@@ -73,7 +87,10 @@ argo_nc_meta_read_launch_config_param <- function(nc) {
 #' @rdname argo_nc_meta
 #' @export
 argo_nc_meta_read_sensor <- function(nc) {
-  argo_nc_assert_dimensions(nc, "N_SENSOR")
+  if (!argo_nc_assert_dimensions(nc, "N_SENSOR", action = warn_immediate)) {
+    return(NULL)
+  }
+
   values <- argo_nc_values(
     nc,
     c("SENSOR", "SENSOR_MAKER", "SENSOR_MODEL", "SENSOR_SERIAL_NO")
@@ -84,7 +101,10 @@ argo_nc_meta_read_sensor <- function(nc) {
 #' @rdname argo_nc_meta
 #' @export
 argo_nc_meta_read_param <- function(nc) {
-  argo_nc_assert_dimensions(nc, "N_PARAM")
+  if (!argo_nc_assert_dimensions(nc, "N_PARAM", action = warn_immediate)) {
+    return(NULL)
+  }
+
   values <- argo_nc_values(
     nc,
     c(
@@ -98,5 +118,6 @@ argo_nc_meta_read_param <- function(nc) {
       "PREDEPLOYMENT_CALIB_COMMENT"
     )
   )
+
   tibble::new_tibble(values, nrow = nc$dim$N_PARAM$len)
 }

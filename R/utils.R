@@ -1,4 +1,8 @@
 
+warn_immediate <- function(...) {
+  warning(..., immediate. = TRUE, call. = FALSE)
+}
+
 argo_assert_columns <- function(tbl, columns) {
   if (!is.data.frame(tbl)) {
     abort("`tbl` must be a data.frame.")

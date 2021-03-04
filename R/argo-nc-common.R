@@ -52,7 +52,7 @@ argo_nc_vars_by_dimension <- function(nc, which, dim_name) {
   names(nc$var)[var_has_dim]
 }
 
-argo_nc_assert_dimensions <- function(nc, dimensions) {
+argo_nc_assert_dimensions <- function(nc, dimensions, action = abort) {
   dims <- Map("[[", list(nc$dim), dimensions)
   dim_is_missing <- vapply(dims, is.null, logical(1))
   if (any(dim_is_missing)) {
@@ -64,10 +64,11 @@ argo_nc_assert_dimensions <- function(nc, dimensions) {
       last = " and "
     )
 
-    abort(glue("'{ nc$filename }' is missing { dims_lab } { missing_dims_list }."))
+    action(glue("'{ nc$filename }' is missing { dims_lab } { missing_dims_list }."))
+    FALSE
+  } else {
+    TRUE
   }
-
-  invisible(nc)
 }
 
 argo_assert_path_type <- function(path, pattern, file_type) {

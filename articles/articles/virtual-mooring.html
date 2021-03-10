@@ -421,7 +421,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/s2/reference/s2_contains.html">s2_dwithin</a></span><span class="op">(</span><span class="va">geog</span>, <span class="va">section_line</span>, <span class="fl">100</span> <span class="op">*</span> <span class="fl">1000</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">section_profiles</span>
-<span class="co">#&gt; # A tibble: 1,024 x 9</span>
+<span class="co">#&gt; # A tibble: 1,025 x 9</span>
 <span class="co">#&gt;    file   date                latitude longitude ocean profiler_type institution</span>
 <span class="co">#&gt;    &lt;chr&gt;  &lt;dttm&gt;                 &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;      </span>
 <span class="co">#&gt;  1 aoml/… 2012-10-22 10:34:31     39.4     -59.8 A               851 AO         </span>
@@ -434,7 +434,7 @@
 <span class="co">#&gt;  8 aoml/… 2014-06-17 11:30:03     39.0     -60.0 A               851 AO         </span>
 <span class="co">#&gt;  9 aoml/… 2014-06-27 11:28:16     40.4     -60.6 A               851 AO         </span>
 <span class="co">#&gt; 10 aoml/… 2014-07-27 11:30:05     37.5     -58.7 A               851 AO         </span>
-<span class="co">#&gt; # … with 1,014 more rows, and 2 more variables: date_update &lt;dttm&gt;,</span>
+<span class="co">#&gt; # … with 1,015 more rows, and 2 more variables: date_update &lt;dttm&gt;,</span>
 <span class="co">#&gt; #   geog &lt;s2_geography&gt;</span></code></pre></div>
 <p>Similar to the profile calculation, we need to calculate some information about the suitability of each profile to our section. In addition to the distance from the section line, we will also need a measure of how far along the section line each profile is so that we can bin it accordingly. I also add a filter here to remove profiles that are “off the end” of the section (whose closest point <em>is</em> the start or end point). This is where the two-point section definition makes our life easier: distance along the profile is just the distance from the start point. If you really need a section defined by multiple points you will need to use a projection and the linear referencing function <code>geos::geos_project()</code>.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
@@ -476,8 +476,8 @@
 <p>From here we have enough information to load our levels.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">section_levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/argo_prof_levels.html">argo_prof_levels</a></span><span class="op">(</span><span class="va">section_profile_weighted</span><span class="op">)</span>
-<span class="co">#&gt; Downloading 840 files from 'https://data-argo.ifremer.fr'</span>
-<span class="co">#&gt; Extracting from 840 files</span></code></pre></div>
+<span class="co">#&gt; Downloading 841 files from 'https://data-argo.ifremer.fr'</span>
+<span class="co">#&gt; Extracting from 841 files</span></code></pre></div>
 <p>Again, the first step once the levels are loaded is to check which QC flag values we can use to ensure reasonable values in our result. Because we’re working with delayed mode data, there is a chance that the <code>temp_adjusted</code> column contains higher quality results. I’ve plotted both below.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">section_levels</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">pres</span>, x <span class="op">=</span> <span class="va">temp</span>, col <span class="op">=</span> <span class="va">temp_qc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -527,7 +527,7 @@
   <span class="op">)</span>
 
 <span class="va">section_levels_binned</span>
-<span class="co">#&gt; # A tibble: 377,456 x 30</span>
+<span class="co">#&gt; # A tibble: 378,019 x 30</span>
 <span class="co">#&gt;    file             n_prof n_levels  pres pres_qc pres_adjusted pres_adjusted_qc</span>
 <span class="co">#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 aoml/1901465/pr…      1        1     5 1                   5 1               </span>
@@ -540,7 +540,7 @@
 <span class="co">#&gt;  8 aoml/1901465/pr…      1        8    40 1                  40 1               </span>
 <span class="co">#&gt;  9 aoml/1901465/pr…      1        9    45 1                  45 1               </span>
 <span class="co">#&gt; 10 aoml/1901465/pr…      1       10    50 1                  50 1               </span>
-<span class="co">#&gt; # … with 377,446 more rows, and 23 more variables: pres_adjusted_error &lt;dbl&gt;,</span>
+<span class="co">#&gt; # … with 378,009 more rows, and 23 more variables: pres_adjusted_error &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   temp &lt;dbl&gt;, temp_qc &lt;chr&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span>
 <span class="co">#&gt; #   temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   psal_adjusted_qc &lt;chr&gt;, psal_adjusted_error &lt;dbl&gt;, cndc &lt;dbl&gt;,</span>

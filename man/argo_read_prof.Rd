@@ -4,6 +4,7 @@
 \alias{argo_read_prof_levels}
 \alias{argo_read_prof_prof}
 \alias{argo_read_prof_calib}
+\alias{argo_read_prof_param}
 \alias{argo_read_prof_history}
 \title{Read Argo profiles}
 \usage{
@@ -12,6 +13,8 @@ argo_read_prof_levels(file, vars = NULL)
 argo_read_prof_prof(file, vars = NULL)
 
 argo_read_prof_calib(file, vars = NULL)
+
+argo_read_prof_param(file, vars = NULL)
 
 argo_read_prof_history(file, vars = NULL)
 }

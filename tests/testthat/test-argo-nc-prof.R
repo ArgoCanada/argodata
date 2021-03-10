@@ -67,6 +67,32 @@ test_that("argo_nc_prof_*_calib() works for single-profile nc files", {
   ncdf4::nc_close(nc)
 })
 
+test_that("argo_nc_prof_*_param() works for single-profile nc files", {
+  nc <- ncdf4::nc_open(
+    system.file(
+      "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+      package = "argodata"
+    )
+  )
+
+  nc_all <- argo_nc_prof_read_param(nc)
+  expect_true(all(argo_nc_prof_vars_param(nc) %in% names(nc_all)))
+  ncdf4::nc_close(nc)
+})
+
+test_that("argo_nc_prof_*_param() works for BGC files", {
+  nc <- ncdf4::nc_open(
+    system.file(
+      "cache-test/dac/csio/2902746/profiles/BR2902746_001.nc",
+      package = "argodata"
+    )
+  )
+
+  nc_all <- argo_nc_prof_read_param(nc)
+  expect_true(all(argo_nc_prof_vars_param(nc) %in% names(nc_all)))
+
+  ncdf4::nc_close(nc)
+})
 
 test_that("argo_nc_prof_*_prof() works for multi files", {
   nc <- ncdf4::nc_open(
@@ -103,6 +129,21 @@ test_that("argo_nc_prof_*_calib() works for multi files", {
 
   nc_all <- argo_nc_prof_read_calib(nc)
   expect_true(all(argo_nc_prof_vars_calib(nc) %in% names(nc_all)))
+  expect_true(length(unique(nc_all$N_PROF)) > 1)
+
+  ncdf4::nc_close(nc)
+})
+
+test_that("argo_nc_prof_*_param() works for multi files", {
+  nc <- ncdf4::nc_open(
+    system.file(
+      "cache-test/dac/csio/2900313/2900313_prof.nc",
+      package = "argodata"
+    )
+  )
+
+  nc_all <- argo_nc_prof_read_param(nc)
+  expect_true(all(argo_nc_prof_vars_param(nc) %in% names(nc_all)))
   expect_true(length(unique(nc_all$N_PROF)) > 1)
 
   ncdf4::nc_close(nc)

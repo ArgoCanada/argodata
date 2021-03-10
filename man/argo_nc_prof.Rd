@@ -8,6 +8,7 @@
 \alias{argo_nc_prof_vars_levels}
 \alias{argo_nc_prof_vars_prof}
 \alias{argo_nc_prof_vars_calib}
+\alias{argo_nc_prof_vars_param}
 \alias{argo_nc_prof_vars_history}
 \title{Read Argo profile NetCDF files}
 \usage{
@@ -24,6 +25,8 @@ argo_nc_prof_vars_levels(nc)
 argo_nc_prof_vars_prof(nc)
 
 argo_nc_prof_vars_calib(nc)
+
+argo_nc_prof_vars_param(nc)
 
 argo_nc_prof_vars_history(nc)
 }

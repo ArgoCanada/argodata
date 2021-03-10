@@ -107,6 +107,37 @@ argo_nc_prof_read_calib <- function(nc, vars = NULL) {
   tibble::new_tibble(values, nrow = n_param * n_calib * n_prof)
 }
 
+argo_nc_prof_read_param <- function(nc, vars = NULL) {
+  nc_vars <- argo_nc_prof_vars_param(nc)
+  vars <- if (is.null(vars)) nc_vars else intersect(vars, nc_vars)
+  n_param <- nc$dim$N_PARAM$len
+  n_prof <- nc$dim$N_PROF$len
+
+
+  if (is.null(n_param) || is.null(n_prof)) {
+    abort(glue("'{ nc$filename }' is missing dimension 'N_PARAM', or 'N_PROF'"))
+  }
+
+  values <- c(
+    unclass(
+      expand.grid(
+        N_PARAM = nc$dim$N_PARAM$vals %||% rep(NA_integer_, n_param),
+        N_PROF = nc$dim$N_PROF$vals %||% rep(NA_integer_, n_prof)
+      )
+    ),
+    argo_nc_values(nc, vars)
+  )
+
+  if ("PARAMETER_DATA_MODE" %in% names(values)) {
+    values$PARAMETER_DATA_MODE <- argo_string_to_chars(
+      values$PARAMETER_DATA_MODE,
+      n = n_param
+    )
+  }
+
+  tibble::new_tibble(values, nrow = n_param * n_prof)
+}
+
 #' @rdname argo_nc_prof
 #' @export
 argo_nc_prof_read_history <- function(nc, vars = NULL) {
@@ -187,6 +218,29 @@ argo_nc_prof_vars_calib <- function(nc) {
       argo_nc_vars_by_dimension(nc, 4, "N_PROF")
     )
   )
+}
+
+#' @rdname argo_nc_prof
+#' @export
+argo_nc_prof_vars_param <- function(nc) {
+  # all param vars are STRING by N_PARAM by N_PROF or N_PARAM by N_PROF
+  string_vars <- Reduce(
+    intersect,
+    list(
+      argo_nc_vars_by_dimension(nc, 2, "N_PARAM"),
+      argo_nc_vars_by_dimension(nc, 3, "N_PROF")
+    )
+  )
+
+  vars <- Reduce(
+    intersect,
+    list(
+      argo_nc_vars_by_dimension(nc, 1, "N_PARAM"),
+      argo_nc_vars_by_dimension(nc, 2, "N_PROF")
+    )
+  )
+
+  c(string_vars, vars)
 }
 
 #' @rdname argo_nc_prof

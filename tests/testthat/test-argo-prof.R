@@ -50,6 +50,21 @@ test_that("argo_prof_calib() works", {
   })
 })
 
+test_that("argo_prof_param() works", {
+  with_argo_example_cache({
+    prof <- argo_prof_param("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
+    expect_true(all(c("file", "n_param", "n_prof") %in% names(prof)))
+
+    prof <- argo_prof_param(
+      "dac/csio/2900313/profiles/D2900313_000.nc",
+      vars = "station_parameters",
+      quiet = TRUE
+    )
+
+    expect_identical(names(prof), c("file", "n_param", "n_prof", "station_parameters"))
+  })
+})
+
 test_that("argo_prof_history() works", {
   with_argo_example_cache({
     prof <- argo_prof_history("dac/csio/2900313/profiles/D2900313_000.nc", quiet = TRUE)
@@ -96,6 +111,18 @@ test_that("argo_read_prof_prof() works", {
 test_that("argo_read_prof_calib() works", {
   expect_is(
     argo_read_prof_calib(
+      system.file(
+        "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+test_that("argo_read_prof_param() works", {
+  expect_is(
+    argo_read_prof_param(
       system.file(
         "cache-test/dac/csio/2900313/profiles/D2900313_000.nc",
         package = "argodata"

@@ -4,6 +4,7 @@
 \alias{argo_prof_levels}
 \alias{argo_prof_prof}
 \alias{argo_prof_calib}
+\alias{argo_prof_param}
 \alias{argo_prof_history}
 \title{Load Argo profiles}
 \usage{
@@ -12,6 +13,8 @@ argo_prof_levels(path, vars = NULL, download = NULL, quiet = FALSE)
 argo_prof_prof(path, vars = NULL, download = NULL, quiet = FALSE)
 
 argo_prof_calib(path, vars = NULL, download = NULL, quiet = FALSE)
+
+argo_prof_param(path, vars = NULL, download = NULL, quiet = FALSE)
 
 argo_prof_history(path, vars = NULL, download = NULL, quiet = FALSE)
 }

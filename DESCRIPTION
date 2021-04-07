@@ -24,7 +24,8 @@ Imports:
     ncdf4,
     vctrs,
     tibble,
-    progress
+    progress,
+    RNetCDF
 Suggests: 
     testthat,
     dplyr,

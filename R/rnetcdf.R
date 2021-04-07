@@ -156,18 +156,24 @@ argo_read_prof_levels2 <- function(file, vars = NULL) {
 
   values <- vector("list", n_vars)
   for (i in seq_len(n_vars)) {
-    values[[i]] <- var.get.nc(nc, vars$var_id[i], rawchar = !vars$var_string[i])
+    value <- var.get.nc(
+      nc, vars$var_id[i],
+      na.mode = 0L,
+      rawchar = !vars$var_string[i]
+    )
+    dim(value) <- NULL
+    if (is.raw(value)) {
+      value <- rawToChar(value, multiple = TRUE)
+    }
+    values[[i]] <- value
   }
   names(values) <- vars$var_name
-
-  is_raw <- vapply(values, is.raw, logical(1))
-  values[is_raw] <- lapply(values[is_raw], rawToChar, multiple = TRUE)
 
   n_levels <- dims$dim_length[1]
   n_prof <- dims$dim_length[2]
   dim_values <- list(
-    N_PROF = vctrs::vec_rep(seq_len(n_prof), n_levels),
-    N_LEVELS = vctrs::vec_rep_each(seq_len(n_levels), n_prof)
+    N_LEVELS = vctrs::vec_rep(seq_len(n_levels), n_prof),
+    N_PROF = vctrs::vec_rep_each(seq_len(n_prof), n_levels)
   )
 
   tibble::new_tibble(c(dim_values, values), nrow = n_prof * n_levels)

@@ -203,7 +203,7 @@ argo_traj_cycle <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 #' @rdname argo_traj
 #' @export
 argo_traj_history <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
-  argo_read_many(
+  tbl <- argo_read_many(
     assert_argo_traj_file,
     argo_read_traj_history,
     path = path,
@@ -211,6 +211,10 @@ argo_traj_history <- function(path, vars = NULL, download = NULL, quiet = FALSE)
     download = download,
     quiet = quiet
   )
+
+  val_is_char <- vapply(tbl, is.character, logical(1))
+  tbl[val_is_char] <- lapply(tbl[val_is_char], stringr::str_trim)
+  tbl
 }
 
 #' Read Argo trajectories
@@ -231,31 +235,34 @@ argo_traj_history <- function(path, vars = NULL, download = NULL, quiet = FALSE)
 #' argo_read_traj_cycle(traj_file)
 #' argo_read_traj_history(traj_file)
 #'
-argo_read_traj_measurement <- function(file, vars = NULL) {
-  with_argo_nc_file(
+argo_read_traj_measurement <- function(file, vars = NULL, quiet = FALSE) {
+  argo_nc_read_simple(
     file,
-    argo_nc_traj_read_measurement,
-    vars = vars
+    dims = "N_MEASUREMENT",
+    vars = vars,
+    quiet = quiet
   )
 }
 
 #' @rdname argo_read_traj
 #' @export
-argo_read_traj_cycle <- function(file, vars = NULL) {
-  with_argo_nc_file(
+argo_read_traj_cycle <- function(file, vars = NULL, quiet = FALSE) {
+  argo_nc_read_simple(
     file,
-    argo_nc_traj_read_cycle,
-    vars = vars
+    dims = "N_CYCLE",
+    vars = vars,
+    quiet = quiet
   )
 }
 
 #' @rdname argo_read_traj
 #' @export
-argo_read_traj_history <- function(file, vars = NULL) {
-  with_argo_nc_file(
+argo_read_traj_history <- function(file, vars = NULL, quiet = FALSE) {
+  argo_nc_read_simple(
     file,
-    argo_nc_traj_read_history,
-    vars = vars
+    dims = "N_HISTORY",
+    vars = vars,
+    quiet = quiet
   )
 }
 

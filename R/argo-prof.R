@@ -2,7 +2,7 @@
 #' Load Argo profiles
 #'
 #' @inheritParams argo_vars
-#' @inheritParams argo_nc_prof_read_levels
+#' @inheritParams argo_nc_read_vars
 #'
 #' @return A [tibble::tibble()].
 #' @export
@@ -179,7 +179,6 @@ argo_prof_history <- function(path, vars = NULL, download = NULL, quiet = NA) {
 #' Read Argo profiles
 #'
 #' @inheritParams argo_read_vars
-#' @inheritParams argo_nc_prof_read_levels
 #'
 #' @return A [tibble::tibble()]
 #' @export

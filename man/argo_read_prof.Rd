@@ -8,15 +8,15 @@
 \alias{argo_read_prof_history}
 \title{Read Argo profiles}
 \usage{
-argo_read_prof_levels(file, vars = NULL)
+argo_read_prof_levels(file, vars = NULL, quiet = FALSE)
 
-argo_read_prof_prof(file, vars = NULL)
+argo_read_prof_prof(file, vars = NULL, quiet = FALSE)
 
-argo_read_prof_calib(file, vars = NULL)
+argo_read_prof_calib(file, vars = NULL, quiet = FALSE)
 
-argo_read_prof_param(file, vars = NULL)
+argo_read_prof_param(file, vars = NULL, quiet = FALSE)
 
-argo_read_prof_history(file, vars = NULL)
+argo_read_prof_history(file, vars = NULL, quiet = FALSE)
 }
 \arguments{
 \item{file}{A previously downloaded Argo NetCDF file.}
@@ -26,6 +26,10 @@ of the variables is not guaranteed, and variables that do not
 exist are ignored. For \verb{nc_read_*()} and \verb{read_*()} variants,
 these are the raw variable names (all caps, without "date"
 substituted for "juld").}
+
+\item{quiet}{Use \code{TRUE} to stop for malformed files, \code{NA} to
+silently warn for malformed files (will return \code{NULL}), or
+\code{FALSE} to return \code{NULL} silently when a read error is encountered.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}}
@@ -41,6 +45,8 @@ prof_file <- system.file(
 
 argo_read_prof_levels(prof_file)
 argo_read_prof_prof(prof_file)
+argo_read_prof_calib(prof_file)
+argo_read_prof_param(prof_file)
 argo_read_prof_history(prof_file)
 
 }

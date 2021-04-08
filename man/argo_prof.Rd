@@ -8,15 +8,15 @@
 \alias{argo_prof_history}
 \title{Load Argo profiles}
 \usage{
-argo_prof_levels(path, vars = NULL, download = NULL, quiet = FALSE)
+argo_prof_levels(path, vars = NULL, download = NULL, quiet = NA)
 
-argo_prof_prof(path, vars = NULL, download = NULL, quiet = FALSE)
+argo_prof_prof(path, vars = NULL, download = NULL, quiet = NA)
 
-argo_prof_calib(path, vars = NULL, download = NULL, quiet = FALSE)
+argo_prof_calib(path, vars = NULL, download = NULL, quiet = NA)
 
-argo_prof_param(path, vars = NULL, download = NULL, quiet = FALSE)
+argo_prof_param(path, vars = NULL, download = NULL, quiet = NA)
 
-argo_prof_history(path, vars = NULL, download = NULL, quiet = FALSE)
+argo_prof_history(path, vars = NULL, download = NULL, quiet = NA)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
@@ -127,6 +127,14 @@ with_argo_example_cache({
 
 with_argo_example_cache({
   argo_prof_prof("dac/csio/2900313/profiles/D2900313_000.nc")
+})
+
+with_argo_example_cache({
+  argo_prof_calib("dac/csio/2900313/profiles/D2900313_000.nc")
+})
+
+with_argo_example_cache({
+  argo_prof_param("dac/csio/2900313/profiles/D2900313_000.nc")
 })
 
 with_argo_example_cache({

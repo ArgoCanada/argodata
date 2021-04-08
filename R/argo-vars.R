@@ -43,6 +43,9 @@ argo_vars <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 #' Read NetCDF variable metadata
 #'
 #' @param file A previously downloaded Argo NetCDF file.
+#' @param quiet Use `TRUE` to stop for malformed files, `NA` to
+#'   silently warn for malformed files (will return `NULL`), or
+#'   `FALSE` to return `NULL` silently when a read error is encountered.
 #' @inheritParams argo_nc_read_vars
 #'
 #' @return A [tibble::tibble()] with one row per variable and columns `name`,
@@ -59,7 +62,7 @@ argo_vars <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 #'
 #' argo_read_vars(prof_file)
 #'
-argo_read_vars <- function(file, vars = NULL) {
+argo_read_vars <- function(file, vars = NULL, quiet = FALSE) {
   with_argo_nc_file(file, argo_nc_read_vars, vars = vars)
 }
 

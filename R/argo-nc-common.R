@@ -4,24 +4,35 @@ argo_read_many <- function(assert_fun, read_fun, ...,
   path <- as_argo_path(path)
   assert_fun(path)
 
-  cached <- argo_download(path, download = download, quiet = quiet)
+  cached <- argo_download(path, download = download, quiet = isTRUE(quiet))
 
   # names should be of the 'file' version, which can be
   # joined with one of the global tables
   names(cached) <- stringr::str_remove(path, "^dac/")
 
-  if (!quiet) {
+  if (!isTRUE(quiet)) {
     files_word <- if (length(cached) != 1) "files" else "file"
     title <- glue("Extracting from { length(cached) } { files_word }")
     message(title)
   }
 
-  tbls <- argo_map(
-    cached,
-    read_fun,
-    vars = argo_unsanitize_vars(vars),
-    ...
-  )
+  # temporary hack to support quiet in some read_fun
+  if ("quiet" %in% names(formals(read_fun))) {
+    tbls <- argo_map(
+      cached,
+      read_fun,
+      vars = argo_unsanitize_vars(vars),
+      quiet = quiet,
+      ...
+    )
+  } else {
+    tbls <- argo_map(
+      cached,
+      read_fun,
+      vars = argo_unsanitize_vars(vars),
+      ...
+    )
+  }
 
   tbl <- vctrs::vec_rbind(!!! tbls, .names_to = "file")
   names(tbl) <- argo_sanitize_vars(names(tbl))

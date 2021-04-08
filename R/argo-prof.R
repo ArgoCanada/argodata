@@ -85,10 +85,18 @@
 #' })
 #'
 #' with_argo_example_cache({
+#'   argo_prof_calib("dac/csio/2900313/profiles/D2900313_000.nc")
+#' })
+#'
+#' with_argo_example_cache({
+#'   argo_prof_param("dac/csio/2900313/profiles/D2900313_000.nc")
+#' })
+#'
+#' with_argo_example_cache({
 #'   argo_prof_history("dac/csio/2900313/profiles/D2900313_000.nc")
 #' })
 #'
-argo_prof_levels <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
+argo_prof_levels <- function(path, vars = NULL, download = NULL, quiet = NA) {
   argo_read_many(
     assert_argo_prof_file,
     argo_read_prof_levels,
@@ -101,7 +109,7 @@ argo_prof_levels <- function(path, vars = NULL, download = NULL, quiet = FALSE) 
 
 #' @rdname argo_prof
 #' @export
-argo_prof_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
+argo_prof_prof <- function(path, vars = NULL, download = NULL, quiet = NA) {
   tbl <- argo_read_many(
     assert_argo_prof_file,
     argo_read_prof_prof,
@@ -118,7 +126,7 @@ argo_prof_prof <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 
 #' @rdname argo_prof
 #' @export
-argo_prof_calib <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
+argo_prof_calib <- function(path, vars = NULL, download = NULL, quiet = NA) {
   tbl <- argo_read_many(
     assert_argo_prof_file,
     argo_read_prof_calib,
@@ -135,7 +143,7 @@ argo_prof_calib <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 
 #' @rdname argo_prof
 #' @export
-argo_prof_param <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
+argo_prof_param <- function(path, vars = NULL, download = NULL, quiet = NA) {
   tbl <- argo_read_many(
     assert_argo_prof_file,
     argo_read_prof_param,
@@ -152,8 +160,8 @@ argo_prof_param <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
 
 #' @rdname argo_prof
 #' @export
-argo_prof_history <- function(path, vars = NULL, download = NULL, quiet = FALSE) {
-  argo_read_many(
+argo_prof_history <- function(path, vars = NULL, download = NULL, quiet = NA) {
+  tbl <- argo_read_many(
     assert_argo_prof_file,
     argo_read_prof_history,
     path = path,
@@ -161,6 +169,10 @@ argo_prof_history <- function(path, vars = NULL, download = NULL, quiet = FALSE)
     download = download,
     quiet = quiet
   )
+
+  val_is_char <- vapply(tbl, is.character, logical(1))
+  tbl[val_is_char] <- lapply(tbl[val_is_char], stringr::str_trim)
+  tbl
 }
 
 
@@ -181,53 +193,59 @@ argo_prof_history <- function(path, vars = NULL, download = NULL, quiet = FALSE)
 #'
 #' argo_read_prof_levels(prof_file)
 #' argo_read_prof_prof(prof_file)
+#' argo_read_prof_calib(prof_file)
+#' argo_read_prof_param(prof_file)
 #' argo_read_prof_history(prof_file)
 #'
-argo_read_prof_levels <- function(file, vars = NULL) {
-  with_argo_nc_file(
+argo_read_prof_levels <- function(file, vars = NULL, quiet = FALSE) {
+  argo_nc_read_simple(
     file,
-    argo_nc_prof_read_levels,
-    vars = vars
+    dims = c("N_LEVELS", "N_PROF"),
+    vars = vars,
+    quiet = quiet
   )
 }
 
 #' @rdname argo_read_prof
 #' @export
-argo_read_prof_prof <- function(file, vars = NULL) {
-  with_argo_nc_file(
+argo_read_prof_prof <- function(file, vars = NULL, quiet = FALSE) {
+  argo_nc_read_simple(
     file,
-    argo_nc_prof_read_prof,
-    vars = vars
+    dims = "N_PROF",
+    vars = vars,
+    quiet = quiet
   )
 }
 
 #' @rdname argo_read_prof
 #' @export
-argo_read_prof_calib <- function(file, vars = NULL) {
-  with_argo_nc_file(
+argo_read_prof_calib <- function(file, vars = NULL, quiet = FALSE) {
+  argo_nc_read_simple(
     file,
-    argo_nc_prof_read_calib,
-    vars = vars
+    dims = c("N_PARAM", "N_CALIB", "N_PROF"),
+    vars = vars,
+    quiet = quiet
   )
 }
 
 #' @rdname argo_read_prof
 #' @export
-argo_read_prof_param <- function(file, vars = NULL) {
-  with_argo_nc_file(
-    file,
-    argo_nc_prof_read_param,
-    vars = vars
+argo_read_prof_param <- function(file, vars = NULL, quiet = FALSE) {
+  argo_nc_read_simple(
+    file, dims = c("N_PARAM", "N_PROF"),
+    vars = vars,
+    quiet = quiet
   )
 }
 
 #' @rdname argo_read_prof
 #' @export
-argo_read_prof_history <- function(file, vars = NULL) {
-  with_argo_nc_file(
+argo_read_prof_history <- function(file, vars = NULL, quiet = FALSE) {
+  argo_nc_read_simple(
     file,
-    argo_nc_prof_read_history,
-    vars = vars
+    dims = c("N_PROF", "N_HISTORY"),
+    vars = vars,
+    quiet = quiet
   )
 }
 

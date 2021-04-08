@@ -277,12 +277,3 @@ argo_nc_read_simple <- function(file, dims, vars = NULL, quiet = FALSE) {
   values <- nc_read_vars(nc, vars)
   new_tibble(c(dim_values, values), nrow = prod(dims$dim_length))
 }
-
-# will get moved...just here for testing
-argo_read_prof_levels2 <- function(file, vars = NULL, quiet = FALSE) {
-  argo_nc_read_simple(file, dims = c("N_LEVELS", "N_PROF"), vars = vars, quiet = quiet)
-}
-
-argo_read_prof_prof2 <- function(file, vars = NULL, quiet = FALSE) {
-  argo_nc_read_simple(file, dims = "N_PROF", vars = vars, quiet = quiet)
-}

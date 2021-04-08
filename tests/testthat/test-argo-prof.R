@@ -13,7 +13,7 @@ test_that("argo_prof_levels() works", {
 
     expect_identical(
       names(prof),
-      c("file", "n_prof", "n_levels", "pres", "temp")
+      c("file",  "n_levels", "n_prof", "pres", "temp")
     )
   })
 })

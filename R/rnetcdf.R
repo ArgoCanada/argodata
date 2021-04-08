@@ -32,7 +32,8 @@ nc_dims <- function(nc, dim_name) {
   has_dim <- rep(FALSE, n)
 
   nc_n <- attr(nc, "inq", exact = TRUE)$ndims
-  n_done <- 0L
+  string_dim_id <- integer(nc_n)
+  n_string <- 0L
   for (nc_i in 0:(nc_n - 1)) {
     inq <- dim.inq.nc(nc, nc_i)
     i <- match(inq$name, dim_name, nomatch = -1L)
@@ -40,8 +41,11 @@ nc_dims <- function(nc, dim_name) {
       has_dim[i] <- TRUE
       dim_id[i] <- inq$id
       dim_length[i] <- inq$length
-      n_done <- n_done + 1L
-      if (n_done == n) break;
+    }
+
+    if (startsWith(inq$name, "STRING") || (inq$name == "DATE_TIME")) {
+      n_string <- n_string + 1L
+      string_dim_id[n_string] <- inq$id
     }
   }
 
@@ -49,7 +53,8 @@ nc_dims <- function(nc, dim_name) {
     dim_id = dim_id,
     dim_name = dim_name,
     has_dim = has_dim,
-    dim_length = dim_length
+    dim_length = dim_length,
+    string_dim_id = string_dim_id[seq_len(n_string)]
   )
 }
 
@@ -81,7 +86,7 @@ nc_vars <- function(nc, var_name) {
   )
 }
 
-nc_find_vars <- function(nc, dim_id) {
+nc_find_vars <- function(nc, dim_id, string_dim_ids) {
   nc_n <- attr(nc, "inq", exact = TRUE)$nvars
   var_name <- character(nc_n)
   var_string <- logical(nc_n)
@@ -92,7 +97,7 @@ nc_find_vars <- function(nc, dim_id) {
   for (nc_i in 0:(nc_n - 1)) {
     inq <- var.inq.nc(nc, nc_i)
     ids <- inq$dimids
-    is_string <- (inq$type == "NC_CHAR") && identical(ids[-1], dim_id)
+    is_string <- identical(ids[-1], dim_id) && (ids[1] %in% string_dim_ids)
 
     if (identical(dim_id, ids) || is_string) {
       n_done <- n_done + 1L
@@ -142,7 +147,7 @@ warn_or_stop_var_unexpected_length <- function(file, var_name, len, expected_len
   )
 }
 
-sanitize_or_stop_vars <- function(vars, file, dim_id, quiet = FALSE) {
+sanitize_or_stop_vars <- function(vars, file, dim_id, string_dim_ids, quiet = FALSE) {
   if (!all(vars$has_var)) {
     missing <- paste0("'", vars$var_name[!vars$has_var], "'")
     variables <- if (sum(!vars$has_var) != 1) "variables" else "variable"
@@ -158,8 +163,7 @@ sanitize_or_stop_vars <- function(vars, file, dim_id, quiet = FALSE) {
   var_string <- logical(n_vars)
   for (i in seq_along(vars$var_dim_id)) {
     ids <- vars$var_dim_id[[i]]
-    # no access to type here but maybe there should be
-    var_string[i] <- identical(ids[-1], dim_id)
+    var_string[i] <- identical(ids[-1], dim_id) && (ids[1] %in% string_dim_ids)
     expected_dim[i] <- identical(dim_id, ids) || var_string[i]
   }
 
@@ -178,6 +182,20 @@ sanitize_or_stop_vars <- function(vars, file, dim_id, quiet = FALSE) {
   }
 
   vars
+}
+
+nc_resolve_vars <- function(nc, vars, dims, file = "", quiet = FALSE) {
+  if (is.null(vars)) {
+    nc_find_vars(nc, dims$dim_id, dims$string_dim_id)
+  } else {
+    sanitize_or_stop_vars(
+      nc_vars(nc, vars),
+      file,
+      dims$dim_id,
+      dims$string_dim_id,
+      quiet = quiet
+    )
+  }
 }
 
 nc_read_vars <- function(nc, vars) {
@@ -202,32 +220,57 @@ nc_read_vars <- function(nc, vars) {
   values
 }
 
-argo_read_prof_levels2 <- function(file, vars = NULL, quiet = FALSE) {
+#' @importFrom vctrs vec_rep vec_rep_each
+nc_read_dims <- function(nc, dims) {
+  lengths <- dims$dim_length
+  n_dims <- length(lengths)
+
+  dim_values <- if (n_dims == 1L) {
+    list(seq_len(lengths))
+  } else if (n_dims == 2L) {
+    n1 <- lengths[1]
+    n2 <- lengths[2]
+    list(
+      vec_rep(seq_len(n1), n2),
+      vec_rep_each(seq_len(n2), n1)
+    )
+  } else if (n_dims == 3L) {
+    n1 <- lengths[1]
+    n2 <- lengths[2]
+    n3 <- lengths[3]
+    list(
+      vec_rep(seq_len(n1), n2 * n3),
+      vec_rep(vec_rep_each(seq_len(n2), n1), n3),
+      vec_rep_each(seq_len(n3), n1 * n2)
+    )
+  } else {
+    unclass(unname(do.call(expand.grid, lapply(lengths, seq_len))))
+  }
+
+  names(dim_values) <- dims$dim_name
+  dim_values
+}
+
+argo_read_simple <- function(file, dims, vars = NULL, quiet = FALSE) {
   nc <- nc_open(file)
   on.exit(nc_close(nc))
 
-  dims <- nc_dims(nc, c("N_LEVELS", "N_PROF"))
+  dims <- nc_dims(nc, dims)
   if (!all(dims$has_dim)) {
     warn_or_stop_missing_dims(file, dims, quiet = quiet)
     return(NULL)
   }
 
-  vars <- if (is.null(vars)) {
-    nc_find_vars(nc, dims$dim_id)
-  } else {
-    sanitize_or_stop_vars(nc_vars(nc, vars), file, dims$dim_id, quiet = quiet)
-  }
-
-  n_levels <- dims$dim_length[1]
-  n_prof <- dims$dim_length[2]
-  n <- n_levels * n_prof
-
-  dim_values <- list(
-    N_LEVELS = vctrs::vec_rep(seq_len(n_levels), n_prof),
-    N_PROF = vctrs::vec_rep_each(seq_len(n_prof), n_levels)
-  )
-
+  vars <- nc_resolve_vars(nc, vars, dims, file = file, quiet = quiet)
+  dim_values <- nc_read_dims(nc, dims)
   values <- nc_read_vars(nc, vars)
+  new_tibble(c(dim_values, values), nrow = prod(dims$dim_length))
+}
 
-  new_tibble(c(dim_values, values), nrow = n)
+argo_read_prof_levels2 <- function(file, vars = NULL, quiet = FALSE) {
+  argo_read_simple(file, dims = c("N_LEVELS", "N_PROF"), vars = vars, quiet = quiet)
+}
+
+argo_read_prof_prof2 <- function(file, vars = NULL, quiet = FALSE) {
+  argo_read_simple(file, dims = "N_PROF", vars = vars, quiet = quiet)
 }

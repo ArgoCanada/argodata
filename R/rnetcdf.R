@@ -1,9 +1,28 @@
 
+# These functions are wrappers around NetCDF reading that are highly
+# optimized for Argo NetCDF files and highly optimized in general because
+# these functions are called a *lot* when thousands of profiles are being
+# read. Another important piece of these functions is the ability to noisily
+# return NULL on a read error so that one file that is outside the assumptions
+# of the read function doesn't cause all the others to stop reading.
+
 #' @importFrom RNetCDF file.inq.nc open.nc close.nc var.get.nc dim.inq.nc var.inq.nc
 nc_open <- function(path) {
   nc <- open.nc(path)
   attr(nc, "inq") <- file.inq.nc(nc)
   nc
+}
+
+nc_close <- function(nc) close.nc(nc)
+
+new_tibble <- function(x, nrow) {
+  structure(x, row.names = c(NA, as.integer(nrow)), class = c("tbl_df", "tbl", "data.frame"))
+}
+
+empty_tibble <- function() {
+  x <- list()
+  names(x) <- character(0)
+  structure(x, row.names = c(NA, as.integer(nrow)), class = c("tbl_df", "tbl", "data.frame"))
 }
 
 nc_dims <- function(nc, dim_name) {
@@ -93,17 +112,44 @@ nc_find_vars <- function(nc, dim_id) {
   )
 }
 
-warn_missing_dims <- function(file, dims) {
-  missing <- paste0("'", dims$dim_name[!dims$has_dim], "'", collapse = " and ")
-  dimensions <- if (sum(!dims$has_dim) != 1) "dimensions" else "dimension"
-  warn_immediate(glue("'{ file }' is missing { dimensions }:\n{ missing }"))
+
+warn_or_stop_read_error <- function(msg, quiet = FALSE) {
+  if (identical(quiet, FALSE)) {
+    abort(msg)
+  } else if (identical(quiet, NA)) {
+    warning(msg, immediate. = TRUE, call. = FALSE)
+  } else {
+    # do nothing
+  }
 }
 
-sanitize_vars <- function(vars, file, dim_id) {
+warn_or_stop_missing_dims <- function(file, dims, quiet = FALSE) {
+  missing <- paste0("'", dims$dim_name[!dims$has_dim], "'", collapse = " and ")
+  dimensions <- if (sum(!dims$has_dim) != 1) "dimensions" else "dimension"
+  warn_or_stop_read_error(
+    glue("'{ file }' is missing { dimensions }:\n{ missing }"),
+    quiet = quiet
+  )
+}
+
+warn_or_stop_var_unexpected_length <- function(file, var_name, len, expected_len,
+                                               quiet = FALSE) {
+  warn_or_stop_read_error(
+    glue(
+      "'{ file }' variable '{ var_name }' has unexpected length { len } (expected { expected_len })"
+    ),
+    quiet = quiet
+  )
+}
+
+sanitize_or_stop_vars <- function(vars, file, dim_id, quiet = FALSE) {
   if (!all(vars$has_var)) {
     missing <- paste0("'", vars$var_name[!vars$has_var], "'")
     variables <- if (sum(!vars$has_var) != 1) "variables" else "variable"
-    warn_immediate(glue("'{ file }' is missing { variables }:\n{ missing }"))
+    warn_or_stop_read_error(
+      glue("'{ file }' is missing { variables }:\n{ missing }"),
+      quiet = quiet
+    )
     vars <- lapply(vars, "[", vars$has_var)
   }
 
@@ -122,10 +168,11 @@ sanitize_vars <- function(vars, file, dim_id) {
   if (!all(expected_dim)) {
     missing <- paste0("'", vars$var_name[!expected_dim], "'")
     variables <- if (sum(!expected_dim) != 1) "variables" else "variable"
-    warn_immediate(
+    warn_or_stop_read_error(
       glue(
         "'{ file }' is has { variables } with unexpected dimensions:\n{ missing }"
-      )
+      ),
+      quiet = quiet
     )
     vars <- lapply(vars, "[", expected_dim)
   }
@@ -133,28 +180,10 @@ sanitize_vars <- function(vars, file, dim_id) {
   vars
 }
 
-argo_read_prof_levels2 <- function(file, vars = NULL) {
-  nc <- nc_open(file)
-  on.exit(close.nc(nc))
-
-  dims <- nc_dims(nc, c("N_LEVELS", "N_PROF"))
-  if (!all(dims$has_dim)) {
-    warn_missing_dims(file, dims)
-    return(NULL)
-  }
-
-  vars <- if (is.null(vars)) {
-    nc_find_vars(nc, dims$dim_id)
-  } else {
-    sanitize_vars(nc_vars(nc, vars), file, dims$dim_id)
-  }
-
+nc_read_vars <- function(nc, vars) {
   n_vars <- length(vars[[1]])
-  if (n_vars == 0) {
-    return(tibble::new_tibble(list(), nrow = 0))
-  }
-
   values <- vector("list", n_vars)
+
   for (i in seq_len(n_vars)) {
     value <- var.get.nc(
       nc, vars$var_id[i],
@@ -162,19 +191,43 @@ argo_read_prof_levels2 <- function(file, vars = NULL) {
       rawchar = !vars$var_string[i]
     )
     dim(value) <- NULL
+
     if (is.raw(value)) {
       value <- rawToChar(value, multiple = TRUE)
     }
     values[[i]] <- value
   }
+
   names(values) <- vars$var_name
+  values
+}
+
+argo_read_prof_levels2 <- function(file, vars = NULL, quiet = FALSE) {
+  nc <- nc_open(file)
+  on.exit(nc_close(nc))
+
+  dims <- nc_dims(nc, c("N_LEVELS", "N_PROF"))
+  if (!all(dims$has_dim)) {
+    warn_or_stop_missing_dims(file, dims, quiet = quiet)
+    return(NULL)
+  }
+
+  vars <- if (is.null(vars)) {
+    nc_find_vars(nc, dims$dim_id)
+  } else {
+    sanitize_or_stop_vars(nc_vars(nc, vars), file, dims$dim_id, quiet = quiet)
+  }
 
   n_levels <- dims$dim_length[1]
   n_prof <- dims$dim_length[2]
+  n <- n_levels * n_prof
+
   dim_values <- list(
     N_LEVELS = vctrs::vec_rep(seq_len(n_levels), n_prof),
     N_PROF = vctrs::vec_rep_each(seq_len(n_prof), n_levels)
   )
 
-  tibble::new_tibble(c(dim_values, values), nrow = n_prof * n_levels)
+  values <- nc_read_vars(nc, vars)
+
+  new_tibble(c(dim_values, values), nrow = n)
 }

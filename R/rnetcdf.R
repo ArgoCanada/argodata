@@ -19,12 +19,11 @@ new_tibble <- function(x, nrow) {
   structure(x, row.names = c(NA, as.integer(nrow)), class = c("tbl_df", "tbl", "data.frame"))
 }
 
-empty_tibble <- function() {
-  x <- list()
-  names(x) <- character(0)
-  structure(x, row.names = c(NA, as.integer(nrow)), class = c("tbl_df", "tbl", "data.frame"))
-}
-
+# In read functions we don't ever have to list all dimensions,
+# but we do have to verify that some exist and get their ids to check/find
+# variables along them. We also need a list of the string dimensions
+# (names specific to Argo) to properly identify when we want to return
+# a vector of single characters (e.g., _QC columns) or a true string.
 nc_dims <- function(nc, dim_name) {
   n <- length(dim_name)
   dim_id <- integer(n)
@@ -58,6 +57,8 @@ nc_dims <- function(nc, dim_name) {
   )
 }
 
+# Lists only variables found in `var_name`. These are always
+# checked by sanitize_or_stop_vars() for the correct dimensionality.
 nc_vars <- function(nc, var_name) {
   n <- length(var_name)
   var_id <- integer(n)
@@ -86,6 +87,8 @@ nc_vars <- function(nc, var_name) {
   )
 }
 
+# Finds variables with the requested dimension family (taking into account
+# string variables).
 nc_find_vars <- function(nc, dim_id, string_dim_ids) {
   nc_n <- attr(nc, "inq", exact = TRUE)$nvars
   var_name <- character(nc_n)
@@ -117,7 +120,9 @@ nc_find_vars <- function(nc, dim_id, string_dim_ids) {
   )
 }
 
-
+# Base reporter that either stops (probably what you want for a single read),
+# warns (probably what you want for a bulk read the first time) or drops
+# (probably what you want for a bulk read in a script).
 warn_or_stop_read_error <- function(msg, quiet = FALSE) {
   if (identical(quiet, FALSE)) {
     abort(msg)
@@ -128,6 +133,9 @@ warn_or_stop_read_error <- function(msg, quiet = FALSE) {
   }
 }
 
+# Some types of files just don't have some dimensions (meta files is where
+# this was first encountered). It's helpful to just warn for these and
+# return NULL in a bulk read.
 warn_or_stop_missing_dims <- function(file, dims, quiet = FALSE) {
   missing <- paste0("'", dims$dim_name[!dims$has_dim], "'", collapse = " and ")
   dimensions <- if (sum(!dims$has_dim) != 1) "dimensions" else "dimension"
@@ -137,16 +145,9 @@ warn_or_stop_missing_dims <- function(file, dims, quiet = FALSE) {
   )
 }
 
-warn_or_stop_var_unexpected_length <- function(file, var_name, len, expected_len,
-                                               quiet = FALSE) {
-  warn_or_stop_read_error(
-    glue(
-      "'{ file }' variable '{ var_name }' has unexpected length { len } (expected { expected_len })"
-    ),
-    quiet = quiet
-  )
-}
-
+# There's no guarantee that user-supplied variables will be along the
+# dimensions of the read or are available in the file. Warning when these
+# are absent is helpful in bulk reads.
 sanitize_or_stop_vars <- function(vars, file, dim_id, string_dim_ids, quiet = FALSE) {
   if (!all(vars$has_var)) {
     missing <- paste0("'", vars$var_name[!vars$has_var], "'")
@@ -184,6 +185,9 @@ sanitize_or_stop_vars <- function(vars, file, dim_id, string_dim_ids, quiet = FA
   vars
 }
 
+# By default vars is NULL, which means we can use `nc_find_vars()`
+# and skip sanitizing. When the user supplies vars, we might need to
+# remove problematic ones.
 nc_resolve_vars <- function(nc, vars, dims, file = "", quiet = FALSE) {
   if (is.null(vars)) {
     nc_find_vars(nc, dims$dim_id, dims$string_dim_id)
@@ -198,6 +202,9 @@ nc_resolve_vars <- function(nc, vars, dims, file = "", quiet = FALSE) {
   }
 }
 
+# Wrapper around var.get.nc() that takes into account the string-ness
+# of the variable. It would also be possible to check the resulting
+# lengths here but the dimension checking appears to work for this so far.
 nc_read_vars <- function(nc, vars) {
   n_vars <- length(vars[[1]])
   values <- vector("list", n_vars)
@@ -220,6 +227,9 @@ nc_read_vars <- function(nc, vars) {
   values
 }
 
+# These are just faster wrappers around expand.grid(), which unnecessarily
+# creates a data.frame() and whose speed can be improved upon with the
+# simple but most common cases of one, two, and three-variable expansions
 #' @importFrom vctrs vec_rep vec_rep_each
 nc_read_dims <- function(nc, dims) {
   lengths <- dims$dim_length
@@ -251,7 +261,8 @@ nc_read_dims <- function(nc, dims) {
   dim_values
 }
 
-argo_read_simple <- function(file, dims, vars = NULL, quiet = FALSE) {
+# Most Argo tables can be read using this function, varying `dims`.
+argo_nc_read_simple <- function(file, dims, vars = NULL, quiet = FALSE) {
   nc <- nc_open(file)
   on.exit(nc_close(nc))
 
@@ -267,10 +278,11 @@ argo_read_simple <- function(file, dims, vars = NULL, quiet = FALSE) {
   new_tibble(c(dim_values, values), nrow = prod(dims$dim_length))
 }
 
+# will get moved...just here for testing
 argo_read_prof_levels2 <- function(file, vars = NULL, quiet = FALSE) {
-  argo_read_simple(file, dims = c("N_LEVELS", "N_PROF"), vars = vars, quiet = quiet)
+  argo_nc_read_simple(file, dims = c("N_LEVELS", "N_PROF"), vars = vars, quiet = quiet)
 }
 
 argo_read_prof_prof2 <- function(file, vars = NULL, quiet = FALSE) {
-  argo_read_simple(file, dims = "N_PROF", vars = vars, quiet = quiet)
+  argo_nc_read_simple(file, dims = "N_PROF", vars = vars, quiet = quiet)
 }

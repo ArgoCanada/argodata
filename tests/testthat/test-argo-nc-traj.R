@@ -1,5 +1,5 @@
 
-test_that("argo_nc_traj_*_measurement() works for trajectory files", {
+test_that("argo_read_traj_measurement() works for trajectory files", {
   nc <- ncdf4::nc_open(
     system.file(
       "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
@@ -16,7 +16,7 @@ test_that("argo_nc_traj_*_measurement() works for trajectory files", {
   ncdf4::nc_close(nc)
 })
 
-test_that("argo_nc_traj_*_cycle() works for trajectory files", {
+test_that("argo_read_traj_cycle() works for trajectory files", {
   nc <- ncdf4::nc_open(
     system.file(
       "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
@@ -33,7 +33,7 @@ test_that("argo_nc_traj_*_cycle() works for trajectory files", {
   ncdf4::nc_close(nc)
 })
 
-test_that("argo_nc_traj_*_history() works for trajectory files", {
+test_that("argo_read_traj_history() works for trajectory files", {
   nc <- ncdf4::nc_open(
     system.file(
       "cache-test/dac/csio/2900313/2900313_Rtraj.nc",

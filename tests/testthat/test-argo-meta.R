@@ -4,7 +4,7 @@ test_that("argo_meta_config_param() works", {
     meta <- argo_meta_config_param("dac/csio/2900313/2900313_meta.nc", quiet = TRUE)
     expect_true(
       all(
-        c("config_mission_number", "config_parameter_name", "config_parameter_value") %in%
+        c("config_parameter_name", "config_parameter_value") %in%
           names(meta)
       )
     )

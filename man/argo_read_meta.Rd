@@ -11,19 +11,19 @@
 \alias{argo_read_tech_tech_param}
 \title{Read Argo float meta}
 \usage{
-argo_read_meta_config_param(file, vars = NULL)
+argo_read_meta_config_param(file, vars = NULL, quiet = FALSE)
 
-argo_read_meta_missions(file, vars = NULL)
+argo_read_meta_missions(file, vars = NULL, quiet = FALSE)
 
-argo_read_meta_trans_system(file, vars = NULL)
+argo_read_meta_trans_system(file, vars = NULL, quiet = FALSE)
 
-argo_read_meta_positioning_system(file, vars = NULL)
+argo_read_meta_positioning_system(file, vars = NULL, quiet = FALSE)
 
-argo_read_meta_launch_config_param(file, vars = NULL)
+argo_read_meta_launch_config_param(file, vars = NULL, quiet = TRUE)
 
-argo_read_meta_sensor(file, vars = NULL)
+argo_read_meta_sensor(file, vars = NULL, quiet = quiet)
 
-argo_read_meta_param(file, vars = NULL)
+argo_read_meta_param(file, vars = NULL, quiet = quiet)
 
 argo_read_tech_tech_param(file, vars = NULL)
 }
@@ -35,6 +35,10 @@ of the variables is not guaranteed, and variables that do not
 exist are ignored. For \verb{nc_read_*()} and \verb{read_*()} variants,
 these are the raw variable names (all caps, without "date"
 substituted for "juld").}
+
+\item{quiet}{Use \code{TRUE} to stop for malformed files, \code{NA} to
+silently warn for malformed files (will return \code{NULL}), or
+\code{FALSE} to return \code{NULL} silently when a read error is encountered.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}}

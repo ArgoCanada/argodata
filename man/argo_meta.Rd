@@ -10,19 +10,19 @@
 \alias{argo_meta_param}
 \title{Load Argo float meta}
 \usage{
-argo_meta_config_param(path, download = NULL, quiet = FALSE)
+argo_meta_config_param(path, download = NULL, quiet = NA)
 
-argo_meta_missions(path, download = NULL, quiet = FALSE)
+argo_meta_missions(path, download = NULL, quiet = NA)
 
-argo_meta_trans_system(path, download = NULL, quiet = FALSE)
+argo_meta_trans_system(path, download = NULL, quiet = NA)
 
-argo_meta_positioning_system(path, download = NULL, quiet = FALSE)
+argo_meta_positioning_system(path, download = NULL, quiet = NA)
 
-argo_meta_launch_config_param(path, download = NULL, quiet = FALSE)
+argo_meta_launch_config_param(path, download = NULL, quiet = NA)
 
-argo_meta_sensor(path, download = NULL, quiet = FALSE)
+argo_meta_sensor(path, download = NULL, quiet = NA)
 
-argo_meta_param(path, download = NULL, quiet = FALSE)
+argo_meta_param(path, download = NULL, quiet = NA)
 }
 \arguments{
 \item{path}{A path relative to the root directory of

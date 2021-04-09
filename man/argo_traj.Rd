@@ -3,12 +3,15 @@
 \name{argo_traj_measurement}
 \alias{argo_traj_measurement}
 \alias{argo_traj_cycle}
+\alias{argo_traj_param}
 \alias{argo_traj_history}
 \title{Load Argo trajectories}
 \usage{
 argo_traj_measurement(path, vars = NULL, download = NULL, quiet = NA)
 
 argo_traj_cycle(path, vars = NULL, download = NULL, quiet = NA)
+
+argo_traj_param(path, vars = NULL, download = NULL, quiet = NA)
 
 argo_traj_history(path, vars = NULL, download = NULL, quiet = NA)
 }
@@ -50,6 +53,10 @@ with_argo_example_cache({
 
 with_argo_example_cache({
   argo_traj_cycle("dac/csio/2900313/2900313_Rtraj.nc")
+})
+
+with_argo_example_cache({
+  argo_traj_param("dac/csio/2900313/2900313_Rtraj.nc")
 })
 
 with_argo_example_cache({

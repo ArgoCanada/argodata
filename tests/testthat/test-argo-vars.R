@@ -4,17 +4,8 @@ test_that("argo_vars() works", {
     argo_vars("dac/csio/2900313/profiles/D2900313_000.nc")
   })
 
-  expect_true(all(c("file", "name", "longname", "units") %in% colnames(vars)))
-  expect_true(all(c("data_type", "temp", "date") %in% vars$name))
-
-  vars <- with_argo_example_cache({
-    argo_vars(
-      "dac/csio/2900313/profiles/D2900313_000.nc",
-      vars = c("data_type", "temp", "date", "empty")
-    )
-  })
-
-  expect_setequal(vars$name, c("data_type", "temp", "date"))
+  expect_true(all(c("file", "name", "att_long_name", "att_units") %in% colnames(vars)))
+  expect_true(all(c("DATA_TYPE", "TEMP", "JULD") %in% vars$name))
 })
 
 test_that("argo_read_vars() works", {
@@ -24,9 +15,6 @@ test_that("argo_read_vars() works", {
   )
 
   vars <- argo_read_vars(prof_file)
-  expect_true(all(c("name", "longname", "units") %in% colnames(vars)))
+  expect_true(all(c("name", "att_long_name", "att_units") %in% colnames(vars)))
   expect_true(all(c("DATA_TYPE", "TEMP", "JULD") %in% vars$name))
-
-  vars <- argo_read_vars(prof_file, vars = c("DATA_TYPE", "TEMP", "JULD", "empty"))
-  expect_setequal(vars$name, c("DATA_TYPE", "TEMP", "JULD"))
 })

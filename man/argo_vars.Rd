@@ -4,19 +4,13 @@
 \alias{argo_vars}
 \title{Load Argo NetCDF variable metadata}
 \usage{
-argo_vars(path, vars = NULL, download = NULL, quiet = FALSE)
+argo_vars(path, download = NULL, quiet = NA)
 }
 \arguments{
 \item{path}{A path relative to the root directory of
 \code{\link[=argo_mirror]{argo_mirror()}} or \code{\link[=argo_cache_dir]{argo_cache_dir()}}. This value can also
 be a data.frame with a \code{file} column (e.g., a global index as
 returned by \code{\link[=argo_global_meta]{argo_global_meta()}} and others).}
-
-\item{vars}{A vector of variable names to include. The ordering
-of the variables is not guaranteed, and variables that do not
-exist are ignored. For \verb{nc_read_*()} and \verb{read_*()} variants,
-these are the raw variable names (all caps, without "date"
-substituted for "juld").}
 
 \item{download}{A logical vector indicating whether or not
 a file should be downloaded. Defaults to the value of

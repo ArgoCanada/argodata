@@ -129,7 +129,7 @@
     <p>Read NetCDF general information</p>
     </div>
 
-    <pre class="usage"><span class='fu'>argo_read_info</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>argo_read_info</span><span class='op'>(</span><span class='va'>file</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,12 +139,10 @@
       <td><p>A previously downloaded Argo NetCDF file.</p></td>
     </tr>
     <tr>
-      <th>vars</th>
-      <td><p>A vector of variable names to include. The ordering
-of the variables is not guaranteed, and variables that do not
-exist are ignored. For <code>nc_read_*()</code> and <code>read_*()</code> variants,
-these are the raw variable names (all caps, without "date"
-substituted for "juld").</p></td>
+      <th>quiet</th>
+      <td><p>Use <code>TRUE</code> to stop for malformed files, <code>NA</code> to
+silently warn for malformed files (will return <code>NULL</code>), or
+<code>FALSE</code> to return <code>NULL</code> silently when a read error is encountered.</p></td>
     </tr>
     </table>
 

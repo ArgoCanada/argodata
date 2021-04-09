@@ -179,18 +179,18 @@
 
 <span class="va">levels</span>
 <span class="co">#&gt; # A tibble: 208,728 x 18</span>
-<span class="co">#&gt;    file                 pres  temp temp_qc n_prof n_levels pres_qc pres_adjusted</span>
-<span class="co">#&gt;    &lt;chr&gt;               &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt;    &lt;int&gt; &lt;chr&gt;           &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 meds/4901167/profi…  6.70  7.24 1            1        1 1                6.90</span>
-<span class="co">#&gt;  2 meds/4901167/profi… 10.8   6.83 1            1        2 1               11   </span>
-<span class="co">#&gt;  3 meds/4901167/profi… 20.1   5.51 1            1        3 1               20.3 </span>
-<span class="co">#&gt;  4 meds/4901167/profi… 30.2   3.85 1            1        4 1               30.4 </span>
-<span class="co">#&gt;  5 meds/4901167/profi… 40.5   3.68 1            1        5 1               40.7 </span>
-<span class="co">#&gt;  6 meds/4901167/profi… 49.9   3.88 1            1        6 1               50.1 </span>
-<span class="co">#&gt;  7 meds/4901167/profi… 59.8   4.01 1            1        7 1               60   </span>
-<span class="co">#&gt;  8 meds/4901167/profi… 69     3.95 1            1        8 1               69.2 </span>
-<span class="co">#&gt;  9 meds/4901167/profi… 80.6   3.63 1            1        9 1               80.8 </span>
-<span class="co">#&gt; 10 meds/4901167/profi… 90.6   3.94 1            1       10 1               90.8 </span>
+<span class="co">#&gt;    file                 pres  temp temp_qc n_levels n_prof pres_qc pres_adjusted</span>
+<span class="co">#&gt;    &lt;chr&gt;               &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;           &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 meds/4901167/profi…  6.70  7.24 1              1      1 1                6.90</span>
+<span class="co">#&gt;  2 meds/4901167/profi… 10.8   6.83 1              2      1 1               11   </span>
+<span class="co">#&gt;  3 meds/4901167/profi… 20.1   5.51 1              3      1 1               20.3 </span>
+<span class="co">#&gt;  4 meds/4901167/profi… 30.2   3.85 1              4      1 1               30.4 </span>
+<span class="co">#&gt;  5 meds/4901167/profi… 40.5   3.68 1              5      1 1               40.7 </span>
+<span class="co">#&gt;  6 meds/4901167/profi… 49.9   3.88 1              6      1 1               50.1 </span>
+<span class="co">#&gt;  7 meds/4901167/profi… 59.8   4.01 1              7      1 1               60   </span>
+<span class="co">#&gt;  8 meds/4901167/profi… 69     3.95 1              8      1 1               69.2 </span>
+<span class="co">#&gt;  9 meds/4901167/profi… 80.6   3.63 1              9      1 1               80.8 </span>
+<span class="co">#&gt; 10 meds/4901167/profi… 90.6   3.94 1             10      1 1               90.8 </span>
 <span class="co">#&gt; # … with 208,718 more rows, and 10 more variables: pres_adjusted_qc &lt;chr&gt;,</span>
 <span class="co">#&gt; #   pres_adjusted_error &lt;dbl&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span>
 <span class="co">#&gt; #   temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span>
@@ -274,18 +274,18 @@
 
 <span class="va">levels_binned</span>
 <span class="co">#&gt; # A tibble: 32,295 x 21</span>
-<span class="co">#&gt;    pres_bin date_bin file             pres  temp temp_qc n_prof n_levels pres_qc</span>
-<span class="co">#&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt;    &lt;int&gt; &lt;chr&gt;  </span>
-<span class="co">#&gt;  1       50        7 meds/4901167/p…  6.70  7.24 1            1        1 1      </span>
-<span class="co">#&gt;  2       50        7 meds/4901167/p… 10.8   6.83 1            1        2 1      </span>
-<span class="co">#&gt;  3       50        7 meds/4901167/p… 20.1   5.51 1            1        3 1      </span>
-<span class="co">#&gt;  4       50        7 meds/4901167/p… 30.2   3.85 1            1        4 1      </span>
-<span class="co">#&gt;  5       50        7 meds/4901167/p… 40.5   3.68 1            1        5 1      </span>
-<span class="co">#&gt;  6       50        7 meds/4901167/p… 49.9   3.88 1            1        6 1      </span>
-<span class="co">#&gt;  7       50        7 meds/4901167/p… 59.8   4.01 1            1        7 1      </span>
-<span class="co">#&gt;  8       50        7 meds/4901167/p… 69     3.95 1            1        8 1      </span>
-<span class="co">#&gt;  9       50        7 meds/4901167/p… 80.6   3.63 1            1        9 1      </span>
-<span class="co">#&gt; 10       50        7 meds/4901167/p… 90.6   3.94 1            1       10 1      </span>
+<span class="co">#&gt;    pres_bin date_bin file             pres  temp temp_qc n_levels n_prof pres_qc</span>
+<span class="co">#&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;  </span>
+<span class="co">#&gt;  1       50        7 meds/4901167/p…  6.70  7.24 1              1      1 1      </span>
+<span class="co">#&gt;  2       50        7 meds/4901167/p… 10.8   6.83 1              2      1 1      </span>
+<span class="co">#&gt;  3       50        7 meds/4901167/p… 20.1   5.51 1              3      1 1      </span>
+<span class="co">#&gt;  4       50        7 meds/4901167/p… 30.2   3.85 1              4      1 1      </span>
+<span class="co">#&gt;  5       50        7 meds/4901167/p… 40.5   3.68 1              5      1 1      </span>
+<span class="co">#&gt;  6       50        7 meds/4901167/p… 49.9   3.88 1              6      1 1      </span>
+<span class="co">#&gt;  7       50        7 meds/4901167/p… 59.8   4.01 1              7      1 1      </span>
+<span class="co">#&gt;  8       50        7 meds/4901167/p… 69     3.95 1              8      1 1      </span>
+<span class="co">#&gt;  9       50        7 meds/4901167/p… 80.6   3.63 1              9      1 1      </span>
+<span class="co">#&gt; 10       50        7 meds/4901167/p… 90.6   3.94 1             10      1 1      </span>
 <span class="co">#&gt; # … with 32,285 more rows, and 12 more variables: pres_adjusted &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   pres_adjusted_qc &lt;chr&gt;, pres_adjusted_error &lt;dbl&gt;, temp_adjusted &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   temp_adjusted_qc &lt;chr&gt;, temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;,</span>
@@ -318,7 +318,7 @@
 <span class="co">#&gt;  8       50        7 0.00861 meds/49011… 2011-07-03 12:58:00 69     3.95 1      </span>
 <span class="co">#&gt;  9       50        7 0.00861 meds/49011… 2011-07-03 12:58:00 80.6   3.63 1      </span>
 <span class="co">#&gt; 10       50        7 0.00861 meds/49011… 2011-07-03 12:58:00 90.6   3.94 1      </span>
-<span class="co">#&gt; # … with 32,285 more rows, and 19 more variables: n_prof &lt;int&gt;, n_levels &lt;int&gt;,</span>
+<span class="co">#&gt; # … with 32,285 more rows, and 19 more variables: n_levels &lt;int&gt;, n_prof &lt;int&gt;,</span>
 <span class="co">#&gt; #   pres_qc &lt;chr&gt;, pres_adjusted &lt;dbl&gt;, pres_adjusted_qc &lt;chr&gt;,</span>
 <span class="co">#&gt; #   pres_adjusted_error &lt;dbl&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span>
 <span class="co">#&gt; #   temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span>
@@ -490,7 +490,7 @@
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">section_levels</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">pres</span>, x <span class="op">=</span> <span class="va">temp_adjusted</span>, col <span class="op">=</span> <span class="va">temp_adjusted_qc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_y_reverse</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Removed 206182 rows containing missing values (geom_point).</span></code></pre></div>
+<span class="co">#&gt; Warning: Removed 206180 rows containing missing values (geom_point).</span></code></pre></div>
 <p><img src="virtual-mooring_files/figure-html/unnamed-chunk-23-2.png" width="2187.5"></p>
 <p>In many cases the adjusted values are identical to the non-adjusted values, but it is reasonable to use the adjusted values where they have been made available. Some adjusted data has been marked as not “good data”, however, which we need to censor before “preferring” the adjusted value over the non-adjusted one.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
@@ -528,18 +528,18 @@
 
 <span class="va">section_levels_binned</span>
 <span class="co">#&gt; # A tibble: 378,019 x 30</span>
-<span class="co">#&gt;    file             n_prof n_levels  pres pres_qc pres_adjusted pres_adjusted_qc</span>
-<span class="co">#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 aoml/1901465/pr…      1        1     5 1                   5 1               </span>
-<span class="co">#&gt;  2 aoml/1901465/pr…      1        2    10 1                  10 1               </span>
-<span class="co">#&gt;  3 aoml/1901465/pr…      1        3    15 1                  15 1               </span>
-<span class="co">#&gt;  4 aoml/1901465/pr…      1        4    20 1                  20 1               </span>
-<span class="co">#&gt;  5 aoml/1901465/pr…      1        5    25 1                  25 1               </span>
-<span class="co">#&gt;  6 aoml/1901465/pr…      1        6    30 1                  30 1               </span>
-<span class="co">#&gt;  7 aoml/1901465/pr…      1        7    35 1                  35 1               </span>
-<span class="co">#&gt;  8 aoml/1901465/pr…      1        8    40 1                  40 1               </span>
-<span class="co">#&gt;  9 aoml/1901465/pr…      1        9    45 1                  45 1               </span>
-<span class="co">#&gt; 10 aoml/1901465/pr…      1       10    50 1                  50 1               </span>
+<span class="co">#&gt;    file             n_levels n_prof  pres pres_qc pres_adjusted pres_adjusted_qc</span>
+<span class="co">#&gt;    &lt;chr&gt;               &lt;int&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;           </span>
+<span class="co">#&gt;  1 aoml/1901465/pr…        1      1     5 1                   5 1               </span>
+<span class="co">#&gt;  2 aoml/1901465/pr…        2      1    10 1                  10 1               </span>
+<span class="co">#&gt;  3 aoml/1901465/pr…        3      1    15 1                  15 1               </span>
+<span class="co">#&gt;  4 aoml/1901465/pr…        4      1    20 1                  20 1               </span>
+<span class="co">#&gt;  5 aoml/1901465/pr…        5      1    25 1                  25 1               </span>
+<span class="co">#&gt;  6 aoml/1901465/pr…        6      1    30 1                  30 1               </span>
+<span class="co">#&gt;  7 aoml/1901465/pr…        7      1    35 1                  35 1               </span>
+<span class="co">#&gt;  8 aoml/1901465/pr…        8      1    40 1                  40 1               </span>
+<span class="co">#&gt;  9 aoml/1901465/pr…        9      1    45 1                  45 1               </span>
+<span class="co">#&gt; 10 aoml/1901465/pr…       10      1    50 1                  50 1               </span>
 <span class="co">#&gt; # … with 378,009 more rows, and 23 more variables: pres_adjusted_error &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   temp &lt;dbl&gt;, temp_qc &lt;chr&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span>
 <span class="co">#&gt; #   temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span>

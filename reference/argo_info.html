@@ -129,7 +129,7 @@
     <p>Load NetCDF general information</p>
     </div>
 
-    <pre class="usage"><span class='fu'>argo_info</span><span class='op'>(</span><span class='va'>path</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>argo_info</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,14 +140,6 @@
 <code><a href='argo_mirror.html'>argo_mirror()</a></code> or <code><a href='argo_cache_dir.html'>argo_cache_dir()</a></code>. This value can also
 be a data.frame with a <code>file</code> column (e.g., a global index as
 returned by <code><a href='argo_global_meta.html'>argo_global_meta()</a></code> and others).</p></td>
-    </tr>
-    <tr>
-      <th>vars</th>
-      <td><p>A vector of variable names to include. The ordering
-of the variables is not guaranteed, and variables that do not
-exist are ignored. For <code>nc_read_*()</code> and <code>read_*()</code> variants,
-these are the raw variable names (all caps, without "date"
-substituted for "juld").</p></td>
     </tr>
     <tr>
       <th>download</th>

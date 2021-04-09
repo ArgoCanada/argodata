@@ -129,11 +129,11 @@
     <p>Read Argo trajectories</p>
     </div>
 
-    <pre class="usage"><span class='fu'>argo_read_traj_measurement</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>argo_read_traj_measurement</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>argo_read_traj_cycle</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>argo_read_traj_cycle</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>argo_read_traj_history</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+<span class='fu'>argo_read_traj_history</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,6 +150,12 @@ exist are ignored. For <code>nc_read_*()</code> and <code>read_*()</code> varian
 these are the raw variable names (all caps, without "date"
 substituted for "juld").</p></td>
     </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Use <code>TRUE</code> to stop for malformed files, <code>NA</code> to
+silently warn for malformed files (will return <code>NULL</code>), or
+<code>FALSE</code> to return <code>NULL</code> silently when a read error is encountered.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -165,7 +171,7 @@ substituted for "juld").</p></td>
 <span class='fu'>argo_read_traj_measurement</span><span class='op'>(</span><span class='va'>traj_file</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 61 x 33</span><span>
 #&gt;    N_MEASUREMENT   JULD JULD_STATUS JULD_QC JULD_ADJUSTED JULD_ADJUSTED_STATUS
-#&gt;            </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>               
+#&gt;  </span><span style='color: #BCBCBC;'>*</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>               
 #&gt; </span><span style='color: #BCBCBC;'> 1</span><span>             1 </span><span style='text-decoration: underline;'>19</span><span>573. 0           0                  </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #949494;'>"</span><span> </span><span style='color: #949494;'>"</span><span>                 
 #&gt; </span><span style='color: #BCBCBC;'> 2</span><span>             2 </span><span style='text-decoration: underline;'>19</span><span>573. 4           1                  </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #949494;'>"</span><span> </span><span style='color: #949494;'>"</span><span>                 
 #&gt; </span><span style='color: #BCBCBC;'> 3</span><span>             3 </span><span style='text-decoration: underline;'>19</span><span>582. 4           1                  </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #949494;'>"</span><span> </span><span style='color: #949494;'>"</span><span>                 
@@ -178,8 +184,8 @@ substituted for "juld").</p></td>
 #&gt; </span><span style='color: #BCBCBC;'>10</span><span>            10 </span><span style='text-decoration: underline;'>19</span><span>592. 4           1                  </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #949494;'>"</span><span> </span><span style='color: #949494;'>"</span><span>                 
 #&gt; </span><span style='color: #949494;'># … with 51 more rows, and 27 more variables: JULD_ADJUSTED_QC &lt;chr&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   LATITUDE &lt;dbl&gt;, LONGITUDE &lt;dbl&gt;, POSITION_ACCURACY &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   POSITION_QC &lt;chr&gt;, CYCLE_NUMBER &lt;int&gt;, CYCLE_NUMBER_ADJUSTED &lt;int&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   MEASUREMENT_CODE &lt;int&gt;, PRES &lt;dbl&gt;, PRES_QC &lt;chr&gt;, PRES_ADJUSTED &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   POSITION_QC &lt;chr&gt;, CYCLE_NUMBER &lt;dbl&gt;, CYCLE_NUMBER_ADJUSTED &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   MEASUREMENT_CODE &lt;dbl&gt;, PRES &lt;dbl&gt;, PRES_QC &lt;chr&gt;, PRES_ADJUSTED &lt;dbl&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   PRES_ADJUSTED_QC &lt;chr&gt;, PRES_ADJUSTED_ERROR &lt;dbl&gt;, TEMP &lt;dbl&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   TEMP_QC &lt;chr&gt;, TEMP_ADJUSTED &lt;dbl&gt;, TEMP_ADJUSTED_QC &lt;chr&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   TEMP_ADJUSTED_ERROR &lt;dbl&gt;, PSAL &lt;dbl&gt;, PSAL_QC &lt;chr&gt;, PSAL_ADJUSTED &lt;dbl&gt;,</span><span>
@@ -188,7 +194,7 @@ substituted for "juld").</p></td>
 #&gt; </span><span style='color: #949494;'>#   AXES_ERROR_ELLIPSE_ANGLE &lt;dbl&gt;, SATELLITE_NAME &lt;chr&gt;</span><span></div><div class='input'><span class='fu'>argo_read_traj_cycle</span><span class='op'>(</span><span class='va'>traj_file</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 8 x 41</span><span>
 #&gt;   N_CYCLE JULD_DESCENT_STA… JULD_DESCENT_STA… JULD_FIRST_STAB… JULD_FIRST_STABI…
-#&gt;     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            
+#&gt; </span><span style='color: #BCBCBC;'>*</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            
 #&gt; </span><span style='color: #BCBCBC;'>1</span><span>       1            </span><span style='text-decoration: underline;'>19</span><span>573. 2                               </span><span style='color: #BB0000;'>NA</span><span> 9                
 #&gt; </span><span style='color: #BCBCBC;'>2</span><span>       2            </span><span style='text-decoration: underline;'>19</span><span>591. 2                               </span><span style='color: #BB0000;'>NA</span><span> 9                
 #&gt; </span><span style='color: #BCBCBC;'>3</span><span>       3            </span><span style='text-decoration: underline;'>19</span><span>601. 2                               </span><span style='color: #BB0000;'>NA</span><span> 9                
@@ -213,17 +219,17 @@ substituted for "juld").</p></td>
 #&gt; </span><span style='color: #949494;'>#   JULD_LAST_MESSAGE_STATUS &lt;chr&gt;, JULD_TRANSMISSION_END &lt;dbl&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   JULD_TRANSMISSION_END_STATUS &lt;chr&gt;, CLOCK_OFFSET &lt;dbl&gt;, GROUNDED &lt;chr&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   REPRESENTATIVE_PARK_PRESSURE &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   REPRESENTATIVE_PARK_PRESSURE_STATUS &lt;chr&gt;, CONFIG_MISSION_NUMBER &lt;int&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   CYCLE_NUMBER_INDEX &lt;int&gt;, CYCLE_NUMBER_INDEX_ADJUSTED &lt;int&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   REPRESENTATIVE_PARK_PRESSURE_STATUS &lt;chr&gt;, CONFIG_MISSION_NUMBER &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   CYCLE_NUMBER_INDEX &lt;dbl&gt;, CYCLE_NUMBER_INDEX_ADJUSTED &lt;dbl&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   DATA_MODE &lt;chr&gt;</span><span></div><div class='input'><span class='fu'>argo_read_traj_history</span><span class='op'>(</span><span class='va'>traj_file</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 14</span><span>
-#&gt;   N_HISTORY HISTORY_PREVIOUS… HISTORY_INDEX_D… HISTORY_START_I… HISTORY_STOP_IN…
-#&gt;       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span>         1                </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #949494;'>"</span><span> </span><span style='color: #949494;'>"</span><span>                            </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #949494;'># … with 9 more variables: HISTORY_INSTITUTION &lt;chr&gt;, HISTORY_STEP &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   HISTORY_SOFTWARE &lt;chr&gt;, HISTORY_SOFTWARE_RELEASE &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   HISTORY_REFERENCE &lt;chr&gt;, HISTORY_DATE &lt;chr&gt;, HISTORY_ACTION &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   HISTORY_PARAMETER &lt;chr&gt;, HISTORY_QCTEST &lt;chr&gt;</span><span></div><div class='input'>
+#&gt;   N_HISTORY HISTORY_INSTITUTI… HISTORY_STEP HISTORY_SOFTWARE HISTORY_SOFTWARE_R…
+#&gt; </span><span style='color: #BCBCBC;'>*</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>         1 </span><span style='color: #949494;'>"</span><span>    </span><span style='color: #949494;'>"</span><span>             </span><span style='color: #949494;'>"</span><span>    </span><span style='color: #949494;'>"</span><span>       </span><span style='color: #949494;'>"</span><span>    </span><span style='color: #949494;'>"</span><span>           </span><span style='color: #949494;'>"</span><span>    </span><span style='color: #949494;'>"</span><span>             
+#&gt; </span><span style='color: #949494;'># … with 9 more variables: HISTORY_REFERENCE &lt;chr&gt;, HISTORY_DATE &lt;chr&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   HISTORY_ACTION &lt;chr&gt;, HISTORY_PARAMETER &lt;chr&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   HISTORY_PREVIOUS_VALUE &lt;dbl&gt;, HISTORY_INDEX_DIMENSION &lt;chr&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   HISTORY_START_INDEX &lt;dbl&gt;, HISTORY_STOP_INDEX &lt;dbl&gt;, HISTORY_QCTEST &lt;chr&gt;</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

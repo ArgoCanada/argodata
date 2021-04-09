@@ -129,19 +129,19 @@
     <p>Load Argo float meta</p>
     </div>
 
-    <pre class="usage"><span class='fu'>argo_meta_config_param</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>argo_meta_config_param</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
 
-<span class='fu'>argo_meta_missions</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>argo_meta_missions</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
 
-<span class='fu'>argo_meta_trans_system</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>argo_meta_trans_system</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
 
-<span class='fu'>argo_meta_positioning_system</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>argo_meta_positioning_system</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
 
-<span class='fu'>argo_meta_launch_config_param</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>argo_meta_launch_config_param</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
 
-<span class='fu'>argo_meta_sensor</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'>argo_meta_sensor</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
 
-<span class='fu'>argo_meta_param</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+<span class='fu'>argo_meta_param</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,68 +175,68 @@ verbose error messages.</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_meta_config_param</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_meta.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 4</span><span>
-#&gt;   file             config_mission_num… config_parameter_name  config_parameter_…
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                          </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/29…                   1 CONFIG_ParkPressure_d…               </span><span style='text-decoration: underline;'>1</span><span>500
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> csio/2900313/29…                   1 CONFIG_ProfilePressur…               </span><span style='text-decoration: underline;'>2</span><span>000
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> csio/2900313/29…                   1 CONFIG_UpTime_hours                    </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> csio/2900313/29…                   1 CONFIG_DownTime_hours                  </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> csio/2900313/29…                   1 CONFIG_CycleTime_hours                240
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> csio/2900313/29…                   1 CONFIG_Direction_NUMB…                  1
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> csio/2900313/29…                   1 CONFIG_MeasureBattery…                  1</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 5</span><span>
+#&gt;   file          n_config_param n_missions config_parameter… config_parameter_na…
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>               
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313…              1          1              </span><span style='text-decoration: underline;'>1</span><span>500 CONFIG_ParkPressure…
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> csio/2900313…              2          1              </span><span style='text-decoration: underline;'>2</span><span>000 CONFIG_ProfilePress…
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> csio/2900313…              3          1                </span><span style='color: #BB0000;'>NA</span><span> CONFIG_UpTime_hours 
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> csio/2900313…              4          1                </span><span style='color: #BB0000;'>NA</span><span> CONFIG_DownTime_hou…
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> csio/2900313…              5          1               240 CONFIG_CycleTime_ho…
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> csio/2900313…              6          1                 1 CONFIG_Direction_NU…
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> csio/2900313…              7          1                 1 CONFIG_MeasureBatte…</div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_meta_missions</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_meta.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 3</span><span>
-#&gt;   file                         config_mission_number config_mission_comment
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                                        </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/2900313_meta.nc                     1 </span><span style='color: #949494;'>""</span><span>                    </div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 4</span><span>
+#&gt;   file                     n_missions config_mission_number config_mission_comm…
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                         </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>               
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/2900313_me…          1                     1 </span><span style='color: #949494;'>""</span><span>                  </div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_meta_trans_system</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_meta.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 4</span><span>
-#&gt;   file                         trans_system trans_system_id trans_frequency
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/2900313_meta.nc ARGOS        02528           1/45           </div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 5</span><span>
+#&gt;   file               n_trans_system trans_system trans_system_id trans_frequency
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/2900…              1 ARGOS        02528           1/45           </div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_meta_positioning_system</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_meta.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 2</span><span>
-#&gt;   file                         positioning_system
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/2900313_meta.nc ARGOS             </div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 3</span><span>
+#&gt;   file                         n_positioning_system positioning_system
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                                       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/2900313_meta.nc                    1 ARGOS             </div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_meta_launch_config_param</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_meta.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 7 x 3</span><span>
-#&gt;   file                     launch_config_parameter_n… launch_config_parameter_v…
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                                           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/2900313_me… CONFIG_ParkPressure_dbar                         </span><span style='text-decoration: underline;'>1</span><span>500
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> csio/2900313/2900313_me… CONFIG_ProfilePressure_db…                       </span><span style='text-decoration: underline;'>2</span><span>000
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> csio/2900313/2900313_me… CONFIG_UpTime_hours                                </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> csio/2900313/2900313_me… CONFIG_DownTime_hours                              </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> csio/2900313/2900313_me… CONFIG_CycleTime_hours                            240
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> csio/2900313/2900313_me… CONFIG_Direction_NUMBER                             1
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> csio/2900313/2900313_me… CONFIG_MeasureBattery_LOG…                          1</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 7 x 4</span><span>
+#&gt;   file            n_launch_config_p… launch_config_parame… launch_config_parame…
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                        </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                                 </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/2…                  1 CONFIG_ParkPressure_…                  </span><span style='text-decoration: underline;'>1</span><span>500
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> csio/2900313/2…                  2 CONFIG_ProfilePressu…                  </span><span style='text-decoration: underline;'>2</span><span>000
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> csio/2900313/2…                  3 CONFIG_UpTime_hours                      </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> csio/2900313/2…                  4 CONFIG_DownTime_hours                    </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> csio/2900313/2…                  5 CONFIG_CycleTime_hou…                   240
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> csio/2900313/2…                  6 CONFIG_Direction_NUM…                     1
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> csio/2900313/2…                  7 CONFIG_MeasureBatter…                     1</div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_meta_sensor</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_meta.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 5</span><span>
-#&gt;   file                        sensor  sensor_maker sensor_model sensor_serial_no
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                       </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/2900313_meta.… CTD_CN… SBE          SBE41        0327            
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> csio/2900313/2900313_meta.… CTD_TE… SBE          SBE41        0327            
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> csio/2900313/2900313_meta.… CTD_PR… SBE          SBE41        0327            </div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 6</span><span>
+#&gt;   file               n_sensor sensor  sensor_maker sensor_model sensor_serial_no
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/2900…        1 CTD_CN… SBE          SBE41        0327            
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> csio/2900313/2900…        2 CTD_TE… SBE          SBE41        0327            
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> csio/2900313/2900…        3 CTD_PR… SBE          SBE41        0327            </div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_meta_param</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_meta.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 9</span><span>
-#&gt;   file              parameter parameter_sensor parameter_units parameter_accura…
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/290… PSAL      CTD_CNDC         psu             0.005 psu        
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> csio/2900313/290… TEMP      CTD_TEMP         degC (ITS-90)   0.002 degC       
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> csio/2900313/290… PRES      CTD_PRES         dbar            1.5%             
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 10</span><span>
+#&gt;   file       n_param parameter parameter_sensor parameter_units parameter_accur…
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900…       1 PSAL      CTD_CNDC         psu             0.005 psu       
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> csio/2900…       2 TEMP      CTD_TEMP         degC (ITS-90)   0.002 degC      
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> csio/2900…       3 PRES      CTD_PRES         dbar            1.5%            
 #&gt; </span><span style='color: #949494;'># … with 4 more variables: parameter_resolution &lt;chr&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   predeployment_calib_equation &lt;chr&gt;, predeployment_calib_coefficient &lt;chr&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   predeployment_calib_comment &lt;chr&gt;</span><span></div><div class='input'>

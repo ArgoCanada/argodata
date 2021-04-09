@@ -129,7 +129,7 @@
     <p>Read NetCDF variable metadata</p>
     </div>
 
-    <pre class="usage"><span class='fu'>argo_read_vars</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>argo_read_vars</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,6 +145,12 @@ of the variables is not guaranteed, and variables that do not
 exist are ignored. For <code>nc_read_*()</code> and <code>read_*()</code> variants,
 these are the raw variable names (all caps, without "date"
 substituted for "juld").</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Use <code>TRUE</code> to stop for malformed files, <code>NA</code> to
+silently warn for malformed files (will return <code>NULL</code>), or
+<code>FALSE</code> to return <code>NULL</code> silently when a read error is encountered.</p></td>
     </tr>
     </table>
 
@@ -162,19 +168,19 @@ to produce a tibble with one row per variable per dimension.</p>
 <span class='op'>)</span>
 
 <span class='fu'>argo_read_vars</span><span class='op'>(</span><span class='va'>prof_file</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 64 x 18</span><span>
-#&gt;    name   longname  units prec  ndims size   dim   att_long_name att_conventions
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lis&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> DATA_… Data type </span><span style='color: #949494;'>""</span><span>    char      1 </span><span style='color: #949494;'>&lt;int </span><span>… </span><span style='color: #949494;'>&lt;chr</span><span>… Data type     Argo reference…
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> FORMA… File for… </span><span style='color: #949494;'>""</span><span>    char      1 </span><span style='color: #949494;'>&lt;int </span><span>… </span><span style='color: #949494;'>&lt;chr</span><span>… File format … </span><span style='color: #BB0000;'>NA</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> HANDB… Data han… </span><span style='color: #949494;'>""</span><span>    char      1 </span><span style='color: #949494;'>&lt;int </span><span>… </span><span style='color: #949494;'>&lt;chr</span><span>… Data handboo… </span><span style='color: #BB0000;'>NA</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> REFER… Date of … </span><span style='color: #949494;'>""</span><span>    char      1 </span><span style='color: #949494;'>&lt;int </span><span>… </span><span style='color: #949494;'>&lt;chr</span><span>… Date of refe… YYYYMMDDHHMISS 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> DATE_… Date of … </span><span style='color: #949494;'>""</span><span>    char      1 </span><span style='color: #949494;'>&lt;int </span><span>… </span><span style='color: #949494;'>&lt;chr</span><span>… Date of file… YYYYMMDDHHMISS 
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> DATE_… Date of … </span><span style='color: #949494;'>""</span><span>    char      1 </span><span style='color: #949494;'>&lt;int </span><span>… </span><span style='color: #949494;'>&lt;chr</span><span>… Date of upda… YYYYMMDDHHMISS 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> PLATF… Float un… </span><span style='color: #949494;'>""</span><span>    char      2 </span><span style='color: #949494;'>&lt;int </span><span>… </span><span style='color: #949494;'>&lt;chr</span><span>… Float unique… WMO float iden…
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> PLATF… Type of … </span><span style='color: #949494;'>""</span><span>    char      2 </span><span style='color: #949494;'>&lt;int </span><span>… </span><span style='color: #949494;'>&lt;chr</span><span>… Type of float Argo reference…
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> PROJE… Name of … </span><span style='color: #949494;'>""</span><span>    char      2 </span><span style='color: #949494;'>&lt;int </span><span>… </span><span style='color: #949494;'>&lt;chr</span><span>… Name of the … </span><span style='color: #BB0000;'>NA</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> PI_NA… Name of … </span><span style='color: #949494;'>""</span><span>    char      2 </span><span style='color: #949494;'>&lt;int </span><span>… </span><span style='color: #949494;'>&lt;chr</span><span>… Name of the … </span><span style='color: #BB0000;'>NA</span><span>             
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 64 x 15</span><span>
+#&gt;    name      dim     size   att_long_name      att_conventions    att__FillValue
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>        
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> DATA_TYPE </span><span style='color: #949494;'>&lt;chr [</span><span>… </span><span style='color: #949494;'>&lt;dbl </span><span>… Data type          Argo reference ta… </span><span style='color: #949494;'>&lt;chr [1]&gt;</span><span>     
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> FORMAT_V… </span><span style='color: #949494;'>&lt;chr [</span><span>… </span><span style='color: #949494;'>&lt;dbl </span><span>… File format versi… </span><span style='color: #BB0000;'>NA</span><span>                 </span><span style='color: #949494;'>&lt;chr [1]&gt;</span><span>     
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> HANDBOOK… </span><span style='color: #949494;'>&lt;chr [</span><span>… </span><span style='color: #949494;'>&lt;dbl </span><span>… Data handbook ver… </span><span style='color: #BB0000;'>NA</span><span>                 </span><span style='color: #949494;'>&lt;chr [1]&gt;</span><span>     
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> REFERENC… </span><span style='color: #949494;'>&lt;chr [</span><span>… </span><span style='color: #949494;'>&lt;dbl </span><span>… Date of reference… YYYYMMDDHHMISS     </span><span style='color: #949494;'>&lt;chr [1]&gt;</span><span>     
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> DATE_CRE… </span><span style='color: #949494;'>&lt;chr [</span><span>… </span><span style='color: #949494;'>&lt;dbl </span><span>… Date of file crea… YYYYMMDDHHMISS     </span><span style='color: #949494;'>&lt;chr [1]&gt;</span><span>     
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> DATE_UPD… </span><span style='color: #949494;'>&lt;chr [</span><span>… </span><span style='color: #949494;'>&lt;dbl </span><span>… Date of update of… YYYYMMDDHHMISS     </span><span style='color: #949494;'>&lt;chr [1]&gt;</span><span>     
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> PLATFORM… </span><span style='color: #949494;'>&lt;chr [</span><span>… </span><span style='color: #949494;'>&lt;dbl </span><span>… Float unique iden… WMO float identif… </span><span style='color: #949494;'>&lt;chr [1]&gt;</span><span>     
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> PLATFORM… </span><span style='color: #949494;'>&lt;chr [</span><span>… </span><span style='color: #949494;'>&lt;dbl </span><span>… Type of float      Argo reference ta… </span><span style='color: #949494;'>&lt;chr [1]&gt;</span><span>     
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> PROJECT_… </span><span style='color: #949494;'>&lt;chr [</span><span>… </span><span style='color: #949494;'>&lt;dbl </span><span>… Name of the proje… </span><span style='color: #BB0000;'>NA</span><span>                 </span><span style='color: #949494;'>&lt;chr [1]&gt;</span><span>     
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> PI_NAME   </span><span style='color: #949494;'>&lt;chr [</span><span>… </span><span style='color: #949494;'>&lt;dbl </span><span>… Name of the princ… </span><span style='color: #BB0000;'>NA</span><span>                 </span><span style='color: #949494;'>&lt;chr [1]&gt;</span><span>     
 #&gt; </span><span style='color: #949494;'># … with 54 more rows, and 9 more variables: att_standard_name &lt;chr&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   att_units &lt;chr&gt;, att_resolution &lt;dbl&gt;, att_axis &lt;chr&gt;, att_valid_min &lt;dbl&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   att_valid_max &lt;dbl&gt;, att_C_format &lt;chr&gt;, att_FORTRAN_format &lt;chr&gt;,</span><span>

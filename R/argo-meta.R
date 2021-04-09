@@ -36,7 +36,7 @@
 #'   argo_meta_param("dac/csio/2900313/2900313_meta.nc")
 #' })
 #'
-argo_meta_config_param <- function(path, download = NULL, quiet = FALSE) {
+argo_meta_config_param <- function(path, download = NULL, quiet = NA) {
   tbl <- argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_config_param,
@@ -53,7 +53,7 @@ argo_meta_config_param <- function(path, download = NULL, quiet = FALSE) {
 
 #' @rdname argo_meta
 #' @export
-argo_meta_missions <- function(path, download = NULL, quiet = FALSE) {
+argo_meta_missions <- function(path, download = NULL, quiet = NA) {
   tbl <- argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_missions,
@@ -70,7 +70,7 @@ argo_meta_missions <- function(path, download = NULL, quiet = FALSE) {
 
 #' @rdname argo_meta
 #' @export
-argo_meta_trans_system <- function(path, download = NULL, quiet = FALSE) {
+argo_meta_trans_system <- function(path, download = NULL, quiet = NA) {
   tbl <- argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_trans_system,
@@ -87,7 +87,7 @@ argo_meta_trans_system <- function(path, download = NULL, quiet = FALSE) {
 
 #' @rdname argo_meta
 #' @export
-argo_meta_positioning_system <- function(path, download = NULL, quiet = FALSE) {
+argo_meta_positioning_system <- function(path, download = NULL, quiet = NA) {
   tbl <- argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_positioning_system,
@@ -104,7 +104,7 @@ argo_meta_positioning_system <- function(path, download = NULL, quiet = FALSE) {
 
 #' @rdname argo_meta
 #' @export
-argo_meta_launch_config_param <- function(path, download = NULL, quiet = FALSE) {
+argo_meta_launch_config_param <- function(path, download = NULL, quiet = NA) {
   tbl <- argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_launch_config_param,
@@ -121,7 +121,7 @@ argo_meta_launch_config_param <- function(path, download = NULL, quiet = FALSE) 
 
 #' @rdname argo_meta
 #' @export
-argo_meta_sensor <- function(path, download = NULL, quiet = FALSE) {
+argo_meta_sensor <- function(path, download = NULL, quiet = NA) {
   tbl <- argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_sensor,
@@ -138,7 +138,7 @@ argo_meta_sensor <- function(path, download = NULL, quiet = FALSE) {
 
 #' @rdname argo_meta
 #' @export
-argo_meta_param <- function(path, download = NULL, quiet = FALSE) {
+argo_meta_param <- function(path, download = NULL, quiet = NA) {
   tbl <- argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_param,
@@ -176,64 +176,89 @@ argo_meta_param <- function(path, download = NULL, quiet = FALSE) {
 #' argo_read_meta_sensor(meta_file)
 #' argo_read_meta_param(meta_file)
 #'
-argo_read_meta_config_param <- function(file, vars = NULL) {
-  with_argo_nc_file(
+argo_read_meta_config_param <- function(file, vars = NULL, quiet = FALSE) {
+  # Non-standard in that argodata generally does not combine multiple
+  # tables into one read function, but doing that here would be terrible
+  # for usability. This is still much faster than the previous method.
+  params <- argo_nc_read_simple(
     file,
-    argo_nc_meta_read_config_param
+    dims = "N_CONFIG_PARAM",
+    quiet = quiet
+  )
+
+  values <- argo_nc_read_simple(
+    file,
+    dims = c("N_CONFIG_PARAM", "N_MISSIONS"),
+    quiet = quiet
+  )
+
+  if (is.null(params) || is.null(values)) {
+    NULL
+  } else {
+    vctrs::vec_cbind(
+      values,
+      vctrs::vec_recycle(params[-1], nrow(values)),
+    )
+  }
+}
+
+#' @rdname argo_read_meta
+#' @export
+argo_read_meta_missions <- function(file, vars = NULL, quiet = FALSE) {
+  argo_nc_read_simple(
+    file,
+    dims = "N_MISSIONS",
+    quiet = quiet
   )
 }
 
 #' @rdname argo_read_meta
 #' @export
-argo_read_meta_missions <- function(file, vars = NULL) {
-  with_argo_nc_file(
+argo_read_meta_trans_system <- function(file, vars = NULL, quiet = FALSE) {
+  argo_nc_read_simple(
     file,
-    argo_nc_meta_read_missions
+    dims = "N_TRANS_SYSTEM",
+    quiet = quiet
   )
 }
 
 #' @rdname argo_read_meta
 #' @export
-argo_read_meta_trans_system <- function(file, vars = NULL) {
-  with_argo_nc_file(
+argo_read_meta_positioning_system <- function(file, vars = NULL, quiet = FALSE) {
+  argo_nc_read_simple(
     file,
-    argo_nc_meta_read_trans_system
+    dims = "N_POSITIONING_SYSTEM",
+    quiet = quiet
   )
 }
 
 #' @rdname argo_read_meta
 #' @export
-argo_read_meta_positioning_system <- function(file, vars = NULL) {
-  with_argo_nc_file(
+argo_read_meta_launch_config_param <- function(file, vars = NULL, quiet = TRUE) {
+  argo_nc_read_simple(
     file,
-    argo_nc_meta_read_positioning_system
+    dims = "N_LAUNCH_CONFIG_PARAM",
+    quiet = quiet
   )
 }
 
 #' @rdname argo_read_meta
 #' @export
-argo_read_meta_launch_config_param <- function(file, vars = NULL) {
-  with_argo_nc_file(
+argo_read_meta_sensor <- function(file, vars = NULL, quiet = quiet) {
+  argo_nc_read_simple(
     file,
-    argo_nc_meta_read_launch_config_param
+    dims = "N_SENSOR",
+    quiet = quiet
   )
 }
 
 #' @rdname argo_read_meta
 #' @export
-argo_read_meta_sensor <- function(file, vars = NULL) {
-  with_argo_nc_file(
+argo_read_meta_param <- function(file, vars = NULL, quiet = quiet) {
+  argo_nc_read_simple(
     file,
-    argo_nc_meta_read_sensor
-  )
-}
-
-#' @rdname argo_read_meta
-#' @export
-argo_read_meta_param <- function(file, vars = NULL) {
-  with_argo_nc_file(
-    file,
-    argo_nc_meta_read_param
+    dims = "N_PARAM",
+    quiet = quiet
   )
 }
 

@@ -12,7 +12,7 @@
 #'   argo_tech_tech_param("dac/csio/2900313/2900313_tech.nc")
 #' })
 #'
-argo_tech_tech_param <- function(path, download = NULL, quiet = FALSE) {
+argo_tech_tech_param <- function(path, download = NULL, quiet = NA) {
   tbl <- argo_read_many(
     assert_argo_tech_file,
     argo_read_tech_tech_param,
@@ -43,13 +43,14 @@ argo_tech_tech_param <- function(path, download = NULL, quiet = FALSE) {
 #'
 #' argo_read_tech_tech_param(tech_file)
 #'
-argo_read_tech_tech_param <- function(file, vars = NULL) {
-  with_argo_nc_file(
+argo_read_tech_tech_param <- function(file, vars = NULL, quiet = FALSE) {
+  argo_nc_read_simple(
     file,
-    argo_nc_tech_read_tech_param
+    dims = "N_TECH_PARAM",
+    quiet = quiet
   )
 }
 
 assert_argo_tech_file <- function(path) {
-  argo_assert_path_type(path, "^dac/[a-z]+/([0-9a-zA-Z]+)/\\1_tech\\.nc$", "meta")
+  argo_assert_path_type(path, "^dac/[a-z]+/([0-9a-zA-Z]+)/\\1_tech\\.nc$", "tech")
 }

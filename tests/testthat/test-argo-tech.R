@@ -22,3 +22,17 @@ test_that("argo_read_tech_tech_param() works", {
     "tbl_df"
   )
 })
+
+test_that("argo_reac_tech_tech_param() works for tech files", {
+  nc <- system.file(
+    "cache-test/dac/csio/2900313/2900313_tech.nc",
+    package = "argodata"
+  )
+
+  nc_all <- argo_read_tech_tech_param(nc)
+  expect_true(
+    all(
+      c("TECHNICAL_PARAMETER_NAME", "TECHNICAL_PARAMETER_VALUE") %in% names(nc_all)
+    )
+  )
+})

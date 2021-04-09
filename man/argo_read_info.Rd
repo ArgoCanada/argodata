@@ -4,16 +4,14 @@
 \alias{argo_read_info}
 \title{Read NetCDF general information}
 \usage{
-argo_read_info(file, vars = NULL)
+argo_read_info(file, quiet = FALSE)
 }
 \arguments{
 \item{file}{A previously downloaded Argo NetCDF file.}
 
-\item{vars}{A vector of variable names to include. The ordering
-of the variables is not guaranteed, and variables that do not
-exist are ignored. For \verb{nc_read_*()} and \verb{read_*()} variants,
-these are the raw variable names (all caps, without "date"
-substituted for "juld").}
+\item{quiet}{Use \code{TRUE} to stop for malformed files, \code{NA} to
+silently warn for malformed files (will return \code{NULL}), or
+\code{FALSE} to return \code{NULL} silently when a read error is encountered.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}}

@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' with_argo_example_cache({
-#'   argo_info("dac/csio/2900313/2900313_meta.nc", vars = "data_type")
+#'   argo_info("dac/csio/2900313/2900313_meta.nc")[c("file", "data_type")]
 #' })
 #'
 #' argo_reference_data_type

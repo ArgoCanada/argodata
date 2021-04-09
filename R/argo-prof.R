@@ -2,7 +2,7 @@
 #' Load Argo profiles
 #'
 #' @inheritParams argo_vars
-#' @inheritParams argo_nc_read_vars
+#' @inheritParams argo_read_vars
 #'
 #' @return A [tibble::tibble()].
 #' @export

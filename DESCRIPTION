@@ -21,7 +21,6 @@ Imports:
     glue,
     vroom,
     stringr,
-    ncdf4,
     vctrs,
     tibble,
     progress,

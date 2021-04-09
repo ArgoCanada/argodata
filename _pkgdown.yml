@@ -35,7 +35,3 @@ reference:
 - title: Read raw tables from files
   contents:
   - starts_with("argo_read_")
-
-- title: Read raw tables from 'ncdf4' objects
-  contents:
-  - starts_with("argo_nc_")

@@ -4,7 +4,7 @@
 \alias{argo_tech_tech_param}
 \title{Load Argo float meta}
 \usage{
-argo_tech_tech_param(path, download = NULL, quiet = FALSE)
+argo_tech_tech_param(path, download = NULL, quiet = NA)
 }
 \arguments{
 \item{path}{A path relative to the root directory of

@@ -25,7 +25,7 @@ argo_read_meta_sensor(file, vars = NULL, quiet = quiet)
 
 argo_read_meta_param(file, vars = NULL, quiet = quiet)
 
-argo_read_tech_tech_param(file, vars = NULL)
+argo_read_tech_tech_param(file, vars = NULL, quiet = FALSE)
 }
 \arguments{
 \item{file}{A previously downloaded Argo NetCDF file.}

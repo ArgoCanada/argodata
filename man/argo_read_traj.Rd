@@ -3,12 +3,15 @@
 \name{argo_read_traj_measurement}
 \alias{argo_read_traj_measurement}
 \alias{argo_read_traj_cycle}
+\alias{argo_read_traj_param}
 \alias{argo_read_traj_history}
 \title{Read Argo trajectories}
 \usage{
 argo_read_traj_measurement(file, vars = NULL, quiet = FALSE)
 
 argo_read_traj_cycle(file, vars = NULL, quiet = FALSE)
+
+argo_read_traj_param(file, vars = NULL, quiet = FALSE)
 
 argo_read_traj_history(file, vars = NULL, quiet = FALSE)
 }
@@ -39,6 +42,7 @@ traj_file <- system.file(
 
 argo_read_traj_measurement(traj_file)
 argo_read_traj_cycle(traj_file)
+argo_read_traj_param(traj_file)
 argo_read_traj_history(traj_file)
 
 }

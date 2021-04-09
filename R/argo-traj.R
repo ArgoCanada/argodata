@@ -24,6 +24,10 @@
 #' })
 #'
 #' with_argo_example_cache({
+#'   argo_traj_param("dac/csio/2900313/2900313_Rtraj.nc")
+#' })
+#'
+#' with_argo_example_cache({
 #'   argo_traj_history("dac/csio/2900313/2900313_Rtraj.nc")
 #' })
 #'
@@ -49,6 +53,23 @@ argo_traj_cycle <- function(path, vars = NULL, download = NULL, quiet = NA) {
     download = download,
     quiet = quiet
   )
+}
+
+#' @rdname argo_traj
+#' @export
+argo_traj_param <- function(path, vars = NULL, download = NULL, quiet = NA) {
+  tbl <- argo_read_many(
+    assert_argo_traj_file,
+    argo_read_traj_param,
+    path = path,
+    vars = vars,
+    download = download,
+    quiet = quiet
+  )
+
+  val_is_char <- vapply(tbl, is.character, logical(1))
+  tbl[val_is_char] <- lapply(tbl[val_is_char], stringr::str_trim)
+  tbl
 }
 
 #' @rdname argo_traj
@@ -84,6 +105,7 @@ argo_traj_history <- function(path, vars = NULL, download = NULL, quiet = NA) {
 #'
 #' argo_read_traj_measurement(traj_file)
 #' argo_read_traj_cycle(traj_file)
+#' argo_read_traj_param(traj_file)
 #' argo_read_traj_history(traj_file)
 #'
 argo_read_traj_measurement <- function(file, vars = NULL, quiet = FALSE) {
@@ -101,6 +123,17 @@ argo_read_traj_cycle <- function(file, vars = NULL, quiet = FALSE) {
   argo_nc_read_simple(
     file,
     dims = "N_CYCLE",
+    vars = vars,
+    quiet = quiet
+  )
+}
+
+#' @rdname argo_read_traj
+#' @export
+argo_read_traj_param <- function(file, vars = NULL, quiet = FALSE) {
+  argo_nc_read_simple(
+    file,
+    dims = "N_PARAM",
     vars = vars,
     quiet = quiet
   )

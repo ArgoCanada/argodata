@@ -37,6 +37,21 @@ test_that("argo_traj_cycle() works", {
   })
 })
 
+test_that("argo_traj_param() works", {
+  with_argo_example_cache({
+    traj <- argo_traj_param("dac/csio/2900313/2900313_Rtraj.nc", quiet = TRUE)
+    expect_true(all(c("n_param", "trajectory_parameters") %in% names(traj)))
+
+    traj <- argo_traj_param(
+      "dac/csio/2900313/2900313_Rtraj.nc",
+      vars = c("empty"),
+      quiet = TRUE
+    )
+
+    expect_identical(names(traj), c("file", "n_param"))
+  })
+})
+
 test_that("argo_traj_history() works", {
   with_argo_example_cache({
     traj <- argo_traj_history("dac/csio/2900313/2900313_Rtraj.nc", quiet = TRUE)
@@ -75,6 +90,19 @@ test_that("argo_read_traj_measurement() works", {
 test_that("argo_read_traj_cycle() works", {
   expect_is(
     argo_read_traj_cycle(
+      system.file(
+        "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
+        package = "argodata"
+      )
+    ),
+    "tbl_df"
+  )
+})
+
+
+test_that("argo_read_traj_cycle() works", {
+  expect_is(
+    argo_read_traj_param(
       system.file(
         "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
         package = "argodata"
@@ -173,6 +201,20 @@ test_that("argo_read_traj_cycle() works for trajectory files", {
 
   nc_no_meta <- argo_read_traj_cycle(nc, vars = c("CYCLE_NUMBER_INDEX", "EMPTY"), quiet = TRUE)
   expect_identical(names(nc_no_meta), c("N_CYCLE", "CYCLE_NUMBER_INDEX"))
+})
+
+test_that("argo_read_traj_param() works for trajectory files", {
+  nc <- system.file(
+    "cache-test/dac/csio/2900313/2900313_Rtraj.nc",
+    package = "argodata"
+  )
+
+  nc_all <- argo_read_traj_param(nc)
+  expect_true(
+    all(
+      c("N_PARAM", "TRAJECTORY_PARAMETERS") %in% names(nc_all)
+    )
+  )
 })
 
 test_that("argo_read_traj_history() works for trajectory files", {

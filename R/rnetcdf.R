@@ -120,6 +120,38 @@ nc_find_vars <- function(nc, dim_id, string_dim_ids) {
   )
 }
 
+# when length(dim_id) == 0, the above doesn't work for non-string variables
+nc_find_vars0 <- function(nc, string_dim_ids) {
+  nc_n <- attr(nc, "inq", exact = TRUE)$nvars
+  var_name <- character(nc_n)
+  var_string <- logical(nc_n)
+  var_id <- integer(nc_n)
+  var_dim_id <- vector("list", nc_n)
+
+  n_done <- 0L
+  for (nc_i in 0:(nc_n - 1)) {
+    inq <- var.inq.nc(nc, nc_i)
+    ids <- inq$dimids
+    is_string <- identical(ids[-1], integer()) && (ids[1] %in% string_dim_ids)
+
+    if ((inq$ndims == 0) || is_string) {
+      n_done <- n_done + 1L
+      var_name[n_done] <- inq$name
+      var_id[n_done] <- inq$id
+      var_string[n_done] <- is_string
+      var_dim_id[[n_done]] <- ids
+    }
+  }
+
+  ind <- seq_len(n_done)
+  list(
+    var_id = var_id[ind],
+    var_name = var_name[ind],
+    var_string = var_string[ind],
+    var_dim_id = var_dim_id[ind]
+  )
+}
+
 # Base reporter that either stops (probably what you want for a single read),
 # warns (probably what you want for a bulk read the first time) or drops
 # (probably what you want for a bulk read in a script).
@@ -189,8 +221,11 @@ sanitize_or_stop_vars <- function(vars, file, dim_id, string_dim_ids, quiet = FA
 # and skip sanitizing. When the user supplies vars, we might need to
 # remove problematic ones.
 nc_resolve_vars <- function(nc, vars, dims, file = "", quiet = FALSE) {
-  if (is.null(vars)) {
+  n_dim <- length(dims[[1]])
+  if (is.null(vars) && (n_dim > 0)) {
     nc_find_vars(nc, dims$dim_id, dims$string_dim_id)
+  } else if(is.null(vars)) {
+    nc_find_vars0(nc, dims$string_dim_id)
   } else {
     sanitize_or_stop_vars(
       nc_vars(nc, vars),

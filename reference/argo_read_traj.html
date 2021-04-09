@@ -133,6 +133,8 @@
 
 <span class='fu'>argo_read_traj_cycle</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
+<span class='fu'>argo_read_traj_param</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+
 <span class='fu'>argo_read_traj_history</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -221,7 +223,13 @@ silently warn for malformed files (will return <code>NULL</code>), or
 #&gt; </span><span style='color: #949494;'>#   REPRESENTATIVE_PARK_PRESSURE &lt;dbl&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   REPRESENTATIVE_PARK_PRESSURE_STATUS &lt;chr&gt;, CONFIG_MISSION_NUMBER &lt;dbl&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   CYCLE_NUMBER_INDEX &lt;dbl&gt;, CYCLE_NUMBER_INDEX_ADJUSTED &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   DATA_MODE &lt;chr&gt;</span><span></div><div class='input'><span class='fu'>argo_read_traj_history</span><span class='op'>(</span><span class='va'>traj_file</span><span class='op'>)</span>
+#&gt; </span><span style='color: #949494;'>#   DATA_MODE &lt;chr&gt;</span><span></div><div class='input'><span class='fu'>argo_read_traj_param</span><span class='op'>(</span><span class='va'>traj_file</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 2</span><span>
+#&gt;   N_PARAM TRAJECTORY_PARAMETERS
+#&gt; </span><span style='color: #BCBCBC;'>*</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>       1 </span><span style='color: #949494;'>"</span><span>PRES            </span><span style='color: #949494;'>"</span><span>   
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span>       2 </span><span style='color: #949494;'>"</span><span>TEMP            </span><span style='color: #949494;'>"</span><span>   
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span>       3 </span><span style='color: #949494;'>"</span><span>PSAL            </span><span style='color: #949494;'>"</span><span>   </div><div class='input'><span class='fu'>argo_read_traj_history</span><span class='op'>(</span><span class='va'>traj_file</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 14</span><span>
 #&gt;   N_HISTORY HISTORY_INSTITUTI… HISTORY_STEP HISTORY_SOFTWARE HISTORY_SOFTWARE_R…
 #&gt; </span><span style='color: #BCBCBC;'>*</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              

@@ -46,7 +46,10 @@ test_that("argo_prof_calib() works", {
       quiet = TRUE
     )
 
-    expect_identical(names(prof), c("file", "n_param", "n_calib", "n_prof", "scientific_calib_equation"))
+    expect_identical(
+      names(prof),
+      c("file", "n_param", "n_calib", "n_prof", "scientific_calib_equation")
+    )
   })
 })
 
@@ -80,6 +83,18 @@ test_that("argo_prof_history() works", {
     expect_identical(
       names(prof),
       c("file", "n_prof", "n_history", "history_qctest")
+    )
+  })
+})
+
+test_that("argo_prof_spectra() works", {
+  with_argo_mirror(argo_test_mirror(), {
+    prof <- argo_prof_spectra("dac/aoml/5906206/profiles/BD5906206_016.nc", quiet = TRUE)
+    expect_true(
+      all(
+        c("file", "n_values", "n_prof", "n_levels", "uv_intensity_nitrate") %in%
+          names(prof)
+      )
     )
   })
 })
@@ -383,4 +398,49 @@ test_that("argo_read_prof_history() works for multi-profile nc files", {
   )
 
   expect_identical(ncol(argo_read_prof_history(nc)), 14L)
+})
+
+test_that("argo_read_prof_spectra() works", {
+  # a file that contains no spectra variables
+  nc <- system.file(
+    "cache-test/dac/csio/2902746/profiles/BR2902746_001.nc",
+    package = "argodata"
+  )
+  expect_null(
+    expect_warning(
+      argo_read_prof_spectra(nc, quiet = NA),
+      "zero variables along an"
+    )
+  )
+
+  # a file that contains one spectra variable
+  nc <- system.file(
+    "cache-test/dac/aoml/5906206/profiles/BD5906206_016.nc",
+    package = "argodata"
+  )
+
+  nc_all <- argo_read_prof_spectra(nc)
+  expect_identical(
+    names(nc_all),
+    c("N_VALUES41", "N_LEVELS", "N_PROF", "UV_INTENSITY_NITRATE")
+  )
+
+  expect_identical(
+    argo_read_prof_spectra(nc, vars = "UV_INTENSITY_NITRATE"),
+    nc_all
+  )
+
+  expect_null(
+    expect_warning(
+      argo_read_prof_spectra(nc, vars = character(), quiet = NA),
+      "must be NULL",
+    )
+  )
+
+  expect_null(
+    expect_warning(
+      argo_read_prof_spectra(nc, vars = "NOT_A_VAR", quiet = NA),
+      "missing spectra variable",
+    )
+  )
 })

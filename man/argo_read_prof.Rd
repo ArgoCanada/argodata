@@ -6,6 +6,7 @@
 \alias{argo_read_prof_calib}
 \alias{argo_read_prof_param}
 \alias{argo_read_prof_history}
+\alias{argo_read_prof_spectra}
 \title{Read Argo profiles}
 \usage{
 argo_read_prof_levels(file, vars = NULL, quiet = FALSE)
@@ -17,6 +18,8 @@ argo_read_prof_calib(file, vars = NULL, quiet = FALSE)
 argo_read_prof_param(file, vars = NULL, quiet = FALSE)
 
 argo_read_prof_history(file, vars = NULL, quiet = FALSE)
+
+argo_read_prof_spectra(file, vars = NULL, quiet = FALSE)
 }
 \arguments{
 \item{file}{A previously downloaded Argo NetCDF file.}

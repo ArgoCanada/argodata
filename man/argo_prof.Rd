@@ -6,6 +6,7 @@
 \alias{argo_prof_calib}
 \alias{argo_prof_param}
 \alias{argo_prof_history}
+\alias{argo_prof_spectra}
 \title{Load Argo profiles}
 \usage{
 argo_prof_levels(path, vars = NULL, download = NULL, quiet = NA)
@@ -17,6 +18,8 @@ argo_prof_calib(path, vars = NULL, download = NULL, quiet = NA)
 argo_prof_param(path, vars = NULL, download = NULL, quiet = NA)
 
 argo_prof_history(path, vars = NULL, download = NULL, quiet = NA)
+
+argo_prof_spectra(path, vars = NULL, download = NULL, quiet = NA)
 }
 \arguments{
 \item{path}{A path relative to the root directory of

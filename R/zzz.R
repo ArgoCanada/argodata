@@ -5,6 +5,10 @@ argo_tmp_dir <- NULL
 # nocov start
 
 .onLoad <- function(...) {
+  # we shortcut around tibble::new_tibble() for speed, but we need
+  # the namespace loaded for the print methods to kick in
+  requireNamespace("tibble", quietly = TRUE)
+
   # create package-specific temporary directory
   argo_tmp_dir <<- tempfile()
   dir.create(argo_tmp_dir)

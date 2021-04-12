@@ -197,7 +197,8 @@ argo_read_meta_config_param <- function(file, vars = NULL, quiet = FALSE) {
   } else {
     vctrs::vec_cbind(
       values,
-      vctrs::vec_recycle(params[-1], nrow(values)),
+      # could also use vec_rep(params[-1], max(values$n_missions))
+      params[rep_len(seq_len(nrow(params)), nrow(values)), -1],
     )
   }
 }

@@ -89,7 +89,12 @@ argo_read_info <- function(file, quiet = FALSE) {
     attr_names[i] <- attr_inq$name
     attrs[[i]] <- RNetCDF::att.get.nc(nc, "NC_GLOBAL", attr_inq$id)
   }
-  names(attrs) <- paste0("att_", rep_len(attr_names, length(attrs)))
+
+  if (length(attrs) > 0) {
+    names(attrs) <- paste0("att_", names(attrs))
+  } else {
+    names(attrs) <- character()
+  }
 
   # this is a convenience function so don't bother with non-scalar attributes
   attrs <- attrs[vapply(attrs, length, integer(1)) == 1]

@@ -76,7 +76,13 @@ argo_read_vars <- function(file, vars = NULL, quiet = FALSE) {
   attrs <- lapply(vars$attrs, function(x) {
     x[names(x) == "_FillValue"] <- lapply(x[names(x) == "_FillValue"], list)
     x <- x[vapply(x, length, integer(1)) == 1L]
-    names(x) <- paste0("att_", rep_len(names(x), length(x)))
+
+    if (length(x) > 0) {
+      names(x) <- paste0("att_", names(x))
+    } else {
+      names(x) <- character()
+    }
+
     new_tibble(x, nrow = 1L)
   })
 

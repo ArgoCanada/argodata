@@ -91,7 +91,7 @@ argo_read_info <- function(file, quiet = FALSE) {
   }
 
   if (length(attrs) > 0) {
-    names(attrs) <- paste0("att_", names(attrs))
+    names(attrs) <- paste0("att_", attr_names)
   } else {
     names(attrs) <- character()
   }

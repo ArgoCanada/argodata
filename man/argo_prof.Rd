@@ -68,4 +68,8 @@ with_argo_example_cache({
   argo_prof_history("dac/csio/2900313/profiles/D2900313_000.nc")
 })
 
+with_argo_example_cache({
+  argo_prof_spectra("dac/aoml/5906206/profiles/BD5906206_016.nc")
+})
+
 }

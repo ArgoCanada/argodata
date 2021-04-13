@@ -277,7 +277,10 @@ filter_rect_rect <- function(tbl, r_query) {
 
   # normalize rectangles so that width < 180 degrees (a better assumption than
   # the alternative and often true for floats in the pacific)
-  width_greater_than_180 <- (r_tbl$xmax - r_tbl$xmin) > 180
+  width_greater_than_180 <- !is.na(r_tbl$xmin) &
+    !is.na(r_tbl$xmax) &
+    ((r_tbl$xmax - r_tbl$xmin) > 180)
+
   xmin_temp <- r_tbl$xmin
   r_tbl$xmin[width_greater_than_180] <- r_tbl$xmax[width_greater_than_180]
   r_tbl$xmax[width_greater_than_180] <- xmin_temp[width_greater_than_180]

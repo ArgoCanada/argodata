@@ -76,6 +76,34 @@ test_that("argo_filter_rect() works for rect", {
   expect_identical(argo_filter_rect(tbl, -90, 90, -10, 10), tbl[1, ])
 })
 
+test_that("argo_filter_rect() sanitizes rectangles > 180 degrees in width", {
+  tbl <- tibble::tibble(
+    latitude_min = c(0, 12),
+    latitude_max = c(12, 24),
+    longitude_min = c(0, -170),
+    longitude_max = c(10, 170)
+  )
+
+  # previous tests should be the same
+  expect_identical(argo_filter_rect(tbl, -90, 90, -180, 180), tbl)
+  expect_identical(argo_filter_rect(tbl, -90, 90, -180, -160), tbl[2, ])
+  expect_identical(argo_filter_rect(tbl, -90, 90, 160, 180), tbl[2, ])
+  expect_identical(argo_filter_rect(tbl, -90, 90, 160, -160), tbl[2, ])
+  expect_identical(argo_filter_rect(tbl, 89, 90, -180, -160), tbl[integer(0), ])
+  expect_identical(argo_filter_rect(tbl, -90, 90, -10, 10), tbl[1, ])
+
+  # explicitly test the mid-atlantic case
+  expect_identical(
+    argo_filter_rect(tbl, 14, 16, 179, -179),
+    tbl[2, ]
+  )
+
+  expect_identical(
+    argo_filter_rect(tbl, 14, 16, -10, 10),
+    tbl[integer(0), ]
+  )
+})
+
 test_that("argo_filter_date() works", {
 
   tbl <- tibble::tibble(

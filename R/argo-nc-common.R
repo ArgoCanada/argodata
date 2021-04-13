@@ -16,23 +16,13 @@ argo_read_many <- function(assert_fun, read_fun, ...,
     message(title)
   }
 
-  # temporary hack to support quiet in some read_fun
-  if ("quiet" %in% names(formals(read_fun))) {
-    tbls <- argo_map(
-      cached,
-      read_fun,
-      vars = argo_unsanitize_vars(vars),
-      quiet = quiet,
-      ...
-    )
-  } else {
-    tbls <- argo_map(
-      cached,
-      read_fun,
-      vars = argo_unsanitize_vars(vars),
-      ...
-    )
-  }
+  tbls <- argo_map(
+    cached,
+    read_fun,
+    vars = argo_unsanitize_vars(vars),
+    quiet = quiet,
+    ...
+  )
 
   tbl <- vctrs::vec_rbind(!!! tbls, .names_to = "file")
   names(tbl) <- argo_sanitize_vars(names(tbl))
@@ -61,22 +51,13 @@ argo_assert_path_type <- function(path, pattern, file_type) {
   invisible(path)
 }
 
-argo_nc_extract_float <- function(nc) {
-  stringr::str_remove(
-    stringr::str_extract(
-      nc$filename,
-      "dac/[a-z]+/[A-Za-z0-9]+"
-    ),
-    "^dac/"
-  )
-}
-
 argo_unsanitize_vars <- function(x) {
   if (is.null(x)) {
     NULL
   } else {
     x <- toupper(x)
-    stringr::str_replace(x, "^DATE", "JULD")
+    x <- stringr::str_replace(x, "^DATE", "JULD")
+    stringr::str_replace(x, "_DPRES$", "_dPRES")
   }
 }
 

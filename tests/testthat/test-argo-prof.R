@@ -99,6 +99,21 @@ test_that("argo_prof_spectra() works", {
   })
 })
 
+test_that("argo_prof_levels() can select dPRESS variables", {
+  with_argo_example_cache({
+    expect_identical(
+      names(
+        argo_prof_levels(
+          "dac/csio/2902746/2902746_Sprof.nc",
+          vars = "doxy_dpres",
+          quiet = TRUE
+        )
+      ),
+      c("file", "n_levels", "n_prof", "doxy_dpres")
+    )
+  })
+})
+
 test_that("argo_read_prof_levels() works", {
   expect_is(
     argo_read_prof_levels(

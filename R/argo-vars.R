@@ -71,10 +71,11 @@ argo_read_vars <- function(file, vars = NULL, quiet = FALSE) {
   vars <- nc_list_vars(nc)
 
   # this is just for convenience so drop attributes with length != 1
-  # _FillValue will have a different type between variables, so needs
-  # a list() column
+  # _FillValue and resolution have a different type between variables;
+  # these need a list() column
   attrs <- lapply(vars$attrs, function(x) {
-    x[names(x) == "_FillValue"] <- lapply(x[names(x) == "_FillValue"], list)
+    wrap_list <- names(x) %in% c("_FillValue", "resolution")
+    x[wrap_list] <- lapply(x[wrap_list], list)
     x <- x[vapply(x, length, integer(1)) == 1L]
 
     if (length(x) > 0) {

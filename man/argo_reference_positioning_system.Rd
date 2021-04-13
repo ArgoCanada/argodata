@@ -16,7 +16,7 @@ Contains a reference for values in the \code{positioning_system} column of
 }
 \section{References}{
 
-Argo User's Manual, November 2019. \url{https://doi.org/10.13155/29825}
+Argo User's Manual, November 2019. \doi{10.13155/29825}
 }
 
 \examples{

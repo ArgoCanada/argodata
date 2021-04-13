@@ -6,7 +6,7 @@
 #' See Reference Table 1 in the Argo User's Manual.
 #'
 #' @section References:
-#' Argo User's Manual, November 2019. <https://doi.org/10.13155/29825>
+#' Argo User's Manual, November 2019. \doi{10.13155/29825}
 #'
 #' @examples
 #' with_argo_example_cache({

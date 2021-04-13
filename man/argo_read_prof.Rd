@@ -52,4 +52,10 @@ argo_read_prof_calib(prof_file)
 argo_read_prof_param(prof_file)
 argo_read_prof_history(prof_file)
 
+bgc_file <- system.file(
+  "cache-test/dac/aoml/5906206/profiles/BD5906206_016.nc",
+  package = "argodata"
+)
+argo_read_prof_spectra(bgc_file)
+
 }

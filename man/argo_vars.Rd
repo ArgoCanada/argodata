@@ -21,13 +21,13 @@ do not exist in the cache.}
 verbose error messages.}
 }
 \value{
-A \code{\link[tibble:tibble]{tibble::tibble()}} with one row per variable and columns \code{name},
-\code{longname}, \code{units}, \code{prec}, \code{ndims}, \code{size}, and \code{dim}. Columns
-\code{size} and \code{dim} can be unnested (e.g., using \code{\link[tidyr:nest]{tidyr::unnest()}})
-to produce a tibble with one row per variable per dimension.
+A \code{\link[tibble:tibble]{tibble::tibble()}} with one row per variable and columns \code{file},
+\code{name},\code{size}, \code{dim}, and \verb{att_*} for variable attributes.
 }
 \description{
-Load Argo NetCDF variable metadata
+Use \code{argo_vars()} to extract variable information from a vector of
+Argo NetCDF files in the form of one row per variable. Use
+\code{\link[=argo_read_vars]{argo_read_vars()}} for lower-level output from a single NetCDF file.
 }
 \examples{
 with_argo_example_cache({

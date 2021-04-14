@@ -3,16 +3,29 @@
 #'
 #' The cache directory stores previously downloaded files to access them
 #' more quickly. The cache directory stores files in the same format as a
-#' an [argo_mirror()].
+#' an [argo_mirror()]. By default, the cache is stored in a temporary
+#' directory that is cleared when the session is restarted. This ensures
+#' access to the latest index and files by default.
 #'
 #' @inheritParams argo_path_info
 #' @param cache_dir A writable directory in which downloaded files can be
 #'   cached.
+#' @param expr An expression to be evaluated with the specified
+#'   default `cache_dir`.
 #' @param all Should index files be downloaded even if they have not been
 #'   previously downloaded?
 #' @inheritParams argo_mirror
 #' @inheritParams argo_should_download
 #'
+#' @return
+#'   - `argo_cache_dir()`: The directory where cache files are located
+#'   - `argo_set_cache_dir()`: The previously set cache directory
+#'   - `with_argo_cache_dir()`, `with_argo_example_cache()`: The result of
+#'     `expr`.
+#'   - `argo_cached()`: The file path to the cached version of the Argo file
+#'     (which may or may not exist).
+#'   - `argo_update_data()`, `argo_update_global()`: The locations of the
+#'     updated files.
 #' @export
 #'
 #' @examples
@@ -119,16 +132,3 @@ with_argo_example_cache <- function(expr) {
 argo_cached <- function(path) {
   as.character(fs::path(argo_cache_dir(), as_argo_path(path)))
 }
-
-# For dev use only! The cache-dev folder is .gitignored,
-# and .Rbuildignored and when developing, downloading updated files is
-# not necessary.
-# nocov start
-use_dev_cache <- function(path) {
-  argo_set_cache_dir("cache-dev")
-  options(
-    argodata.max_global_cache_age = Inf,
-    argodata.max_data_cache_age = Inf
-  )
-}
-# nocov end

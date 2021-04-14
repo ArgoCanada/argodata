@@ -15,11 +15,11 @@ with_argo_mirror(mirror, expr)
 \arguments{
 \item{mirror}{The URL to an Argo mirror or a path to a directory
 where Argo data has been cached or synced. According to the
-\href{http://www.argodatamgt.org/Access-to-data/Access-via-FTP-or-HTTPS-on-GDAC}{Argo data acess page},
+\href{http://www.argodatamgt.org/Access-to-data/Access-via-FTP-or-HTTPS-on-GDAC}{Argo data access page},
 The following public mirrors are available:
 \itemize{
-\item \url{ftp://usgodae.org/pub/outgoing/argo}
-\item \url{ftp://ftp.ifremer.fr/ifremer/argo}
+\item \url{ftp://usgodae.org/pub/outgoing/argo/}
+\item \url{ftp://ftp.ifremer.fr/ifremer/argo/}
 \item \url{https://data-argo.ifremer.fr}
 }
 
@@ -27,6 +27,16 @@ Use \code{NULL} to reset to the default mirror.}
 
 \item{expr}{An expression to be evaluated with the specified
 default \code{mirror}.}
+}
+\value{
+\itemize{
+\item \code{argo_mirror()}: The current default mirror
+\item \code{argo_set_mirror()}: The previously-set mirror
+\item \code{with_argo_mirror()}: The result of \code{expr} evaluated using
+\code{mirror} as the default mirror.
+\item \code{argo_test_mirror()}: A filesystem mirror that contains several
+files useful for tests and examples.
+}
 }
 \description{
 Fetch the default Argo mirror using \code{\link[=argo_mirror]{argo_mirror()}} or set it
@@ -37,6 +47,6 @@ using \verb{options("argodata.mirror = "path/to/mirror")}. Use
 }
 \examples{
 argo_mirror()
-with_argo_mirror("https://data-argo.ifremer.fr/", argo_mirror())
+with_argo_mirror("ftp://usgodae.org/pub/outgoing/argo/", argo_mirror())
 
 }

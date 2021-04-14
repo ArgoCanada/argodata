@@ -21,10 +21,14 @@ do not exist in the cache.}
 verbose error messages.}
 }
 \value{
-A \code{\link[tibble:tibble]{tibble::tibble()}}.
+A \code{\link[tibble:tibble]{tibble::tibble()}} with one row per technical parameter
+per cycle and columns \code{file}, \code{n_tech_param}, \code{technical_parameter_name},
+\code{technical_parameter_value}, and \code{cycle_number}.
 }
 \description{
-Load Argo float meta
+Use \code{argo_tech_tech_param()} to extract information from Argo technical
+spec NetCDF files. Use \code{\link[=argo_read_tech_tech_param]{argo_read_tech_tech_param()}}
+to extract information from a single previously-downloaded NetCDF file.
 }
 \examples{
 with_argo_example_cache({

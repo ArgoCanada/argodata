@@ -9,11 +9,11 @@
 #'
 #' @param mirror The URL to an Argo mirror or a path to a directory
 #'   where Argo data has been cached or synced. According to the
-#'   [Argo data acess page](http://www.argodatamgt.org/Access-to-data/Access-via-FTP-or-HTTPS-on-GDAC),
+#'   [Argo data access page](http://www.argodatamgt.org/Access-to-data/Access-via-FTP-or-HTTPS-on-GDAC),
 #'   The following public mirrors are available:
 #'
-#'   - <ftp://usgodae.org/pub/outgoing/argo>
-#'   - <ftp://ftp.ifremer.fr/ifremer/argo>
+#'   - <ftp://usgodae.org/pub/outgoing/argo/>
+#'   - <ftp://ftp.ifremer.fr/ifremer/argo/>
 #'   - <https://data-argo.ifremer.fr>
 #'
 #'   Use `NULL` to reset to the default mirror.
@@ -21,11 +21,18 @@
 #' @param expr An expression to be evaluated with the specified
 #'   default `mirror`.
 #'
+#' @return
+#'   - `argo_mirror()`: The current default mirror
+#'   - `argo_set_mirror()`: The previously-set mirror
+#'   - `with_argo_mirror()`: The result of `expr` evaluated using
+#'     `mirror` as the default mirror.
+#'   - `argo_test_mirror()`: A filesystem mirror that contains several
+#'     files useful for tests and examples.
 #' @export
 #'
 #' @examples
 #' argo_mirror()
-#' with_argo_mirror("https://data-argo.ifremer.fr/", argo_mirror())
+#' with_argo_mirror("ftp://usgodae.org/pub/outgoing/argo/", argo_mirror())
 #'
 argo_mirror <- function() {
   getOption("argodata.mirror", NULL) %||% "https://data-argo.ifremer.fr"

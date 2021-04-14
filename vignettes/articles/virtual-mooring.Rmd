@@ -1,5 +1,5 @@
 ---
-title: "Virtual moorings and sections"
+title: "Example: Virtual moorings and sections"
 ---
 
 ```{r setup, include = FALSE}
@@ -268,10 +268,6 @@ ggplot(levels_aggregated_randomized, aes(x = temp_weighted_mean_q50, y = pres_bi
 ```
 
 In this case the weighted mean and randomized approach give the same results. This is a good thing! Another thing to note is that in the above example the weighted mean varies little even with the bootstrapping approach (the `geom_ribbon()` behind each profile is barely if at all visible).
-
-### Kriging
-
-(subsurface geology folks are all over this kind of thing but I have to look up what the best way to go about doing it is)
 
 ## Sections
 

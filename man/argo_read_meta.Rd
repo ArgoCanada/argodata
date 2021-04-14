@@ -28,27 +28,52 @@ argo_read_meta_param(file, vars = NULL, quiet = quiet)
 argo_read_tech_tech_param(file, vars = NULL, quiet = FALSE)
 }
 \arguments{
-\item{file}{A previously downloaded Argo NetCDF file.}
+\item{file}{A previously downloaded Argo NetCDF file
+(e.g., using \code{\link[=argo_download]{argo_download()}}).}
 
-\item{vars}{A vector of variable names to include. The ordering
-of the variables is not guaranteed, and variables that do not
-exist are ignored. For \verb{nc_read_*()} and \verb{read_*()} variants,
-these are the raw variable names (all caps, without "date"
-substituted for "juld").}
+\item{vars}{A vector of variable names to include. Explicitly specifying
+\code{vars} can lead to much faster read times when reading many files.}
 
-\item{quiet}{Use \code{TRUE} to stop for malformed files, \code{NA} to
-silently warn for malformed files (will return \code{NULL}), or
-\code{FALSE} to return \code{NULL} silently when a read error is encountered.}
+\item{quiet}{Use \code{FALSE} to stop for malformed files, \code{NA} to
+silently warn for malformed files, or \code{TRUE} to silently ignore
+read errors when possible.}
 }
 \value{
-A \code{\link[tibble:tibble]{tibble::tibble()}}
+A \code{\link[tibble:tibble]{tibble::tibble()}} with
+\itemize{
+\item \code{argo_meta_config_param()}: one row per configuration parameter and
+columns \code{n_config_param}, \code{N_MISSIONS}, \code{CONFIG_PARAMETER_VALUE},
+and \code{CONFIG_PARAMETER_NAME}.
+\item \code{argo_meta_missions()}: one row per mission and columns
+\code{N_MISSIONS}, \code{CONFIG_MISSION_NUMBER}, and \code{CONFIG_MISSION_COMMENT}.
+\item \code{argo_meta_trans_system()}: one row per transmission system
+and columns \code{N_TRANS_SYSTEM}, \code{TRANS_SYSTEM}, \code{TRANS_SYSTEM_ID},
+and \code{TRANS_FREQUENCY}.
+\item \code{argo_meta_positioning_system()}: one row per positioning
+system and columns \code{N_POSITIONING_SYSTEM}, and
+\code{POSITIONING_SYSTEM}.
+\item \code{argo_meta_launch_config_param()}: one row per launch
+configuration parameter and columns \code{N_LAUNCH_CONFIG_PARAM},
+\code{LAUNCH_CONFIG_PARAMETER_NAME}, and \code{LAUNCH_CONFIG_PARAMETER_VALUE}.
+\item \code{argo_meta_sensor()}: one row per sensor and columns
+\code{N_SENSOR}, \code{SENSOR}, \code{SENSOR_MAKER}, \code{SENSOR_MODEL},
+and \code{sensor_serial_no}.
+\item \code{argo_meta_param()}: one row per parameter and columns
+\code{N_PARAM}, \code{PARAMETER} \code{PARAMETER_SENSOR}, \code{PARAMETER_UNITS},
+\code{PARAMETER_RESOLUTION}, \code{PREDEPLOYMENT_CALIB_EQUATION},
+\code{PREDEPLOYMENT_CALIB_COEFFICIENT}, and \code{PREDEPLOYMENT_CALIB_COMMENT}.
+}
 
-A \code{\link[tibble:tibble]{tibble::tibble()}}
+A \code{\link[tibble:tibble]{tibble::tibble()}} with one row per technical parameter
+and columns \code{N_TECH_PARAM}, \code{TECHNICAL_PARAMETER_NAME},
+\code{TECHNICAL_PARAMETER_VALUE}, and \code{CYCLE_NUMBER}.
 }
 \description{
-Read Argo float meta
+Use \verb{argo_read_meta_*()} functions to extract meta information from a
+previously-downloaded Argo NetCDF file.
 
-Read Argo float technical parameters
+Use \code{argo_read_tech_tech_param()} to extract technical specifications from a
+previously-downloaded Argo NetCDF file.
 }
 \examples{
 meta_file <- system.file(

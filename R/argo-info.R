@@ -1,9 +1,15 @@
 
 #' Load NetCDF general information
 #'
+#' Use `argo_info()` to extract scalar variables and global attributes
+#' from a vector of Argo NetCDF files. Use [argo_read_info()] to extract
+#' variables from a previously-downloaded Argo NetCDF file.
+#'
 #' @inheritParams argo_vars
 #'
-#' @return A [tibble::tibble()]
+#' @return A [tibble::tibble()] with one row per file. Columns containing
+#'   global attribute information are prefixed with `att_` to differentiate
+#'   them from variables with zero dimensions.
 #' @export
 #'
 #' @examples
@@ -58,9 +64,15 @@ argo_info <- function(path, download = NULL, quiet = NA) {
 
 #' Read NetCDF general information
 #'
+#' Use `argo_read_info()` to extract variables and global attributes from
+#' a previously-downloaded Argo NetCDF file. The variables read by
+#' `argo_read_info()` are always length 1.
+#'
 #' @inheritParams argo_read_vars
 #'
-#' @return A [tibble::tibble()]
+#' @return A [tibble::tibble()] with one row. Columns containing
+#'   global attribute information are prefixed with `att_` to differentiate
+#'   them from variables with zero dimensions.
 #' @export
 #'
 #' @examples

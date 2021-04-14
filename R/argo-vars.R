@@ -1,13 +1,16 @@
 
 #' Load Argo NetCDF variable metadata
 #'
+#' Use `argo_vars()` to extract variable information from a vector of
+#' Argo NetCDF files in the form of one row per variable. Use
+#' [argo_read_vars()] for lower-level output from a single NetCDF file.
+#'
 #' @inheritParams argo_download
 #' @inheritParams argo_read_vars
 #'
-#' @return A [tibble::tibble()] with one row per variable and columns `name`,
-#'   `longname`, `units`, `prec`, `ndims`, `size`, and `dim`. Columns
-#'   `size` and `dim` can be unnested (e.g., using [tidyr::unnest()])
-#'   to produce a tibble with one row per variable per dimension.
+#' @return A [tibble::tibble()] with one row per variable and columns `file`,
+#'  `name`,`size`, `dim`, and `att_*` for variable attributes.
+#'
 #' @export
 #'
 #' @examples
@@ -32,28 +35,25 @@ argo_vars <- function(path, download = NULL, quiet = NA) {
     quiet = quiet
   )
 
-  tbl <- vctrs::vec_rbind(!!! tbls, .names_to = "file")
-  names(tbl) <- tolower(names(tbl))
-  tbl
+  vctrs::vec_rbind(!!! tbls, .names_to = "file")
 }
 
 
 #' Read NetCDF variable metadata
 #'
-#' @param file A previously downloaded Argo NetCDF file.
-#' @param quiet Use `TRUE` to stop for malformed files, `NA` to
-#'   silently warn for malformed files (will return `NULL`), or
-#'   `FALSE` to return `NULL` silently when a read error is encountered.
-#' @param vars A vector of variable names to include. The ordering
-#'   of the variables is not guaranteed, and variables that do not
-#'   exist are ignored. For `nc_read_*()` and `read_*()` variants,
-#'   these are the raw variable names (all caps, without "date"
-#'   substituted for "juld").
+#' Use `argo_vars()` to extract variable information fromm an Argo NetCDF file
+#' in the form of one row per variable.
+#'
+#' @param file A previously downloaded Argo NetCDF file
+#'   (e.g., using [argo_download()]).
+#' @param quiet Use `FALSE` to stop for malformed files, `NA` to
+#'   silently warn for malformed files, or `TRUE` to silently ignore
+#'   read errors when possible.
+#' @param vars A vector of variable names to include. Explicitly specifying
+#'   `vars` can lead to much faster read times when reading many files.
 #'
 #' @return A [tibble::tibble()] with one row per variable and columns `name`,
-#'   `longname`, `units`, `prec`, `ndims`, `size`, and `dim`. Columns
-#'   `size` and `dim` can be unnested (e.g., using [tidyr::unnest()])
-#'   to produce a tibble with one row per variable per dimension.
+#'  `size`, `dim`, and `att_*` for variable attributes.
 #' @export
 #'
 #' @examples

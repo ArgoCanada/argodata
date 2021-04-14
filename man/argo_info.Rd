@@ -21,10 +21,14 @@ do not exist in the cache.}
 verbose error messages.}
 }
 \value{
-A \code{\link[tibble:tibble]{tibble::tibble()}}
+A \code{\link[tibble:tibble]{tibble::tibble()}} with one row per file. Columns containing
+global attribute information are prefixed with \code{att_} to differentiate
+them from variables with zero dimensions.
 }
 \description{
-Load NetCDF general information
+Use \code{argo_info()} to extract scalar variables and global attributes
+from a vector of Argo NetCDF files. Use \code{\link[=argo_read_info]{argo_read_info()}} to extract
+variables from a previously-downloaded Argo NetCDF file.
 }
 \examples{
 with_argo_example_cache({

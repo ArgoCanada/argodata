@@ -21,11 +21,8 @@ argo_traj_history(path, vars = NULL, download = NULL, quiet = NA)
 be a data.frame with a \code{file} column (e.g., a global index as
 returned by \code{\link[=argo_global_meta]{argo_global_meta()}} and others).}
 
-\item{vars}{A vector of variable names to include. The ordering
-of the variables is not guaranteed, and variables that do not
-exist are ignored. For \verb{nc_read_*()} and \verb{read_*()} variants,
-these are the raw variable names (all caps, without "date"
-substituted for "juld").}
+\item{vars}{A vector of variable names to include. Explicitly specifying
+\code{vars} can lead to much faster read times when reading many files.}
 
 \item{download}{A logical vector indicating whether or not
 a file should be downloaded. Defaults to the value of
@@ -36,15 +33,18 @@ do not exist in the cache.}
 verbose error messages.}
 }
 \value{
-A \code{\link[tibble:tibble]{tibble::tibble()}}.
+A \code{\link[tibble:tibble]{tibble::tibble()}} with
+\itemize{
+\item \code{argo_traj_measurement()}: one row per file per measurement.
+\item \code{argo_traj_cycle()}: one row per file per cycle.
+\item \code{argo_traj_param()}: one row per file per parameter.
+\item \code{argo_traj_history()}: one row per file per history entry.
+}
 }
 \description{
-Trajectory files contain (1) location measurements and (2)
-detailed information about each cycle. Use \code{\link[=argo_traj_measurement]{argo_traj_measurement()}}
-output containing one row per location measurement; use
-\code{\link[=argo_traj_cycle]{argo_traj_cycle()}} for output containing one row per
-cycle. Finally, use \code{\link[=argo_traj_history]{argo_traj_history()}} to view quality
-control that has been applied.
+Use \verb{argo_traj_*()} functions to extract information from Argo trajectory
+NetCDF files. Use \code{\link[=argo_read_traj_measurement]{argo_read_traj_*()}}
+to extract information from a single previously-downloaded NetCDF file.
 }
 \examples{
 with_argo_example_cache({

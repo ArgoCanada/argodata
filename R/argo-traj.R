@@ -1,16 +1,18 @@
 
 #' Load Argo trajectories
 #'
-#' Trajectory files contain (1) location measurements and (2)
-#' detailed information about each cycle. Use [argo_traj_measurement()]
-#' output containing one row per location measurement; use
-#' [argo_traj_cycle()] for output containing one row per
-#' cycle. Finally, use [argo_traj_history()] to view quality
-#' control that has been applied.
+#' Use `argo_traj_*()` functions to extract information from Argo trajectory
+#' NetCDF files. Use [`argo_read_traj_*()`][argo_read_traj_measurement]
+#' to extract information from a single previously-downloaded NetCDF file.
 #'
 #' @inheritParams argo_prof_levels
 #'
-#' @return A [tibble::tibble()].
+#' @return A [tibble::tibble()] with
+#'   - `argo_traj_measurement()`: one row per file per measurement.
+#'   - `argo_traj_cycle()`: one row per file per cycle.
+#'   - `argo_traj_param()`: one row per file per parameter.
+#'   - `argo_traj_history()`: one row per file per history entry.
+#'
 #' @export
 #' @rdname argo_traj
 #'
@@ -85,9 +87,17 @@ argo_traj_history <- function(path, vars = NULL, download = NULL, quiet = NA) {
 
 #' Read Argo trajectories
 #'
+#' Use `argo_read_traj_*()` functions to extract trajectory information from a
+#' previously-downloaded Argo NetCDF file.
+#'
 #' @inheritParams argo_read_vars
 #'
-#' @return A [tibble::tibble()].
+#' @return A [tibble::tibble()] with
+#'   - `argo_read_traj_measurement()`: one per measurement.
+#'   - `argo_read_traj_cycle()`: one per cycle.
+#'   - `argo_read_traj_param()`: one per parameter.
+#'   - `argo_read_traj_history()`: one row per history entry.
+#'
 #' @export
 #' @rdname argo_read_traj
 #'

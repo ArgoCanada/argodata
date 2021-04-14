@@ -7,17 +7,22 @@
 argo_read_info(file, quiet = FALSE)
 }
 \arguments{
-\item{file}{A previously downloaded Argo NetCDF file.}
+\item{file}{A previously downloaded Argo NetCDF file
+(e.g., using \code{\link[=argo_download]{argo_download()}}).}
 
-\item{quiet}{Use \code{TRUE} to stop for malformed files, \code{NA} to
-silently warn for malformed files (will return \code{NULL}), or
-\code{FALSE} to return \code{NULL} silently when a read error is encountered.}
+\item{quiet}{Use \code{FALSE} to stop for malformed files, \code{NA} to
+silently warn for malformed files, or \code{TRUE} to silently ignore
+read errors when possible.}
 }
 \value{
-A \code{\link[tibble:tibble]{tibble::tibble()}}
+A \code{\link[tibble:tibble]{tibble::tibble()}} with one row. Columns containing
+global attribute information are prefixed with \code{att_} to differentiate
+them from variables with zero dimensions.
 }
 \description{
-Read NetCDF general information
+Use \code{argo_read_info()} to extract variables and global attributes from
+a previously-downloaded Argo NetCDF file. The variables read by
+\code{argo_read_info()} are always length 1.
 }
 \examples{
 prof_file <- system.file(

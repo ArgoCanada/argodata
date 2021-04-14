@@ -1,10 +1,23 @@
 
 #' Load Argo profiles
 #'
+#' Use `argo_prof_*()` functions to extract information from Argo profile
+#' NetCDF files. Use [`argo_read_prof_*()`][argo_read_prof_levels]
+#' to extract information from a single previously-downloaded NetCDF file.
+#'
 #' @inheritParams argo_vars
 #' @inheritParams argo_read_vars
 #'
-#' @return A [tibble::tibble()].
+#' @return A [tibble::tibble()] with
+#'   - `argo_prof_levels()`: one row per file per profile per sampling level.
+#'   - `argo_prof_prof()`: one row per file per profile.
+#'   - `argo_prof_calib()`: one row per file per profile per calibration per
+#'      parameter.
+#'   - `argo_prof_param()`: one row per file per profile per parameter.
+#'   - `argo_prof_history()`: one row per file per profile per history entry.
+#'   - `argo_prof_spectra()`: one row per file per profile per sampling level
+#'     per spectra value.
+#'
 #' @export
 #' @rdname argo_prof
 #'
@@ -120,9 +133,20 @@ argo_prof_spectra <- function(path, vars = NULL, download = NULL, quiet = NA) {
 
 #' Read Argo profiles
 #'
+#' Use `argo_read_prof_*()` functions to extract profile information from a
+#' previously-downloaded Argo NetCDF file.
+#'
 #' @inheritParams argo_read_vars
 #'
-#' @return A [tibble::tibble()]
+#' @return A [tibble::tibble()] with
+#'   - `argo_read_prof_levels()`: one row per profile per sampling level.
+#'   - `argo_read_prof_prof()`: one row per profile.
+#'   - `argo_read_prof_calib()`: one row per profile per calibration per parameter.
+#'   - `argo_read_prof_param()`: one row per profile per parameter.
+#'   - `argo_read_prof_history()`: one row per profile per history entry.
+#'   - `argo_read_prof_spectra()`: one row per profile per sampling level per
+#'     spectra value.
+#'
 #' @export
 #' @rdname argo_read_prof
 #'

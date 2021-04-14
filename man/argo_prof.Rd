@@ -27,11 +27,8 @@ argo_prof_spectra(path, vars = NULL, download = NULL, quiet = NA)
 be a data.frame with a \code{file} column (e.g., a global index as
 returned by \code{\link[=argo_global_meta]{argo_global_meta()}} and others).}
 
-\item{vars}{A vector of variable names to include. The ordering
-of the variables is not guaranteed, and variables that do not
-exist are ignored. For \verb{nc_read_*()} and \verb{read_*()} variants,
-these are the raw variable names (all caps, without "date"
-substituted for "juld").}
+\item{vars}{A vector of variable names to include. Explicitly specifying
+\code{vars} can lead to much faster read times when reading many files.}
 
 \item{download}{A logical vector indicating whether or not
 a file should be downloaded. Defaults to the value of
@@ -42,10 +39,22 @@ do not exist in the cache.}
 verbose error messages.}
 }
 \value{
-A \code{\link[tibble:tibble]{tibble::tibble()}}.
+A \code{\link[tibble:tibble]{tibble::tibble()}} with
+\itemize{
+\item \code{argo_prof_levels()}: one row per file per profile per sampling level.
+\item \code{argo_prof_prof()}: one row per file per profile.
+\item \code{argo_prof_calib()}: one row per file per profile per calibration per
+parameter.
+\item \code{argo_prof_param()}: one row per file per profile per parameter.
+\item \code{argo_prof_history()}: one row per file per profile per history entry.
+\item \code{argo_prof_spectra()}: one row per file per profile per sampling level
+per spectra value.
+}
 }
 \description{
-Load Argo profiles
+Use \verb{argo_prof_*()} functions to extract information from Argo profile
+NetCDF files. Use \code{\link[=argo_read_prof_levels]{argo_read_prof_*()}}
+to extract information from a single previously-downloaded NetCDF file.
 }
 \examples{
 with_argo_example_cache({

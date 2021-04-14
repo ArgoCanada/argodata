@@ -7,26 +7,23 @@
 argo_read_vars(file, vars = NULL, quiet = FALSE)
 }
 \arguments{
-\item{file}{A previously downloaded Argo NetCDF file.}
+\item{file}{A previously downloaded Argo NetCDF file
+(e.g., using \code{\link[=argo_download]{argo_download()}}).}
 
-\item{vars}{A vector of variable names to include. The ordering
-of the variables is not guaranteed, and variables that do not
-exist are ignored. For \verb{nc_read_*()} and \verb{read_*()} variants,
-these are the raw variable names (all caps, without "date"
-substituted for "juld").}
+\item{vars}{A vector of variable names to include. Explicitly specifying
+\code{vars} can lead to much faster read times when reading many files.}
 
-\item{quiet}{Use \code{TRUE} to stop for malformed files, \code{NA} to
-silently warn for malformed files (will return \code{NULL}), or
-\code{FALSE} to return \code{NULL} silently when a read error is encountered.}
+\item{quiet}{Use \code{FALSE} to stop for malformed files, \code{NA} to
+silently warn for malformed files, or \code{TRUE} to silently ignore
+read errors when possible.}
 }
 \value{
 A \code{\link[tibble:tibble]{tibble::tibble()}} with one row per variable and columns \code{name},
-\code{longname}, \code{units}, \code{prec}, \code{ndims}, \code{size}, and \code{dim}. Columns
-\code{size} and \code{dim} can be unnested (e.g., using \code{\link[tidyr:nest]{tidyr::unnest()}})
-to produce a tibble with one row per variable per dimension.
+\code{size}, \code{dim}, and \verb{att_*} for variable attributes.
 }
 \description{
-Read NetCDF variable metadata
+Use \code{argo_vars()} to extract variable information fromm an Argo NetCDF file
+in the form of one row per variable.
 }
 \examples{
 prof_file <- system.file(

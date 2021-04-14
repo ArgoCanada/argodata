@@ -39,10 +39,37 @@ do not exist in the cache.}
 verbose error messages.}
 }
 \value{
-A \code{\link[tibble:tibble]{tibble::tibble()}}.
+A \code{\link[tibble:tibble]{tibble::tibble()}} with
+\itemize{
+\item \code{argo_meta_config_param()}: one row per file per configuration parameter and
+columns \code{file}, \code{n_config_param}, \code{n_missions}, \code{config_parameter_value},
+and \code{config_parameter_name}.
+\item \code{argo_meta_missions()}: one row per file per mission and columns \code{file},
+\code{n_missions}, \code{config_mission_number}, and \code{config_mission_comment}.
+\item \code{argo_meta_trans_system()}: one row per file per transmission system
+and columns \code{file}, \code{n_trans_system}, \code{trans_system}, \code{trans_system_id},
+and \code{trans_frequency}.
+\item \code{argo_meta_positioning_system()}: one row per file per positioning
+system and columns \code{file}, \code{n_positioning_system}, and
+\code{positioning_system}.
+\item \code{argo_meta_launch_config_param()}: one row per file per launch
+configuration parameter and columns \code{file}, \code{n_launch_config_param},
+\code{launch_config_parameter_name}, and \code{launch_config_parameter_value}.
+\item \code{argo_meta_sensor()}: one row per file per sensor and columns
+\code{file}, \code{n_sensor}, \code{sensor}, \code{sensor_maker}, \code{sensor_model},
+and \code{sensor_serial_no}.
+\item \code{argo_meta_param()}: one row per file per parameter and columns \code{file},
+\code{n_param}, \code{parameter} \code{parameter_sensor}, \code{parameter_units},
+\code{parameter_resolution}, \code{predeployment_calib_equation},
+\code{predeployment_calib_coefficient}, and \code{predeployment_calib_comment}.
+}
 }
 \description{
-Load Argo float meta
+Use \verb{argo_meta_*()} functions to extract information from Argo meta
+NetCDF files. Use \code{\link[=argo_read_meta_config_param]{argo_read_meta_*()}}
+to extract information from a single previously-downloaded NetCDF file.
+Using \code{\link[=argo_info]{argo_info()}} on meta files is also useful for extracting general
+float information.
 }
 \examples{
 with_argo_example_cache({

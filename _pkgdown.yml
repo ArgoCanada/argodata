@@ -1,4 +1,7 @@
 
+figures:
+  dpi: 300
+
 reference:
 - title: Load and filter indexes
   contents:

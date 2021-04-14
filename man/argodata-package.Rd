@@ -4,10 +4,15 @@
 \name{argodata-package}
 \alias{argodata}
 \alias{argodata-package}
-\title{argodata: Download Argo Ocean Float Data}
+\title{argodata: Locate, Download, and Read Argo Ocean Float Data}
 \description{
-Downloads data from the international Argo
-  research program.
+Data from the international Argo
+  research program <doi:10.17882/42182> is provided in the form of
+  millions of NetCDF files stored on a remote server. These data contain
+  in-situ oceanographic measurements from decades of observation from
+  around the world. Functions are provided here to locate, download,
+  and read Argo NetCDF files to accelerate oceanographic and climate
+  research.
 }
 \seealso{
 Useful links:

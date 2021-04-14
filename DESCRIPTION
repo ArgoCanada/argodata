@@ -1,5 +1,5 @@
 Package: argodata
-Title: Download Argo Ocean Float Data
+Title: Locate, Download, and Read Argo Ocean Float Data
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Dewey",
@@ -7,8 +7,13 @@ Authors@R:
            role = c("aut", "cre"),
            email = "dewey.dunnington@dfo-mpo.gc.ca",
            comment = c(ORCID = "0000-0002-9415-4582"))
-Description: Downloads data from the international Argo
-  research program.
+Description: Data from the international Argo
+  research program <doi:10.17882/42182> is provided in the form of
+  millions of NetCDF files stored on a remote server. These data contain
+  in-situ oceanographic measurements from decades of observation from
+  around the world. Functions are provided here to locate, download,
+  and read Argo NetCDF files to accelerate oceanographic and climate
+  research.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

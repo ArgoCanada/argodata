@@ -12,8 +12,8 @@
 #'   [Argo data access page](http://www.argodatamgt.org/Access-to-data/Access-via-FTP-or-HTTPS-on-GDAC),
 #'   The following public mirrors are available:
 #'
-#'   - <ftp://usgodae.org/pub/outgoing/argo>
-#'   - <ftp://ftp.ifremer.fr/ifremer/argo>
+#'   - <ftp://usgodae.org/pub/outgoing/argo/>
+#'   - <ftp://ftp.ifremer.fr/ifremer/argo/>
 #'   - <https://data-argo.ifremer.fr>
 #'
 #'   Use `NULL` to reset to the default mirror.
@@ -32,7 +32,7 @@
 #'
 #' @examples
 #' argo_mirror()
-#' with_argo_mirror("ftp://usgodae.org/pub/outgoing/argo", argo_mirror())
+#' with_argo_mirror("ftp://usgodae.org/pub/outgoing/argo/", argo_mirror())
 #'
 argo_mirror <- function() {
   getOption("argodata.mirror", NULL) %||% "https://data-argo.ifremer.fr"

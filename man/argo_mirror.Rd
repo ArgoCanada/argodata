@@ -18,8 +18,8 @@ where Argo data has been cached or synced. According to the
 \href{http://www.argodatamgt.org/Access-to-data/Access-via-FTP-or-HTTPS-on-GDAC}{Argo data access page},
 The following public mirrors are available:
 \itemize{
-\item \url{ftp://usgodae.org/pub/outgoing/argo}
-\item \url{ftp://ftp.ifremer.fr/ifremer/argo}
+\item \url{ftp://usgodae.org/pub/outgoing/argo/}
+\item \url{ftp://ftp.ifremer.fr/ifremer/argo/}
 \item \url{https://data-argo.ifremer.fr}
 }
 
@@ -47,6 +47,6 @@ using \verb{options("argodata.mirror = "path/to/mirror")}. Use
 }
 \examples{
 argo_mirror()
-with_argo_mirror("ftp://usgodae.org/pub/outgoing/argo", argo_mirror())
+with_argo_mirror("ftp://usgodae.org/pub/outgoing/argo/", argo_mirror())
 
 }

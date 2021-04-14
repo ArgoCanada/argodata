@@ -58,35 +58,29 @@ argo_traj_cycle <- function(path, vars = NULL, download = NULL, quiet = NA) {
 #' @rdname argo_traj
 #' @export
 argo_traj_param <- function(path, vars = NULL, download = NULL, quiet = NA) {
-  tbl <- argo_read_many(
+  argo_read_many(
     assert_argo_traj_file,
     argo_read_traj_param,
     path = path,
     vars = vars,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
-
-  val_is_char <- vapply(tbl, is.character, logical(1))
-  tbl[val_is_char] <- lapply(tbl[val_is_char], stringr::str_trim)
-  tbl
 }
 
 #' @rdname argo_traj
 #' @export
 argo_traj_history <- function(path, vars = NULL, download = NULL, quiet = NA) {
-  tbl <- argo_read_many(
+  argo_read_many(
     assert_argo_traj_file,
     argo_read_traj_history,
     path = path,
     vars = vars,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
-
-  val_is_char <- vapply(tbl, is.character, logical(1))
-  tbl[val_is_char] <- lapply(tbl[val_is_char], stringr::str_trim)
-  tbl
 }
 
 #' Read Argo trajectories

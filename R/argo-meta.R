@@ -37,120 +37,99 @@
 #' })
 #'
 argo_meta_config_param <- function(path, download = NULL, quiet = NA) {
-  tbl <- argo_read_many(
+  argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_config_param,
     path = path,
     vars = NULL,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
-
-  is_char <- vapply(tbl, is.character, logical(1))
-  tbl[is_char] <- lapply(tbl[is_char], stringr::str_trim)
-  tbl
 }
 
 #' @rdname argo_meta
 #' @export
 argo_meta_missions <- function(path, download = NULL, quiet = NA) {
-  tbl <- argo_read_many(
+  argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_missions,
     path = path,
     vars = NULL,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
-
-  is_char <- vapply(tbl, is.character, logical(1))
-  tbl[is_char] <- lapply(tbl[is_char], stringr::str_trim)
-  tbl
 }
 
 #' @rdname argo_meta
 #' @export
 argo_meta_trans_system <- function(path, download = NULL, quiet = NA) {
-  tbl <- argo_read_many(
+  argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_trans_system,
     path = path,
     vars = NULL,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
-
-  is_char <- vapply(tbl, is.character, logical(1))
-  tbl[is_char] <- lapply(tbl[is_char], stringr::str_trim)
-  tbl
 }
 
 #' @rdname argo_meta
 #' @export
 argo_meta_positioning_system <- function(path, download = NULL, quiet = NA) {
-  tbl <- argo_read_many(
+  argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_positioning_system,
     path = path,
     vars = NULL,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
-
-  is_char <- vapply(tbl, is.character, logical(1))
-  tbl[is_char] <- lapply(tbl[is_char], stringr::str_trim)
-  tbl
 }
 
 #' @rdname argo_meta
 #' @export
 argo_meta_launch_config_param <- function(path, download = NULL, quiet = NA) {
-  tbl <- argo_read_many(
+  argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_launch_config_param,
     path = path,
     vars = NULL,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
-
-  is_char <- vapply(tbl, is.character, logical(1))
-  tbl[is_char] <- lapply(tbl[is_char], stringr::str_trim)
-  tbl
 }
 
 #' @rdname argo_meta
 #' @export
 argo_meta_sensor <- function(path, download = NULL, quiet = NA) {
-  tbl <- argo_read_many(
+  argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_sensor,
     path = path,
     vars = NULL,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
-
-  is_char <- vapply(tbl, is.character, logical(1))
-  tbl[is_char] <- lapply(tbl[is_char], stringr::str_trim)
-  tbl
 }
 
 #' @rdname argo_meta
 #' @export
 argo_meta_param <- function(path, download = NULL, quiet = NA) {
-  tbl <- argo_read_many(
+  argo_read_many(
     assert_argo_meta_file,
     argo_read_meta_param,
     path = path,
     vars = NULL,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
-
-  is_char <- vapply(tbl, is.character, logical(1))
-  tbl[is_char] <- lapply(tbl[is_char], stringr::str_trim)
-  tbl
 }
 
 

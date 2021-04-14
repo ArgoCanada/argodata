@@ -1,6 +1,6 @@
 
 argo_read_many <- function(assert_fun, read_fun, ...,
-                           path, vars, download, quiet) {
+                           path, vars, download, quiet, trim = FALSE) {
   path <- as_argo_path(path)
   assert_fun(path)
 
@@ -25,9 +25,17 @@ argo_read_many <- function(assert_fun, read_fun, ...,
   )
 
   tbl <- vctrs::vec_rbind(!!! tbls, .names_to = "file")
+
   names(tbl) <- argo_sanitize_vars(names(tbl))
 
-  argo_juld_to_date_tbl(tbl)
+  tbl <- argo_juld_to_date_tbl(tbl)
+
+  if (trim) {
+    is_char <- vapply(tbl, is.character, logical(1))
+    tbl[is_char] <- lapply(tbl[is_char], stringr::str_trim)
+  }
+
+  tbl
 }
 
 argo_assert_path_type <- function(path, pattern, file_type) {

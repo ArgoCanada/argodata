@@ -13,18 +13,15 @@
 #' })
 #'
 argo_tech_tech_param <- function(path, download = NULL, quiet = NA) {
-  tbl <- argo_read_many(
+  argo_read_many(
     assert_argo_tech_file,
     argo_read_tech_tech_param,
     path = path,
     vars = NULL,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
-
-  is_char <- vapply(tbl, is.character, logical(1))
-  tbl[is_char] <- lapply(tbl[is_char], stringr::str_trim)
-  tbl
 }
 
 #' Read Argo float technical parameters

@@ -47,69 +47,57 @@ argo_prof_levels <- function(path, vars = NULL, download = NULL, quiet = NA) {
 #' @rdname argo_prof
 #' @export
 argo_prof_prof <- function(path, vars = NULL, download = NULL, quiet = NA) {
-  tbl <- argo_read_many(
+  argo_read_many(
     assert_argo_prof_file,
     argo_read_prof_prof,
     path = path,
     vars = vars,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
-
-  val_is_char <- vapply(tbl, is.character, logical(1))
-  tbl[val_is_char] <- lapply(tbl[val_is_char], stringr::str_trim)
-  tbl
 }
 
 #' @rdname argo_prof
 #' @export
 argo_prof_calib <- function(path, vars = NULL, download = NULL, quiet = NA) {
-  tbl <- argo_read_many(
+  argo_read_many(
     assert_argo_prof_file,
     argo_read_prof_calib,
     path = path,
     vars = vars,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
-
-  val_is_char <- vapply(tbl, is.character, logical(1))
-  tbl[val_is_char] <- lapply(tbl[val_is_char], stringr::str_trim)
-  tbl
 }
 
 #' @rdname argo_prof
 #' @export
 argo_prof_param <- function(path, vars = NULL, download = NULL, quiet = NA) {
-  tbl <- argo_read_many(
+  argo_read_many(
     assert_argo_prof_file,
     argo_read_prof_param,
     path = path,
     vars = vars,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
-
-  val_is_char <- vapply(tbl, is.character, logical(1))
-  tbl[val_is_char] <- lapply(tbl[val_is_char], stringr::str_trim)
-  tbl
 }
 
 #' @rdname argo_prof
 #' @export
 argo_prof_history <- function(path, vars = NULL, download = NULL, quiet = NA) {
-  tbl <- argo_read_many(
+  argo_read_many(
     assert_argo_prof_file,
     argo_read_prof_history,
     path = path,
     vars = vars,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
-
-  val_is_char <- vapply(tbl, is.character, logical(1))
-  tbl[val_is_char] <- lapply(tbl[val_is_char], stringr::str_trim)
-  tbl
 }
 
 #' @rdname argo_prof
@@ -121,10 +109,11 @@ argo_prof_spectra <- function(path, vars = NULL, download = NULL, quiet = NA) {
     path = path,
     vars = vars,
     download = download,
-    quiet = quiet
+    quiet = quiet,
+    trim = TRUE
   )
 
-  names(tbl) <- gsub("n_values[0-9]+$", "n_values", names(tbl))
+  names(tbl) <- stringr::str_replace(names(tbl), "n_values[0-9]+", "n_values")
   tbl
 }
 

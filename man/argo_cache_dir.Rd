@@ -50,17 +50,31 @@ and/or \code{options(argodata.max_data_cache_age = ...)}.}
 cached.}
 
 \item{expr}{An expression to be evaluated with the specified
-default \code{mirror}.}
+default \code{cache_dir}.}
 
 \item{path}{A path relative to the root directory of
 \code{\link[=argo_mirror]{argo_mirror()}} or \code{\link[=argo_cache_dir]{argo_cache_dir()}}. This value can also
 be a data.frame with a \code{file} column (e.g., a global index as
 returned by \code{\link[=argo_global_meta]{argo_global_meta()}} and others).}
 }
+\value{
+\itemize{
+\item \code{argo_cache_dir()}: The directory where cache files are located
+\item \code{argo_set_cache_dir()}: The previously set cache directory
+\item \code{with_argo_cache_dir()}, \code{with_argo_example_cache()}: The result of
+\code{expr}.
+\item \code{argo_cached()}: The file path to the cached version of the Argo file
+(which may or may not exist).
+\item \code{argo_update_data()}, \code{argo_update_global()}: The locations of the
+updated files.
+}
+}
 \description{
 The cache directory stores previously downloaded files to access them
 more quickly. The cache directory stores files in the same format as a
-an \code{\link[=argo_mirror]{argo_mirror()}}.
+an \code{\link[=argo_mirror]{argo_mirror()}}. By default, the cache is stored in a temporary
+directory that is cleared when the session is restarted. This ensures
+access to the latest index and files by default.
 }
 \examples{
 argo_cache_dir()

@@ -10,6 +10,10 @@
 #' @param .f A function
 #' @param ... Passed to `.f`
 #'
+#' @return
+#'   - `argo_map()`, `argo_map_default()`: A `list()` along `.x` with
+#'     `.f` applied to each element.
+#'   - `argo_set_mapper()`: The previous mapper.
 #' @export
 #'
 argo_map <- function(.x, .f, ...) {

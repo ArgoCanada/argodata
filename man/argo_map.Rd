@@ -19,6 +19,13 @@ argo_map_default(.x, .f, ...)
 
 \item{...}{Passed to \code{.f}}
 }
+\value{
+\itemize{
+\item \code{argo_map()}, \code{argo_map_default()}: A \code{list()} along \code{.x} with
+\code{.f} applied to each element.
+\item \code{argo_set_mapper()}: The previous mapper.
+}
+}
 \description{
 Several operations in argodata require iteration over many NetCDF files.
 Users may wish to use parallel processing and/or

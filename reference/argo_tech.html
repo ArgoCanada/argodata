@@ -40,7 +40,9 @@
 
 
 <meta property="og:title" content="Load Argo float meta — argo_tech_tech_param" />
-<meta property="og:description" content="Load Argo float meta" />
+<meta property="og:description" content="Use argo_tech_tech_param() to extract information from Argo technical
+spec NetCDF files. Use argo_read_tech_tech_param()
+to extract information from a single previously-downloaded NetCDF file." />
 
 
 
@@ -95,7 +97,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/articles/virtual-mooring.html">Virtual moorings and sections</a>
+      <a href="../articles/articles/virtual-mooring.html">Example: Virtual moorings and sections</a>
     </li>
   </ul>
 </li>
@@ -126,7 +128,9 @@
     </div>
 
     <div class="ref-description">
-    <p>Load Argo float meta</p>
+    <p>Use <code>argo_tech_tech_param()</code> to extract information from Argo technical
+spec NetCDF files. Use <code><a href='argo_read_meta_config_param.html'>argo_read_tech_tech_param()</a></code>
+to extract information from a single previously-downloaded NetCDF file.</p>
     </div>
 
     <pre class="usage"><span class='fu'>argo_tech_tech_param</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre>
@@ -157,7 +161,9 @@ verbose error messages.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code>.</p>
+    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> with one row per technical parameter
+per cycle and columns <code>file</code>, <code>n_tech_param</code>, <code>technical_parameter_name</code>,
+<code>technical_parameter_value</code>, and <code>cycle_number</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>

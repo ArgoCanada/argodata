@@ -99,7 +99,7 @@ with_argo_mirror() to temporarily change the default mirror." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/articles/virtual-mooring.html">Virtual moorings and sections</a>
+      <a href="../articles/articles/virtual-mooring.html">Example: Virtual moorings and sections</a>
     </li>
   </ul>
 </li>
@@ -150,10 +150,10 @@ using <code>options("argodata.mirror = "path/to/mirror")</code>. Use
       <th>mirror</th>
       <td><p>The URL to an Argo mirror or a path to a directory
 where Argo data has been cached or synced. According to the
-<a href='http://www.argodatamgt.org/Access-to-data/Access-via-FTP-or-HTTPS-on-GDAC'>Argo data acess page</a>,
+<a href='http://www.argodatamgt.org/Access-to-data/Access-via-FTP-or-HTTPS-on-GDAC'>Argo data access page</a>,
 The following public mirrors are available:</p><ul>
-<li><p><a href='ftp://usgodae.org/pub/outgoing/argo'>ftp://usgodae.org/pub/outgoing/argo</a></p></li>
-<li><p><a href='ftp://ftp.ifremer.fr/ifremer/argo'>ftp://ftp.ifremer.fr/ifremer/argo</a></p></li>
+<li><p><a href='ftp://usgodae.org/pub/outgoing/argo/'>ftp://usgodae.org/pub/outgoing/argo/</a></p></li>
+<li><p><a href='ftp://ftp.ifremer.fr/ifremer/argo/'>ftp://ftp.ifremer.fr/ifremer/argo/</a></p></li>
 <li><p><a href='https://data-argo.ifremer.fr'>https://data-argo.ifremer.fr</a></p></li>
 </ul>
 
@@ -166,11 +166,23 @@ default <code>mirror</code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    
+<ul>
+<li><p><code>argo_mirror()</code>: The current default mirror</p></li>
+<li><p><code>argo_set_mirror()</code>: The previously-set mirror</p></li>
+<li><p><code>with_argo_mirror()</code>: The result of <code>expr</code> evaluated using
+<code>mirror</code> as the default mirror.</p></li>
+<li><p><code><a href='argo_cache_dir.html'>argo_test_mirror()</a></code>: A filesystem mirror that contains several
+files useful for tests and examples.</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>argo_mirror</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "https://data-argo.ifremer.fr"</div><div class='input'><span class='fu'>with_argo_mirror</span><span class='op'>(</span><span class='st'>"https://data-argo.ifremer.fr/"</span>, <span class='fu'>argo_mirror</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "https://data-argo.ifremer.fr"</div><div class='input'>
+</div><div class='output co'>#&gt; [1] "https://data-argo.ifremer.fr"</div><div class='input'><span class='fu'>with_argo_mirror</span><span class='op'>(</span><span class='st'>"ftp://usgodae.org/pub/outgoing/argo/"</span>, <span class='fu'>argo_mirror</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "ftp://usgodae.org/pub/outgoing/argo"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Virtual moorings and sections • argodata</title>
+<title>Example: Virtual moorings and sections • argodata</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../../bootstrap-toc.css">
 <script src="../../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
-<script src="../../pkgdown.js"></script><meta property="og:title" content="Virtual moorings and sections">
+<script src="../../pkgdown.js"></script><meta property="og:title" content="Example: Virtual moorings and sections">
 <meta property="og:description" content="argodata">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -54,7 +54,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../../articles/articles/virtual-mooring.html">Virtual moorings and sections</a>
+      <a href="../../articles/articles/virtual-mooring.html">Example: Virtual moorings and sections</a>
     </li>
   </ul>
 </li>
@@ -79,7 +79,7 @@
       </header><script src="virtual-mooring_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Virtual moorings and sections</h1>
+      <h1 data-toc-skip>Example: Virtual moorings and sections</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/ArgoCanada/argodata/blob/master/vignettes/articles/virtual-mooring.Rmd"><code>vignettes/articles/virtual-mooring.Rmd</code></a></small>
@@ -174,6 +174,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/argo_prof_levels.html">argo_prof_levels</a></span><span class="op">(</span><span class="va">profiles</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">file</span>, <span class="va">pres</span>, <span class="va">temp</span>, <span class="va">temp_qc</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Downloading 146 files from 'https://data-argo.ifremer.fr'</span>
 <span class="co">#&gt; Extracting from 146 files</span>
 
 <span class="va">levels</span>
@@ -388,11 +389,6 @@
 <p><img src="virtual-mooring_files/figure-html/unnamed-chunk-17-1.png" width="2187.5"></p>
 <p>In this case the weighted mean and randomized approach give the same results. This is a good thing! Another thing to note is that in the above example the weighted mean varies little even with the bootstrapping approach (the <code>geom_ribbon()</code> behind each profile is barely if at all visible).</p>
 </div>
-<div id="kriging" class="section level3">
-<h3 class="hasAnchor">
-<a href="#kriging" class="anchor"></a>Kriging</h3>
-<p>(subsurface geology folks are all over this kind of thing but I have to look up what the best way to go about doing it is)</p>
-</div>
 </div>
 <div id="sections" class="section level2">
 <h2 class="hasAnchor">
@@ -475,6 +471,7 @@
 <p>From here we have enough information to load our levels.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">section_levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/argo_prof_levels.html">argo_prof_levels</a></span><span class="op">(</span><span class="va">section_profile_weighted</span><span class="op">)</span>
+<span class="co">#&gt; Downloading 841 files from 'https://data-argo.ifremer.fr'</span>
 <span class="co">#&gt; Extracting from 841 files</span></code></pre></div>
 <p>Again, the first step once the levels are loaded is to check which QC flag values we can use to ensure reasonable values in our result. Because we’re working with delayed mode data, there is a chance that the <code>temp_adjusted</code> column contains higher quality results. I’ve plotted both below.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">

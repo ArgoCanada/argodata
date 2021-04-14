@@ -40,7 +40,9 @@
 
 
 <meta property="og:title" content="Read NetCDF general information — argo_read_info" />
-<meta property="og:description" content="Read NetCDF general information" />
+<meta property="og:description" content="Use argo_read_info() to extract variables and global attributes from
+a previously-downloaded Argo NetCDF file. The variables read by
+argo_read_info() are always length 1." />
 
 
 
@@ -95,7 +97,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/articles/virtual-mooring.html">Virtual moorings and sections</a>
+      <a href="../articles/articles/virtual-mooring.html">Example: Virtual moorings and sections</a>
     </li>
   </ul>
 </li>
@@ -126,7 +128,9 @@
     </div>
 
     <div class="ref-description">
-    <p>Read NetCDF general information</p>
+    <p>Use <code>argo_read_info()</code> to extract variables and global attributes from
+a previously-downloaded Argo NetCDF file. The variables read by
+<code>argo_read_info()</code> are always length 1.</p>
     </div>
 
     <pre class="usage"><span class='fu'>argo_read_info</span><span class='op'>(</span><span class='va'>file</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
@@ -136,19 +140,22 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>file</th>
-      <td><p>A previously downloaded Argo NetCDF file.</p></td>
+      <td><p>A previously downloaded Argo NetCDF file
+(e.g., using <code><a href='argo_download.html'>argo_download()</a></code>).</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>Use <code>TRUE</code> to stop for malformed files, <code>NA</code> to
-silently warn for malformed files (will return <code>NULL</code>), or
-<code>FALSE</code> to return <code>NULL</code> silently when a read error is encountered.</p></td>
+      <td><p>Use <code>FALSE</code> to stop for malformed files, <code>NA</code> to
+silently warn for malformed files, or <code>TRUE</code> to silently ignore
+read errors when possible.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code></p>
+    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> with one row. Columns containing
+global attribute information are prefixed with <code>att_</code> to differentiate
+them from variables with zero dimensions.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>prof_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>

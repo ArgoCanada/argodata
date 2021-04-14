@@ -40,7 +40,11 @@
 
 
 <meta property="og:title" content="Load Argo float meta — argo_meta_config_param" />
-<meta property="og:description" content="Load Argo float meta" />
+<meta property="og:description" content="Use argo_meta_*() functions to extract information from Argo meta
+NetCDF files. Use argo_read_meta_*()
+to extract information from a single previously-downloaded NetCDF file.
+Using argo_info() on meta files is also useful for extracting general
+float information." />
 
 
 
@@ -95,7 +99,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/articles/virtual-mooring.html">Virtual moorings and sections</a>
+      <a href="../articles/articles/virtual-mooring.html">Example: Virtual moorings and sections</a>
     </li>
   </ul>
 </li>
@@ -126,7 +130,11 @@
     </div>
 
     <div class="ref-description">
-    <p>Load Argo float meta</p>
+    <p>Use <code>argo_meta_*()</code> functions to extract information from Argo meta
+NetCDF files. Use <code><a href='argo_read_meta_config_param.html'>argo_read_meta_*()</a></code>
+to extract information from a single previously-downloaded NetCDF file.
+Using <code><a href='argo_info.html'>argo_info()</a></code> on meta files is also useful for extracting general
+float information.</p>
     </div>
 
     <pre class="usage"><span class='fu'>argo_meta_config_param</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
@@ -169,7 +177,30 @@ verbose error messages.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code>.</p>
+    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> with</p><ul>
+<li><p><code>argo_meta_config_param()</code>: one row per file per configuration parameter and
+columns <code>file</code>, <code>n_config_param</code>, <code>n_missions</code>, <code>config_parameter_value</code>,
+and <code>config_parameter_name</code>.</p></li>
+<li><p><code>argo_meta_missions()</code>: one row per file per mission and columns <code>file</code>,
+<code>n_missions</code>, <code>config_mission_number</code>, and <code>config_mission_comment</code>.</p></li>
+<li><p><code>argo_meta_trans_system()</code>: one row per file per transmission system
+and columns <code>file</code>, <code>n_trans_system</code>, <code>trans_system</code>, <code>trans_system_id</code>,
+and <code>trans_frequency</code>.</p></li>
+<li><p><code>argo_meta_positioning_system()</code>: one row per file per positioning
+system and columns <code>file</code>, <code>n_positioning_system</code>, and
+<code>positioning_system</code>.</p></li>
+<li><p><code>argo_meta_launch_config_param()</code>: one row per file per launch
+configuration parameter and columns <code>file</code>, <code>n_launch_config_param</code>,
+<code>launch_config_parameter_name</code>, and <code>launch_config_parameter_value</code>.</p></li>
+<li><p><code>argo_meta_sensor()</code>: one row per file per sensor and columns
+<code>file</code>, <code>n_sensor</code>, <code>sensor</code>, <code>sensor_maker</code>, <code>sensor_model</code>,
+and <code>sensor_serial_no</code>.</p></li>
+<li><p><code>argo_meta_param()</code>: one row per file per parameter and columns <code>file</code>,
+<code>n_param</code>, <code>parameter</code> <code>parameter_sensor</code>, <code>parameter_units</code>,
+<code>parameter_resolution</code>, <code>predeployment_calib_equation</code>,
+<code>predeployment_calib_coefficient</code>, and <code>predeployment_calib_comment</code>.</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>

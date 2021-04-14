@@ -40,7 +40,8 @@
 
 
 <meta property="og:title" content="Read NetCDF variable metadata — argo_read_vars" />
-<meta property="og:description" content="Read NetCDF variable metadata" />
+<meta property="og:description" content="Use argo_vars() to extract variable information fromm an Argo NetCDF file
+in the form of one row per variable." />
 
 
 
@@ -95,7 +96,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/articles/virtual-mooring.html">Virtual moorings and sections</a>
+      <a href="../articles/articles/virtual-mooring.html">Example: Virtual moorings and sections</a>
     </li>
   </ul>
 </li>
@@ -126,7 +127,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Read NetCDF variable metadata</p>
+    <p>Use <code><a href='argo_vars.html'>argo_vars()</a></code> to extract variable information fromm an Argo NetCDF file
+in the form of one row per variable.</p>
     </div>
 
     <pre class="usage"><span class='fu'>argo_read_vars</span><span class='op'>(</span><span class='va'>file</span>, vars <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
@@ -136,30 +138,26 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>file</th>
-      <td><p>A previously downloaded Argo NetCDF file.</p></td>
+      <td><p>A previously downloaded Argo NetCDF file
+(e.g., using <code><a href='argo_download.html'>argo_download()</a></code>).</p></td>
     </tr>
     <tr>
       <th>vars</th>
-      <td><p>A vector of variable names to include. The ordering
-of the variables is not guaranteed, and variables that do not
-exist are ignored. For <code>nc_read_*()</code> and <code>read_*()</code> variants,
-these are the raw variable names (all caps, without "date"
-substituted for "juld").</p></td>
+      <td><p>A vector of variable names to include. Explicitly specifying
+<code>vars</code> can lead to much faster read times when reading many files.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
-      <td><p>Use <code>TRUE</code> to stop for malformed files, <code>NA</code> to
-silently warn for malformed files (will return <code>NULL</code>), or
-<code>FALSE</code> to return <code>NULL</code> silently when a read error is encountered.</p></td>
+      <td><p>Use <code>FALSE</code> to stop for malformed files, <code>NA</code> to
+silently warn for malformed files, or <code>TRUE</code> to silently ignore
+read errors when possible.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> with one row per variable and columns <code>name</code>,
-<code>longname</code>, <code>units</code>, <code>prec</code>, <code>ndims</code>, <code>size</code>, and <code>dim</code>. Columns
-<code>size</code> and <code>dim</code> can be unnested (e.g., using <code><a href='https://tidyr.tidyverse.org/reference/nest.html'>tidyr::unnest()</a></code>)
-to produce a tibble with one row per variable per dimension.</p>
+<code>size</code>, <code>dim</code>, and <code>att_*</code> for variable attributes.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>prof_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>

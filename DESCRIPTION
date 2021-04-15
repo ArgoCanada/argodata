@@ -1,12 +1,20 @@
 Package: argodata
 Title: Locate, Download, and Read Argo Ocean Float Data
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R: c(
     person(given = "Dewey",
            family = "Dunnington",
-           role = c("aut", "cre"),
+           role = c("aut", "cre", "cph"),
            email = "dewey.dunnington@dfo-mpo.gc.ca",
-           comment = c(ORCID = "0000-0002-9415-4582"))
+           comment = c(ORCID = "0000-0002-9415-4582")),
+    person(given="Jaimie", family="Harbin", role=c("ctb"),
+        comment=c(ORCID="https://orcid.org/0000-0003-3774-3732")),
+    person(given="Chris", family="Gordon", role=c("ctb")),
+    person(given="Dan", family="Kelley", role=c("ctb"),
+        comment=c(ORCID="https://orcid.org/0000-0001-7808-5911")),
+    person(given="Clark", family="Richards", role=c("ctb"),
+        comment=c(ORCID="https://orcid.org/0000-0002-7833-206X"))
+    )
 Description: Data from the international Argo
   research program <doi:10.17882/42182> is provided in the form of
   millions of NetCDF files stored on a remote server. These data contain

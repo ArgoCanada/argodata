@@ -23,7 +23,15 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Dewey Dunnington \email{dewey.dunnington@dfo-mpo.gc.ca} (\href{https://orcid.org/0000-0002-9415-4582}{ORCID})
+\strong{Maintainer}: Dewey Dunnington \email{dewey.dunnington@dfo-mpo.gc.ca} (\href{https://orcid.org/0000-0002-9415-4582}{ORCID}) [copyright holder]
+
+Other contributors:
+\itemize{
+  \item Jaimie Harbin (\href{https://orcid.org/0000-0003-3774-3732}{ORCID}) [contributor]
+  \item Chris Gordon [contributor]
+  \item Dan Kelley (\href{https://orcid.org/0000-0001-7808-5911}{ORCID}) [contributor]
+  \item Clark Richards (\href{https://orcid.org/0000-0002-7833-206X}{ORCID}) [contributor]
+}
 
 }
 \keyword{internal}

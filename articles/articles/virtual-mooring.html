@@ -174,7 +174,6 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/argo_prof_levels.html">argo_prof_levels</a></span><span class="op">(</span><span class="va">profiles</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">file</span>, <span class="va">pres</span>, <span class="va">temp</span>, <span class="va">temp_qc</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Downloading 146 files from 'https://data-argo.ifremer.fr'</span>
 <span class="co">#&gt; Extracting from 146 files</span>
 
 <span class="va">levels</span>
@@ -471,7 +470,6 @@
 <p>From here we have enough information to load our levels.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">section_levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/argo_prof_levels.html">argo_prof_levels</a></span><span class="op">(</span><span class="va">section_profile_weighted</span><span class="op">)</span>
-<span class="co">#&gt; Downloading 841 files from 'https://data-argo.ifremer.fr'</span>
 <span class="co">#&gt; Extracting from 841 files</span></code></pre></div>
 <p>Again, the first step once the levels are loaded is to check which QC flag values we can use to ensure reasonable values in our result. Because we’re working with delayed mode data, there is a chance that the <code>temp_adjusted</code> column contains higher quality results. I’ve plotted both below.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">

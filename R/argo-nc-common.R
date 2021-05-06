@@ -15,9 +15,12 @@ argo_read_many <- function(assert_fun, read_fun, ...,
     quiet = isTRUE(quiet)
   )
 
-  # names should be of the 'file' version, which can be
-  # joined with one of the global tables
+  # Names should be of the 'file' version, which can be
+  # joined with one of the global tables. This includes
+  # aux files, for which using the original filename here
+  # allow an easy join with non-aux files.
   names(cached) <- stringr::str_remove(path, "^(dac|aux)/")
+  names(cached) <- gsub("_aux\\.nc$", ".nc", names(cached))
 
   # drop NA filenames (e.g., failed aux downloads)
   cached <- cached[!is.na(cached)]

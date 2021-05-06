@@ -21,6 +21,8 @@
 argo_vars <- function(path, download = NULL, quiet = NA) {
   path <- as_argo_path(path)
   assert_argo_nc_file(path)
+
+  # sync with argo_read_many()!
   path_is_abs <- fs::is_absolute_path(path) & file.exists(path)
   cached <- path
   cached[!path_is_abs & !is.na(path)] <- argo_download(
@@ -28,8 +30,8 @@ argo_vars <- function(path, download = NULL, quiet = NA) {
     download = download,
     quiet = isTRUE(quiet)
   )
-
   names(cached) <- stringr::str_remove(path, "^(dac|aux)/")
+  names(cached) <- gsub("_aux\\.nc$", ".nc", names(cached))
   cached <- cached[!is.na(cached)]
 
   if (!isTRUE(quiet)) {

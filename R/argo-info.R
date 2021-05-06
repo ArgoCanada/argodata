@@ -21,6 +21,7 @@ argo_info <- function(path, download = NULL, quiet = NA) {
   path <- as_argo_path(path)
   assert_argo_nc_file(path)
 
+  # sync with argo_read_many()!
   path_is_abs <- fs::is_absolute_path(path) & file.exists(path)
   cached <- path
   cached[!path_is_abs & !is.na(path)] <- argo_download(
@@ -28,10 +29,8 @@ argo_info <- function(path, download = NULL, quiet = NA) {
     download = download,
     quiet = isTRUE(quiet)
   )
-
-  # names should be of the 'file' version, which can be
-  # joined with one of the global tables
-  names(cached) <- stringr::str_remove(path, "^dac/")
+  names(cached) <- stringr::str_remove(path, "^(dac|aux)/")
+  names(cached) <- gsub("_aux\\.nc$", ".nc", names(cached))
 
   # drop NA filenames (e.g., failed aux downloads)
   cached <- cached[!is.na(cached)]

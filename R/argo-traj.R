@@ -157,7 +157,7 @@ argo_read_traj_history <- function(file, vars = NULL, quiet = FALSE) {
 assert_argo_traj_file <- function(path) {
   argo_assert_path_type(
     path,
-    "^(dac|aux)/[a-z]+/([0-9a-zA-Z]+)/\\1_B?(R|D)traj(_aux)?\\.nc$",
+    "[0-9a-zA-Z]+_B?(R|D)traj(_aux)?\\.nc$",
     "trajectory"
   )
 }

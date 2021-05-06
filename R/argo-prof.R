@@ -292,7 +292,7 @@ argo_read_prof_spectra <- function(file, vars = NULL, quiet = FALSE) {
 assert_argo_prof_file <- function(path) {
   argo_assert_path_type(
     path,
-    "^(dac|aux)/[a-z]+/([0-9a-zA-Z]+)/((profiles/(B|S)?(R|D)\\1_[0-9]+D?\\.nc)|(\\1_[A-Z]*prof(_aux)?\\.nc))$",
+    "(((B|S)?(R|D)[0-9a-zA-Z]+_[0-9]+D?(_aux)?\\.nc)|([0-9a-zA-Z]+_[A-Z]*prof(_aux)?\\.nc))$",
     "profile"
   )
 }

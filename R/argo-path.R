@@ -81,6 +81,13 @@ as_argo_path <- function(path) {
   if (is.data.frame(path) && ("file" %in% names(path))) {
     path <- path[["file"]]
     path <- paste0(rep_len("dac/", length(path)), path)
+  } else if (inherits(path, "argoFloats") && identical(path@metadata$type, "index")) {
+    path <- as_argo_path(path@data$index)
+  } else if (inherits(path, "argoFloats") && identical(path@metadata$type, "profiles")) {
+    path <- fs::path_abs(path.expand(pr@data$file))
+  } else if (inherits(path, "argoFloats") && identical(path@metadata$type, "argos")) {
+    path <- vapply(path@data$argos, "[[", "filename", FUN.VALUE = character(1))
+    path <- fs::path_abs(path.expand(path))
   }
 
   if (!is.character(path)) {
@@ -89,14 +96,14 @@ as_argo_path <- function(path) {
     )
   }
 
-  path
+  as.character(path)
 }
 
 #' @rdname argo_path_info
 #' @export
 as_argo_path_aux <- function(path) {
   path <- as_argo_path(path)
-  is_aux <- grepl("^aux", path)
+  is_aux <- grepl(".+?_aux.nc$", path)
   aux_path <- gsub("dac/", "aux/", path)
   aux_path <- gsub("\\.nc$", "_aux.nc", aux_path)
   path[!is_aux] <- aux_path

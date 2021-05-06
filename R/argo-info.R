@@ -27,6 +27,9 @@ argo_info <- function(path, download = NULL, quiet = NA) {
   # joined with one of the global tables
   names(cached) <- stringr::str_remove(path, "^dac/")
 
+  # drop NA filenames (e.g., failed aux downloads)
+  cached <- cached[!is.na(cached)]
+
   if (!isTRUE(quiet)) {
     files_word <- if (length(cached) != 1) "files" else "file"
     title <- glue("Extracting from { length(cached) } { files_word }")

@@ -22,6 +22,7 @@ argo_vars <- function(path, download = NULL, quiet = NA) {
   path <- as_argo_path(path)
   cached <- argo_download(path, download = download, quiet = isTRUE(quiet))
   names(cached) <- stringr::str_remove(path, "^dac/")
+  cached <- cached[!is.na(cached)]
 
   if (!isTRUE(quiet)) {
     files_word <- if (length(cached) != 1) "files" else "file"

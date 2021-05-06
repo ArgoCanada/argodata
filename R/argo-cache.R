@@ -130,5 +130,22 @@ with_argo_example_cache <- function(expr) {
 #' @rdname argo_cache_dir
 #' @export
 argo_cached <- function(path) {
-  as.character(fs::path(argo_cache_dir(), as_argo_path(path)))
+  path <- as.character(fs::path(argo_cache_dir(), as_argo_path(path)))
+
+  # Windows can't create a directory called 'aux', so fudge this
+  # to 'aux2'. Use an option as an escape hatch in case this needs to be
+  # different (e.g., maybe this is fine on a shared drive). Using
+  # aux files is not very common so this is probably fine.
+  gsub(
+    "/aux/",
+    paste0(
+      "/",
+      getOption(
+        "argodata.aux_name",
+        if (.Platform$OS.type == "windows") "aux2" else "aux"
+      ),
+      "/"
+    ),
+    path
+  )
 }

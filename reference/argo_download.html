@@ -131,6 +131,8 @@
 
     <pre class="usage"><span class='fu'>argo_download</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, async <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
+<span class='fu'>argo_download_aux</span><span class='op'>(</span><span class='va'>path</span>, download <span class='op'>=</span> <span class='cn'>NULL</span>, async <span class='op'>=</span> <span class='cn'>TRUE</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+
 <span class='fu'>argo_should_download</span><span class='op'>(</span>
   <span class='va'>path</span>,
   max_global_cache_age <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"argodata.max_global_cache_age"</span>, <span class='cn'>Inf</span><span class='op'>)</span>,

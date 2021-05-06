@@ -44,7 +44,7 @@ argo_read_many <- function(assert_fun, read_fun, ...,
 argo_assert_path_type <- function(path, pattern, file_type) {
   path_matches_pattern <- stringr::str_detect(path, pattern)
 
-  if (any(!path_matches_pattern)) {
+  if (any(!path_matches_pattern, na.rm = TRUE)) {
     bad_files <- path[!path_matches_pattern]
     paths <- if (length(bad_files) != 1) "paths" else "path"
     bad_files_label <- paste0(

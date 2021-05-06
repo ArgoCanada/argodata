@@ -130,7 +130,8 @@ with_argo_example_cache <- function(expr) {
 #' @rdname argo_cache_dir
 #' @export
 argo_cached <- function(path) {
-  path <- as.character(fs::path(argo_cache_dir(), as_argo_path(path)))
+  path <- fs::path(argo_cache_dir(), as_argo_path(path))
+  path <- as.character(fs::path_abs(path.expand(path)))
 
   # Windows can't create a directory called 'aux', so fudge this
   # to 'aux2'. Use an option as an escape hatch in case this needs to be

@@ -20,8 +20,16 @@
 #'
 argo_vars <- function(path, download = NULL, quiet = NA) {
   path <- as_argo_path(path)
-  cached <- argo_download(path, download = download, quiet = isTRUE(quiet))
-  names(cached) <- stringr::str_remove(path, "^dac/")
+  assert_argo_nc_file(path)
+  path_is_abs <- fs::is_absolute_path(path) & file.exists(path)
+  cached <- path
+  cached[!path_is_abs & !is.na(path)] <- argo_download(
+    path[!path_is_abs & !is.na(path)],
+    download = download,
+    quiet = isTRUE(quiet)
+  )
+
+  names(cached) <- stringr::str_remove(path, "^(dac|aux)/")
   cached <- cached[!is.na(cached)]
 
   if (!isTRUE(quiet)) {

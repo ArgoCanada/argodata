@@ -4,11 +4,20 @@ argo_read_many <- function(assert_fun, read_fun, ...,
   path <- as_argo_path(path)
   assert_fun(path)
 
-  cached <- argo_download(path, download = download, quiet = isTRUE(quiet))
+  # you should always be able to pass in an absolute path to
+  # an actual file and have it work
+  path_is_abs <- fs::is_absolute_path(path) & file.exists(path)
+
+  cached <- path
+  cached[!path_is_abs & !is.na(path)] <- argo_download(
+    path[!path_is_abs & !is.na(path)],
+    download = download,
+    quiet = isTRUE(quiet)
+  )
 
   # names should be of the 'file' version, which can be
   # joined with one of the global tables
-  names(cached) <- stringr::str_remove(path, "^dac/")
+  names(cached) <- stringr::str_remove(path, "^(dac|aux)/")
 
   # drop NA filenames (e.g., failed aux downloads)
   cached <- cached[!is.na(cached)]

@@ -21,7 +21,13 @@ argo_info <- function(path, download = NULL, quiet = NA) {
   path <- as_argo_path(path)
   assert_argo_nc_file(path)
 
-  cached <- argo_download(path, download = download, quiet = isTRUE(quiet))
+  path_is_abs <- fs::is_absolute_path(path) & file.exists(path)
+  cached <- path
+  cached[!path_is_abs & !is.na(path)] <- argo_download(
+    path[!path_is_abs & !is.na(path)],
+    download = download,
+    quiet = isTRUE(quiet)
+  )
 
   # names should be of the 'file' version, which can be
   # joined with one of the global tables

@@ -51,7 +51,8 @@ multi_file_download <- function(url, dest) {
     abort(
       glue(
         "{ length(missing_paths) } { files } failed to download:\n{missing_paths_lab}"
-      )
+      ),
+      class = "argodata_error_failed_download"
     )
   }
 
@@ -100,7 +101,10 @@ multi_file_download_async <- function(url, dest) {
   if (n_error > 0) {
     files <- if (n_error != 1) "files" else "file"
     bad_urls <- paste0("'", url[!unlist(as.list(results)[key])], "'", collapse = "\n")
-    abort(glue("{ n_error }/{ length(url) } { files } failed to download:\n{ bad_urls }"))
+    abort(
+      glue("{ n_error }/{ length(url) } { files } failed to download:\n{ bad_urls }"),
+      class = "argodata_error_failed_download"
+    )
   }
 
   invisible(dest)

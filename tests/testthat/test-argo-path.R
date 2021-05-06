@@ -89,3 +89,9 @@ test_that("as_argo_path() works", {
   expect_identical(as_argo_path(character(0)), character(0))
   expect_identical(as_argo_path(data.frame(file = character(0))), character(0))
 })
+
+test_that("as_argo_path_aux() works", {
+  expect_identical(as_argo_path_aux("dac/a file.nc"), "aux/a file_aux.nc")
+  # shouldn't change an existing aux path
+  expect_identical(as_argo_path_aux("aux/a file_aux.nc"), "aux/a file_aux.nc")
+})

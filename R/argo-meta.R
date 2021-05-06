@@ -296,5 +296,5 @@ argo_read_meta_param <- function(file, vars = NULL, quiet = quiet) {
 }
 
 assert_argo_meta_file <- function(path) {
-  argo_assert_path_type(path, "^dac/[a-z]+/([0-9a-zA-Z]+)/\\1_meta\\.nc$", "meta")
+  argo_assert_path_type(path, "[0-9a-zA-Z]+_meta(_aux)?\\.nc$", "meta")
 }

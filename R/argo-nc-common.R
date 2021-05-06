@@ -4,11 +4,26 @@ argo_read_many <- function(assert_fun, read_fun, ...,
   path <- as_argo_path(path)
   assert_fun(path)
 
-  cached <- argo_download(path, download = download, quiet = isTRUE(quiet))
+  # you should always be able to pass in an absolute path to
+  # an actual file and have it work
+  path_is_abs <- fs::is_absolute_path(path) & file.exists(path)
 
-  # names should be of the 'file' version, which can be
-  # joined with one of the global tables
-  names(cached) <- stringr::str_remove(path, "^dac/")
+  cached <- path
+  cached[!path_is_abs & !is.na(path)] <- argo_download(
+    path[!path_is_abs & !is.na(path)],
+    download = download,
+    quiet = isTRUE(quiet)
+  )
+
+  # Names should be of the 'file' version, which can be
+  # joined with one of the global tables. This includes
+  # aux files, for which using the original filename here
+  # allow an easy join with non-aux files.
+  names(cached) <- stringr::str_remove(path, "^(dac|aux)/")
+  names(cached) <- gsub("_aux\\.nc$", ".nc", names(cached))
+
+  # drop NA filenames (e.g., failed aux downloads)
+  cached <- cached[!is.na(cached)]
 
   if (!isTRUE(quiet)) {
     files_word <- if (length(cached) != 1) "files" else "file"
@@ -41,7 +56,7 @@ argo_read_many <- function(assert_fun, read_fun, ...,
 argo_assert_path_type <- function(path, pattern, file_type) {
   path_matches_pattern <- stringr::str_detect(path, pattern)
 
-  if (any(!path_matches_pattern)) {
+  if (any(!path_matches_pattern, na.rm = TRUE)) {
     bad_files <- path[!path_matches_pattern]
     paths <- if (length(bad_files) != 1) "paths" else "path"
     bad_files_label <- paste0(

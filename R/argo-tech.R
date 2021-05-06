@@ -60,5 +60,5 @@ argo_read_tech_tech_param <- function(file, vars = NULL, quiet = FALSE) {
 }
 
 assert_argo_tech_file <- function(path) {
-  argo_assert_path_type(path, "^dac/[a-z]+/([0-9a-zA-Z]+)/\\1_tech\\.nc$", "tech")
+  argo_assert_path_type(path, "[0-9a-zA-Z]+_tech(_aux)?\\.nc$", "tech")
 }

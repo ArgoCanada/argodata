@@ -84,6 +84,7 @@ test_that("argo_should_download() works for data files", {
 
 test_that("argo_download() works", {
   skip_if_offline()
+  skip_if_not(Sys.getenv("R_ARGO_CACHE_DIR") != "")
 
   # with async = FALSE
   tmp_cache <- tempfile()
@@ -109,4 +110,25 @@ test_that("argo_download() works", {
   )
 
   unlink(tmp_cache, recursive = TRUE)
+})
+
+test_that("argu_download_aux() works", {
+  skip_if_offline()
+  skip_if_not(Sys.getenv("R_ARGO_CACHE_DIR") != "")
+
+  paths <- c(
+    "dac/meds/4902533/profiles/R4902533_001.nc",
+    "dac/meds/4900632/profiles/D4900632_003.nc"
+  )
+
+  aux <- argo_download_aux(paths, quiet = TRUE)
+  expect_identical(
+    aux,
+    c(argo_cached(as_argo_path_aux(paths[1])), NA_character_)
+  )
+
+  expect_identical(
+    argo_download_aux("aux/meds/4902533/profiles/R4902533_001_aux.nc"),
+    argo_cached("aux/meds/4902533/profiles/R4902533_001_aux.nc")
+  )
 })

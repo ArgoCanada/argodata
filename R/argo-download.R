@@ -45,6 +45,29 @@ argo_download <- function(path, download = NULL, async = NULL, quiet = FALSE) {
 
 #' @rdname argo_download
 #' @export
+argo_download_aux <- function(path, download = NULL, async = TRUE, quiet = FALSE) {
+  path <- as_argo_path(path)
+  aux_path <- as_argo_path_aux(path)
+
+  # there is no index for aux files, so all we have to go on is whether or
+  # not the download succeeds
+  tryCatch(
+    argo_download(
+      aux_path,
+      download = download,
+      async = async,
+      quiet = quiet
+    ),
+    argodata_error_failed_download = function(e) {}
+  )
+
+  cached <- argo_cached(aux_path)
+  cached[!file.exists(cached)] <- NA_character_
+  cached
+}
+
+#' @rdname argo_download
+#' @export
 argo_should_download <- function(path,
                                  max_global_cache_age = getOption("argodata.max_global_cache_age", Inf),
                                  max_data_cache_age = getOption("argodata.max_data_cache_age", Inf)) {

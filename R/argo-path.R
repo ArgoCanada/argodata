@@ -32,12 +32,12 @@ argo_path_info <- function(path) {
 
   extract_prof <- stringr::str_match(
     filename,
-    "^(B|S)?(R|D)([0-9]+)_([0-9]+)(D)?\\.nc$"
+    "^(B|S)?(R|D)([0-9]+)_([0-9]+)(D)?(_aux)?\\.nc$"
   )
 
   extract_non_prof <- stringr::str_match(
     filename,
-    "^([0-9]+)_(B|S)?(R|D)?(traj|prof|tech|meta)\\.nc"
+    "^([0-9]+)_(B|S)?(R|D)?(traj|prof|tech|meta)(_aux)?\\.nc"
   )
 
   is_prof <- is.na(extract_non_prof[, 1])

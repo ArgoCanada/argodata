@@ -121,5 +121,5 @@ argo_read_info <- function(file, quiet = FALSE) {
 }
 
 assert_argo_nc_file <- function(path) {
-  argo_assert_path_type(path, "^dac/[a-z]+/([0-9a-zA-Z]+)/.*?\\.nc$", "NetCDF")
+  argo_assert_path_type(path, "^(dac|aux)/[a-z]+/([0-9a-zA-Z]+)/.*?\\.nc$", "NetCDF")
 }

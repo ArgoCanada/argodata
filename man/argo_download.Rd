@@ -2,10 +2,13 @@
 % Please edit documentation in R/argo-download.R
 \name{argo_download}
 \alias{argo_download}
+\alias{argo_download_aux}
 \alias{argo_should_download}
 \title{Download Argo data files}
 \usage{
 argo_download(path, download = NULL, async = NULL, quiet = FALSE)
+
+argo_download_aux(path, download = NULL, async = TRUE, quiet = FALSE)
 
 argo_should_download(
   path,

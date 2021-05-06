@@ -4,6 +4,7 @@
 \alias{argo_path_info}
 \alias{argo_extract_path_info}
 \alias{as_argo_path}
+\alias{as_argo_path_aux}
 \title{Extract information from an Argo path}
 \usage{
 argo_path_info(path)
@@ -11,6 +12,8 @@ argo_path_info(path)
 argo_extract_path_info(tbl)
 
 as_argo_path(path)
+
+as_argo_path_aux(path)
 }
 \arguments{
 \item{path}{A path relative to the root directory of

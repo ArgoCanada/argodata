@@ -91,3 +91,14 @@ as_argo_path <- function(path) {
 
   path
 }
+
+#' @rdname argo_path_info
+#' @export
+as_argo_path_aux <- function(path) {
+  path <- as_argo_path(path)
+  is_aux <- grepl("^aux", path)
+  aux_path <- gsub("dac/", "aux/", path)
+  aux_path <- gsub("\\.nc$", "_aux.nc", aux_path)
+  path[!is_aux] <- aux_path
+  path
+}

@@ -2,6 +2,8 @@
 figures:
   dpi: 300
 
+url: https://argocanada.github.io/argodata
+
 reference:
 - title: Load and filter indexes
   contents:

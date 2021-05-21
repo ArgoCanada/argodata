@@ -38,15 +38,15 @@ journal: JOSS
 
 # Summary
 
-This paper describes ``argodata``, an R package that makes it easier to work with data acquired in the International Argo Program, which provides over two decades of oceanographic measurements from around the world. Although Argo data are publicly available in NetCDF format and several software packages are available to assist in locating and downloading relevant Argo data, the multidimensional arrays used can be difficult to understand for non-oceanographers. Given increasing use of Argo data in other disciplines, we built a minimal interface to the data set that uses the data frame as the primary data structure. This approach allows users to leverage the rich ecosystem of R packages that manipulate data frames (e.g., the ``tidyverse``) and associated instructional resources.
+This paper describes ``argodata``, an R package that makes it easier to work with data acquired in the International Argo Program, which provides over two decades of oceanographic measurements from around the world. Although Argo data are publicly available in NetCDF format and several software packages are available to assist in locating and downloading relevant Argo data, the multidimensional arrays used can be difficult to understand for non-oceanographers. Given the increasing use of Argo data in other disciplines, we built a minimal interface to the data set that uses the data frame as the primary data structure. This approach allows users to leverage the rich ecosystem of R packages that manipulate data frames (e.g., the ``tidyverse``) and associated instructional resources.
 
 # Introduction
 
 The ocean is highly variable in both space and time and mapping this variability at appropriate scales is a key factor in many scientific studies. Oceanographic data have direct applications that range from the analysis of near-bottom ecosystems to air-sea interactions.  More broadly, ocean measurements are needed to constrain the models that scientists use to understand the evolving state of the ocean and to make predictions about its future, particularly as a component of the global climate system.
 
-The International Argo Program deploys and collects data from several thousand devices that are programmed to drift with and move vertically through the ocean. Sensors measure conductivity, temperature, pressure, and sometimes other quantities along this vertical path yielding "profiles" that are uploaded via satellite to globally distributed data assembly centres [@roemmich_argo_2001; @roemmich_argo_2009-2]. Since 1997, the Argo international research program has collected over 2.4 million profiles from around the globe.
+The International Argo Program deploys and collects data from several thousand devices that are programmed to drift with and move vertically through the ocean. Sensors measure electrical conductivity, temperature, pressure, and sometimes other quantities along this vertical path yielding "profiles" that are uploaded via satellite to globally distributed data assembly centres [@roemmich_argo_2001; @roemmich_argo_2009-2]. Since 1997, the International Argo Program has collected over 2.4 million profiles from around the globe.
 
-Although the NetCDF data files provided by Argo data servers contain metadata that describe their contents, we identified a number of barriers to data access. The barriers identified were (1) reading and decoding the index files to locate files of interest, (2) downloading and potentially caching large numbers of small NetCDF files, (3) reading the NetCDF files into a form where the data contained within can be visualized and analyzed, and (4) dealing efficiently with potentially large Argo data sets. Whereas a variety of applications have been created to address some of these barriers, the ``argodata`` package is our attempt to overcome these barriers for the novice to average-level programmer who may not be familiar with oceanographic conventions for storing data.
+Although the NetCDF data files provided by Argo data servers contain metadata that describe their contents, we identified a number of barriers to data access. These included (1) reading and decoding the index files to locate files of interest, (2) downloading and potentially caching large numbers of small NetCDF files, (3) reading the NetCDF files into a form where the data contained within can be visualized and analyzed, and (4) dealing efficiently with potentially large Argo data sets. Whereas a variety of applications have been created to address some of these barriers, the ``argodata`` package is our attempt to overcome these barriers for the novice to average-level programmer who may not be familiar with oceanographic conventions for storing data.
 
 # Statement of need
 
@@ -85,7 +85,11 @@ To locate files of interest on the Argo mirror, index files for profile, traject
 ```
 
 ```
-## # A tibble: 2,453,087 x 8
+## Downloading 1 file from 'https://data-argo.ifremer.fr'
+```
+
+```
+## # A tibble: 2,455,058 x 8
 ##    file     date                latitude longitude ocean profiler_type
 ##    <chr>    <dttm>                 <dbl>     <dbl> <chr>         <dbl>
 ##  1 aoml/13~ 1997-07-29 20:03:00    0.267     -16.0 A               845
@@ -98,7 +102,7 @@ To locate files of interest on the Argo mirror, index files for profile, traject
 ##  8 aoml/13~ 1997-10-14 18:39:35    1.76      -21.6 A               845
 ##  9 aoml/13~ 1997-10-25 19:32:34    1.80      -21.8 A               845
 ## 10 aoml/13~ 1997-11-05 18:51:42    1.64      -21.4 A               845
-## # ... with 2,453,077 more rows, and 2 more variables:
+## # ... with 2,455,048 more rows, and 2 more variables:
 ## #   institution <chr>, date_update <dttm>
 ```
 
@@ -120,6 +124,10 @@ To load data from NetCDF files into meaningful data frames we draw from the conc
 ```r
 (levels <- prof_gulf_stream_2020 %>% 
   argo_prof_levels())
+```
+
+```
+## Downloading 700 files from 'https://data-argo.ifremer.fr'
 ```
 
 ```
@@ -158,8 +166,8 @@ ggplot(levels, aes(x = temp, y = pres)) +
   scale_x_continuous(position = "top") +
   theme_bw() +
   labs(
-    x = "Temperature (°C)",
-    y = "Pressure (dbar)"
+    x = "Temperature [°C]",
+    y = "Pressure [dbar]"
   )
 ```
 
@@ -203,7 +211,7 @@ points(
 legend(
   "topleft",
   levels(temp_calc$near_surface_temp_bin), pt.bg = palette(), pch = 21,
-  title = "Near-surface temperature (°C)", ncol = 3
+  title = "Near-surface temperature [°C]", ncol = 3
 )
 ```
 

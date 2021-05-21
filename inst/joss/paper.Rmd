@@ -35,6 +35,12 @@ journal: JOSS
 ---
 
 ```{r setup, include=FALSE}
+# complete package install code
+# install.packages("remotes")
+# remotes::install_cran(c("rticles", "tidyverse", "oce", "ocedata", "cmocean", "ragg", "raster", "ncdf4"))
+# remotes::install_github("ArgoCanada/argoFloats", ref = "develop")
+# remotes::install_github("ArgoCanada/argodata")
+
 # load packages to avoid messages later
 library(argoFloats)
 library(oce)
@@ -47,21 +53,24 @@ temp_cache <- tempdir()
 dir.create(temp_cache)
 options(argoFloats.destdir = temp_cache)
 
+# make sure a temporary cache is being used for argodata
+argo_set_cache_dir(NULL)
+
 options(width = 70)
 knitr::opts_chunk$set(fig.path = "", dev = "ragg_png", dpi = 300)
 ```
 
 # Summary
 
-This paper describes ``argodata``, an R package that makes it easier to work with data acquired in the International Argo Program, which provides over two decades of oceanographic measurements from around the world. Although Argo data are publicly available in NetCDF format and several software packages are available to assist in locating and downloading relevant Argo data, the multidimensional arrays used can be difficult to understand for non-oceanographers. Given increasing use of Argo data in other disciplines, we built a minimal interface to the data set that uses the data frame as the primary data structure. This approach allows users to leverage the rich ecosystem of R packages that manipulate data frames (e.g., the ``tidyverse``) and associated instructional resources.
+This paper describes ``argodata``, an R package that makes it easier to work with data acquired in the International Argo Program, which provides over two decades of oceanographic measurements from around the world. Although Argo data are publicly available in NetCDF format and several software packages are available to assist in locating and downloading relevant Argo data, the multidimensional arrays used can be difficult to understand for non-oceanographers. Given the increasing use of Argo data in other disciplines, we built a minimal interface to the data set that uses the data frame as the primary data structure. This approach allows users to leverage the rich ecosystem of R packages that manipulate data frames (e.g., the ``tidyverse``) and associated instructional resources.
 
 # Introduction
 
 The ocean is highly variable in both space and time and mapping this variability at appropriate scales is a key factor in many scientific studies. Oceanographic data have direct applications that range from the analysis of near-bottom ecosystems to air-sea interactions.  More broadly, ocean measurements are needed to constrain the models that scientists use to understand the evolving state of the ocean and to make predictions about its future, particularly as a component of the global climate system.
 
-The International Argo Program deploys and collects data from several thousand devices that are programmed to drift with and move vertically through the ocean. Sensors measure conductivity, temperature, pressure, and sometimes other quantities along this vertical path yielding "profiles" that are uploaded via satellite to globally distributed data assembly centres [@roemmich_argo_2001; @roemmich_argo_2009-2]. Since 1997, the Argo international research program has collected over 2.4 million profiles from around the globe.
+The International Argo Program deploys and collects data from several thousand devices that are programmed to drift with and move vertically through the ocean. Sensors measure electrical conductivity, temperature, pressure, and sometimes other quantities along this vertical path yielding "profiles" that are uploaded via satellite to globally distributed data assembly centres [@roemmich_argo_2001; @roemmich_argo_2009-2]. Since 1997, the International Argo Program has collected over 2.4 million profiles from around the globe.
 
-Although the NetCDF data files provided by Argo data servers contain metadata that describe their contents, we identified a number of barriers to data access. The barriers identified were (1) reading and decoding the index files to locate files of interest, (2) downloading and potentially caching large numbers of small NetCDF files, (3) reading the NetCDF files into a form where the data contained within can be visualized and analyzed, and (4) dealing efficiently with potentially large Argo data sets. Whereas a variety of applications have been created to address some of these barriers, the ``argodata`` package is our attempt to overcome these barriers for the novice to average-level programmer who may not be familiar with oceanographic conventions for storing data.
+Although the NetCDF data files provided by Argo data servers contain metadata that describe their contents, we identified a number of barriers to data access. These included (1) reading and decoding the index files to locate files of interest, (2) downloading and potentially caching large numbers of small NetCDF files, (3) reading the NetCDF files into a form where the data contained within can be visualized and analyzed, and (4) dealing efficiently with potentially large Argo data sets. Whereas a variety of applications have been created to address some of these barriers, the ``argodata`` package is our attempt to overcome these barriers for the novice to average-level programmer who may not be familiar with oceanographic conventions for storing data.
 
 # Statement of need
 
@@ -120,8 +129,8 @@ ggplot(levels, aes(x = temp, y = pres)) +
   scale_x_continuous(position = "top") +
   theme_bw() +
   labs(
-    x = "Temperature (°C)",
-    y = "Pressure (dbar)"
+    x = "Temperature [°C]",
+    y = "Pressure [dbar]"
   )
 ```
 
@@ -162,7 +171,7 @@ points(
 legend(
   "topleft",
   levels(temp_calc$near_surface_temp_bin), pt.bg = palette(), pch = 21,
-  title = "Near-surface temperature (°C)", ncol = 3
+  title = "Near-surface temperature [°C]", ncol = 3
 )
 ```
 

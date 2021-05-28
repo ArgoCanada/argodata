@@ -184,85 +184,85 @@ verbose error messages.</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_traj_measurement</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_Rtraj.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 61 x 34</span><span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 61 x 34</span>
 #&gt;    file                    n_measurement date                date_status        
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> csio/2900313/2900313_R…             1 2003-08-04 </span><span style='color: #949494;'>01:40:00</span><span> </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> csio/2900313/2900313_R…             2 2003-08-04 </span><span style='color: #949494;'>01:40:00</span><span> </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> csio/2900313/2900313_R…             3 2003-08-13 </span><span style='color: #949494;'>08:52:56</span><span> </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> csio/2900313/2900313_R…             4 2003-08-13 </span><span style='color: #949494;'>12:09:46</span><span> </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> csio/2900313/2900313_R…             5 2003-08-13 </span><span style='color: #949494;'>13:47:15</span><span> </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> csio/2900313/2900313_R…             6 2003-08-13 </span><span style='color: #949494;'>16:59:59</span><span> </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> csio/2900313/2900313_R…             7 2003-08-13 </span><span style='color: #949494;'>18:41:17</span><span> </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> csio/2900313/2900313_R…             8 2003-08-13 </span><span style='color: #949494;'>18:46:50</span><span> </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> csio/2900313/2900313_R…             9 2003-08-23 </span><span style='color: #949494;'>08:15:49</span><span> </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> csio/2900313/2900313_R…            10 2003-08-23 </span><span style='color: #949494;'>08:19:09</span><span> </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #949494;'># … with 51 more rows, and 30 more variables: date_qc &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_adjusted &lt;dttm&gt;, date_adjusted_status &lt;dttm&gt;, date_adjusted_qc &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   latitude &lt;dbl&gt;, longitude &lt;dbl&gt;, position_accuracy &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   position_qc &lt;chr&gt;, cycle_number &lt;dbl&gt;, cycle_number_adjusted &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   measurement_code &lt;dbl&gt;, pres &lt;dbl&gt;, pres_qc &lt;chr&gt;, pres_adjusted &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   pres_adjusted_qc &lt;chr&gt;, pres_adjusted_error &lt;dbl&gt;, temp &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_qc &lt;chr&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   psal_adjusted_qc &lt;chr&gt;, psal_adjusted_error &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   axes_error_ellipse_major &lt;dbl&gt;, axes_error_ellipse_minor &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   axes_error_ellipse_angle &lt;dbl&gt;, satellite_name &lt;chr&gt;</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>             
+#&gt; <span style='color: #BCBCBC;'> 1</span> csio/2900313/2900313_R…             1 2003-08-04 <span style='color: #949494;'>01:40:00</span> <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'> 2</span> csio/2900313/2900313_R…             2 2003-08-04 <span style='color: #949494;'>01:40:00</span> <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'> 3</span> csio/2900313/2900313_R…             3 2003-08-13 <span style='color: #949494;'>08:52:56</span> <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'> 4</span> csio/2900313/2900313_R…             4 2003-08-13 <span style='color: #949494;'>12:09:46</span> <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'> 5</span> csio/2900313/2900313_R…             5 2003-08-13 <span style='color: #949494;'>13:47:15</span> <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'> 6</span> csio/2900313/2900313_R…             6 2003-08-13 <span style='color: #949494;'>16:59:59</span> <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'> 7</span> csio/2900313/2900313_R…             7 2003-08-13 <span style='color: #949494;'>18:41:17</span> <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'> 8</span> csio/2900313/2900313_R…             8 2003-08-13 <span style='color: #949494;'>18:46:50</span> <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'> 9</span> csio/2900313/2900313_R…             9 2003-08-23 <span style='color: #949494;'>08:15:49</span> <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'>10</span> csio/2900313/2900313_R…            10 2003-08-23 <span style='color: #949494;'>08:19:09</span> <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #949494;'># … with 51 more rows, and 30 more variables: date_qc &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_adjusted &lt;dttm&gt;, date_adjusted_status &lt;dttm&gt;, date_adjusted_qc &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   latitude &lt;dbl&gt;, longitude &lt;dbl&gt;, position_accuracy &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   position_qc &lt;chr&gt;, cycle_number &lt;dbl&gt;, cycle_number_adjusted &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   measurement_code &lt;dbl&gt;, pres &lt;dbl&gt;, pres_qc &lt;chr&gt;, pres_adjusted &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   pres_adjusted_qc &lt;chr&gt;, pres_adjusted_error &lt;dbl&gt;, temp &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_qc &lt;chr&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   psal_adjusted_qc &lt;chr&gt;, psal_adjusted_error &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   axes_error_ellipse_major &lt;dbl&gt;, axes_error_ellipse_minor &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   axes_error_ellipse_angle &lt;dbl&gt;, satellite_name &lt;chr&gt;</span></div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_traj_cycle</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_Rtraj.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 8 x 42</span><span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 8 x 42</span>
 #&gt;   file      n_cycle date_descent_start  date_descent_start_… date_first_stabili…
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/290…       1 2003-08-04 </span><span style='color: #949494;'>04:34:33</span><span> </span><span style='color: #BB0000;'>NA</span><span>                   </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> csio/290…       2 2003-08-22 </span><span style='color: #949494;'>04:49:08</span><span> </span><span style='color: #BB0000;'>NA</span><span>                   </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> csio/290…       3 2003-09-01 </span><span style='color: #949494;'>04:52:03</span><span> </span><span style='color: #BB0000;'>NA</span><span>                   </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> csio/290…       4 2003-09-11 </span><span style='color: #949494;'>05:09:28</span><span> </span><span style='color: #BB0000;'>NA</span><span>                   </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> csio/290…       5 2003-09-21 </span><span style='color: #949494;'>09:53:54</span><span> </span><span style='color: #BB0000;'>NA</span><span>                   </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> csio/290…       6 2003-10-01 </span><span style='color: #949494;'>05:15:36</span><span> </span><span style='color: #BB0000;'>NA</span><span>                   </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> csio/290…       7 2003-10-11 </span><span style='color: #949494;'>04:04:28</span><span> </span><span style='color: #BB0000;'>NA</span><span>                   </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #BCBCBC;'>8</span><span> csio/290…       8 2003-10-21 </span><span style='color: #949494;'>23:39:28</span><span> </span><span style='color: #BB0000;'>NA</span><span>                   </span><span style='color: #BB0000;'>NA</span><span>                 
-#&gt; </span><span style='color: #949494;'># … with 37 more variables: date_first_stabilization_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_descent_end &lt;dttm&gt;, date_descent_end_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_park_start &lt;dttm&gt;, date_park_start_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_park_end &lt;dttm&gt;, date_park_end_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_deep_descent_end &lt;dttm&gt;, date_deep_descent_end_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_deep_park_start &lt;dttm&gt;, date_deep_park_start_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_ascent_start &lt;dttm&gt;, date_ascent_start_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_deep_ascent_start &lt;dttm&gt;, date_deep_ascent_start_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_ascent_end &lt;dttm&gt;, date_ascent_end_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_transmission_start &lt;dttm&gt;, date_transmission_start_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_first_message &lt;dttm&gt;, date_first_message_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_first_location &lt;dttm&gt;, date_first_location_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_last_location &lt;dttm&gt;, date_last_location_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_last_message &lt;dttm&gt;, date_last_message_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date_transmission_end &lt;dttm&gt;, date_transmission_end_status &lt;dttm&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   clock_offset &lt;dbl&gt;, grounded &lt;chr&gt;, representative_park_pressure &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   representative_park_pressure_status &lt;chr&gt;, config_mission_number &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   cycle_number_index &lt;dbl&gt;, cycle_number_index_adjusted &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   data_mode &lt;chr&gt;</span><span></div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>             
+#&gt; <span style='color: #BCBCBC;'>1</span> csio/290…       1 2003-08-04 <span style='color: #949494;'>04:34:33</span> <span style='color: #BB0000;'>NA</span>                   <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'>2</span> csio/290…       2 2003-08-22 <span style='color: #949494;'>04:49:08</span> <span style='color: #BB0000;'>NA</span>                   <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'>3</span> csio/290…       3 2003-09-01 <span style='color: #949494;'>04:52:03</span> <span style='color: #BB0000;'>NA</span>                   <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'>4</span> csio/290…       4 2003-09-11 <span style='color: #949494;'>05:09:28</span> <span style='color: #BB0000;'>NA</span>                   <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'>5</span> csio/290…       5 2003-09-21 <span style='color: #949494;'>09:53:54</span> <span style='color: #BB0000;'>NA</span>                   <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'>6</span> csio/290…       6 2003-10-01 <span style='color: #949494;'>05:15:36</span> <span style='color: #BB0000;'>NA</span>                   <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'>7</span> csio/290…       7 2003-10-11 <span style='color: #949494;'>04:04:28</span> <span style='color: #BB0000;'>NA</span>                   <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #BCBCBC;'>8</span> csio/290…       8 2003-10-21 <span style='color: #949494;'>23:39:28</span> <span style='color: #BB0000;'>NA</span>                   <span style='color: #BB0000;'>NA</span>                 
+#&gt; <span style='color: #949494;'># … with 37 more variables: date_first_stabilization_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_descent_end &lt;dttm&gt;, date_descent_end_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_park_start &lt;dttm&gt;, date_park_start_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_park_end &lt;dttm&gt;, date_park_end_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_deep_descent_end &lt;dttm&gt;, date_deep_descent_end_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_deep_park_start &lt;dttm&gt;, date_deep_park_start_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_ascent_start &lt;dttm&gt;, date_ascent_start_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_deep_ascent_start &lt;dttm&gt;, date_deep_ascent_start_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_ascent_end &lt;dttm&gt;, date_ascent_end_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_transmission_start &lt;dttm&gt;, date_transmission_start_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_first_message &lt;dttm&gt;, date_first_message_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_first_location &lt;dttm&gt;, date_first_location_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_last_location &lt;dttm&gt;, date_last_location_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_last_message &lt;dttm&gt;, date_last_message_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date_transmission_end &lt;dttm&gt;, date_transmission_end_status &lt;dttm&gt;,</span>
+#&gt; <span style='color: #949494;'>#   clock_offset &lt;dbl&gt;, grounded &lt;chr&gt;, representative_park_pressure &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   representative_park_pressure_status &lt;chr&gt;, config_mission_number &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   cycle_number_index &lt;dbl&gt;, cycle_number_index_adjusted &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   data_mode &lt;chr&gt;</span></div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_traj_param</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_Rtraj.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 3</span><span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 3</span>
 #&gt;   file                          n_param trajectory_parameters
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/2900313_Rtraj.nc       1 PRES                 
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> csio/2900313/2900313_Rtraj.nc       2 TEMP                 
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> csio/2900313/2900313_Rtraj.nc       3 PSAL                 </div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                
+#&gt; <span style='color: #BCBCBC;'>1</span> csio/2900313/2900313_Rtraj.nc       1 PRES                 
+#&gt; <span style='color: #BCBCBC;'>2</span> csio/2900313/2900313_Rtraj.nc       2 TEMP                 
+#&gt; <span style='color: #BCBCBC;'>3</span> csio/2900313/2900313_Rtraj.nc       3 PSAL                 </div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_traj_history</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/2900313_Rtraj.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 15</span><span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 15</span>
 #&gt;   file                 n_history history_institut… history_step history_software
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                    </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/290031…         1 </span><span style='color: #949494;'>""</span><span>                </span><span style='color: #949494;'>""</span><span>           </span><span style='color: #949494;'>""</span><span>              
-#&gt; </span><span style='color: #949494;'># … with 10 more variables: history_software_release &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   history_reference &lt;chr&gt;, history_date &lt;chr&gt;, history_action &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   history_parameter &lt;chr&gt;, history_previous_value &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   history_index_dimension &lt;chr&gt;, history_start_index &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   history_stop_index &lt;dbl&gt;, history_qctest &lt;chr&gt;</span><span></div><div class='input'>
-</div></span></pre>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           
+#&gt; <span style='color: #BCBCBC;'>1</span> csio/2900313/290031…         1 <span style='color: #949494;'>""</span>                <span style='color: #949494;'>""</span>           <span style='color: #949494;'>""</span>              
+#&gt; <span style='color: #949494;'># … with 10 more variables: history_software_release &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   history_reference &lt;chr&gt;, history_date &lt;chr&gt;, history_action &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   history_parameter &lt;chr&gt;, history_previous_value &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   history_index_dimension &lt;chr&gt;, history_start_index &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   history_stop_index &lt;dbl&gt;, history_qctest &lt;chr&gt;</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

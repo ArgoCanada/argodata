@@ -192,88 +192,88 @@ per spectra value.</p></li>
     <pre class="examples"><div class='input'><span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_prof_levels</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/profiles/D2900313_000.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 70 x 18</span><span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 70 x 18</span>
 #&gt;    file            n_levels n_prof   pres pres_qc pres_adjusted pres_adjusted_qc
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> csio/2900313/p…        1      1   9.80 1                9.80 1               
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> csio/2900313/p…        2      1  20.1  1               20.1  1               
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> csio/2900313/p…        3      1  29.9  1               29.9  1               
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> csio/2900313/p…        4      1  39.7  1               39.7  1               
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> csio/2900313/p…        5      1  49.9  1               49.9  1               
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> csio/2900313/p…        6      1  60.3  1               60.3  1               
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> csio/2900313/p…        7      1  69.7  1               69.7  1               
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> csio/2900313/p…        8      1  80.3  1               80.3  1               
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> csio/2900313/p…        9      1  90.2  1               90.2  1               
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> csio/2900313/p…       10      1 100.   1              100.   1               
-#&gt; </span><span style='color: #949494;'># … with 60 more rows, and 11 more variables: pres_adjusted_error &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp &lt;dbl&gt;, temp_qc &lt;chr&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   psal_adjusted_qc &lt;chr&gt;, psal_adjusted_error &lt;dbl&gt;</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           
+#&gt; <span style='color: #BCBCBC;'> 1</span> csio/2900313/p…        1      1   9.80 1                9.80 1               
+#&gt; <span style='color: #BCBCBC;'> 2</span> csio/2900313/p…        2      1  20.1  1               20.1  1               
+#&gt; <span style='color: #BCBCBC;'> 3</span> csio/2900313/p…        3      1  29.9  1               29.9  1               
+#&gt; <span style='color: #BCBCBC;'> 4</span> csio/2900313/p…        4      1  39.7  1               39.7  1               
+#&gt; <span style='color: #BCBCBC;'> 5</span> csio/2900313/p…        5      1  49.9  1               49.9  1               
+#&gt; <span style='color: #BCBCBC;'> 6</span> csio/2900313/p…        6      1  60.3  1               60.3  1               
+#&gt; <span style='color: #BCBCBC;'> 7</span> csio/2900313/p…        7      1  69.7  1               69.7  1               
+#&gt; <span style='color: #BCBCBC;'> 8</span> csio/2900313/p…        8      1  80.3  1               80.3  1               
+#&gt; <span style='color: #BCBCBC;'> 9</span> csio/2900313/p…        9      1  90.2  1               90.2  1               
+#&gt; <span style='color: #BCBCBC;'>10</span> csio/2900313/p…       10      1 100.   1              100.   1               
+#&gt; <span style='color: #949494;'># … with 60 more rows, and 11 more variables: pres_adjusted_error &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp &lt;dbl&gt;, temp_qc &lt;chr&gt;, temp_adjusted &lt;dbl&gt;, temp_adjusted_qc &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   temp_adjusted_error &lt;dbl&gt;, psal &lt;dbl&gt;, psal_qc &lt;chr&gt;, psal_adjusted &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   psal_adjusted_qc &lt;chr&gt;, psal_adjusted_error &lt;dbl&gt;</span></div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_prof_prof</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/profiles/D2900313_000.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 27</span><span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 27</span>
 #&gt;   file    n_prof platform_number platform_type project_name pi_name cycle_number
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2…      1 2900313         PROVOR        CHINA ARGO … JIANPI…            0
-#&gt; </span><span style='color: #949494;'># … with 20 more variables: direction &lt;chr&gt;, data_centre &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   dc_reference &lt;chr&gt;, data_state_indicator &lt;chr&gt;, data_mode &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   float_serial_no &lt;chr&gt;, firmware_version &lt;chr&gt;, wmo_inst_type &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   date &lt;dttm&gt;, date_qc &lt;dttm&gt;, date_location &lt;dttm&gt;, latitude &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   longitude &lt;dbl&gt;, position_qc &lt;chr&gt;, positioning_system &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   profile_pres_qc &lt;chr&gt;, profile_temp_qc &lt;chr&gt;, profile_psal_qc &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   vertical_sampling_scheme &lt;chr&gt;, config_mission_number &lt;dbl&gt;</span><span></div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> csio/2…      1 2900313         PROVOR        CHINA ARGO … JIANPI…            0
+#&gt; <span style='color: #949494;'># … with 20 more variables: direction &lt;chr&gt;, data_centre &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   dc_reference &lt;chr&gt;, data_state_indicator &lt;chr&gt;, data_mode &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   float_serial_no &lt;chr&gt;, firmware_version &lt;chr&gt;, wmo_inst_type &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   date &lt;dttm&gt;, date_qc &lt;dttm&gt;, date_location &lt;dttm&gt;, latitude &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   longitude &lt;dbl&gt;, position_qc &lt;chr&gt;, positioning_system &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   profile_pres_qc &lt;chr&gt;, profile_temp_qc &lt;chr&gt;, profile_psal_qc &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   vertical_sampling_scheme &lt;chr&gt;, config_mission_number &lt;dbl&gt;</span></div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_prof_calib</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/profiles/D2900313_000.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 9</span><span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 9</span>
 #&gt;   file    n_param n_calib n_prof parameter scientific_calib_… scientific_calib_…
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2…       1       1      1 PRES      none               none              
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> csio/2…       2       1      1 TEMP      none               none              
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> csio/2…       3       1      1 PSAL      PSAL_ADJUSTED = P… WJO: r =0.9999(+/…
-#&gt; </span><span style='color: #949494;'># … with 2 more variables: scientific_calib_comment &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   scientific_calib_date &lt;chr&gt;</span><span></div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             
+#&gt; <span style='color: #BCBCBC;'>1</span> csio/2…       1       1      1 PRES      none               none              
+#&gt; <span style='color: #BCBCBC;'>2</span> csio/2…       2       1      1 TEMP      none               none              
+#&gt; <span style='color: #BCBCBC;'>3</span> csio/2…       3       1      1 PSAL      PSAL_ADJUSTED = P… WJO: r =0.9999(+/…
+#&gt; <span style='color: #949494;'># … with 2 more variables: scientific_calib_comment &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   scientific_calib_date &lt;chr&gt;</span></div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_prof_param</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/profiles/D2900313_000.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 4</span><span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 4</span>
 #&gt;   file                                  n_param n_prof station_parameters
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                                   </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/profiles/D2900313_000.nc       1      1 PRES              
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> csio/2900313/profiles/D2900313_000.nc       2      1 TEMP              
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> csio/2900313/profiles/D2900313_000.nc       3      1 PSAL              </div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             
+#&gt; <span style='color: #BCBCBC;'>1</span> csio/2900313/profiles/D2900313_000.nc       1      1 PRES              
+#&gt; <span style='color: #BCBCBC;'>2</span> csio/2900313/profiles/D2900313_000.nc       2      1 TEMP              
+#&gt; <span style='color: #BCBCBC;'>3</span> csio/2900313/profiles/D2900313_000.nc       3      1 PSAL              </div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_prof_history</span><span class='op'>(</span><span class='st'>"dac/csio/2900313/profiles/D2900313_000.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 3 x 15</span><span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 3 x 15</span>
 #&gt;   file           n_prof n_history history_institu… history_step history_software
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> csio/2900313/…      1         1 HZ               ARGQ         </span><span style='color: #949494;'>""</span><span>              
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> csio/2900313/…      1         2 HZ               ARGQ         </span><span style='color: #949494;'>""</span><span>              
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> csio/2900313/…      1         3 HZ               ARSQ         </span><span style='color: #949494;'>"</span><span>WJO</span><span style='color: #949494;'>"</span><span>           
-#&gt; </span><span style='color: #949494;'># … with 9 more variables: history_software_release &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   history_reference &lt;chr&gt;, history_date &lt;chr&gt;, history_action &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   history_parameter &lt;chr&gt;, history_start_pres &lt;dbl&gt;, history_stop_pres &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   history_previous_value &lt;dbl&gt;, history_qctest &lt;chr&gt;</span><span></div><div class='input'>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           
+#&gt; <span style='color: #BCBCBC;'>1</span> csio/2900313/…      1         1 HZ               ARGQ         <span style='color: #949494;'>""</span>              
+#&gt; <span style='color: #BCBCBC;'>2</span> csio/2900313/…      1         2 HZ               ARGQ         <span style='color: #949494;'>""</span>              
+#&gt; <span style='color: #BCBCBC;'>3</span> csio/2900313/…      1         3 HZ               ARSQ         <span style='color: #949494;'>"</span>WJO<span style='color: #949494;'>"</span>           
+#&gt; <span style='color: #949494;'># … with 9 more variables: history_software_release &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   history_reference &lt;chr&gt;, history_date &lt;chr&gt;, history_action &lt;chr&gt;,</span>
+#&gt; <span style='color: #949494;'>#   history_parameter &lt;chr&gt;, history_start_pres &lt;dbl&gt;, history_stop_pres &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   history_previous_value &lt;dbl&gt;, history_qctest &lt;chr&gt;</span></div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_prof_spectra</span><span class='op'>(</span><span class='st'>"dac/aoml/5906206/profiles/BD5906206_016.nc"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 40,590 x 5</span><span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 40,590 x 5</span>
 #&gt;    file                             n_values n_levels n_prof uv_intensity_nitra…
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                               </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> aoml/5906206/profiles/BD5906206…        1        1      1                  </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> aoml/5906206/profiles/BD5906206…        2        1      1                  </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> aoml/5906206/profiles/BD5906206…        3        1      1                  </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> aoml/5906206/profiles/BD5906206…        4        1      1                  </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> aoml/5906206/profiles/BD5906206…        5        1      1                  </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> aoml/5906206/profiles/BD5906206…        6        1      1                  </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> aoml/5906206/profiles/BD5906206…        7        1      1                  </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> aoml/5906206/profiles/BD5906206…        8        1      1                  </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> aoml/5906206/profiles/BD5906206…        9        1      1                  </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> aoml/5906206/profiles/BD5906206…       10        1      1                  </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #949494;'># … with 40,580 more rows</span><span></div><div class='input'>
-</div></span></pre>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                               <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> aoml/5906206/profiles/BD5906206…        1        1      1                  <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span> aoml/5906206/profiles/BD5906206…        2        1      1                  <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span> aoml/5906206/profiles/BD5906206…        3        1      1                  <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span> aoml/5906206/profiles/BD5906206…        4        1      1                  <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span> aoml/5906206/profiles/BD5906206…        5        1      1                  <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span> aoml/5906206/profiles/BD5906206…        6        1      1                  <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span> aoml/5906206/profiles/BD5906206…        7        1      1                  <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span> aoml/5906206/profiles/BD5906206…        8        1      1                  <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span> aoml/5906206/profiles/BD5906206…        9        1      1                  <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #BCBCBC;'>10</span> aoml/5906206/profiles/BD5906206…       10        1      1                  <span style='color: #BB0000;'>NA</span>
+#&gt; <span style='color: #949494;'># … with 40,580 more rows</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

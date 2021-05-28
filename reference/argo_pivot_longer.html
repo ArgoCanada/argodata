@@ -165,21 +165,21 @@ output using <code><a href='https://dplyr.tidyverse.org/reference/select.html'>d
   <span class='fu'><a href='argo_prof_levels.html'>argo_prof_levels</a></span><span class='op'>(</span><span class='st'>"dac/csio/2902746/profiles/BR2902746_001.nc"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'>argo_pivot_longer</span><span class='op'>(</span>id_cols <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>file</span>, <span class='va'>n_prof</span>, <span class='va'>pres</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 404 x 9</span><span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 404 x 9</span>
 #&gt;    file     n_prof  pres variable value value_qc value_adjusted value_adjusted_…
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>           
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> csio/29…      1 0.200 doxy      188. 3                  197. 1               
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> csio/29…      1 0.900 doxy      188. 3                  196. 1               
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> csio/29…      1 1.90  doxy      188. 3                  197. 1               
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> csio/29…      1 2.90  doxy      190. 3                  199. 1               
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> csio/29…      1 4     doxy      190. 3                  199. 1               
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> csio/29…      1 5     doxy      190. 3                  199. 1               
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> csio/29…      1 6     doxy      190. 3                  199. 1               
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> csio/29…      1 7.10  doxy      191. 3                  200. 1               
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> csio/29…      1 8.20  doxy      191. 3                  200. 1               
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> csio/29…      1 9.30  doxy      191. 3                  200. 1               
-#&gt; </span><span style='color: #949494;'># … with 394 more rows, and 1 more variable: value_adjusted_error &lt;dbl&gt;</span><span></div><div class='input'>
-</div></span></pre>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           
+#&gt; <span style='color: #BCBCBC;'> 1</span> csio/29…      1 0.200 doxy      188. 3                  197. 1               
+#&gt; <span style='color: #BCBCBC;'> 2</span> csio/29…      1 0.900 doxy      188. 3                  196. 1               
+#&gt; <span style='color: #BCBCBC;'> 3</span> csio/29…      1 1.90  doxy      188. 3                  197. 1               
+#&gt; <span style='color: #BCBCBC;'> 4</span> csio/29…      1 2.90  doxy      190. 3                  199. 1               
+#&gt; <span style='color: #BCBCBC;'> 5</span> csio/29…      1 4     doxy      190. 3                  199. 1               
+#&gt; <span style='color: #BCBCBC;'> 6</span> csio/29…      1 5     doxy      190. 3                  199. 1               
+#&gt; <span style='color: #BCBCBC;'> 7</span> csio/29…      1 6     doxy      190. 3                  199. 1               
+#&gt; <span style='color: #BCBCBC;'> 8</span> csio/29…      1 7.10  doxy      191. 3                  200. 1               
+#&gt; <span style='color: #BCBCBC;'> 9</span> csio/29…      1 8.20  doxy      191. 3                  200. 1               
+#&gt; <span style='color: #BCBCBC;'>10</span> csio/29…      1 9.30  doxy      191. 3                  200. 1               
+#&gt; <span style='color: #949494;'># … with 394 more rows, and 1 more variable: value_adjusted_error &lt;dbl&gt;</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

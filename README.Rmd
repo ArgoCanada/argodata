@@ -34,7 +34,7 @@ The goal of argodata is to provide a data frame-based interface to data generate
 
 ## Installation
 
-You can install the development version from [GitHub](https://github.com/) with:
+You can install the development version from [GitHub](https://github.com/) using:
 
 ``` r
 # install.packages("remotes")

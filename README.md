@@ -21,7 +21,7 @@ package](https://github.com/ArgoCanada/argoFloats).
 ## Installation
 
 You can install the development version from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/) using:
 
 ``` r
 # install.packages("remotes")

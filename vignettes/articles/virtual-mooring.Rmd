@@ -47,8 +47,6 @@ mooring_start <- as.Date("2011-01-01")
 mooring_end <- as.Date("2019-12-31")
 ```
 
-Finally, it is worth considering whether or not the "realtime" or "delayed" data sets best suits your use-case. The delayed data set is more likely to have poor-quality measurements corrected; however, the realtime data set may have more profiles available. You should pick one or the other to avoid double-counting profiles collected by the same float! In this article we will use the realtime data set.
-
 An index of all profiles available from the Argo program is available by calling `argo_global_prof()`. This will take 20-60 seconds to load depending on your internet connection; if you would like to avoid downloading the index file more than once you can [configure a persistent cache directory](https://github.com/ArgoCanada/argodata#installation), but be aware that this index is updated frequently.
 
 ```{r}
@@ -62,7 +60,6 @@ profiles <- argo_global_prof() %>%
     date_min = mooring_start,
     date_max = mooring_end
   ) %>% 
-  argo_filter_data_mode("realtime") %>% 
   argo_extract_path_info() %>% 
   select(file, file_float, date, latitude, longitude, everything()) %>% 
   arrange(date)

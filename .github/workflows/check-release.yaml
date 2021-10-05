@@ -6,14 +6,14 @@ on:
   pull_request:
     branches: [main, master]
 
-name: test-coverage
+name: R-CMD-check
 
 jobs:
-  test-coverage:
+  R-CMD-check:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-
+      R_KEEP_PKG_SOURCE: yes
     steps:
       - uses: actions/checkout@v2
 
@@ -23,16 +23,29 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: covr
+          extra-packages: rcmdcheck
 
       - name: Cache Argo downloads
         uses: actions/cache@v2
         with:
           path: ${{ runner.temp }}/argo-cache-dir
-          key: argo-cache-dir-coverage-4
+          key: argo-cache-dir-check-5
 
-      - name: Test coverage
+      - name: Check
         env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: false
           R_ARGO_CACHE_DIR: ${{ runner.temp }}/argo-cache-dir
-        run: covr::codecov()
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
+
+      - name: Show testthat output
+        if: always()
+        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+        shell: bash
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@main
+        with:
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          path: check

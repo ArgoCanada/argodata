@@ -20,6 +20,9 @@
 #' @param data_mode One of "realtime" or "delayed".
 #' @param direction One of "ascending" or "descending"
 #' @param float A float identifier.
+#' @param parameter One or more (case insensitive) parameter names in which
+#'   to search the `parameters` column of the bio-prof and synthetic-prof
+#'   index files.
 #'
 #' @rdname argo_filter
 #' @return `tbl` with rows that match the search criteria.

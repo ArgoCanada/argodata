@@ -23,7 +23,9 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: pkgdown
+          extra-packages:
+            - pkgdown
+            - lubridate
           needs: website
 
       - name: Cache Argo downloads

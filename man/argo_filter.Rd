@@ -48,6 +48,10 @@ objects and are encouraged to used UTC.}
 
 \item{float}{A float identifier.}
 
+\item{parameter}{One or more (case insensitive) parameter names in which
+to search the \code{parameters} column of the bio-prof and synthetic-prof
+index files.}
+
 \item{data_mode}{One of "realtime" or "delayed".}
 
 \item{direction}{One of "ascending" or "descending"}

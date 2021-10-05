@@ -23,7 +23,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: pkgdown, lubridate, ggplot2, ggspatial, lwgeom, s2
+          extra-packages: pkgdown, rmarkdown, lubridate, ggplot2, ggspatial, lwgeom, s2
           needs: website
 
       - name: Cache Argo downloads

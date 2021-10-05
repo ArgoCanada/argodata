@@ -9,7 +9,7 @@
 #'
 #' @param mirror The URL to an Argo mirror or a path to a directory
 #'   where Argo data has been cached or synced. According to the
-#'   [Argo data access page](http://www.argodatamgt.org/Access-to-data/Access-via-FTP-or-HTTPS-on-GDAC),
+#'   [Argo data access page](http://www.argodatamgt.org/Access-to-data/Argo-GDAC-ftp-and-https-servers),
 #'   The following public mirrors are available:
 #'
 #'   - <ftp://usgodae.org/pub/outgoing/argo/>

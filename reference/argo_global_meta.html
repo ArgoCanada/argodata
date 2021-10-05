@@ -40,7 +40,10 @@
 
 
 <meta property="og:title" content="Load Argo global index files — argo_global_meta" />
-<meta property="og:description" content="Load Argo global index files" />
+<meta property="og:description" content="The argo_mirror() points to a directory containing millions of NetCDF
+files in which Argo data is organized. These files are indexed by category
+in the root directory of the mirror. The argo_global_*() functions provide
+access to these as data frames." />
 
 
 
@@ -126,7 +129,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Load Argo global index files</p>
+    <p>The <code><a href='argo_mirror.html'>argo_mirror()</a></code> points to a directory containing millions of NetCDF
+files in which Argo data is organized. These files are indexed by category
+in the root directory of the mirror. The <code>argo_global_*()</code> functions provide
+access to these as data frames.</p>
     </div>
 
     <pre class="usage"><span class='fu'>argo_global_meta</span><span class='op'>(</span>download <span class='op'>=</span> <span class='cn'>NULL</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
@@ -162,7 +168,20 @@ verbose error messages.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code>.</p>
+    
+<ul>
+<li><p><code>argo_global_meta()</code>: a <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> of the Argo meta file index</p></li>
+<li><p><code>argo_global_tech()</code>: a <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> of the Argo tech file index</p></li>
+<li><p><code>argo_global_traj()</code>: a <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> of the Argo trajectory file index</p></li>
+<li><p><code>argo_global_bio_traj()</code>: a <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> of the Argo meta
+biogeochemical trajectory index</p></li>
+<li><p><code>argo_global_prof()</code>: a <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> of the Argo profile file index</p></li>
+<li><p><code>argo_global_bio_prof()</code>: a <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> of the Argo biogeochemical profile
+index</p></li>
+<li><p><code>argo_global_synthetic_prof()</code>: a <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code> of the Argo
+biogeochemical synthetic profile index</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>

@@ -139,11 +139,14 @@ argo_filter_updated <- function(tbl, date_update_min, date_update_max = Sys.time
 argo_filter_float <- function(tbl, float) {
   argo_assert_columns(tbl, "file")
 
+  float <- as.character(float)
+  float[is.na(float)] <- "NA"
+
   bad_float <- !stringr::str_detect(float, "^[0-9]+$")
   if (any(bad_float)) {
     values <- if (sum(bad_float) != 1) "values" else "value"
     are <- if (sum(bad_float) != 1) "are" else "is"
-    bad_float_lab <- glue::glue_collapse(paste0("'", float, "'"), sep = ", ", last = " and ")
+    bad_float_lab <- glue::glue_collapse(paste0("'", float[bad_float], "'"), sep = ", ", last = " and ")
     abort(
       glue(
         paste0(
@@ -158,9 +161,35 @@ argo_filter_float <- function(tbl, float) {
     return(tbl[integer(0), , drop = FALSE])
   }
 
-
   file_regex <- paste0("[^0-9](", paste0(float, collapse = "|"), ")[^0-9][^/]*$")
   argo_do_filter(tbl, stringr::str_detect(tbl$file, file_regex))
+}
+
+#' @rdname argo_filter
+#' @export
+argo_filter_parameter <- function(tbl, parameter) {
+  argo_assert_columns(tbl, "parameters")
+
+  parameter <- stringr::str_to_upper(parameter)
+  parameter[is.na(parameter)] <- "NA"
+
+  bad_parameter <- !stringr::str_detect(parameter, "^[A-Za-z0-9_]+$")
+  if (any(bad_parameter)) {
+    values <- if (sum(bad_parameter) != 1) "values" else "value"
+    are <- if (sum(bad_parameter) != 1) "are" else "is"
+    bad_param_lab <- glue::glue_collapse(paste0("'", parameter[bad_parameter], "'"), sep = ", ", last = " and ")
+    abort(
+      glue(
+        paste0(
+          "`parameter` must be an alpha-numeric string. ",
+          "The following { values } { are } not valid:\n{ bad_param_lab }"
+        )
+      )
+    )
+  }
+
+  parameter_regex <- paste0("\\b(", paste0(parameter, collapse = "|"), ")\\b")
+  argo_do_filter(tbl, stringr::str_detect(tbl$parameters, parameter_regex))
 }
 
 #' @rdname argo_filter

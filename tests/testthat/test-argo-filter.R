@@ -13,6 +13,20 @@ test_that("argo_filter_float() works", {
   expect_error(argo_filter_float(tbl, c("abc", "def")), "must be a numeric identifier")
 })
 
+test_that("argo_filter_parameter() works", {
+  tbl <- tibble::tibble(
+    parameters = c("PARAM1 PARAM2", "PARAM3")
+  )
+
+  expect_identical(argo_filter_parameter(tbl, "param0"), tbl[integer(0), ])
+  expect_identical(argo_filter_parameter(tbl, "param1"), tbl[1, ])
+  expect_identical(argo_filter_parameter(tbl, "param3"), tbl[2, ])
+  expect_identical(argo_filter_parameter(tbl, c("param1", "param3")), tbl)
+
+  expect_error(argo_filter_parameter(tbl, c("abc", "$$$")), "must be an alpha-numeric string")
+})
+
+
 test_that("argo_filter_data_mode() works", {
   tbl <- tibble::tibble(
     file = c("D456_stuff.nc", "R456_stuff.nc", "123_Dprof.nc", "123_Rtraj.nc")

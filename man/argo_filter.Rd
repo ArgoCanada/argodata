@@ -6,6 +6,7 @@
 \alias{argo_filter_date}
 \alias{argo_filter_updated}
 \alias{argo_filter_float}
+\alias{argo_filter_parameter}
 \alias{argo_filter_data_mode}
 \alias{argo_filter_direction}
 \title{Select rows of Argo tables}
@@ -19,6 +20,8 @@ argo_filter_date(tbl, date_min, date_max = Sys.time())
 argo_filter_updated(tbl, date_update_min, date_update_max = Sys.time())
 
 argo_filter_float(tbl, float)
+
+argo_filter_parameter(tbl, parameter)
 
 argo_filter_data_mode(tbl, data_mode)
 

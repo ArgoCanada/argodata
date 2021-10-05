@@ -162,7 +162,7 @@ and family. The column conventions used by the global indexes is assumed
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>argo_path_info</span><span class='op'>(</span><span class='st'>"dac/nmdis/2901633/profiles/R2901633_052.nc"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 7</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 × 7</span>
 #&gt;   file              file_float file_type file_cycle file_data_mode file_modifier
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        
 #&gt; <span style='color: #BCBCBC;'>1</span> nmdis/2901633/pr… 2901633    prof              52 R              <span style='color: #BB0000;'>NA</span>           
@@ -170,19 +170,19 @@ and family. The column conventions used by the global indexes is assumed
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>argo_extract_path_info</span><span class='op'>(</span><span class='fu'><a href='argo_global_meta.html'>argo_global_meta</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 16,062 x 10</span>
-#&gt;    file             file_float file_type file_cycle file_data_mode file_modifier
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        
-#&gt; <span style='color: #BCBCBC;'> 1</span> aoml/13857/1385… 13857      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
-#&gt; <span style='color: #BCBCBC;'> 2</span> aoml/13858/1385… 13858      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
-#&gt; <span style='color: #BCBCBC;'> 3</span> aoml/13859/1385… 13859      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
-#&gt; <span style='color: #BCBCBC;'> 4</span> aoml/15819/1581… 15819      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
-#&gt; <span style='color: #BCBCBC;'> 5</span> aoml/15820/1582… 15820      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
-#&gt; <span style='color: #BCBCBC;'> 6</span> aoml/15851/1585… 15851      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
-#&gt; <span style='color: #BCBCBC;'> 7</span> aoml/15852/1585… 15852      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
-#&gt; <span style='color: #BCBCBC;'> 8</span> aoml/15853/1585… 15853      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
-#&gt; <span style='color: #BCBCBC;'> 9</span> aoml/15854/1585… 15854      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
-#&gt; <span style='color: #BCBCBC;'>10</span> aoml/15855/1585… 15855      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 16,062 × 10</span>
+#&gt;    file                     file_float file_type file_cycle file_data_mode file_modifier
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>          <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        
+#&gt; <span style='color: #BCBCBC;'> 1</span> aoml/13857/13857_meta.nc 13857      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
+#&gt; <span style='color: #BCBCBC;'> 2</span> aoml/13858/13858_meta.nc 13858      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
+#&gt; <span style='color: #BCBCBC;'> 3</span> aoml/13859/13859_meta.nc 13859      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
+#&gt; <span style='color: #BCBCBC;'> 4</span> aoml/15819/15819_meta.nc 15819      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
+#&gt; <span style='color: #BCBCBC;'> 5</span> aoml/15820/15820_meta.nc 15820      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
+#&gt; <span style='color: #BCBCBC;'> 6</span> aoml/15851/15851_meta.nc 15851      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
+#&gt; <span style='color: #BCBCBC;'> 7</span> aoml/15852/15852_meta.nc 15852      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
+#&gt; <span style='color: #BCBCBC;'> 8</span> aoml/15853/15853_meta.nc 15853      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
+#&gt; <span style='color: #BCBCBC;'> 9</span> aoml/15854/15854_meta.nc 15854      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
+#&gt; <span style='color: #BCBCBC;'>10</span> aoml/15855/15855_meta.nc 15855      meta              <span style='color: #BB0000;'>NA</span> <span style='color: #BB0000;'>NA</span>             <span style='color: #BB0000;'>NA</span>           
 #&gt; <span style='color: #949494;'># … with 16,052 more rows, and 4 more variables: file_descending &lt;lgl&gt;,</span>
 #&gt; <span style='color: #949494;'>#   profiler_type &lt;dbl&gt;, institution &lt;chr&gt;, date_update &lt;dttm&gt;</span></div><div class='input'>
 </div></pre>

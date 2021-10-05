@@ -153,15 +153,15 @@ argo_prof_history() and argo_traj_history()." />
   <span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>argo_reference_history_step</span>, by <span class='op'>=</span> <span class='st'>"history_step"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 5</span>
-#&gt;   file            n_prof n_history history_step history_step_description        
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                           
-#&gt; <span style='color: #BCBCBC;'>1</span> csio/2902746/p…      1         1 <span style='color: #949494;'>"</span>ARFM<span style='color: #949494;'>"</span>       Convert raw data from telecommu…
-#&gt; <span style='color: #BCBCBC;'>2</span> csio/2902746/p…      1         2 <span style='color: #949494;'>"</span>ARCA<span style='color: #949494;'>"</span>       Calibration has been performed  
-#&gt; <span style='color: #BCBCBC;'>3</span> csio/2902746/p…      1         3 <span style='color: #949494;'>"</span>ARGQ<span style='color: #949494;'>"</span>       Automatic QC of data reported i…
-#&gt; <span style='color: #BCBCBC;'>4</span> csio/2902746/p…      1         4 <span style='color: #949494;'>""</span>           <span style='color: #BB0000;'>NA</span>                              </div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 × 5</span>
+#&gt;   file                                   n_prof n_history history_step history_step_de…
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                   <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           
+#&gt; <span style='color: #BCBCBC;'>1</span> csio/2902746/profiles/BR2902746_001.nc      1         1 <span style='color: #949494;'>"</span>ARFM<span style='color: #949494;'>"</span>       Convert raw dat…
+#&gt; <span style='color: #BCBCBC;'>2</span> csio/2902746/profiles/BR2902746_001.nc      1         2 <span style='color: #949494;'>"</span>ARCA<span style='color: #949494;'>"</span>       Calibration has…
+#&gt; <span style='color: #BCBCBC;'>3</span> csio/2902746/profiles/BR2902746_001.nc      1         3 <span style='color: #949494;'>"</span>ARGQ<span style='color: #949494;'>"</span>       Automatic QC of…
+#&gt; <span style='color: #BCBCBC;'>4</span> csio/2902746/profiles/BR2902746_001.nc      1         4 <span style='color: #949494;'>""</span>           <span style='color: #BB0000;'>NA</span>              </div><div class='input'>
 <span class='va'>argo_reference_history_step</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9 x 2</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9 × 2</span>
 #&gt;   history_step history_step_description                                         
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                                                            
 #&gt; <span style='color: #BCBCBC;'>1</span> ARFM         Convert raw data from telecommunications system to a processing …

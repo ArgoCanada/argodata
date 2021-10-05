@@ -141,6 +141,8 @@ other global index tables in the <code>argo_global_*()</code> family.</p>
 
 <span class='fu'>argo_filter_float</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='va'>float</span><span class='op'>)</span>
 
+<span class='fu'>argo_filter_parameter</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='va'>parameter</span><span class='op'>)</span>
+
 <span class='fu'>argo_filter_data_mode</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='va'>data_mode</span><span class='op'>)</span>
 
 <span class='fu'>argo_filter_direction</span><span class='op'>(</span><span class='va'>tbl</span>, <span class='va'>direction</span><span class='op'>)</span></pre>
@@ -181,6 +183,12 @@ objects and are encouraged to used UTC.</p></td>
       <td><p>A float identifier.</p></td>
     </tr>
     <tr>
+      <th>parameter</th>
+      <td><p>One or more (case insensitive) parameter names in which
+to search the <code>parameters</code> column of the bio-prof and synthetic-prof
+index files.</p></td>
+    </tr>
+    <tr>
       <th>data_mode</th>
       <td><p>One of "realtime" or "delayed".</p></td>
     </tr>
@@ -197,50 +205,37 @@ objects and are encouraged to used UTC.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>, warn.conflicts <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='co'># \dontrun{</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='fu'><a href='argo_global_meta.html'>argo_global_prof</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='co'># within 500 km of Halifax, Nova Scotia</span>
   <span class='fu'>argo_filter_radius</span><span class='op'>(</span><span class='fl'>45</span>, <span class='op'>-</span><span class='fl'>64</span>, <span class='fl'>500</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading argo_global_prof()</span></div><div class='output co'>#&gt; <span class='message'>Downloading 1 file from 'https://data-argo.ifremer.fr'</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2,376 x 8</span>
-#&gt;    file   date                latitude longitude ocean profiler_type institution
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>                 <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      
-#&gt; <span style='color: #BCBCBC;'> 1</span> aoml/… 2013-04-20 <span style='color: #949494;'>10:47:20</span>     43.0     -<span style='color: #BB0000;'>59.3</span> A               851 AO         
-#&gt; <span style='color: #BCBCBC;'> 2</span> aoml/… 2013-04-30 <span style='color: #949494;'>11:27:49</span>     43.0     -<span style='color: #BB0000;'>58.7</span> A               851 AO         
-#&gt; <span style='color: #BCBCBC;'> 3</span> aoml/… 2013-05-10 <span style='color: #949494;'>11:00:04</span>     42.9     -<span style='color: #BB0000;'>59.5</span> A               851 AO         
-#&gt; <span style='color: #BCBCBC;'> 4</span> aoml/… 2013-05-20 <span style='color: #949494;'>10:14:33</span>     43.0     -<span style='color: #BB0000;'>59.1</span> A               851 AO         
-#&gt; <span style='color: #BCBCBC;'> 5</span> aoml/… 2013-05-30 <span style='color: #949494;'>10:34:48</span>     42.8     -<span style='color: #BB0000;'>58.8</span> A               851 AO         
-#&gt; <span style='color: #BCBCBC;'> 6</span> aoml/… 2003-07-23 <span style='color: #949494;'>08:26:00</span>     40.6     -<span style='color: #BB0000;'>64.3</span> A               852 AO         
-#&gt; <span style='color: #BCBCBC;'> 7</span> aoml/… 2005-04-03 <span style='color: #949494;'>07:40:04</span>     41.4     -<span style='color: #BB0000;'>67.5</span> A               852 AO         
-#&gt; <span style='color: #BCBCBC;'> 8</span> aoml/… 2005-04-13 <span style='color: #949494;'>07:38:45</span>     41.6     -<span style='color: #BB0000;'>67.5</span> A               852 AO         
-#&gt; <span style='color: #BCBCBC;'> 9</span> aoml/… 2005-04-23 <span style='color: #949494;'>07:35:52</span>     41.9     -<span style='color: #BB0000;'>67.6</span> A               852 AO         
-#&gt; <span style='color: #BCBCBC;'>10</span> aoml/… 2004-06-27 <span style='color: #949494;'>05:53:00</span>     42.1     -<span style='color: #BB0000;'>59.4</span> A               852 AO         
-#&gt; <span style='color: #949494;'># … with 2,366 more rows, and 1 more variable: date_update &lt;dttm&gt;</span></div><div class='input'><span class='co'># }</span>
+<span class='op'>}</span>
 
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'><a href='argo_global_meta.html'>argo_global_traj</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'>argo_filter_rect</span><span class='op'>(</span><span class='fl'>40</span>, <span class='fl'>60</span>, <span class='op'>-</span><span class='fl'>64</span>, <span class='op'>-</span><span class='fl'>54</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading argo_global_traj()</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 452 x 8</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading argo_global_traj()</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 669 × 8</span>
 #&gt;    file      latitude_max latitude_min longitude_max longitude_min profiler_type
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> aoml/190…         52.6         33.5         -<span style='color: #BB0000;'>40.1</span>         -<span style='color: #BB0000;'>74.0</span>           851
-#&gt; <span style='color: #BCBCBC;'> 2</span> aoml/190…         40.5         25.6         -<span style='color: #BB0000;'>57.3</span>         -<span style='color: #BB0000;'>75.3</span>           851
-#&gt; <span style='color: #BCBCBC;'> 3</span> aoml/390…         42.4         28.4         -<span style='color: #BB0000;'>47.1</span>         -<span style='color: #BB0000;'>75.3</span>           851
-#&gt; <span style='color: #BCBCBC;'> 4</span> aoml/390…         40.9         27.7         -<span style='color: #BB0000;'>49.9</span>         -<span style='color: #BB0000;'>76.6</span>           852
-#&gt; <span style='color: #BCBCBC;'> 5</span> aoml/390…         45.6         19.9         -<span style='color: #BB0000;'>27.8</span>         -<span style='color: #BB0000;'>75.9</span>           851
-#&gt; <span style='color: #BCBCBC;'> 6</span> aoml/390…         41.8         33.8         -<span style='color: #BB0000;'>44.1</span>         -<span style='color: #BB0000;'>74.3</span>           854
-#&gt; <span style='color: #BCBCBC;'> 7</span> aoml/490…         44.2         36.4         -<span style='color: #BB0000;'>36.7</span>         -<span style='color: #BB0000;'>72.7</span>           851
-#&gt; <span style='color: #BCBCBC;'> 8</span> aoml/490…         43.0         29.7         -<span style='color: #BB0000;'>38.4</span>         -<span style='color: #BB0000;'>76.1</span>           851
-#&gt; <span style='color: #BCBCBC;'> 9</span> aoml/490…         43.3         31.6         -<span style='color: #BB0000;'>44.7</span>         -<span style='color: #BB0000;'>74.7</span>           851
-#&gt; <span style='color: #BCBCBC;'>10</span> aoml/490…         40.3         27.3         -<span style='color: #BB0000;'>54.8</span>         -<span style='color: #BB0000;'>74.1</span>           846
-#&gt; <span style='color: #949494;'># … with 442 more rows, and 2 more variables: institution &lt;chr&gt;,</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> aoml/190…         52.6        33.5          -<span style='color: #BB0000;'>40.1</span>         -<span style='color: #BB0000;'>74.0</span>           851
+#&gt; <span style='color: #BCBCBC;'> 2</span> aoml/190…         40.5        25.6          -<span style='color: #BB0000;'>57.3</span>         -<span style='color: #BB0000;'>75.3</span>           851
+#&gt; <span style='color: #BCBCBC;'> 3</span> aoml/390…         41.8         1.42         180.         -<span style='color: #BB0000;'>180.</span>            846
+#&gt; <span style='color: #BCBCBC;'> 4</span> aoml/390…         42.4        28.4          -<span style='color: #BB0000;'>47.1</span>         -<span style='color: #BB0000;'>75.3</span>           851
+#&gt; <span style='color: #BCBCBC;'> 5</span> aoml/390…         40.9        27.7          -<span style='color: #BB0000;'>49.9</span>         -<span style='color: #BB0000;'>76.6</span>           852
+#&gt; <span style='color: #BCBCBC;'> 6</span> aoml/390…         45.6        19.9          -<span style='color: #BB0000;'>27.8</span>         -<span style='color: #BB0000;'>75.9</span>           851
+#&gt; <span style='color: #BCBCBC;'> 7</span> aoml/390…         41.8        33.8          -<span style='color: #BB0000;'>44.1</span>         -<span style='color: #BB0000;'>74.3</span>           854
+#&gt; <span style='color: #BCBCBC;'> 8</span> aoml/490…         58.0        52.9          180.         -<span style='color: #BB0000;'>180.</span>            846
+#&gt; <span style='color: #BCBCBC;'> 9</span> aoml/490…         60.4        53.9          180.         -<span style='color: #BB0000;'>180.</span>            846
+#&gt; <span style='color: #BCBCBC;'>10</span> aoml/490…         54.6        51.1          180.         -<span style='color: #BB0000;'>180.</span>            846
+#&gt; <span style='color: #949494;'># … with 659 more rows, and 2 more variables: institution &lt;chr&gt;,</span>
 #&gt; <span style='color: #949494;'>#   date_update &lt;dttm&gt;</span></div><div class='input'>
 <span class='fu'><a href='argo_cache_dir.html'>with_argo_example_cache</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'><a href='argo_global_meta.html'>argo_global_traj</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'>argo_filter_updated</span><span class='op'>(</span><span class='st'>"2020-01-01 00:00"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>date_update</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5,695 x 8</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 5,695 × 8</span>
 #&gt;    date_update         file              latitude_max latitude_min longitude_max
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> 2020-06-25 <span style='color: #949494;'>20:34:53</span> aoml/1900959/190…        21.0         17.1           40.7
@@ -259,7 +254,7 @@ objects and are encouraged to used UTC.</p></td>
   <span class='fu'><a href='argo_global_meta.html'>argo_global_traj</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'>argo_filter_float</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"13857"</span>, <span class='st'>"15851"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 8</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 × 8</span>
 #&gt;   file       latitude_max latitude_min longitude_max longitude_min profiler_type
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> aoml/1385…         6.93        0.008        -<span style='color: #BB0000;'>15.0</span>          -<span style='color: #BB0000;'>33.8</span>           845
@@ -269,7 +264,7 @@ objects and are encouraged to used UTC.</p></td>
   <span class='fu'><a href='argo_global_meta.html'>argo_global_traj</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'>argo_filter_data_mode</span><span class='op'>(</span><span class='st'>"delayed"</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1,986 x 8</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1,986 × 8</span>
 #&gt;    file      latitude_max latitude_min longitude_max longitude_min profiler_type
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> aoml/190…         6.56       -<span style='color: #BB0000;'>9.67</span>          -<span style='color: #BB0000;'>14.0</span>         -<span style='color: #BB0000;'>50.6</span>           851

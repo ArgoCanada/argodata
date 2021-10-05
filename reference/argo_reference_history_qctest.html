@@ -161,7 +161,7 @@ to join this table.</p>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>argo_reference_history_qctest</span>, by <span class='op'>=</span> <span class='st'>"history_qctest"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>history_qctest_description</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 20 x 7</span>
+</div><div class='output co'>#&gt; <span class='message'>Extracting from 1 file</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 20 × 7</span>
 #&gt;    history_qctest_des… file     n_prof n_history history_qctest history_qctest_…
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                     <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span> Platform Identific… csio/29…      1         1 2                             1
@@ -186,19 +186,19 @@ to join this table.</p>
 #&gt; <span style='color: #BCBCBC;'>20</span> Frozen profile test csio/29…      1         3 3FC18                        18
 #&gt; <span style='color: #949494;'># … with 1 more variable: history_qctest_flag &lt;int&gt;</span></div><div class='input'>
 <span class='va'>argo_reference_history_qctest</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 22 x 4</span>
-#&gt;    history_qctest_num… history_qctest_f… history_qctest_descript… history_qctest
-#&gt;                  <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>             <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         
-#&gt; <span style='color: #BCBCBC;'> 1</span>                   1                 2 Platform Identification… 2             
-#&gt; <span style='color: #BCBCBC;'> 2</span>                   2                 4 Impossible Date test     4             
-#&gt; <span style='color: #BCBCBC;'> 3</span>                   3                 8 Impossible Location test 8             
-#&gt; <span style='color: #BCBCBC;'> 4</span>                   4                16 Position on Land test    10            
-#&gt; <span style='color: #BCBCBC;'> 5</span>                   5                32 Impossible Speed test    20            
-#&gt; <span style='color: #BCBCBC;'> 6</span>                   6                64 Global Range test        40            
-#&gt; <span style='color: #BCBCBC;'> 7</span>                   7               128 Regional Global Paramet… 80            
-#&gt; <span style='color: #BCBCBC;'> 8</span>                   8               256 Pressure Increasing test 100           
-#&gt; <span style='color: #BCBCBC;'> 9</span>                   9               512 Spike test               200           
-#&gt; <span style='color: #BCBCBC;'>10</span>                  10              <span style='text-decoration: underline;'>1</span>024 Top and Bottom Spike te… 400           
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 22 × 4</span>
+#&gt;    history_qctest_number history_qctest_flag history_qctest_desc… history_qctest
+#&gt;                    <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>                <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         
+#&gt; <span style='color: #BCBCBC;'> 1</span>                     1                   2 Platform Identifica… 2             
+#&gt; <span style='color: #BCBCBC;'> 2</span>                     2                   4 Impossible Date test 4             
+#&gt; <span style='color: #BCBCBC;'> 3</span>                     3                   8 Impossible Location… 8             
+#&gt; <span style='color: #BCBCBC;'> 4</span>                     4                  16 Position on Land te… 10            
+#&gt; <span style='color: #BCBCBC;'> 5</span>                     5                  32 Impossible Speed te… 20            
+#&gt; <span style='color: #BCBCBC;'> 6</span>                     6                  64 Global Range test    40            
+#&gt; <span style='color: #BCBCBC;'> 7</span>                     7                 128 Regional Global Par… 80            
+#&gt; <span style='color: #BCBCBC;'> 8</span>                     8                 256 Pressure Increasing… 100           
+#&gt; <span style='color: #BCBCBC;'> 9</span>                     9                 512 Spike test           200           
+#&gt; <span style='color: #BCBCBC;'>10</span>                    10                <span style='text-decoration: underline;'>1</span>024 Top and Bottom Spik… 400           
 #&gt; <span style='color: #949494;'># … with 12 more rows</span></div><div class='input'>
 </div></pre>
   </div>

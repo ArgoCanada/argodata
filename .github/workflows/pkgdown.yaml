@@ -32,6 +32,11 @@ jobs:
           path: ${{ runner.temp }}/argo-cache-dir
           key: argo-cache-dir-pkgdown-5
 
+      - name: Debug pkgdown build
+        run: |
+          Rscript -e 'rmarkdown::render("vignettes/articles/virtual-mooring.Rmd")'
+
+
       - name: Deploy package
         run: |
           git config --local user.name "$GITHUB_ACTOR"

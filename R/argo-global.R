@@ -1,9 +1,24 @@
 
 #' Load Argo global index files
 #'
+#' The [argo_mirror()] points to a directory containing millions of NetCDF
+#' files in which Argo data is organized. These files are indexed by category
+#' in the root directory of the mirror. The `argo_global_*()` functions provide
+#' access to these as data frames.
+#'
 #' @inheritParams argo_download
 #'
-#' @return A [tibble::tibble()].
+#' @return
+#'   - `argo_global_meta()`: a [tibble::tibble()] of the Argo meta file index
+#'   - `argo_global_tech()`: a [tibble::tibble()] of the Argo tech file index
+#'   - `argo_global_traj()`: a [tibble::tibble()] of the Argo trajectory file index
+#'   - `argo_global_bio_traj()`: a [tibble::tibble()] of the Argo meta
+#'     biogeochemical trajectory index
+#'   - `argo_global_prof()`: a [tibble::tibble()] of the Argo profile file index
+#'   - `argo_global_bio_prof()`: a [tibble::tibble()] of the Argo biogeochemical profile
+#'     index
+#'   - `argo_global_synthetic_prof()`: a [tibble::tibble()] of the Argo
+#'     biogeochemical synthetic profile index
 #' @export
 #'
 #' @examples

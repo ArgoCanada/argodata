@@ -15,7 +15,7 @@ with_argo_mirror(mirror, expr)
 \arguments{
 \item{mirror}{The URL to an Argo mirror or a path to a directory
 where Argo data has been cached or synced. According to the
-\href{http://www.argodatamgt.org/Access-to-data/Access-via-FTP-or-HTTPS-on-GDAC}{Argo data access page},
+\href{http://www.argodatamgt.org/Access-to-data/Argo-GDAC-ftp-and-https-servers}{Argo data access page},
 The following public mirrors are available:
 \itemize{
 \item \url{ftp://usgodae.org/pub/outgoing/argo/}

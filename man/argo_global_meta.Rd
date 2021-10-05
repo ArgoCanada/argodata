@@ -34,10 +34,24 @@ do not exist in the cache.}
 verbose error messages.}
 }
 \value{
-A \code{\link[tibble:tibble]{tibble::tibble()}}.
+\itemize{
+\item \code{argo_global_meta()}: a \code{\link[tibble:tibble]{tibble::tibble()}} of the Argo meta file index
+\item \code{argo_global_tech()}: a \code{\link[tibble:tibble]{tibble::tibble()}} of the Argo tech file index
+\item \code{argo_global_traj()}: a \code{\link[tibble:tibble]{tibble::tibble()}} of the Argo trajectory file index
+\item \code{argo_global_bio_traj()}: a \code{\link[tibble:tibble]{tibble::tibble()}} of the Argo meta
+biogeochemical trajectory index
+\item \code{argo_global_prof()}: a \code{\link[tibble:tibble]{tibble::tibble()}} of the Argo profile file index
+\item \code{argo_global_bio_prof()}: a \code{\link[tibble:tibble]{tibble::tibble()}} of the Argo biogeochemical profile
+index
+\item \code{argo_global_synthetic_prof()}: a \code{\link[tibble:tibble]{tibble::tibble()}} of the Argo
+biogeochemical synthetic profile index
+}
 }
 \description{
-Load Argo global index files
+The \code{\link[=argo_mirror]{argo_mirror()}} points to a directory containing millions of NetCDF
+files in which Argo data is organized. These files are indexed by category
+in the root directory of the mirror. The \verb{argo_global_*()} functions provide
+access to these as data frames.
 }
 \examples{
 with_argo_example_cache({

@@ -84,7 +84,7 @@ as_argo_path <- function(path) {
   } else if (inherits(path, "argoFloats") && identical(path@metadata$type, "index")) {
     path <- as_argo_path(path@data$index)
   } else if (inherits(path, "argoFloats") && identical(path@metadata$type, "profiles")) {
-    path <- fs::path_abs(path.expand(pr@data$file))
+    path <- fs::path_abs(path.expand(path@data$file))
   } else if (inherits(path, "argoFloats") && identical(path@metadata$type, "argos")) {
     path <- vapply(path@data$argos, "[[", "filename", FUN.VALUE = character(1))
     path <- fs::path_abs(path.expand(path))

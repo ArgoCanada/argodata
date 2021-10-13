@@ -221,6 +221,44 @@ argo_filter_data_mode <- function(tbl, data_mode) {
 
 #' @rdname argo_filter
 #' @export
+argo_filter_parameter_data_mode <- function(tbl, parameter, data_mode) {
+  argo_assert_columns(tbl, c("parameters", "parameter_data_mode"))
+
+  # we can only do this for one parameter/data_mode combination
+  # data_mode of length 1 is enforced below
+  if (length(parameter) != 1) {
+    abort("`parameter` must be length 1 in `argo_filter_parameter_data_mode()`")
+  }
+
+  # sanitize first so that matching works below
+  parameter <- stringr::str_to_upper(parameter)
+  parameter[is.na(parameter)] <- "NA"
+
+  # A value of 'A' exists in the index for realtime-adjusted values
+  data_mode_choices <- c("R", "A", "D", "r", "a", "d", "realtime", "adjusted", "delayed")
+  if (!isTRUE(data_mode %in% data_mode_choices)) {
+    choices <- glue::glue_collapse(paste0("'", data_mode_choices, "'"), sep = ", ", last = " or ")
+    abort(
+      glue(
+        "`data_mode` must be one of { choices }"
+      )
+    )
+  }
+
+  data_mode <- toupper(substr(data_mode, 1, 1))
+
+  # this is slow with the full index, so filter based on parameter first
+  tbl <- argo_filter_parameter(tbl, parameter)
+
+  params_split <- stringr::str_split(tbl$parameters, "\\s+")
+  param_index <- vapply(params_split, function(x) match(parameter, x), integer(1))
+  param_data_mode <- stringr::str_sub(tbl$parameter_data_mode, param_index, param_index)
+
+  argo_do_filter(tbl, param_data_mode == data_mode)
+}
+
+#' @rdname argo_filter
+#' @export
 argo_filter_direction <- function(tbl, direction) {
   argo_assert_columns(tbl, "file")
 

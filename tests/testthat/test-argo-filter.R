@@ -37,6 +37,28 @@ test_that("argo_filter_data_mode() works", {
   expect_error(argo_filter_data_mode(tbl, "fishing"), "must be one of")
 })
 
+test_that("argo_filter_parameter_data_mode() works", {
+  tbl <- tibble::tibble(
+    parameters = c("PARAM1 PARAM2", "PARAM3"),
+    parameter_data_mode = c("RD", "A")
+  )
+
+  expect_identical(argo_filter_parameter_data_mode(tbl, "param0", "R"), tbl[integer(0), ])
+  expect_identical(argo_filter_parameter_data_mode(tbl, "param1", "R"), tbl[1, ])
+  expect_identical(argo_filter_parameter_data_mode(tbl, "param3", "R"), tbl[integer(0), ])
+  expect_identical(argo_filter_parameter_data_mode(tbl, "param3", "A"), tbl[2, ])
+
+  expect_error(
+    argo_filter_parameter_data_mode(tbl, c("abc", "$$$")),
+    "must be length 1"
+  )
+
+  expect_error(
+    argo_filter_parameter_data_mode(tbl, "abc", "not a data mode"),
+    "must be one of"
+  )
+})
+
 test_that("argo_filter_radius() works for lat/lon", {
   tbl <- tibble::tibble(
     latitude = c(0, 45),

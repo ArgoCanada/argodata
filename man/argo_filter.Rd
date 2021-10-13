@@ -8,6 +8,7 @@
 \alias{argo_filter_float}
 \alias{argo_filter_parameter}
 \alias{argo_filter_data_mode}
+\alias{argo_filter_parameter_data_mode}
 \alias{argo_filter_direction}
 \title{Select rows of Argo tables}
 \usage{
@@ -24,6 +25,8 @@ argo_filter_float(tbl, float)
 argo_filter_parameter(tbl, parameter)
 
 argo_filter_data_mode(tbl, data_mode)
+
+argo_filter_parameter_data_mode(tbl, parameter, data_mode)
 
 argo_filter_direction(tbl, direction)
 }

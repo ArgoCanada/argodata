@@ -3,7 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   articles/virtual-mooring: virtual-mooring.html
-last_built: 2021-10-05T20:19Z
+last_built: 2021-10-13T14:15Z
 urls:
   reference: https://argocanada.github.io/argodata/reference
   article: https://argocanada.github.io/argodata/articles

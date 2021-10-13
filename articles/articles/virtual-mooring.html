@@ -146,8 +146,8 @@
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>
   <span class="va">profiles</span>,
   <span class="fu">aes</span><span class="op">(</span>
-    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span>,
-    fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span>
+    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span>,
+    fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span>
   <span class="op">)</span>
 <span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -166,7 +166,7 @@
     crs <span class="op">=</span> <span class="fl">4326</span>
   <span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://paleolimbot.github.io/ggspatial/reference/stat_spatial_identity.html">geom_spatial_point</a></span><span class="op">(</span>crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="virtual-mooring_files/figure-html/unnamed-chunk-6-1.png" width="2187.5"></p>
 <p>You can use plots like this to ensure that you have a reasonable density of samples in both space and time for the question you are trying to answer. Once you’ve done this, you can load profile levels using <code><a href="../../reference/argo_prof_levels.html">argo_prof_levels()</a></code>. This will download the files from the Argo server and load them into a table with one row per profile per sampling level. This will take about 90 seconds depending on your internet connection and system configuration.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -266,7 +266,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">profiles</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">file</span>, <span class="va">date</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"file"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     pres_bin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="va">pres</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span> <span class="op">+</span> <span class="fl">50</span>,
-    date_bin <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>
+    date_bin <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>
   <span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">pres_bin</span>, <span class="va">date_bin</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 

@@ -120,8 +120,8 @@
 <span class="va">prof_lab_may_2020</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/argo_global_meta.html">argo_global_prof</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/argo_filter_radius.html">argo_filter_rect</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">60</span>, <span class="op">-</span><span class="fl">60</span>, <span class="op">-</span><span class="fl">50</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span>
-    <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2020</span>, 
-    <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">==</span> <span class="fl">5</span>
+    <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2020</span>, 
+    <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">==</span> <span class="fl">5</span>
   <span class="op">)</span>
 
 <span class="co"># download, cache, and load NetCDF files</span>

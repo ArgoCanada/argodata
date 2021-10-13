@@ -181,6 +181,6 @@ The ``argodata`` package helps scientists analyze data from the International Ar
 
 # Acknowledgements
 
-We acknowledge useful discussions with Chris Gordon, especially regarding the extraction of quality control information from Argo data files. Support for this work came from the Natural Sciences and Engineering Research Council of Canada and G7 Charlevoix Blueprint for Healthy Oceans, Seas and Resilient Coastal Communities. The data used in this paper were collected and made freely available by the International Argo Program and the national programs that contribute to it (<https://argo.ucsd.edu>, <https://www.ocean-ops.org>). The Argo Program [@argo] is part of the Global Ocean Observing System.
+We acknowledge useful discussions with Chris Gordon, especially regarding the extraction of quality control information from Argo data files. We thank the editors and reviewers for their thoughtful and careful review of this manuscript. Support for this work came from the Natural Sciences and Engineering Research Council of Canada and G7 Charlevoix Blueprint for Healthy Oceans, Seas and Resilient Coastal Communities. The data used in this paper were collected and made freely available by the International Argo Program and the national programs that contribute to it (<https://argo.ucsd.edu>, <https://www.ocean-ops.org>). The Argo Program [@argo] is part of the Global Ocean Observing System.
 
 # References

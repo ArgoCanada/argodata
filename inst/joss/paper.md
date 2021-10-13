@@ -38,15 +38,15 @@ journal: JOSS
 
 # Summary
 
-This paper describes ``argodata``, an R package that makes it easier to work with data acquired in the International Argo Program, which provides over two decades of oceanographic measurements from around the world. Although Argo data are publicly available in NetCDF format and several software packages are available to assist in locating and downloading relevant Argo data, the multidimensional arrays used can be difficult to understand for non-oceanographers. Given the increasing use of Argo data in other disciplines, we built a minimal interface to the data set that uses the data frame as the primary data structure. This approach allows users to leverage the rich ecosystem of R packages that manipulate data frames (e.g., the ``tidyverse``) and associated instructional resources.
+This paper describes ``argodata``, an R package that makes it easier to work with data acquired in the International Argo Program, which provides over two decades of oceanographic measurements from around the world. Although Argo data are publicly available in NetCDF format and several software packages are available to assist in locating and downloading relevant Argo data, the multidimensional arrays used can be difficult to understand for non-oceanographers, particulary for the expanding arrays of biogeochemical variables measured by Argo floats. Given the increasing use of Argo data in other disciplines, we built a minimal interface to the data set that uses the data frame as the primary data structure. This approach allows users to leverage the rich ecosystem of R packages that manipulate data frames (e.g., the ``tidyverse``) and associated instructional resources.
 
 # Introduction
 
 The ocean is highly variable in both space and time and mapping this variability at appropriate scales is a key factor in many scientific studies. Oceanographic data have direct applications that range from the analysis of near-bottom ecosystems to air-sea interactions.  More broadly, ocean measurements are needed to constrain the models that scientists use to understand the evolving state of the ocean and to make predictions about its future, particularly as a component of the global climate system.
 
-The International Argo Program deploys and collects data from several thousand devices that are programmed to drift with and move vertically through the ocean. Sensors measure electrical conductivity, temperature, pressure, and sometimes other quantities along this vertical path yielding "profiles" that are uploaded via satellite to globally distributed data assembly centres [@roemmich_argo_2001; @roemmich_argo_2009-2]. Since 1997, the International Argo Program has collected over 2.4 million profiles from around the globe.
+The International Argo Program [@argo] deploys and collects data from several thousand devices that are programmed to drift with and move vertically through the ocean. Sensors measure electrical conductivity, temperature, pressure, and other quantities along this vertical path yielding "profiles" that are uploaded via satellite to globally distributed data assembly centres [@roemmich_argo_2001; @roemmich_argo_2009-2]. Since 1997, the International Argo Program has collected over 2.4 million profiles from around the globe and expanded its original array of sensors to measure biogeochemicical variables such as pH, chloryphyll-α, dissolved oxygen, nitrate, and many others.
 
-Although the NetCDF data files provided by Argo data servers contain metadata that describe their contents, we identified a number of barriers to data access. These included (1) reading and decoding the index files to locate files of interest, (2) downloading and potentially caching large numbers of small NetCDF files, (3) reading the NetCDF files into a form where the data contained within can be visualized and analyzed, and (4) dealing efficiently with potentially large Argo data sets. Whereas a variety of applications have been created to address some of these barriers, the ``argodata`` package is our attempt to overcome these barriers for the novice to average-level programmer who may not be familiar with oceanographic conventions for storing data.
+Although the NetCDF data files provided by Argo data servers contain metadata that describe their contents, we identified a number of barriers to data access. These included (1) reading and decoding the index files to locate files of interest, (2) downloading and potentially caching large numbers of small NetCDF files, (3) reading the NetCDF files into a form where the data contained within can be visualized and analyzed, and (4) dealing efficiently with potentially large Argo data sets. In particular, the incorporation of biogeochemical variables in Argo NetCDF files introduced additional complexity such that a novice- to average-level programmer may have difficulty extracting and manipulating data from many profiles. Whereas a variety of applications have been created to address some of these barriers, the ``argodata`` package is our attempt to overcome these barriers for the novice- to average-level programmer who may not be familiar with oceanographic conventions for storing data.
 
 # Statement of need
 
@@ -89,7 +89,7 @@ To locate files of interest on the Argo mirror, index files for profile, traject
 ```
 
 ```
-## # A tibble: 2,455,058 x 8
+## # A tibble: 2,524,364 x 8
 ##    file     date                latitude longitude ocean profiler_type
 ##    <chr>    <dttm>                 <dbl>     <dbl> <chr>         <dbl>
 ##  1 aoml/13~ 1997-07-29 20:03:00    0.267     -16.0 A               845
@@ -102,7 +102,7 @@ To locate files of interest on the Argo mirror, index files for profile, traject
 ##  8 aoml/13~ 1997-10-14 18:39:35    1.76      -21.6 A               845
 ##  9 aoml/13~ 1997-10-25 19:32:34    1.80      -21.8 A               845
 ## 10 aoml/13~ 1997-11-05 18:51:42    1.64      -21.4 A               845
-## # ... with 2,455,048 more rows, and 2 more variables:
+## # ... with 2,524,354 more rows, and 2 more variables:
 ## #   institution <chr>, date_update <dttm>
 ```
 
@@ -116,9 +116,9 @@ prof_gulf_stream_2020 <- prof %>%
   argo_filter_data_mode("delayed")
 ```
 
-The next step is to download the selected files. This is done automatically by the load functions described below; however, one can use `argo_download()` to download (if necessary) and cache files in an index. To facilitate use of alternative cache solutions like `rsync` or ``bowerbird``, we use the same file structure as the mirror itself and provide `argo_set_cache_dir()` to allow this directory to be used for all calls to `argo_download()`.
+The next step is to download the selected files. The explicit call to `argo_download()` is typically omitted as it is done automatically for missing files by the load functions described below; however, one can manually call `argo_download()` to download (if necessary) and cache files in an index. To facilitate use of alternative cache solutions like `rsync` or ``bowerbird`` [@r-bowerbird], we use the same file structure as the mirror itself and provide `argo_set_cache_dir()` to allow this directory to be used for all calls to `argo_download()`.
 
-To load data from NetCDF files into meaningful data frames we draw from the concept of "grids" introduced by the ``tidync`` and ``ncmeta`` packages [@r-ncmeta; @r-tidync]. For example, temperature values stored in an Argo profile NetCDF file are identified by values of `N_PROF` (an integer identifying a profile within an Argo NetCDF file) and `N_LEVEL` (an integer identifying a sampling level within a profile). Temperature values can be represented by a matrix with one row per `N_LEVELS` and one column per `N_PROF` or by a data frame with variables `N_PROF`, `N_LEVELS`, and `TEMP`. Any other variables that share the dimensions of the temperature variable can be added as additional columns in the data frame. After looping through each file in a complete copy of the Argo data set, we identified 19 grids among the four file types. The most commonly-used grid is the levels grid for Argo profile files:
+To load data from NetCDF files into meaningful data frames we draw from the concept of "grids" introduced by the ``tidync`` and ``ncmeta`` packages [@r-ncmeta; @r-tidync]. For example, temperature values stored in an Argo profile NetCDF file are identified by values of `N_PROF` (an integer identifying a profile within an Argo NetCDF file) and `N_LEVEL` (an integer identifying a sampling level within a profile). Temperature values can be represented by a matrix with one row per `N_LEVELS` and one column per `N_PROF` or by a data frame with variables `N_PROF`, `N_LEVELS`, and `TEMP`. Any other variables that share the dimensions of the temperature variable can be added as additional columns in the data frame. After looping through each file in a complete copy of the Argo data set, we identified 19 grids among four Argo NetCDF file formats (profile, trajectory, metadata, and technical information) [@argo-user-manual]. The most commonly-used grid is the levels grid for Argo profile files:
 
 
 ```r
@@ -127,15 +127,15 @@ To load data from NetCDF files into meaningful data frames we draw from the conc
 ```
 
 ```
-## Downloading 700 files from 'https://data-argo.ifremer.fr'
+## Downloading 757 files from 'https://data-argo.ifremer.fr'
 ```
 
 ```
-## Extracting from 700 files
+## Extracting from 757 files
 ```
 
 ```
-## # A tibble: 1,360,320 x 18
+## # A tibble: 1,473,130 x 18
 ##    file   n_levels n_prof  pres pres_qc pres_adjusted pres_adjusted_qc
 ##    <chr>     <int>  <int> <dbl> <chr>           <dbl> <chr>           
 ##  1 aoml/~        1      1  1.12 1                1.12 1               
@@ -148,7 +148,7 @@ To load data from NetCDF files into meaningful data frames we draw from the conc
 ##  8 aoml/~        8      1  7.92 1                7.92 1               
 ##  9 aoml/~        9      1  9    1                9    1               
 ## 10 aoml/~       10      1 10    1               10    1               
-## # ... with 1,360,310 more rows, and 11 more variables:
+## # ... with 1,473,120 more rows, and 11 more variables:
 ## #   pres_adjusted_error <dbl>, temp <dbl>, temp_qc <chr>,
 ## #   temp_adjusted <dbl>, temp_adjusted_qc <chr>,
 ## #   temp_adjusted_error <dbl>, psal <dbl>, psal_qc <chr>,
@@ -223,6 +223,6 @@ The ``argodata`` package helps scientists analyze data from the International Ar
 
 # Acknowledgements
 
-We acknowledge useful discussions with Chris Gordon, especially regarding the extraction of quality control information from Argo data files. Support for this work came from the Natural Sciences and Engineering Research Council of Canada and G7 Charlevoix Blueprint for Healthy Oceans, Seas and Resilient Coastal Communities. The data used in this paper were collected and made freely available by the International Argo Program and the national programs that contribute to it (<https://argo.ucsd.edu>, <https://www.ocean-ops.org>). The Argo Program is part of the Global Ocean Observing System.
+We acknowledge useful discussions with Chris Gordon, especially regarding the extraction of quality control information from Argo data files. We thank the editors and reviewers for their thoughtful and careful review of this manuscript. Support for this work came from the Natural Sciences and Engineering Research Council of Canada and G7 Charlevoix Blueprint for Healthy Oceans, Seas and Resilient Coastal Communities. The data used in this paper were collected and made freely available by the International Argo Program and the national programs that contribute to it (<https://argo.ucsd.edu>, <https://www.ocean-ops.org>). The Argo Program [@argo] is part of the Global Ocean Observing System.
 
 # References

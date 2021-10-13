@@ -223,8 +223,10 @@ argo_read_global_bio_traj <- function(file) {
 #' @rdname argo_read_global_meta
 #' @export
 argo_read_global_bio_prof <- function(file) {
+  # the parameter_data_mode column is whitespace sensitive (leading/trailing
+  # spaces are meaningful)
   vroom::vroom(
-    file, delim = ",",
+    file, delim = ",", trim_ws = FALSE,
     col_types = vroom::cols(
       file = vroom::col_character(),
       date = vroom::col_datetime("%Y%m%d%H%M%S"),
@@ -244,8 +246,10 @@ argo_read_global_bio_prof <- function(file) {
 #' @rdname argo_read_global_meta
 #' @export
 argo_read_global_synthetic_prof <- function(file) {
+  # the parameter_data_mode column is whitespace sensitive (leading/trailing
+  # spaces are meaningful)
   vroom::vroom(
-    file, delim = ",",
+    file, delim = ",", trim_ws = FALSE,
     col_types = vroom::cols(
       file = vroom::col_character(),
       date = vroom::col_datetime("%Y%m%d%H%M%S"),

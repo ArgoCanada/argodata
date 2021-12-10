@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://argocanada.github.io/argodata/404.html</loc>
+  </url>
+  <url>
+    <loc>https://argocanada.github.io/argodata/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://argocanada.github.io/argodata/CONTRIBUTING.html</loc>
+  </url>
+  <url>
+    <loc>https://argocanada.github.io/argodata/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://argocanada.github.io/argodata/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://argocanada.github.io/argodata/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://argocanada.github.io/argodata/articles/virtual-mooring.html</loc>
+  </url>
+  <url>
+    <loc>https://argocanada.github.io/argodata/authors.html</loc>
+  </url>
+  <url>
     <loc>https://argocanada.github.io/argodata/index.html</loc>
   </url>
   <url>
@@ -106,6 +130,6 @@
     <loc>https://argocanada.github.io/argodata/reference/argodata-package.html</loc>
   </url>
   <url>
-    <loc>https://argocanada.github.io/argodata/articles/articles/virtual-mooring.html</loc>
+    <loc>https://argocanada.github.io/argodata/reference/index.html</loc>
   </url>
 </urlset>
